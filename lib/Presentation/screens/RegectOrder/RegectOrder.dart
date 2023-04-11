@@ -1,0 +1,156 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
+import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
+import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/widgets/noInternet.dart';
+import 'package:nasooh/Presentation/widgets/shared.dart';
+import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/constants.dart';
+import 'package:nasooh/app/utils/myApplication.dart';
+
+import '../../../app/utils/lang/language_constants.dart';
+
+class RegectOrder extends StatefulWidget {
+  const RegectOrder();
+
+  @override
+  State<RegectOrder> createState() => _RegectOrderState();
+}
+
+class _RegectOrderState extends State<RegectOrder> {
+  HomeController homeController = HomeController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+
+  late StreamSubscription<ConnectivityResult> subscription;
+  bool? isConnected;
+  final controller = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    super.initState();
+
+///////////////////////////
+    MyApplication.checkConnection().then((value) {
+      if (value) {
+        //////
+        // todo recall data
+        ///
+        ///
+        ///
+        ///
+      } else {
+        MyApplication.showToastView(
+            message: '${getTranslated(context, 'noInternet')}');
+      }
+    });
+
+    // todo subscribe to internet change
+    subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      if (mounted) {
+        setState(() {
+          result == ConnectivityResult.none
+              ? isConnected = false
+              : isConnected = true;
+        });
+      }
+
+      /// if internet comes back
+      if (result != ConnectivityResult.none) {
+        /// call your apis
+        // todo recall data
+        ///
+        ///
+        ///
+        ///
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _textController.dispose();
+    _focusNode.dispose();
+    subscription.cancel();
+    for (var element in homeController.categories) {
+      element["isSelected"] = false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // todo if not connected display nointernet widget else continue to the rest build code
+    final sizee = MediaQuery.of(context).size;
+    if (isConnected == null) {
+      MyApplication.checkConnection().then((value) {
+        setState(() {
+          isConnected = value;
+        });
+      });
+    } else if (!isConnected!) {
+      MyApplication.showToastView(
+          message: '${getTranslated(context, 'noInternet')}');
+      return NoInternetWidget(size: sizee);
+    }
+
+    return GestureDetector(
+      onTap: () {
+        MyApplication.dismissKeyboard(context);
+      }, // hide keyboard on tap anywhere
+
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          key: _scaffoldKey,
+          backgroundColor: Constants.whiteAppColor,
+          appBar: AppBar(
+              centerTitle: false,
+              leadingWidth: 70,
+              title: Row(
+                children: const [
+                  Text("رفض الطلب"),
+                ],
+              ),
+              leading: const myBackButton()),
+          body: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+                child: Column(
+                  children: [
+                    Advicess(
+                      isAdviceDetal: false,
+                    ),
+                    TextField(
+                      maxLines: 6,
+                      decoration: Constants.setRegistrationTextInputDecoration(
+                          isParagraph: true,
+                          hintText: "سبب الرفض",
+                          prefixIcon: Icon(
+                            Icons.remove_circle_outline_outlined,
+                            color: Color(0xffED2626),
+                            size: 24,
+                          )),
+                    ),
+                    Spacer(),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: MyButton(
+                          txt: "رفض الطلب",
+                          onPressedHandler: () {},
+                          isBold: true,
+                        )),
+                  ],
+                ),
+              ))),
+    );
+  }
+}
