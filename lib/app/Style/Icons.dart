@@ -4,6 +4,7 @@ const String onBoardingPNG = "assets/images/PNG/onBoarding.png";
 const String onBoardingPNGbk = "assets/images/PNG/1761.png";
 const String onboardingPnggg = "assets/images/PNG/consultant_3 1.png";
 const String ltti = "assets/images/PNG/90422-security-car-black.json";
+const String personn = "assets/images/PNG/person.jpeg";
 
 ///////// SVGs /////////
 const String onBoardingg = "assets/images/SVGs/signout.svg";
@@ -49,7 +50,9 @@ const String logOut = "assets/images/SVGs/logOut.svg";
 const String attachFiles = "assets/images/SVGs/attachFiles.svg";
 const String micee = "assets/images/SVGs/mice.svg";
 const String sendChat = "assets/images/SVGs/sendChat.svg";
+const String coinss = "assets/images/SVGs/coinss.svg";
 // const String appbarLogo = "assets/images/SVGs/appbarLogo.svg";
 
 ///////////////////// Jsons////////
 const String otpLotti = "assets/images/Jsons/4.json";
+const String myWallet = "assets/images/Jsons/7455-loading1.json";

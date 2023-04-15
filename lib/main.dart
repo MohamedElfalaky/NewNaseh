@@ -7,6 +7,7 @@ import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dar
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_cubit.dart';
 
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
+import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
 
 import 'package:nasooh/app/constants.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -133,7 +134,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
             primarySwatch: getMaterialColor(
                 colorHex:
-                    0xFF0085A5), // todo change color to use default app color
+                    0xFFbac0085A55), // todo change color to use default app color
             appBarTheme: const AppBarTheme().copyWith(
               toolbarHeight: 70,
               titleSpacing: 4,
@@ -142,23 +143,24 @@ class _MyAppState extends State<MyApp> {
               titleTextStyle: Constants.mainTitleFont,
             ),
             scaffoldBackgroundColor: Constants.whiteAppColor),
-        home: HomeScreen(),
+        home: const HomeScreen(),
       ),
     );
   }
 
   getMaterialColor({required int colorHex}) {
     Map<int, Color> color = {
-      50: const Color.fromRGBO(136, 14, 79, .1),
-      100: const Color.fromRGBO(136, 14, 79, .2),
-      200: const Color.fromRGBO(136, 14, 79, .3),
-      300: const Color.fromRGBO(136, 14, 79, .4),
-      400: const Color.fromRGBO(136, 14, 79, .5),
-      500: const Color.fromRGBO(136, 14, 79, .6),
-      600: const Color.fromRGBO(136, 14, 79, .7),
-      700: const Color.fromRGBO(136, 14, 79, .8),
-      800: const Color.fromRGBO(136, 14, 79, .9),
-      900: const Color.fromRGBO(136, 14, 79, 1),
+      // ignore: use_full_hex_values_for_flutter_colors
+      50: const Color.fromRGBO(0, 123, 165, .1),
+      100: const Color.fromRGBO(0, 123, 165, .2),
+      200: const Color.fromRGBO(0, 123, 165, .3),
+      300: const Color.fromRGBO(0, 123, 165, .4),
+      400: const Color.fromRGBO(0, 123, 165, .5),
+      500: const Color.fromRGBO(0, 123, 165, .6),
+      600: const Color.fromRGBO(0, 123, 165, .7),
+      700: const Color.fromRGBO(0, 123, 165, .8),
+      800: const Color.fromRGBO(0, 123, 165, .9),
+      900: const Color.fromRGBO(0, 123, 165, 1),
     };
     return MaterialColor(colorHex, color);
   }
