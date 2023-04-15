@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,7 +13,9 @@ import 'package:nasooh/app/utils/myApplication.dart';
 import '../../../app/utils/lang/language_constants.dart';
 
 class AdviceDetail extends StatefulWidget {
-  const AdviceDetail();
+  const AdviceDetail({
+    super.key,
+  });
 
   @override
   State<AdviceDetail> createState() => _AdviceDetailState();
