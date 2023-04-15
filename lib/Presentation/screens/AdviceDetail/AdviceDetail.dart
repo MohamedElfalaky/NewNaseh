@@ -109,6 +109,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
           key: _scaffoldKey,
           backgroundColor: Constants.whiteAppColor,
           appBar: AppBar(
+              // toolbarHeight: 90,
               centerTitle: false,
               leadingWidth: 70,
               title: Row(

@@ -7,6 +7,8 @@ import 'package:nasooh/Presentation/screens/AdviceDetail/AdviceDetail.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/outComeandRate.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
+import 'package:nasooh/Presentation/screens/NotificationScreen/NotificationScreen.dart';
+import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
@@ -116,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Container(
                   margin: EdgeInsets.only(
-                      top: MyApplication.hightClc(context, 50),
+                      top: MyApplication.hightClc(context, 30),
                       bottom: 12,
                       right: 24,
                       left: 24),
@@ -124,25 +126,35 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
+                        margin: const EdgeInsets.only(bottom: 4),
                         height: 84,
                         width: 84,
                         decoration: BoxDecoration(
+                            image: const DecorationImage(
+                              image: AssetImage(personn),
+                              fit: BoxFit.cover,
+                            ),
+                            // shape: BoxShape.circle,
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15),
                             border: Border.all(
                                 width: 6,
                                 color:
                                     const Color(0XFF7C7C84).withOpacity(0.2))),
-                        child: SvgPicture.asset(
-                          onboardingImage,
-                          height: 70,
-                          width: 70,
-                          fit: BoxFit.contain,
-                        ),
+                        // child: ClipRRect(
+                        //   borderRadius: BorderRadius.circular(5),
+                        //   child: Image.asset(
+                        //     personn,
+                        //     fit: BoxFit.cover,
+                        //   ),
+                        // )
                       ),
-                      const Text(
-                        "محمد عبدالعزيز الحميد كامل",
-                        style: Constants.mainTitleFont,
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 4),
+                        child: Text(
+                          "محمد عبدالعزيز الحميد كامل",
+                          style: Constants.mainTitleFont,
+                        ),
                       ),
                       Row(
                         children: [
@@ -161,17 +173,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 myListile(
-                  iconn: ta3delProfile,
-                  namee: "طلباتي",
-                  // onTapHandler:
-                  //     MyApplication.showToastView(message: "sjhsk")
-                ),
+                    iconn: ta3delProfile,
+                    namee: "طلباتي",
+                    onTapHandler: () => Navigator.pop(context)),
                 myListile(
                     iconn: mahfazty,
                     namee: "محفظتي",
-                    onTapHandler: () =>
-                        MyApplication.showToastView(message: "sjns")),
-                myListile(iconn: mahfazty, namee: "الأشعارات"),
+                    onTapHandler: () {
+                      Navigator.pop(context);
+                      MyApplication.navigateTo(context, const WalletScreen());
+                    }),
+                myListile(
+                    iconn: mahfazty,
+                    namee: "الأشعارات",
+                    onTapHandler: () {
+                      Navigator.pop(context);
+                      MyApplication.navigateTo(
+                          context, const NotificationScreen());
+                    }),
                 myListile(iconn: shorot, namee: "الإعدادات"),
                 myListile(iconn: shorot, namee: 'الشروط والأحكام'),
                 myListile(iconn: shorot, namee: 'الدعم الفني'),
@@ -374,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           itemBuilder: (context, index) => InkWell(
                               onTap: () => MyApplication.navigateTo(
-                                  context, AdviceDetail()),
+                                  context, const AdviceDetail()),
                               child: Advicess()),
                           itemCount: 4,
                         ))

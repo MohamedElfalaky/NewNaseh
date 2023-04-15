@@ -2,24 +2,26 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:lottie/lottie.dart';
+import 'package:nasooh/Presentation/screens/WalletScreen/Components/OneOrder.dart';
+import 'package:nasooh/Presentation/screens/WalletScreen/controller/WalletScreenController.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
+import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
 import '../../../app/utils/lang/language_constants.dart';
 
-class RegectOrder extends StatefulWidget {
-  const RegectOrder();
+class WalletScreen extends StatefulWidget {
+  const WalletScreen();
 
   @override
-  State<RegectOrder> createState() => _RegectOrderState();
+  State<WalletScreen> createState() => _WalletScreenState();
 }
 
-class _RegectOrderState extends State<RegectOrder> {
-  final TextEditingController _textController = TextEditingController();
+class _WalletScreenState extends State<WalletScreen> {
+  WalletScreenController walletScreenController = WalletScreenController();
 
   late StreamSubscription<ConnectivityResult> subscription;
   bool? isConnected;
@@ -71,7 +73,6 @@ class _RegectOrderState extends State<RegectOrder> {
   @override
   void dispose() {
     super.dispose();
-    _textController.dispose();
     subscription.cancel();
   }
 
@@ -104,42 +105,61 @@ class _RegectOrderState extends State<RegectOrder> {
               leadingWidth: 70,
               title: Row(
                 children: const [
-                  Text("رفض الطلب"),
+                  Text("محفظتي"),
                 ],
               ),
               leading: const myBackButton()),
-          body: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: Column(
+          body: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Advicess(
-                      isAdviceDetal: false,
+                    Container(
+                      height: 120,
+                      width: 120,
+                      child: Lottie.asset(
+                        myWallet,
+                        // fit: BoxFit.none,
+                      ),
                     ),
-                    TextField(
-                      maxLines: 6,
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          isParagraph: true,
-                          hintText: "سبب الرفض",
-                          prefixIcon: Icon(
-                            Icons.remove_circle_outline_outlined,
-                            color: Color(0xffED2626),
-                            size: 24,
-                          )),
-                    ),
-                    Spacer(),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        child: MyButton(
-                          txt: "رفض الطلب",
-                          onPressedHandler: () {},
-                          isBold: true,
-                        )),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "رصيد محفظتي",
+                          style: Constants.secondaryTitleRegularFont,
+                        ),
+                        // Text(
+                        //   "1.435.83",
+                        //   style: Constants.headerNavigationFont
+                        //       .copyWith(fontSize: 32),
+                        // ),
+                        RichText(
+                            text: TextSpan(
+                                text: "1.435.83",
+                                style: Constants.headerNavigationFont
+                                    .copyWith(fontSize: 32),
+                                children: [
+                              TextSpan(
+                                  text: "ريال سعودي",
+                                  style: Constants.subtitleFont
+                                      .copyWith(fontWeight: FontWeight.normal))
+                            ]))
+                      ],
+                    )
                   ],
                 ),
-              ))),
+              ),
+              Expanded(
+                  child: ListView.builder(
+                itemBuilder: (context, index) => OneOreder(),
+                itemCount: 10,
+              ))
+            ],
+          )),
     );
   }
 }
