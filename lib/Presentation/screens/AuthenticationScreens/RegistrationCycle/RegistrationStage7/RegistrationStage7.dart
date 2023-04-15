@@ -1,6 +1,7 @@
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/MyButtonOutlined.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
@@ -238,7 +239,10 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                               child: MyButton(
                                 isBold: true,
                                 txt: "إتمام التسجيل",
-                                onPressedHandler: () {},
+                                onPressedHandler: () {
+                                  MyApplication.navigateTo(
+                                      context, HomeScreen());
+                                },
                               ),
                             ),
                           ),

@@ -5,6 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_cubit.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
@@ -143,7 +144,7 @@ class _MyAppState extends State<MyApp> {
               titleTextStyle: Constants.mainTitleFont,
             ),
             scaffoldBackgroundColor: Constants.whiteAppColor),
-        home: const HomeScreen(),
+        home: const LoginScreen(),
       ),
     );
   }

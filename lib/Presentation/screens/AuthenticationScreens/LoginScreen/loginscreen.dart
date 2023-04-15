@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage1/RegistrationStage1.dart';
+import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:password_text_field/password_text_field.dart';
@@ -221,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen>
                               onPressedHandler: () {
                                 if (_formKey.currentState!.validate()) {
                                   MyApplication.navigateTo(
-                                      context, RegistrationStage1());
+                                      context, HomeScreen());
                                 }
                               },
                             ),

@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/AdviceDetail/AdviceDetail.dart';
+import 'package:nasooh/Presentation/screens/EditProfileScreen/EditProfileScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/outComeandRate.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
@@ -177,6 +178,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     namee: "طلباتي",
                     onTapHandler: () => Navigator.pop(context)),
                 myListile(
+                    iconn: ta3delProfile,
+                    namee: "تعديل الملف الشخصي",
+                    onTapHandler: () => MyApplication.navigateTo(
+                        context, const EditProfileScreen())),
+                myListile(
                     iconn: mahfazty,
                     namee: "محفظتي",
                     onTapHandler: () {
@@ -198,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 myListile(iconn: logOut, namee: 'تسجيل الخروج'),
                 const Padding(
                   padding:
-                      EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 50),
+                      EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 25),
                   child: Text(
                     "رقم الأصدار 1.0.0.1",
                     style: Constants.subtitleFont,
