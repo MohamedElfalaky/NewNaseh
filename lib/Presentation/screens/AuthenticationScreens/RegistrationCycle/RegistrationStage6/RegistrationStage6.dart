@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage7/RegistrationStage7.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/MyButtonOutlined.dart';
@@ -16,8 +17,6 @@ class RegistrationStage6 extends StatefulWidget {
 }
 
 class _RegistrationStage6State extends State<RegistrationStage6> {
-  var _groupValue;
-  bool _termsConditions = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -82,131 +81,15 @@ class _RegistrationStage6State extends State<RegistrationStage6> {
           leading: const myBackButton(),
         ),
         body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: 16,
-            right: 16,
-            left: 16,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: TextFormField(
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          hintText: "اسم صاحب الحساب البنكي...",
-                          prefixIcon: SvgPicture.asset(
-                            ipanIcon,
-                            height: 24,
-                          )),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: TextFormField(
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          hintText: "آيبانIBAN Number...  SA***********",
-                          prefixIcon: SvgPicture.asset(
-                            ipanIcon2,
-                            height: 24,
-                          )),
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      SvgPicture.asset(ekrar),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      const Text(
-                        "إقرار باالسياسة والعمولة",
-                        style: Constants.mainTitleFont,
-                      ),
-                      const Spacer(),
-                      SizedBox(
-                          height: 24,
-                          width: 24,
-                          child: Checkbox(
-                              activeColor: Constants.primaryAppColor,
-                              value: _termsConditions,
-                              onChanged: (d) {
-                                setState(() {
-                                  _termsConditions = d!;
-                                });
-                              }))
-                    ],
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text(
-                      "هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحةما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها.",
-                      style: Constants.subtitleFont,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: TextFormField(
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          hintText: "تاريخ الميلاد...",
-                          prefixIcon: SvgPicture.asset(
-                            dateIcon,
-                            height: 24,
-                          )),
-                    ),
-                  ),
-                  const Text(
-                    "الجنس",
-                    style: Constants.secondaryTitleFont,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 120,
-                        child: RadioListTile(
-                            activeColor: Constants.primaryAppColor,
-                            contentPadding: const EdgeInsets.all(0),
-                            title: const Text(
-                              "ذكر",
-                              style: Constants.secondaryTitleRegularFont,
-                            ),
-                            value: "ذكر",
-                            groupValue: _groupValue,
-                            onChanged: (s) {
-                              setState(() {
-                                _groupValue = s;
-                              });
-                            }),
-                      ),
-                      SizedBox(
-                        width: 120,
-                        child: RadioListTile(
-                            activeColor: Constants.primaryAppColor,
-                            contentPadding: const EdgeInsets.all(0),
-                            title: const Text(
-                              "أنثى",
-                              style: Constants.secondaryTitleRegularFont,
-                            ),
-                            value: "أنثى",
-                            groupValue: _groupValue,
-                            onChanged: (s) {
-                              setState(() {
-                                _groupValue = s;
-                              });
-                            }),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 90,
-                  )
-                ],
-              )),
-        ),
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            padding: EdgeInsets.only(
+              top: 16,
+              right: 16,
+              left: 16,
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: RegistrationController.r6Body(setState)),
       ),
     );
   }

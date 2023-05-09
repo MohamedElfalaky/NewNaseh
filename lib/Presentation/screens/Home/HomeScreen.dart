@@ -4,11 +4,14 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/AdviceDetail/AdviceDetail.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 import 'package:nasooh/Presentation/screens/EditProfileScreen/EditProfileScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/outComeandRate.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/NotificationScreen.dart';
+import 'package:nasooh/Presentation/screens/SettingsScreen/SettingsScreen.dart';
+import 'package:nasooh/Presentation/screens/TermsConditionsScreen/TermsConditionsScreen.dart';
 import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
@@ -197,11 +200,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       MyApplication.navigateTo(
                           context, const NotificationScreen());
                     }),
-                myListile(iconn: shorot, namee: "الإعدادات"),
-                myListile(iconn: shorot, namee: 'الشروط والأحكام'),
+                myListile(
+                    iconn: shorot,
+                    namee: "الإعدادات",
+                    onTapHandler: () {
+                      Navigator.pop(context);
+                      MyApplication.navigateTo(context, const SettingsScreen());
+                    }),
+                myListile(
+                    iconn: shorot,
+                    namee: 'الشروط والأحكام',
+                    onTapHandler: () {
+                      Navigator.pop(context);
+                      MyApplication.navigateTo(
+                          context, const TermsConditionsScreen());
+                    }),
                 myListile(iconn: shorot, namee: 'الدعم الفني'),
                 myListile(iconn: shorot, namee: 'تعرف علي تطبيق نصوح'),
-                myListile(iconn: logOut, namee: 'تسجيل الخروج'),
+                myListile(
+                    iconn: logOut,
+                    namee: 'تسجيل الخروج',
+                    onTapHandler: () {
+                      Navigator.pop(context);
+                      MyApplication.navigateTo(context, const LoginScreen());
+                    }),
                 const Padding(
                   padding:
                       EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 25),

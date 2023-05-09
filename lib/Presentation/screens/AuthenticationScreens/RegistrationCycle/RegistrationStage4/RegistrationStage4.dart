@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificateItem.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage5/RegistrationStage5.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
@@ -20,7 +21,6 @@ class RegistrationStage4 extends StatefulWidget {
 List<Map<String, dynamic>> certiList = [];
 
 class _RegistrationStage4State extends State<RegistrationStage4> {
-  TextEditingController certificatesController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -73,103 +73,7 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
             left: 16,
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          child: SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: TextFormField(
-                      maxLength: 33,
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          hintText:
-                              "الوصف المختصر | مثال: خبير في البرمجة والتصميم",
-                          prefixIcon: SvgPicture.asset(
-                            wasfIcon,
-                            height: 24,
-                          )),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: TextFormField(
-                      maxLength: 770,
-                      maxLines: 6,
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          isParagraph: true,
-                          hintText: "نبذة تعريفية...",
-                          prefixIcon: SvgPicture.asset(
-                            nabzaIcon,
-                            height: 24,
-                          )),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      bottom: 24,
-                    ),
-                    child: TextFormField(
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          hintText: "سنوات الخبرة...",
-                          prefixIcon: SvgPicture.asset(
-                            khebraIcon,
-                            height: 24,
-                          )),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 24),
-                    child: TextFormField(
-                      controller: certificatesController,
-                      maxLength: 10,
-                      decoration: Constants.setRegistrationTextInputDecoration(
-                          hintText: "الشهادات والإنجازات...",
-                          suffixIcon: InkWell(
-                            onTap: () {
-                              if (certificatesController.text.isNotEmpty) {
-                                var idd = DateTime.now().toString();
-                                certiList.add({
-                                  "widget": certificateItem(
-                                      cert: certificatesController.text,
-                                      staticId: idd),
-                                  "cert": certificatesController.text,
-                                  "id": idd
-                                });
-                                certificatesController.clear();
-                                MyApplication.dismissKeyboard(context);
-
-                                BlocProvider.of<AddCirtificateCubit>(context)
-                                    .addCirtificate();
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.only(end: 8),
-                              child: SvgPicture.asset(
-                                certIcaddCertIconon,
-                              ),
-                            ),
-                          ),
-                          prefixIcon: SvgPicture.asset(
-                            certIcon,
-                            height: 24,
-                          )),
-                    ),
-                  ),
-                  BlocBuilder<AddCirtificateCubit, AddCirtificateState>(
-                    builder: (context, state) {
-                      return Wrap(
-                        children: certiList
-                            .map((e) => e["widget"] as Widget)
-                            .toList(),
-                      );
-                    },
-                  ),
-                  SizedBox(
-                    height: 90,
-                  )
-                ],
-              )),
+          child: RegistrationController.r4Body(context),
         ),
       ),
     );

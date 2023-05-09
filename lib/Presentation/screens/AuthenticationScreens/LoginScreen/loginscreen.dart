@@ -181,8 +181,7 @@ class _LoginScreenState extends State<LoginScreen>
                                                 color: Color(0xFFBDBDBD)))),
                                     margin: const EdgeInsetsDirectional.only(
                                         end: 8),
-                                    padding: const EdgeInsetsDirectional.only(
-                                        end: 8),
+                                    padding: const EdgeInsetsDirectional.all(8),
                                     child: SvgPicture.asset(
                                       passField,
                                       height: 24,

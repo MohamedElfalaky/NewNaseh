@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage3/RegistrationStage3.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage5/RegistrationStage5.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
@@ -134,43 +136,56 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   ExpansionTile(
-                      tilePadding: EdgeInsets.all(0),
-                      title: Text(
+                      tilePadding: const EdgeInsets.all(0),
+                      title: const Text(
                         "المعلومات الشخصية",
                         style: Constants.mainTitleFont,
                       ),
-                      children: []),
+                      children: [
+                        RegistrationController.r3Body(context, setState)
+                      ]),
                   ExpansionTile(
-                      tilePadding: EdgeInsets.all(0),
-                      title: Text(
+                      tilePadding: const EdgeInsets.all(0),
+                      title: const Text(
                         "معلومات التخصص",
                         style: Constants.mainTitleFont,
                       ),
-                      children: []),
-                  ExpansionTile(
-                      tilePadding: EdgeInsets.all(0),
-                      title: Text(
+                      children: [RegistrationController.r4Body(context)]),
+                  ListTile(
+                      contentPadding: const EdgeInsets.all(0),
+                      onTap: () => MyApplication.navigateTo(
+                          context, const RegistrationStage5()),
+
+                      // tilePadding: EdgeInsets.all(0),
+                      title: const Text(
                         "مجالات التخصص",
                         style: Constants.mainTitleFont,
                       ),
-                      children: []),
+                      trailing: const Icon(
+                        Icons.keyboard_arrow_left_outlined,
+                        size: 26,
+                      )
+                      // children: [
+
+                      // ]
+                      ),
                   ExpansionTile(
-                      tilePadding: EdgeInsets.all(0),
-                      title: Text(
+                      tilePadding: const EdgeInsets.all(0),
+                      title: const Text(
                         "معلومات إضافية",
                         style: Constants.mainTitleFont,
                       ),
-                      children: []),
+                      children: [RegistrationController.r6Body(setState)]),
                   ExpansionTile(
-                      tilePadding: EdgeInsets.all(0),
-                      title: Text(
+                      tilePadding: const EdgeInsets.all(0),
+                      title: const Text(
                         "بيانات الموقع وحسابات التواصل",
                         style: Constants.mainTitleFont,
                       ),
-                      children: []),
-                  SizedBox(
+                      children: [RegistrationController.r7Body()]),
+                  const SizedBox(
                     height: 90,
                   )
                 ],
