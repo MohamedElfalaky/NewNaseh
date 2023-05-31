@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> {
           return supportedLocales.first;
         },
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'NASE7',
         theme: ThemeData(
             primarySwatch: getMaterialColor(
                 colorHex:
