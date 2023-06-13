@@ -105,7 +105,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
                   Text("الشروط والأحكام"),
                 ],
               ),
-              leading: const myBackButton()),
+              leading: const MyBackButton()),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(

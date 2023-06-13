@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/app/constants.dart';
 
 class MyButtonOutlined extends StatelessWidget {
-  final onPressedHandler;
+  final void Function()? onPressedHandler;
   final String? txt;
   final Color? btnColor;
   final Color? txtColor;
@@ -11,7 +11,7 @@ class MyButtonOutlined extends StatelessWidget {
   final bool? isBold;
   final Widget? prefixWidget;
   const MyButtonOutlined(
-      {this.onPressedHandler,
+      {super.key, this.onPressedHandler,
       this.txt,
       this.btnColor,
       this.txtColor,
@@ -25,16 +25,16 @@ class MyButtonOutlined extends StatelessWidget {
       style: OutlinedButton.styleFrom(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-          textStyle: TextStyle(fontWeight: FontWeight.normal),
-          side: BorderSide(color: Colors.black)),
+          textStyle: const TextStyle(fontWeight: FontWeight.normal),
+          side: const BorderSide(color: Colors.black)),
       onPressed: onPressedHandler,
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            prefixWidget ?? SizedBox(),
+            prefixWidget ?? const SizedBox(),
             Container(
-              margin: EdgeInsets.all(3),
+              margin: const EdgeInsets.all(3),
               child: Text(
                 '$txt',
                 style: TextStyle(

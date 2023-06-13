@@ -15,10 +15,16 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:photo_view/photo_view.dart';
 
+import '../../../../app/utils/registeration_values.dart';
+
 class RegistrationController {
   /// r3
   static final ImagePicker _picker = ImagePicker();
   static XFile? regImage;
+  static final TextEditingController _fullName = TextEditingController();
+  static final TextEditingController _englishName = TextEditingController();
+  static final TextEditingController _email = TextEditingController();
+  static final TextEditingController _password = TextEditingController();
 
   static Future pickImage(
       ImageSource source, BuildContext context, setState) async {
@@ -105,6 +111,10 @@ class RegistrationController {
                                               ImageSource.gallery,
                                               ctx,
                                               setState);
+                                          inputImageAdded =
+                                              RegistrationController
+                                                  .regImage!.path;
+                                          print("Image PAth is $inputImageAdded");
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -127,6 +137,10 @@ class RegistrationController {
                                               ImageSource.camera,
                                               ctx,
                                               setState);
+                                          inputImageAdded =
+                                              RegistrationController
+                                                  .regImage!.path;
+                                          print("Image PAth is $inputImageAdded");
                                         },
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -166,6 +180,7 @@ class RegistrationController {
                           onTap: () {
                             setState(() {
                               RegistrationController.regImage = null;
+                              inputImageAdded = "";
                             });
                           },
                           child: CircleAvatar(child: Icon(Icons.close))),
@@ -177,6 +192,10 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(top: 34, bottom: 24),
               child: TextFormField(
+                controller: _fullName,
+                onChanged: (val) {
+                  inputFullName = _fullName.text;
+                },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "الاسم ثلاثي باللغة العربية ..سيظهر للمستخدمين",
                     prefixIcon: SvgPicture.asset(
@@ -186,6 +205,10 @@ class RegistrationController {
               ),
             ),
             TextFormField(
+              controller: _englishName,
+              onChanged: (val) {
+                inputEnglishName = _englishName.text;
+              },
               decoration: Constants.setRegistrationTextInputDecoration(
                   hintText: "اسم المستخدم باللغة الإنجليزية...",
                   prefixIcon: SvgPicture.asset(
@@ -206,6 +229,10 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: TextFormField(
+                controller: _email,
+                onChanged: (val) {
+                  inputEmail = _email.text;
+                },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "البريد الإلكتروني...",
                     prefixIcon: SvgPicture.asset(
@@ -217,6 +244,10 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: TextFormField(
+                controller: _password,
+                onChanged: (val) {
+                  inputPassword = _password.text;
+                },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "كلمة المرور...",
                     prefixIcon: SvgPicture.asset(

@@ -4,11 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import '../../app/constants.dart';
 import '../../app/utils/lang/language_constants.dart';
 
-class appbarButton extends StatelessWidget {
-  Icon? myIcon;
-  Function()? onTapHandler;
+class AppbarButton extends StatelessWidget {
+  final Icon? myIcon;
+  final Function()? onTapHandler;
 
-  appbarButton({super.key, this.myIcon, this.onTapHandler});
+  const AppbarButton({super.key, this.myIcon, this.onTapHandler});
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +19,15 @@ class appbarButton extends StatelessWidget {
         width: 40,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Color(0XFFFFFFFF).withOpacity(0.2)),
+            color: const Color(0XFFFFFFFF).withOpacity(0.2)),
         child: myIcon,
       ),
     );
   }
 }
 
-class goBack extends StatelessWidget {
-  const goBack({
+class GoBack extends StatelessWidget {
+  const GoBack({
     Key? key,
   }) : super(key: key);
 
@@ -62,8 +62,9 @@ class goBack extends StatelessWidget {
 }
 
 class MyPrefixWidget extends StatelessWidget {
-  MyPrefixWidget({Key? key, this.svgString}) : super(key: key);
-  String? svgString;
+  const MyPrefixWidget({Key? key, this.svgString}) : super(key: key);
+  final String? svgString;
+
   String getSvgString() {
     return svgString == null ? 'assets/images/SVGs/flag.svg' : svgString!;
   }
@@ -90,14 +91,15 @@ class MyPrefixWidget extends StatelessWidget {
 }
 
 class Back extends StatelessWidget {
-  Back({Key? key, this.header}) : super(key: key);
-  String? header;
+  const Back({Key? key, this.header}) : super(key: key);
+  final String? header;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const goBack(),
+        const GoBack(),
         const SizedBox(
           width: 16,
         ),
@@ -108,8 +110,8 @@ class Back extends StatelessWidget {
   }
 }
 
-class myBackButton extends StatelessWidget {
-  const myBackButton({super.key});
+class MyBackButton extends StatelessWidget {
+  const MyBackButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -117,17 +119,17 @@ class myBackButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: Constants.whiteAppColor,
-            border: Border.all(color: Color(0XFFDADADA)),
+            border: Border.all(color: const Color(0XFFDADADA)),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                  color: Color(0XFF5C5E6B1A).withOpacity(0.2),
-                  offset: Offset(0, 4),
+                  color: const Color(0XFF5C5E6B1A).withOpacity(0.2),
+                  offset: const Offset(0, 4),
                   blurRadius: 4)
             ]),
         height: 42,
         width: 42,
-        child: BackButton(
+        child: const BackButton(
           color: Color(0xff575762),
         ),
       ),

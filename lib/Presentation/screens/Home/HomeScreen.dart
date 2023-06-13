@@ -252,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      appbarButton(
+                      AppbarButton(
                           myIcon: const Icon(
                             Icons.menu,
                             color: Colors.white,

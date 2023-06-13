@@ -107,7 +107,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 Text("الإشعارات"),
               ],
             ),
-            leading: const myBackButton(),
+            leading: const MyBackButton(),
             actions: [
               Switch(
                 value: false,

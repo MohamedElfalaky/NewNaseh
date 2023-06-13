@@ -3,23 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
-import 'package:nasooh/Data/cubit/authentication/login_cubit/login_cubit.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage3/RegistrationStage3.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/RegistrationStage4.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage6/RegistrationStage6.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage7/RegistrationStage7.dart';
 import 'package:nasooh/Presentation/screens/EditProfileScreen/EditProfileScreen.dart';
-
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
-
 import 'package:nasooh/app/constants.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'app/global.dart';
 import 'app/keys.dart';
+import 'app/utils/BlocProviders.dart';
 import 'app/utils/lang/demo_localization.dart';
 import 'app/utils/lang/language_constants.dart';
 import 'app/utils/sharedPreferenceClass.dart';
@@ -89,11 +86,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
-        BlocProvider<AddCirtificateCubit>(
-            create: (context) => AddCirtificateCubit()),
-      ],
+      providers: providers,
       child: MaterialApp(
         navigatorKey: Keys.navigatorKey,
         builder: (context2, widget) => ResponsiveWrapper.builder(

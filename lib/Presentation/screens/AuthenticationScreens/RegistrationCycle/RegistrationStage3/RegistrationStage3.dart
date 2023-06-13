@@ -13,6 +13,7 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:photo_view/photo_view.dart';
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/registeration_values.dart';
 
 class RegistrationStage3 extends StatefulWidget {
   const RegistrationStage3({Key? key}) : super(key: key);
@@ -60,6 +61,12 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
                   isBold: true,
                   txt: "التالي",
                   onPressedHandler: () {
+                    print(inputPhone +
+                        inputImageAdded +
+                        inputFullName +
+                        inputEnglishName +
+                        inputEmail +
+                        inputPassword);
                     MyApplication.navigateTo(context, RegistrationStage4());
                   },
                 ),
@@ -81,7 +88,7 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("المعلومات الشخصية"),
-            leading: const myBackButton()),
+            leading: const MyBackButton()),
         body: Container(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,

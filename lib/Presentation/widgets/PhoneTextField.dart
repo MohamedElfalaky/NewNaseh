@@ -294,7 +294,7 @@ class _MyIntlPhoneFieldState extends State<MyIntlPhoneField> {
         ),
       ),
     );
-    if (this.mounted) setState(() {});
+    if (mounted) setState(() {});
   }
 
   @override

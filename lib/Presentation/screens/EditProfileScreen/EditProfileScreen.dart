@@ -121,7 +121,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Text("تعديل الملف الشخصي"),
             ],
           ),
-          leading: const myBackButton(),
+          leading: const MyBackButton(),
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
