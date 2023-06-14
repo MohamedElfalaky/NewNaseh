@@ -29,7 +29,7 @@ class _certificateItemState extends State<certificateItem> {
         children: [
           Text(
             widget.cert,
-            style: TextStyle(fontFamily: Constants.mainFont, fontSize: 10),
+            style: const TextStyle(fontFamily: Constants.mainFont, fontSize: 10),
           ),
           const SizedBox(
             width: 8,
@@ -46,13 +46,13 @@ class _certificateItemState extends State<certificateItem> {
                   certiList.removeWhere(
                       (element) => element["id"].toString() == widget.staticId);
 
-                  BlocProvider.of<AddCirtificateCubit>(context)
-                      .addCirtificate();
+                  BlocProvider.of<AddCertificateCubit>(context)
+                      .addCertificate();
 
                   // print(widget.staticId);
                   // print(certiList[0]["id"]);
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.close_outlined,
                   size: 12,
                   color: Color(0XFF5C5E6B),

@@ -61,13 +61,15 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
                   isBold: true,
                   txt: "التالي",
                   onPressedHandler: () {
-                    print(inputPhone +
-                        inputImageAdded +
-                        inputFullName +
-                        inputEnglishName +
-                        inputEmail +
-                        inputPassword);
-                    MyApplication.navigateTo(context, RegistrationStage4());
+                    if (stage3FormKey.currentState!.validate()) {
+                      debugPrint(inputPhone +
+                          inputImageName +
+                          inputFullName +
+                          inputEnglishName +
+                          inputEmail +
+                          inputPassword);
+                      MyApplication.navigateTo(context, RegistrationStage4());
+                    }
                   },
                 ),
               ),

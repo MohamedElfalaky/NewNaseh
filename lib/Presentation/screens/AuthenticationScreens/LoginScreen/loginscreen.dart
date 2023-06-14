@@ -43,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen>
     _fadeController.forward();
   }
 
+  String _sendPhone = "";
   @override
   void dispose() {
     // TODO: implement dispose
@@ -154,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen>
                                 initialCountryCode: 'SA',
                                 onChanged: (phone) {
                                   print(phone.completeNumber);
+                                  _sendPhone = phone.completeNumber;
                                 },
                                 invalidNumberMessage:
                                     getTranslated(context, "invalid_number")!,
@@ -234,11 +236,7 @@ class _LoginScreenState extends State<LoginScreen>
                                           context.read<LoginCubit>().login(
                                               context: context,
                                               pass: _passwordController.text,
-                                              phone: _phoneController.text);
-                                          // if (state is LoginLoaded) {
-                                          //   MyApplication.navigateTo(
-                                          //       context, const HomeScreen());
-                                          // }
+                                              phone: _sendPhone);
                                         }
                                       },
                                     ),

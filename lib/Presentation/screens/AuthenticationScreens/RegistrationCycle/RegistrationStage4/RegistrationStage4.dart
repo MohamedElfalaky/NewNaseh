@@ -10,6 +10,7 @@ import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/registeration_values.dart';
 
 class RegistrationStage4 extends StatefulWidget {
   const RegistrationStage4({Key? key}) : super(key: key);
@@ -42,7 +43,12 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
                   isBold: true,
                   txt: "التالي",
                   onPressedHandler: () {
-                    MyApplication.navigateTo(context, RegistrationStage5());
+                    if (stage4FormKey.currentState!.validate()) {
+                      debugPrint(
+                          " input experience is $inputExperience   &  inputDescription is $inputDescription &   inputSummary  is $inputSummary && List of inputs are ${certiList} ");
+                      MyApplication.navigateTo(
+                          context, const RegistrationStage5());
+                    }
                   },
                 ),
               ),
@@ -80,39 +86,39 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
   }
 
 /////////////// returns
-  // Container certificates({required String cert}) {
-  //   return Container(
-  //     margin: const EdgeInsetsDirectional.only(end: 4, bottom: 4),
-  //     padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-  //     decoration: BoxDecoration(
-  //         color: const Color(0XFFEEEEEE),
-  //         borderRadius: BorderRadius.circular(10)),
-  //     child: Row(
-  //       mainAxisSize: MainAxisSize.min,
-  //       children: [
-  //         Text(
-  //           cert,
-  //           style: TextStyle(fontFamily: Constants.mainFont, fontSize: 10),
-  //         ),
-  //         const SizedBox(
-  //           width: 8,
-  //         ),
-  //         Container(
-  //           height: 14,
-  //           width: 14,
-  //           decoration: BoxDecoration(
-  //               borderRadius: BorderRadius.circular(100),
-  //               border: Border.all(color: const Color(0XFF5C5E6B))),
-  //           child: const Center(
-  //             child: Icon(
-  //               Icons.close_outlined,
-  //               size: 12,
-  //               color: Color(0XFF5C5E6B),
-  //             ),
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
+// Container certificates({required String cert}) {
+//   return Container(
+//     margin: const EdgeInsetsDirectional.only(end: 4, bottom: 4),
+//     padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+//     decoration: BoxDecoration(
+//         color: const Color(0XFFEEEEEE),
+//         borderRadius: BorderRadius.circular(10)),
+//     child: Row(
+//       mainAxisSize: MainAxisSize.min,
+//       children: [
+//         Text(
+//           cert,
+//           style: TextStyle(fontFamily: Constants.mainFont, fontSize: 10),
+//         ),
+//         const SizedBox(
+//           width: 8,
+//         ),
+//         Container(
+//           height: 14,
+//           width: 14,
+//           decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(100),
+//               border: Border.all(color: const Color(0XFF5C5E6B))),
+//           child: const Center(
+//             child: Icon(
+//               Icons.close_outlined,
+//               size: 12,
+//               color: Color(0XFF5C5E6B),
+//             ),
+//           ),
+//         )
+//       ],
+//     ),
+//   );
+// }
 }

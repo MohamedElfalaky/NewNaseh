@@ -21,8 +21,8 @@ class MobCubit extends Cubit<MobState> {
       )
           .then((value) {
         if (value != null) {
-          MyApplication.navigateTo(context!, const RegistrationStage2());
           emit(MobLoaded(value));
+          MyApplication.navigateTo(context!, const RegistrationStage2());
         } else {
           emit(MobError());
         }

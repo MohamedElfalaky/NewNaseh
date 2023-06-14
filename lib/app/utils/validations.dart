@@ -1,9 +1,16 @@
 import 'package:flutter/cupertino.dart';
-
 import 'lang/language_constants.dart';
 
 
 class Validations {
+
+
+static   String validationEmail =
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+static String validationName = r'^[a-z A-Z]+$';
+static  String validationPassword = '@^(.{0,7}|[^0-9]*|[^A-Z])';
+
+
   static String? validateName(String? name, BuildContext context) {
     String? validateString = '';
    // Pattern pattern = r'[a-zA-Zء-يa-zA-Zء-ي]';
@@ -103,3 +110,5 @@ class Validations {
     return validateString;
   }
 }
+
+

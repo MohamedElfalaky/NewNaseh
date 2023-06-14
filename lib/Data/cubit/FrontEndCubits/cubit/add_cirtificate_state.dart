@@ -1,8 +1,8 @@
 part of 'add_cirtificate_cubit.dart';
 
 @immutable
-abstract class AddCirtificateState {}
+abstract class AddCertificateState {}
 
-class AddCirtificateInitial extends AddCirtificateState {}
+class AddCertificateInitial extends AddCertificateState {}
 
-class AddCirtificateAdded extends AddCirtificateState {}
+class AddCertificateAdded extends AddCertificateState {}

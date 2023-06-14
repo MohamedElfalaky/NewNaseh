@@ -88,7 +88,7 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                               style: Constants.subtitleFont1,
                             ),
                             Text(
-                              " $inputPhone 966+",
+                              " $inputPhone",
                               style: Constants.secondaryTitleRegularFont,
                             ),
 
@@ -128,10 +128,12 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                                       txt: "التالي",
                                       onPressedHandler: () {
                                         if (_formKey.currentState!.validate()) {
-                                          context.read<CheckCodeCubit>().login(
-                                              context: context,
-                                              code: _pinController.text,
-                                              phone: inputPhone);
+                                          context
+                                              .read<CheckCodeCubit>()
+                                              .checkCodeMethod(
+                                                  context: context,
+                                                  code: _pinController.text,
+                                                  phone: inputPhone);
                                         }
                                       },
                                     ),

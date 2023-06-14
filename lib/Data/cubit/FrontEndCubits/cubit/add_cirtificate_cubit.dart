@@ -1,12 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-
 part 'add_cirtificate_state.dart';
 
-class AddCirtificateCubit extends Cubit<AddCirtificateState> {
-  AddCirtificateCubit() : super(AddCirtificateInitial());
+class AddCertificateCubit extends Cubit<AddCertificateState> {
+  AddCertificateCubit() : super(AddCertificateInitial());
 
-  void addCirtificate() {
-    emit(AddCirtificateAdded());
+  void addCertificate() {
+    emit(AddCertificateAdded());
   }
 }

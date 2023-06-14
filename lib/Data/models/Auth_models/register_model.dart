@@ -1,18 +1,18 @@
 // To parse this JSON data, do
 //
-//      loginModel = loginModelFromJson(jsonString);
+//     final registerModel = registerModelFromJson(jsonString);
 
 import 'dart:convert';
 
-RegisterModel loginModelFromJson(dynamic str) => RegisterModel.fromJson(str);
+RegisterModel registerModelFromJson(dynamic str) => RegisterModel.fromJson(str);
 
-String loginModelToJson(RegisterModel data) => json.encode(data.toJson());
+String registerModelToJson(RegisterModel data) => json.encode(data.toJson());
 
 class RegisterModel {
-  Data? data;
-  int? status;
-  String? message;
-  List<dynamic>? pagination;
+  final RegisterData? data;
+  final int? status;
+  final String? message;
+  final List<dynamic>? pagination;
 
   RegisterModel({
     this.data,
@@ -22,47 +22,47 @@ class RegisterModel {
   });
 
   factory RegisterModel.fromJson(Map<String, dynamic> json) => RegisterModel(
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    status: json["status"],
-    message: json["message"],
-    pagination: json["pagination"] == null
-        ? []
-        : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-  );
+        data: json["data"] == null ? null : RegisterData.fromJson(json["data"]),
+        status: json["status"],
+        message: json["message"],
+        pagination: json["pagination"] == null
+            ? []
+            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data?.toJson(),
-    "status": status,
-    "message": message,
-    "pagination": pagination == null
-        ? []
-        : List<dynamic>.from(pagination!.map((x) => x)),
-  };
+        "data": data?.toJson(),
+        "status": status,
+        "message": message,
+        "pagination": pagination == null
+            ? []
+            : List<dynamic>.from(pagination!.map((x) => x)),
+      };
 }
 
-class Data {
-  int? id;
-  String? avatar;
-  String? email;
-  String? description;
-  int? lang;
-  String? token;
-  String? fullName;
-  String? mobile;
-  String? userName;
-  String? info;
-  String? gender;
-  Country? countryId;
-  CityId? cityId;
-  String? experienceYear;
-  String? bankName;
-  String? bankAccount;
-  String? birthday;
-  NationalityId? nationalityId;
-  int? status;
-  List<dynamic>? category;
+class RegisterData {
+  final int? id;
+  final String? avatar;
+  final String? email;
+  final String? description;
+  final String? lang;
+  final String? token;
+  final String? fullName;
+  final String? mobile;
+  final String? userName;
+  final String? info;
+  final String? gender;
+  final Country? countryId;
+  final CityId? cityId;
+  final String? experienceYear;
+  final String? bankName;
+  final String? bankAccount;
+  final String? birthday;
+  final NationalityId? nationalityId;
+  final String? status;
+  final List<dynamic>? category;
 
-  Data({
+  RegisterData({
     this.id,
     this.avatar,
     this.email,
@@ -85,65 +85,65 @@ class Data {
     this.category,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    avatar: json["avatar"],
-    email: json["email"],
-    description: json["description"],
-    lang: json["lang"],
-    token: json["token"],
-    fullName: json["full_name"],
-    mobile: json["mobile"],
-    userName: json["user_name"],
-    info: json["info"],
-    gender: json["gender"],
-    countryId: json["country_id"] == null
-        ? null
-        : Country.fromJson(json["country_id"]),
-    cityId:
-    json["city_id"] == null ? null : CityId.fromJson(json["city_id"]),
-    experienceYear: json["experience_year"],
-    bankName: json["bank_name"],
-    bankAccount: json["bank_account"],
-    birthday: json["birthday"],
-    nationalityId: json["nationality_id"] == null
-        ? null
-        : NationalityId.fromJson(json["nationality_id"]),
-    status: json["status"],
-    category: json["category"] == null
-        ? []
-        : List<dynamic>.from(json["category"]!.map((x) => x)),
-  );
+  factory RegisterData.fromJson(Map<String, dynamic> json) => RegisterData(
+        id: json["id"],
+        avatar: json["avatar"],
+        email: json["email"],
+        description: json["description"],
+        lang: json["lang"],
+        token: json["token"],
+        fullName: json["full_name"],
+        mobile: json["mobile"],
+        userName: json["user_name"],
+        info: json["info"],
+        gender: json["gender"],
+        countryId: json["country_id"] == null
+            ? null
+            : Country.fromJson(json["country_id"]),
+        cityId:
+            json["city_id"] == null ? null : CityId.fromJson(json["city_id"]),
+        experienceYear: json["experience_year"],
+        bankName: json["bank_name"],
+        bankAccount: json["bank_account"],
+        birthday: json["birthday"],
+        nationalityId: json["nationality_id"] == null
+            ? null
+            : NationalityId.fromJson(json["nationality_id"]),
+        status: json["status"],
+        category: json["category"] == null
+            ? []
+            : List<dynamic>.from(json["category"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "avatar": avatar,
-    "email": email,
-    "description": description,
-    "lang": lang,
-    "token": token,
-    "full_name": fullName,
-    "mobile": mobile,
-    "user_name": userName,
-    "info": info,
-    "gender": gender,
-    "country_id": countryId?.toJson(),
-    "city_id": cityId?.toJson(),
-    "experience_year": experienceYear,
-    "bank_name": bankName,
-    "bank_account": bankAccount,
-    "birthday": birthday,
-    "nationality_id": nationalityId?.toJson(),
-    "status": status,
-    "category":
-    category == null ? [] : List<dynamic>.from(category!.map((x) => x)),
-  };
+        "id": id,
+        "avatar": avatar,
+        "email": email,
+        "description": description,
+        "lang": lang,
+        "token": token,
+        "full_name": fullName,
+        "mobile": mobile,
+        "user_name": userName,
+        "info": info,
+        "gender": gender,
+        "country_id": countryId?.toJson(),
+        "city_id": cityId?.toJson(),
+        "experience_year": experienceYear,
+        "bank_name": bankName,
+        "bank_account": bankAccount,
+        "birthday": birthday,
+        "nationality_id": nationalityId?.toJson(),
+        "status": status,
+        "category":
+            category == null ? [] : List<dynamic>.from(category!.map((x) => x)),
+      };
 }
 
 class CityId {
-  int? id;
-  Country? country;
-  String? name;
+  final int? id;
+  final Country? country;
+  final String? name;
 
   CityId({
     this.id,
@@ -152,22 +152,22 @@ class CityId {
   });
 
   factory CityId.fromJson(Map<String, dynamic> json) => CityId(
-    id: json["id"],
-    country:
-    json["country"] == null ? null : Country.fromJson(json["country"]),
-    name: json["name"],
-  );
+        id: json["id"],
+        country:
+            json["country"] == null ? null : Country.fromJson(json["country"]),
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "country": country?.toJson(),
-    "name": name,
-  };
+        "id": id,
+        "country": country?.toJson(),
+        "name": name,
+      };
 }
 
 class Country {
-  int? id;
-  String? name;
+  final int? id;
+  final String? name;
 
   Country({
     this.id,
@@ -175,20 +175,20 @@ class Country {
   });
 
   factory Country.fromJson(Map<String, dynamic> json) => Country(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }
 
 class NationalityId {
-  int? id;
-  String? name;
-  String? logo;
+  final int? id;
+  final String? name;
+  final String? logo;
 
   NationalityId({
     this.id,
@@ -197,14 +197,14 @@ class NationalityId {
   });
 
   factory NationalityId.fromJson(Map<String, dynamic> json) => NationalityId(
-    id: json["id"],
-    name: json["name"],
-    logo: json["logo"],
-  );
+        id: json["id"],
+        name: json["name"],
+        logo: json["logo"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "logo": logo,
-  };
+        "id": id,
+        "name": name,
+        "logo": logo,
+      };
 }

@@ -19,11 +19,7 @@ class MobRepo {
           });
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        // debugPrint("response is ${response.body.toString()}");
-
         final userdata = mobModelFromJson(responseMap);
-
-        // debugPrint("code message  ${userdata.message}");
         return userdata;
       } else {
         MyApplication.showToastView(message: responseMap["message"]);

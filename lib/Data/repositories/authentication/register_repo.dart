@@ -10,7 +10,6 @@ import '../../models/Auth_models/register_model.dart';
 import 'package:http/http.dart' as http;
 
 class Register {
-  ///Create Login Cycle
   Future<RegisterModel?> register({
     String? phone,
     String? pass,
@@ -55,32 +54,19 @@ class Register {
             'bank_account': '$bankAccount',
             'birthday': '$birthday',
           });
-      // Map<String, dynamic> responseMap = json.decode(response.body);
-      // var responseMap = response.body;
-      if (response.statusCode == 200
-          // && responseMap["status"] == 1
-          ) {
-        debugPrint("response is ${response.body.toString()}");
-        debugPrint("request is $phone & $pass");
-
-        final userdata = loginModelFromJson(response.body);
-
-        print("user data data is  ${userdata.data.toString()}");
-
-        // print("user data data is  ${userdata.data}") ;
-        // final userdata = json.decode(response.body);
-
-        // sharedPrefs.setToken(userdata.data.token);
-        // sharedPrefs.setUserName(userdata.data.name);
-        // if (userdata.data.hasMedia) {
-        //   sharedPrefs.setUserPhoto(userdata.data.media[0].thumb);
-        // } else {
-        //   sharedPrefs.setUserPhoto('');
-        // }
-        // MyApplication.showToastView(message: responseMap["message"]);
+      Map<String, dynamic> responseMap = json.decode(response.body);
+      if (response.statusCode == 200 && responseMap["status"] == 1) {
+        final userdata = registerModelFromJson(responseMap);
+        sharedPrefs.setToken(userdata.data!.token!);
+        sharedPrefs.setUserName(userdata.data!.userName!);
+        if (userdata.data!.avatar != "") {
+          sharedPrefs.setUserPhoto(userdata.data!.avatar!);
+        } else {
+          sharedPrefs.setUserPhoto('');
+        }
         return userdata;
       } else {
-        // MyApplication.showToastView(message: responseMap["message"]);
+        MyApplication.showToastView(message: responseMap["message"]);
       }
     } on TimeoutException catch (e) {
       // todo show toast

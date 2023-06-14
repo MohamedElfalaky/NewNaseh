@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nasooh/Data/cubit/authentication/category_cubit/category_cubit.dart';
 import '../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../Data/cubit/authentication/check_code/check_code_cubit.dart';
 import '../../Data/cubit/authentication/login_cubit/login_cubit.dart';
@@ -11,5 +12,6 @@ List<SingleChildWidget> providers = [
   BlocProvider<RegisterCubit>(create: (context) => RegisterCubit()),
   BlocProvider<MobCubit>(create: (context) => MobCubit()),
   BlocProvider<CheckCodeCubit>(create: (context) => CheckCodeCubit()),
-  BlocProvider<AddCirtificateCubit>(create: (context) => AddCirtificateCubit()),
+  BlocProvider<CategoryCubit>(create: (context) => CategoryCubit()),
+  BlocProvider<AddCertificateCubit>(create: (context) => AddCertificateCubit()),
 ];

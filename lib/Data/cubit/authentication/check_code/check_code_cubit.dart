@@ -9,7 +9,7 @@ class CheckCodeCubit extends Cubit<CheckCodeState> {
   CheckCodeCubit() : super(CheckCodeInitial());
   CheckCodeRepo checkCodeRepo = CheckCodeRepo();
 
-  login({
+  checkCodeMethod({
     String? phone,
     String? code,
     BuildContext? context,
@@ -18,8 +18,8 @@ class CheckCodeCubit extends Cubit<CheckCodeState> {
       emit(CheckCodeLoading());
       checkCodeRepo.checkCode(phone: phone, code: code).then((value) {
         if (value != null) {
-          MyApplication.navigateTo(context!, const RegistrationStage3());
           emit(CheckCodeLoaded(value));
+          MyApplication.navigateTo(context!, const RegistrationStage3());
         } else {
           emit(CheckCodeError());
         }

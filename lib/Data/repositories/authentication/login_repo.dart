@@ -10,7 +10,6 @@ import '../../models/Auth_models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class Auth {
-  ///Create Login Cycle
   Future<LoginModel?> login({String? phone, String? pass}) async {
     try {
       http.Response response = await http.post(

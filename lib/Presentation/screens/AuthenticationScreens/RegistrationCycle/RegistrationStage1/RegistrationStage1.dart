@@ -24,6 +24,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _phoneController = TextEditingController();
+  String _sendPhone = "";
 
   @override
   Widget build(BuildContext context) {
@@ -100,6 +101,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                                 initialCountryCode: 'SA',
                                 onChanged: (phone) {
                                   print(phone.completeNumber);
+                                  _sendPhone = phone.completeNumber;
                                 },
                                 invalidNumberMessage:
                                     getTranslated(context, "invalid_number")!,
@@ -116,14 +118,10 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                                       txt: "إرسال رمز التحقق",
                                       onPressedHandler: () {
                                         if (_formKey.currentState!.validate()) {
-                                          print(
-                                              "phone controller is ${_phoneController.text}");
                                           context.read<MobCubit>().register(
                                               context: context,
-                                              phone: _phoneController.text);
-                                          inputPhone = _phoneController.text;
-                                          // MyApplication.navigateTo(
-                                          //     context, const RegistrationStage2());
+                                              phone: _sendPhone);
+                                          inputPhone = _sendPhone;
                                         }
                                       },
                                     ),
