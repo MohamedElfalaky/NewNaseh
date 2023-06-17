@@ -18,9 +18,8 @@ class CategoryRepo {
       );
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        print(responseMap.toString());
+
         final categoryFields = categoryModelFromJson(responseMap);
-        print("Data from Api is ${categoryFields.data![0].id}");
 
         // MyApplication.showToastView(message: responseMap["message"]);
         return categoryFields;
@@ -29,12 +28,12 @@ class CategoryRepo {
         MyApplication.showToastView(message: responseMap["message"]);
       }
     } on TimeoutException catch (e) {
-      // todo show toast
+      MyApplication.showToastView(message: e.toString());
       if (kDebugMode) {
         print(e);
       }
     } on SocketException catch (e) {
-      // todo show toast
+      MyApplication.showToastView(message: e.toString());
       if (kDebugMode) {
         print(e);
       }

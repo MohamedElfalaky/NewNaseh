@@ -36,12 +36,12 @@ class Auth {
         MyApplication.showToastView(message: responseMap["message"]);
       }
     } on TimeoutException catch (e) {
-      // todo show toast
+      MyApplication.showToastView(message: e.toString());
       if (kDebugMode) {
         print(e);
       }
     } on SocketException catch (e) {
-      // todo show toast
+      MyApplication.showToastView(message: e.toString());
       if (kDebugMode) {
         print(e);
       }

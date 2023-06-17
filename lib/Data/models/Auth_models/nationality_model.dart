@@ -4,17 +4,15 @@
 
 import 'dart:convert';
 
-NationalityModel nationalityModelFromJson(dynamic str) =>
-    NationalityModel.fromJson(str);
+NationalityModel nationalityModelFromJson(dynamic str) => NationalityModel.fromJson(str);
 
-String nationalityModelToJson(NationalityModel data) =>
-    json.encode(data.toJson());
+String nationalityModelToJson(NationalityModel data) => json.encode(data.toJson());
 
 class NationalityModel {
-  List<NationalityData>? data;
-  int? status;
-  String? message;
-  List<dynamic>? pagination;
+  final List<NationalityData>? data;
+  final int? status;
+  final String? message;
+  final List<dynamic>? pagination;
 
   NationalityModel({
     this.data,
@@ -23,35 +21,25 @@ class NationalityModel {
     this.pagination,
   });
 
-  factory NationalityModel.fromJson(Map<String, dynamic> json) =>
-      NationalityModel(
-        data: json["data"] == null
-            ? []
-            : List<NationalityData>.from(
-                json["data"]!.map((x) => NationalityData.fromJson(x))),
-        status: json["status"],
-        message: json["message"] ?? "",
-        pagination: json["pagination"] == null
-            ? []
-            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-      );
+  factory NationalityModel.fromJson(Map<String, dynamic> json) => NationalityModel(
+    data: json["data"] == null ? [] : List<NationalityData>.from(json["data"]!.map((x) => NationalityData.fromJson(x))),
+    status: json["status"],
+    message: json["message"],
+    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+  );
 
   Map<String, dynamic> toJson() => {
-        "data": data == null
-            ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
-        "status": status,
-        "message": message,
-        "pagination": pagination == null
-            ? []
-            : List<dynamic>.from(pagination!.map((x) => x)),
-      };
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+    "status": status,
+    "message": message,
+    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
+  };
 }
 
 class NationalityData {
-  int? id;
-  String? name;
-  String? logo;
+  final int? id;
+  final String? name;
+  final String? logo;
 
   NationalityData({
     this.id,
@@ -59,16 +47,15 @@ class NationalityData {
     this.logo,
   });
 
-  factory NationalityData.fromJson(Map<String, dynamic> json) =>
-      NationalityData(
-        id: json["id"] ?? 0,
-        name: json["name"] ?? "",
-        logo: json["logo"] ?? "",
-      );
+  factory NationalityData.fromJson(Map<String, dynamic> json) => NationalityData(
+    id: json["id"],
+    name: json["name"],
+    logo: json["logo"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "logo": logo,
-      };
+    "id": id,
+    "name": name,
+    "logo": logo,
+  };
 }

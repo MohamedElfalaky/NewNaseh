@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../../Presentation/screens/Home/HomeScreen.dart';
+import '../../../../app/utils/myApplication.dart';
 import '../../../repositories/authentication/register_repo.dart';
 import 'register_state.dart';
 
@@ -19,7 +22,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     String? category,
     String? userName,
     String? info,
-    String? avatar,
+    XFile? avatar,
     String? description,
     String? experienceYear,
     String? documents,
@@ -54,6 +57,7 @@ class RegisterCubit extends Cubit<RegisterState> {
           .then((value) {
         if (value != null) {
           emit(RegisterLoaded(value));
+          MyApplication.navigateTo(context!, const HomeScreen());
         } else {
           emit(RegisterError());
         }

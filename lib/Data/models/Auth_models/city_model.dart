@@ -9,10 +9,10 @@ CityModel cityModelFromJson(dynamic str) => CityModel.fromJson(str);
 String cityModelToJson(CityModel data) => json.encode(data.toJson());
 
 class CityModel {
-  List<CityData>? data;
-  int? status;
-  String? message;
-  List<dynamic>? pagination;
+  final List<CityData>? data;
+  final int? status;
+  final String? message;
+  final List<dynamic>? pagination;
 
   CityModel({
     this.data,
@@ -22,33 +22,24 @@ class CityModel {
   });
 
   factory CityModel.fromJson(Map<String, dynamic> json) => CityModel(
-        data: json["data"] == null
-            ? []
-            : List<CityData>.from(
-                json["data"]!.map((x) => CityData.fromJson(x))),
-        status: json["status"],
-        message: json["message"],
-        pagination: json["pagination"] == null
-            ? []
-            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-      );
+    data: json["data"] == null ? [] : List<CityData>.from(json["data"]!.map((x) => CityData.fromJson(x))),
+    status: json["status"],
+    message: json["message"],
+    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+  );
 
   Map<String, dynamic> toJson() => {
-        "data": data == null
-            ? []
-            : List<dynamic>.from(data!.map((x) => x.toJson())),
-        "status": status,
-        "message": message,
-        "pagination": pagination == null
-            ? []
-            : List<dynamic>.from(pagination!.map((x) => x)),
-      };
+    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
+    "status": status,
+    "message": message,
+    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
+  };
 }
 
 class CityData {
-  int? id;
-  Country? country;
-  String? name;
+  final int? id;
+  final Country? country;
+  final String? name;
 
   CityData({
     this.id,
@@ -57,22 +48,21 @@ class CityData {
   });
 
   factory CityData.fromJson(Map<String, dynamic> json) => CityData(
-        id: json["id"],
-        country:
-            json["country"] == null ? null : Country.fromJson(json["country"]),
-        name: json["name"],
-      );
+    id: json["id"],
+    country: json["country"] == null ? null : Country.fromJson(json["country"]),
+    name: json["name"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "country": country?.toJson(),
-        "name": name,
-      };
+    "id": id,
+    "country": country?.toJson(),
+    "name": name,
+  };
 }
 
 class Country {
-  int? id;
-  String? name;
+  final int? id;
+  final String? name;
 
   Country({
     this.id,
@@ -80,12 +70,12 @@ class Country {
   });
 
   factory Country.fromJson(Map<String, dynamic> json) => Country(
-        id: json["id"],
-        name: json["name"],
-      );
+    id: json["id"],
+    name: json["name"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-      };
+    "id": id,
+    "name": name,
+  };
 }

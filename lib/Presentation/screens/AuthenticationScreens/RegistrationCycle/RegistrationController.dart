@@ -14,9 +14,17 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:photo_view/photo_view.dart';
 
+import '../../../../Data/cubit/authentication/city_cubit/city_cubit.dart';
+import '../../../../Data/cubit/authentication/city_cubit/city_state.dart';
+import '../../../../Data/cubit/authentication/country_cubit/country_cubit.dart';
+import '../../../../Data/cubit/authentication/country_cubit/country_state.dart';
+import '../../../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
+import '../../../../Data/cubit/authentication/nationality_cubit/nationality_state.dart';
+import '../../../../Data/models/Auth_models/country_model.dart';
 import '../../../../app/utils/lang/language_constants.dart';
 import '../../../../app/utils/registeration_values.dart';
 import '../../../../app/utils/validations.dart';
+import 'RegistrationStage7/RegistrationStage7.dart';
 
 final stage3FormKey = GlobalKey<FormState>();
 final stage4FormKey = GlobalKey<FormState>();
@@ -34,6 +42,12 @@ class RegistrationController {
   static final TextEditingController _summaryController =
       TextEditingController();
   static final TextEditingController _experienceController =
+      TextEditingController();
+  static final TextEditingController _bankNameController =
+      TextEditingController();
+  static final TextEditingController _bankAccountController =
+      TextEditingController();
+  static final TextEditingController _birthdayController =
       TextEditingController();
 
   static Future pickImage(
@@ -464,7 +478,6 @@ class RegistrationController {
   }
 
   /// r6
-  static var _maleFemale;
   static bool _termsConditions = false;
 
   static Widget r6Body(setState) {
@@ -476,6 +489,10 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: TextFormField(
+                controller: _bankNameController,
+                onChanged: (val) {
+                  inputBankName = _bankNameController.text;
+                },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "اسم صاحب الحساب البنكي...",
                     prefixIcon: SvgPicture.asset(
@@ -487,6 +504,10 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: TextFormField(
+                controller: _bankAccountController,
+                onChanged: (val) {
+                  inputBankAccount = _bankAccountController.text;
+                },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "آيبانIBAN Number...  SA***********",
                     prefixIcon: SvgPicture.asset(
@@ -529,6 +550,12 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 20),
               child: TextFormField(
+                controller: _birthdayController,
+                onChanged: (val) {
+                  inputBirthday = _birthdayController.text;
+                  print(inputBirthday.toString());
+                  print("the birthday is $inputBirthday");
+                },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "تاريخ الميلاد...",
                     prefixIcon: SvgPicture.asset(
@@ -552,11 +579,11 @@ class RegistrationController {
                         "ذكر",
                         style: Constants.secondaryTitleRegularFont,
                       ),
-                      value: "ذكر",
-                      groupValue: _maleFemale,
+                      value: 1,
+                      groupValue: inputGender,
                       onChanged: (s) {
                         setState(() {
-                          _maleFemale = s;
+                          inputGender = s;
                         });
                       }),
                 ),
@@ -569,11 +596,11 @@ class RegistrationController {
                         "أنثى",
                         style: Constants.secondaryTitleRegularFont,
                       ),
-                      value: "أنثى",
-                      groupValue: _maleFemale,
+                      value: 0,
+                      groupValue: inputGender,
                       onChanged: (s) {
                         setState(() {
-                          _maleFemale = s;
+                          inputGender = s;
                         });
                       }),
                 )
@@ -587,6 +614,9 @@ class RegistrationController {
   }
 
   /// r7
+  static dynamic countryValue;
+  static dynamic cityValue;
+  static dynamic nationalityValue;
 
   static Widget r7Body() {
     return SingleChildScrollView(
@@ -594,90 +624,162 @@ class RegistrationController {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: DropDownTextField(
-                searchDecoration: const InputDecoration(
-                    hintText: "ابحث هنا...",
-                    hintStyle: TextStyle(
-                      fontFamily: Constants.mainFont,
-                      fontSize: 14,
-                      color: Constants.fontHintColor,
-                    )),
-                listTextStyle: Constants.secondaryTitleRegularFont,
-                textStyle: Constants.secondaryTitleRegularFont,
-                enableSearch: true,
-// initialValue: "خالد",
-                dropDownList: const [
-                  DropDownValueModel(name: "السعودية", value: "سعودي"),
-                  DropDownValueModel(name: "مصر", value: "سعودي"),
-                  DropDownValueModel(name: "البحرين", value: "سعودي"),
-                ],
-                textFieldDecoration:
-                    Constants.setRegistrationTextInputDecoration(
-                        hintText: "بلد الإقامة...",
-                        prefixIcon: SvgPicture.asset(
-                          countryIcon,
-                          height: 24,
+            BlocBuilder<CountryCubit, CountryState>(builder: (context, state) {
+              // if (state is CountryLoading) {
+              //   return const Center(child: CircularProgressIndicator());
+              // }
+              // else
+                if (state is CountryLoaded) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: DropDownTextField(
+                    searchDecoration: const InputDecoration(
+                        hintText: "ابحث هنا...",
+                        hintStyle: TextStyle(
+                          fontFamily: Constants.mainFont,
+                          fontSize: 14,
+                          color: Constants.fontHintColor,
                         )),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: DropDownTextField(
-                searchDecoration: const InputDecoration(
-                    hintText: "ابحث هنا...",
-                    hintStyle: TextStyle(
-                      fontFamily: Constants.mainFont,
-                      fontSize: 14,
-                      color: Constants.fontHintColor,
-                    )),
-                listTextStyle: Constants.secondaryTitleRegularFont,
-                textStyle: Constants.secondaryTitleRegularFont,
-                enableSearch: true,
-// initialValue: "خالد",
-                dropDownList: const [
-                  DropDownValueModel(name: "القاهرة", value: "سعودي"),
-                  DropDownValueModel(name: "الرياض", value: "سعودي"),
-                  DropDownValueModel(name: "المدينة المنورة", value: "سعودي"),
-                ],
-                textFieldDecoration:
-                    Constants.setRegistrationTextInputDecoration(
-                        hintText: "مدينة الإقامة...",
-                        prefixIcon: SvgPicture.asset(
-                          cityIcon,
-                          height: 24,
+                    listTextStyle: Constants.secondaryTitleRegularFont,
+                    textStyle: Constants.secondaryTitleRegularFont,
+                    enableSearch: true,
+                    onChanged: (val) {
+                      countryValue = val;
+                      inputCountry = countryValue
+                          .toString()
+                          .split(",")
+                          .last
+                          .split("(")
+                          .first
+                          .split(")")
+                          .first;
+                      print("${inputCountry} is countrySelected");
+                      context.read<CityCubit>().getCities(inputCountry!);
+                    },
+                    dropDownList: state.response!.data!
+                        .map((e) =>
+                            DropDownValueModel(name: e.name!, value: e.id))
+                        .toList(),
+                    textFieldDecoration:
+                        Constants.setRegistrationTextInputDecoration(
+                            hintText: "بلد الإقامة...",
+                            prefixIcon: SvgPicture.asset(
+                              countryIcon,
+                              height: 24,
+                            )),
+                  ),
+                );
+              } else if (state is CountryError) {
+                return const SizedBox();
+              } else {
+                return const SizedBox();
+              }
+            }),
+            BlocBuilder<CityCubit, CityState>(builder: (context, cityState) {
+              if (cityState is CityLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (cityState is CityLoaded) {
+                return inputCountry =="" ? SizedBox(): Padding(
+                        padding: const EdgeInsets.only(bottom: 24),
+                        child: DropDownTextField(
+                          searchDecoration: const InputDecoration(
+                              hintText: "ابحث هنا...",
+                              hintStyle: TextStyle(
+                                fontFamily: Constants.mainFont,
+                                fontSize: 14,
+                                color: Constants.fontHintColor,
+                              )),
+                          listTextStyle: Constants.secondaryTitleRegularFont,
+                          textStyle: Constants.secondaryTitleRegularFont,
+                          enableSearch: true,
+                          onChanged: (val) {
+                            cityValue = val;
+                            // print(
+                            //     "${countryValue.toString().split(",").last.split("(").first.split(")").first} is this valye");
+
+                            inputCity = cityValue
+                                .toString()
+                                .split(",")
+                                .last
+                                .split("(")
+                                .first
+                                .split(")")
+                                .first;
+                            print("${inputCity} is CityChosen");
+                          },
+                          dropDownList: cityState.response!.data!
+                              .map(
+                                (e) => DropDownValueModel(
+                                    name: e.name!, value: e.id),
+                              )
+                              .toList(),
+                          textFieldDecoration:
+                              Constants.setRegistrationTextInputDecoration(
+                                  hintText: "مدينة الإقامة...",
+                                  prefixIcon: SvgPicture.asset(
+                                    cityIcon,
+                                    height: 24,
+                                  )),
+                        ),
+                      );
+              } else if (cityState is CityError) {
+                return const SizedBox();
+              } else {
+                return const SizedBox();
+              }
+            }),
+            BlocBuilder<NationalityCubit, NationalityState>(
+                builder: (context, newState) {
+              // if (newState is NationalityLoading) {
+              //   return const Center(child: CircularProgressIndicator());
+              // }
+              // else
+                if (newState is NationalityLoaded) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 24),
+                  child: DropDownTextField(
+                    searchDecoration: const InputDecoration(
+                        hintText: "ابحث هنا...",
+                        hintStyle: TextStyle(
+                          fontFamily: Constants.mainFont,
+                          fontSize: 14,
+                          color: Constants.fontHintColor,
                         )),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: DropDownTextField(
-                searchDecoration: const InputDecoration(
-                    hintText: "ابحث هنا...",
-                    hintStyle: TextStyle(
-                      fontFamily: Constants.mainFont,
-                      fontSize: 14,
-                      color: Constants.fontHintColor,
-                    )),
-                listTextStyle: Constants.secondaryTitleRegularFont,
-                textStyle: Constants.secondaryTitleRegularFont,
-                enableSearch: true,
-// initialValue: "خالد",
-                dropDownList: const [
-                  DropDownValueModel(name: "مصري", value: "سعودي"),
-                  DropDownValueModel(name: "سعودي", value: "سعودي"),
-                  DropDownValueModel(name: "سوري", value: "سعودي"),
-                ],
-                textFieldDecoration:
-                    Constants.setRegistrationTextInputDecoration(
-                        hintText: "الجنسية...",
-                        prefixIcon: SvgPicture.asset(
-                          nationalityIcon,
-                          height: 24,
-                        )),
-              ),
-            ),
+                    listTextStyle: Constants.secondaryTitleRegularFont,
+                    textStyle: Constants.secondaryTitleRegularFont,
+                    enableSearch: true,
+                    dropDownList: newState.response!.data!
+                        .map(
+                          (e) => DropDownValueModel(name: e.name!, value: e.id),
+                        )
+                        .toList(),
+                    onChanged: (val) {
+                      nationalityValue = val;
+                      inputNationality = nationalityValue
+                          .toString()
+                          .split(",")
+                          .last
+                          .split("(")
+                          .first
+                          .split(")")
+                          .first;
+                      print("${inputNationality} is countrySelected");
+                    },
+                    textFieldDecoration:
+                        Constants.setRegistrationTextInputDecoration(
+                            hintText: "الجنسية...",
+                            prefixIcon: SvgPicture.asset(
+                              nationalityIcon,
+                              height: 24,
+                            )),
+                  ),
+                );
+              } else if (newState is NationalityError) {
+                return const Center(child: Text('error'));
+              } else {
+                return const Center(child: Text('....'));
+              }
+            }),
             const Padding(
               padding: EdgeInsets.only(bottom: 16),
               child: Text(
