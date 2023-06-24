@@ -19,7 +19,12 @@ class Auth {
             'mobile': '$phone',
             'password': '$pass',
           });
+      // debugPrint("request is $phone & $pass");
+      debugPrint("response is ${response.body.toString()}");
+      // debugPrint("response code is ${response.statusCode.toString()}");
       Map<String, dynamic> responseMap = json.decode(response.body);
+      // debugPrint("response is ${response.toString()}");
+
       if (response.statusCode == 200 && responseMap["status"] == 1) {
         final userdata = loginModelFromJson(responseMap);
         sharedPrefs.setToken(userdata.data!.token!);
@@ -51,5 +56,6 @@ class Auth {
         MyApplication.showToastView(message: e.toString());
       }
     }
+    return null;
   }
 }

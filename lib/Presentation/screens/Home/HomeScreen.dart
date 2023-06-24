@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nasooh/Presentation/screens/AdviceDetail/AdviceDetail.dart';
+import 'package:nasooh/Presentation/screens/AdviceDetail/advice_detail.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 import 'package:nasooh/Presentation/screens/EditProfileScreen/EditProfileScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
@@ -18,7 +19,10 @@ import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
 
+import '../../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
+import '../../../Data/cubit/authentication/log_out_cubit/log_out_state.dart';
 import '../../../app/utils/lang/language_constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -134,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 84,
                         width: 84,
                         decoration: BoxDecoration(
-                            image: const DecorationImage(
-                              image: AssetImage(personn),
+                            image:  DecorationImage(
+                              image: NetworkImage(sharedPrefs.getUserPhoto()),
                               fit: BoxFit.cover,
                             ),
                             // shape: BoxShape.circle,
@@ -153,10 +157,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         //   ),
                         // )
                       ),
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 4),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 4),
                         child: Text(
-                          "محمد عبدالعزيز الحميد كامل",
+                          sharedPrefs.getUserName(),
                           style: Constants.mainTitleFont,
                         ),
                       ),
@@ -217,13 +221,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     }),
                 myListile(iconn: shorot, namee: 'الدعم الفني'),
                 myListile(iconn: shorot, namee: 'تعرف علي تطبيق نصوح'),
-                myListile(
-                    iconn: logOut,
-                    namee: 'تسجيل الخروج',
-                    onTapHandler: () {
-                      Navigator.pop(context);
-                      MyApplication.navigateTo(context, const LoginScreen());
-                    }),
+                BlocBuilder<LogOutCubit, LogOutState>(
+                    builder: (context, state) => state is LogOutLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : myListile(
+                            iconn: logOut,
+                            namee: 'تسجيل الخروج',
+                            onTapHandler: () {
+                              context.read<LogOutCubit>().logOut(
+                                    context: context,
+                                  );
+                              // Navigator.pop(context);
+
+                              // MyApplication.navigateTo(
+                              //     context, const LoginScreen());
+                            })),
                 const Padding(
                   padding:
                       EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 25),

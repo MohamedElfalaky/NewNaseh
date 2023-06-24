@@ -9,10 +9,10 @@ CategoryModel categoryModelFromJson(dynamic str) => CategoryModel.fromJson(str);
 String categoryModelToJson(CategoryModel data) => json.encode(data.toJson());
 
 class CategoryModel {
-  final List<CategoryData>? data;
-  final int? status;
-  final String? message;
-  final List<dynamic>? pagination;
+  List<CategoryData>? data;
+  int? status;
+  String? message;
+  List<dynamic>? pagination;
 
   CategoryModel({
     this.data,
@@ -37,16 +37,18 @@ class CategoryModel {
 }
 
 class CategoryData {
-  final int? id;
-  final String? name;
-  final List<CategoryData>? children;
-  final int? parentId;
+  int? id;
+  String? name;
+  List<CategoryData>? children;
+  int? parentId;
+  bool? selected;
 
   CategoryData({
     this.id,
     this.name,
     this.children,
     this.parentId,
+    this.selected,
   });
 
   factory CategoryData.fromJson(Map<String, dynamic> json) => CategoryData(
@@ -54,6 +56,7 @@ class CategoryData {
     name: json["name"],
     children: json["children"] == null ? [] : List<CategoryData>.from(json["children"]!.map((x) => CategoryData.fromJson(x))),
     parentId: json["parent_id"],
+    selected: json["selected"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +64,6 @@ class CategoryData {
     "name": name,
     "children": children == null ? [] : List<dynamic>.from(children!.map((x) => x.toJson())),
     "parent_id": parentId,
+    "selected": selected,
   };
 }

@@ -60,5 +60,7 @@
   "password data": "فضلا ادخل كلمة المرور ولا تقل عن 8 حروف او ارقام",
   "description Required": "فضلا ادخل الوصف",
   "summary Required": "فضلا ادخل النبذة التعريفية",
-  "experience Required": "فضلا ادخل سنوات الخبرة"
+  "experience Required": "فضلا ادخل سنوات الخبرة",
+  "short description": "الوصف لا يقل عن 3 أحرف" ,
+  "add image please": "فضلا اختر صورة"
 }

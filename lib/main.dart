@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
   void changeLanguage() async {
     Locale newLocale = await setLocale("ar");
     GlobalVars().oldLang = "en";
-    sharedPrefs.setlanguage("ar");
+    sharedPrefs.setLanguage("ar");
     setState(() {
       GlobalVars().headers = {'Accept': 'application/json', 'lang': "ar"};
       selectedLang = "ar";

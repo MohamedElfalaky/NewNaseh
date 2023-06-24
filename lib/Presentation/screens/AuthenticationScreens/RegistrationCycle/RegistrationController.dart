@@ -58,6 +58,7 @@ class RegistrationController {
 
       setState(() {
         regImage = myImage;
+        inputImagePhoto = regImage;
       });
     } on PlatformException catch (e) {
       print("platform exeption : $e");
@@ -138,14 +139,14 @@ class RegistrationController {
                                                 ImageSource.gallery,
                                                 ctx,
                                                 setState);
-                                            inputImageName =
-                                                RegistrationController
-                                                    .regImage!.path;
-                                            inputImagePhoto =
-                                                RegistrationController
-                                                    .regImage!;
-                                            print(
-                                                "Image path is $inputImageName");
+                                            // inputImageName =
+                                            //     RegistrationController
+                                            //         .regImage!.path;
+                                            // inputImagePhoto =
+                                            //     RegistrationController
+                                            //         .regImage;
+                                            // print(
+                                            //     "Image path is ${inputImagePhoto!.path}");
                                           },
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -168,14 +169,14 @@ class RegistrationController {
                                                 ImageSource.camera,
                                                 ctx,
                                                 setState);
-                                            inputImageName =
-                                                RegistrationController
-                                                    .regImage!.path;
-                                            inputImagePhoto =
-                                                RegistrationController
-                                                    .regImage!;
-                                            print(
-                                                "Image PAth is $inputImageName");
+                                            // inputImageName =
+                                            //     RegistrationController
+                                            //         .regImage!.path;
+                                            // inputImagePhoto =
+                                            //     RegistrationController
+                                            //         .regImage;
+                                            // print(
+                                            //     "Image PAth is $inputImageName");
                                           },
                                           child: Row(
                                             mainAxisSize: MainAxisSize.min,
@@ -216,7 +217,7 @@ class RegistrationController {
                               setState(() {
                                 inputImagePhoto =
                                     RegistrationController.regImage = null;
-                                inputImageName = "";
+                                // inputImageName = "";
                               });
                             },
                             child:
@@ -362,6 +363,8 @@ class RegistrationController {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return getTranslated(context, "description Required")!;
+                    } else if (value.length < 3) {
+                      return getTranslated(context, "short description")!;
                     }
                     return null;
                   },
@@ -629,7 +632,7 @@ class RegistrationController {
               //   return const Center(child: CircularProgressIndicator());
               // }
               // else
-                if (state is CountryLoaded) {
+              if (state is CountryLoaded) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 24),
                   child: DropDownTextField(
@@ -675,66 +678,66 @@ class RegistrationController {
                 return const SizedBox();
               }
             }),
-            BlocBuilder<CityCubit, CityState>(builder: (context, cityState) {
-              if (cityState is CityLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (cityState is CityLoaded) {
-                return inputCountry =="" ? SizedBox(): Padding(
-                        padding: const EdgeInsets.only(bottom: 24),
-                        child: DropDownTextField(
-                          searchDecoration: const InputDecoration(
-                              hintText: "ابحث هنا...",
-                              hintStyle: TextStyle(
-                                fontFamily: Constants.mainFont,
-                                fontSize: 14,
-                                color: Constants.fontHintColor,
-                              )),
-                          listTextStyle: Constants.secondaryTitleRegularFont,
-                          textStyle: Constants.secondaryTitleRegularFont,
-                          enableSearch: true,
-                          onChanged: (val) {
-                            cityValue = val;
-                            // print(
-                            //     "${countryValue.toString().split(",").last.split("(").first.split(")").first} is this valye");
-
-                            inputCity = cityValue
-                                .toString()
-                                .split(",")
-                                .last
-                                .split("(")
-                                .first
-                                .split(")")
-                                .first;
-                            print("${inputCity} is CityChosen");
-                          },
-                          dropDownList: cityState.response!.data!
-                              .map(
-                                (e) => DropDownValueModel(
-                                    name: e.name!, value: e.id),
-                              )
-                              .toList(),
-                          textFieldDecoration:
-                              Constants.setRegistrationTextInputDecoration(
-                                  hintText: "مدينة الإقامة...",
-                                  prefixIcon: SvgPicture.asset(
-                                    cityIcon,
-                                    height: 24,
-                                  )),
-                        ),
-                      );
-              } else if (cityState is CityError) {
-                return const SizedBox();
-              } else {
-                return const SizedBox();
-              }
-            }),
+            // BlocBuilder<CityCubit, CityState>(builder: (context, cityState) {
+            //   if (cityState is CityLoading) {
+            //     return const Center(child: CircularProgressIndicator());
+            //   } else if (cityState is CityLoaded) {
+            //     return  Padding(
+            //             padding: const EdgeInsets.only(bottom: 24),
+            //             child: DropDownTextField(
+            //               searchDecoration: const InputDecoration(
+            //                   hintText: "ابحث هنا...",
+            //                   hintStyle: TextStyle(
+            //                     fontFamily: Constants.mainFont,
+            //                     fontSize: 14,
+            //                     color: Constants.fontHintColor,
+            //                   )),
+            //               listTextStyle: Constants.secondaryTitleRegularFont,
+            //               textStyle: Constants.secondaryTitleRegularFont,
+            //               enableSearch: true,
+            //               onChanged: (val) {
+            //                 cityValue = val;
+            //                 // print(
+            //                 //     "${countryValue.toString().split(",").last.split("(").first.split(")").first} is this valye");
+            //
+            //                 inputCity = cityValue
+            //                     .toString()
+            //                     .split(",")
+            //                     .last
+            //                     .split("(")
+            //                     .first
+            //                     .split(")")
+            //                     .first;
+            //                 print("${inputCity} is CityChosen");
+            //               },
+            //               dropDownList: cityState.response!.data!
+            //                   .map(
+            //                     (e) => DropDownValueModel(
+            //                         name: e.name!, value: e.id),
+            //                   )
+            //                   .toList(),
+            //               textFieldDecoration:
+            //                   Constants.setRegistrationTextInputDecoration(
+            //                       hintText: "مدينة الإقامة...",
+            //                       prefixIcon: SvgPicture.asset(
+            //                         cityIcon,
+            //                         height: 24,
+            //                       )),
+            //             ),
+            //           );
+            //   } else if (cityState is CityError) {
+            //     return const SizedBox();
+            //   } else {
+            //     return const SizedBox();
+            //   }
+            // }),
             BlocBuilder<NationalityCubit, NationalityState>(
                 builder: (context, newState) {
               // if (newState is NationalityLoading) {
               //   return const Center(child: CircularProgressIndicator());
               // }
               // else
-                if (newState is NationalityLoaded) {
+              if (newState is NationalityLoaded) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 24),
                   child: DropDownTextField(
@@ -775,9 +778,9 @@ class RegistrationController {
                   ),
                 );
               } else if (newState is NationalityError) {
-                return const Center(child: Text('error'));
+                return const Center(child: SizedBox());
               } else {
-                return const Center(child: Text('....'));
+                return const Center(child: SizedBox());
               }
             }),
             const Padding(

@@ -9,9 +9,9 @@ class SharedPrefs {
     sharedPrefs = await SharedPreferences.getInstance();
   }
 
-  String get fcmtoken => sharedPrefs!.getString(fcmkey) ?? "";
+  String get fCMToken => sharedPrefs!.getString(fCMKey) ?? "";
 
-  int get cartamoun => sharedPrefs!.getInt(cartamount) ?? 0;
+  int get cartAmoun => sharedPrefs!.getInt(cartAmount) ?? 0;
 
   bool getIsUnBoarded() {
     return sharedPrefs!.getBool(keyUnBoarded) ?? false;
@@ -70,35 +70,35 @@ class SharedPrefs {
   }
 
   setAmount(int value) {
-    sharedPrefs!.setInt(cartamount, value);
+    sharedPrefs!.setInt(cartAmount, value);
   }
 
   setfcmtoken(String value) {
-    sharedPrefs!.setString(fcmkey, value);
+    sharedPrefs!.setString(fCMKey, value);
   }
 
   void removeToken() {
     sharedPrefs!.remove(keyToken);
   }
 
-  void removeamount() {
-    sharedPrefs!.remove(cartamount);
+  void removeAmount() {
+    sharedPrefs!.remove(cartAmount);
   }
 
   String getLanguage() {
-    return sharedPrefs!.getString(LAGUAGE_CODE) ?? '';
+    return sharedPrefs!.getString(langCode) ?? '';
   }
 
-  setlanguage(String value) {
-    sharedPrefs!.setString(LAGUAGE_CODE, value);
+  setLanguage(String value) {
+    sharedPrefs!.setString(langCode, value);
   }
 
-  setIscurrentAddress(bool value) {
-    sharedPrefs!.setBool(currentAddredd, value);
+  setIsCurrentAddress(bool value) {
+    sharedPrefs!.setBool(currentAddress, value);
   }
 
   bool getCurrentAddress() {
-    return sharedPrefs!.getBool(currentAddredd) ?? true;
+    return sharedPrefs!.getBool(currentAddress) ?? true;
   }
 }
 
@@ -106,16 +106,16 @@ final sharedPrefs = SharedPrefs();
 
 // constants/strings.dart
 String keyToken = "key_token";
-String fcmkey = "Fcm_key";
+String fCMKey = "Fcm_key";
 String pickupMethod = "pickupMethod_key";
 String keySignedIn = "signed_in";
 String keyUnBoarded = "key_unBoarded";
 String keyShowPickDialog = "key_show_pick_dialog";
 String keyUserName = "key_user_name";
-String cartamount = "amountcart";
+String cartAmount = "cartAmount";
 String keyUserPhoto = "key_user_photo";
-const String LAGUAGE_CODE = 'languageCode';
-String currentAddredd = 'currentAddress';
+const String langCode = 'languageCode';
+String currentAddress = 'currentAddress';
 String receiveMethodKey = 'receive_method_key';
 
 // String keyUserId = "key_user_id";

@@ -58,9 +58,9 @@ class MyApplication {
   handleUnAuthenticatedUser(String msg, BuildContext context) {
     if (msg == 'Unauthenticated.') {
       sharedPrefs.removeToken();
-      sharedPrefs.removeamount();
+      sharedPrefs.removeAmount();
       sharedPrefs.setIsSignedIn(false);
-      sharedPrefs.setIscurrentAddress(true);
+      sharedPrefs.setIsCurrentAddress(true);
     }
   }
 

@@ -4,6 +4,7 @@ import '../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../Data/cubit/authentication/check_code/check_code_cubit.dart';
 import '../../Data/cubit/authentication/city_cubit/city_cubit.dart';
 import '../../Data/cubit/authentication/country_cubit/country_cubit.dart';
+import '../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
 import '../../Data/cubit/authentication/login_cubit/login_cubit.dart';
 import '../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
 import '../../Data/cubit/authentication/new_mob/mob_cubit.dart';
@@ -16,6 +17,7 @@ List<SingleChildWidget> providers = [
   BlocProvider<MobCubit>(create: (context) => MobCubit()),
   BlocProvider<CheckCodeCubit>(create: (context) => CheckCodeCubit()),
   BlocProvider<CategoryCubit>(create: (context) => CategoryCubit()),
+  BlocProvider<LogOutCubit>(create: (context) => LogOutCubit()),
   BlocProvider<CountryCubit>(create: (context) => CountryCubit()),
   BlocProvider<NationalityCubit>(create: (context) => NationalityCubit()),
   BlocProvider<CityCubit>(create: (context) => CityCubit()),

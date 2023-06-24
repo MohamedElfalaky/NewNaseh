@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +11,7 @@ import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:photo_view/photo_view.dart';
 import '../../../../../app/constants.dart';
+import '../../../../../app/utils/lang/language_constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
 
@@ -61,9 +61,12 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
                   isBold: true,
                   txt: "التالي",
                   onPressedHandler: () {
-                    if (stage3FormKey.currentState!.validate()) {
+                    if(inputImagePhoto ==null) {
+                      MyApplication.showToastView(
+                        message: '${getTranslated(context,"add image please")}');}
+                  else   if (stage3FormKey.currentState!.validate()) {
                       debugPrint(inputPhone +
-                          inputImageName +
+                          // inputImageName +
                           inputFullName +
                           inputEnglishName +
                           inputEmail +

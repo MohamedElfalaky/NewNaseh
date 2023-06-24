@@ -10,6 +10,7 @@ import '../../../../../Data/cubit/authentication/category_cubit/category_state.d
 import '../../../../../Data/models/Auth_models/category_model.dart';
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/registeration_values.dart';
 
 class RegistrationStage5 extends StatefulWidget {
   const RegistrationStage5({Key? key}) : super(key: key);
@@ -19,6 +20,9 @@ class RegistrationStage5 extends StatefulWidget {
 }
 
 class _RegistrationStage5State extends State<RegistrationStage5> {
+  List<CategoryData> categoryData = [];
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     context.read<CategoryCubit>().getCategories();
@@ -109,6 +113,8 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
     );
   }
 
+  List<CategoryData> results = [];
+
   Widget _buildCard(BuildContext context, CategoryModel model) {
     return Container(
       height: MediaQuery.of(context).size.height,
@@ -127,6 +133,20 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
+                  controller: _searchController,
+                  onChanged: (val) {
+                    setState(() {
+                      categoryData = model.data!;
+                      List<CategoryData> searchList(String query) {
+                        return categoryData
+                            .where((item) => item.name!.contains(query))
+                            .toList();
+                      }
+
+                      results = searchList(_searchController.text);
+                      print(results.length);
+                    });
+                  },
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "ابحث عن المجالات التي تجيديها...",
                       prefixIcon: SvgPicture.asset(
@@ -137,76 +157,182 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.6,
-                child: ListView.builder(
-                  itemCount: model.data!.length,
-                  itemBuilder: (context, int x) => ExpansionTile(
-                      tilePadding: const EdgeInsets.all(0),
-                      // leading: SizedBox(
-                      //     height: 24,
-                      //     width: 24,
-                      //     child: Checkbox(value: false, onChanged: (s) {})),
-                      title: Row(
-                        children: [
-                          SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Checkbox(value: false, onChanged: (s) {})),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            model.data![x].name!,
-                            style: Constants.secondaryTitleFont,
-                          ),
-                        ],
-                      ),
-                      children: [
+                child: _searchController.text.isEmpty
+                    ? ListView.builder(
+                        itemCount: model.data!.length,
+                        itemBuilder: (context, int x) {
+                          // List<MyNewModel> newList = model.data!.map((obj) {
+                          //   return MyNewModel(id: obj.id!, booleanValue: false);
+                          // }).toList();
+                          // MyNewModel item = newList[x];
 
-                        // SizedBox(
-                        //     height: MediaQuery.of(context).size.height * 0.35,
-                        //     child: ListView.builder(itemBuilder: (context , int y) => Container())),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 12, end: 4, top: 4, bottom: 4),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                  height: 24,
-                                  width: 24,
-                                  child: Checkbox(
-                                      value: false, onChanged: (s) {})),
-                              const SizedBox(
-                                width: 8,
+                          return ExpansionTile(
+                              tilePadding: const EdgeInsets.all(0),
+                              // leading: SizedBox(
+                              //     height: 24,
+                              //     width: 24,
+                              //     child: Checkbox(value: false, onChanged: (s) {})),
+                              title: Row(
+                                children: [
+                                  SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: Checkbox(
+                                          value: model.data![x].selected,
+                                          onChanged: (bool? s) {
+                                            // setState(() {
+                                            //   for (var newItem in newList) {
+                                            //     newItem.booleanValue = false;
+                                            //   }
+                                            //   item.booleanValue = true;
+                                            // });
+                                            // print(item.booleanValue);
+                                            // print(item.id);
+
+                                            setState(() {
+                                              model.data![x].selected = s;
+                                              if (model.data![x].selected ==
+                                                  true) {
+                                                // print(model.data![x].id);
+                                                sendCategory
+                                                    .add(model.data![x].id!);
+
+                                                for (var selectItems in model
+                                                    .data![x].children!) {
+                                                  selectItems.selected = true;
+                                                  sendCategory
+                                                      .add(selectItems.id!);
+                                                }
+                                              } else if (model
+                                                      .data![x].selected ==
+                                                  false) {
+                                                sendCategory.removeWhere((e) =>
+                                                    e == model.data![x].id);
+                                              }
+
+                                              // model.data![x].selected = s;
+
+                                              // newList[x].booleanValue = s!;
+                                              // print(
+                                              //     " item bool is${newList[x].booleanValue} and item id is ${newList[x].id}");
+                                              //
+                                              // print(newList[x].booleanValue);
+                                            });
+                                            debugPrint(
+                                                "the send category is ${sendCategory.toSet().toList().toString()}");
+                                          })),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      model.data![x].name!,
+                                      style: Constants.secondaryTitleFont,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const Text(
-                                "التسويق الألكتروني",
-                                style: Constants.secondaryTitleRegularFont,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 12, end: 4, top: 4, bottom: 4),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                  height: 24,
-                                  width: 24,
-                                  child: Checkbox(
-                                      value: false, onChanged: (s) {})),
-                              const SizedBox(
-                                width: 8,
-                              ),
-                              const Text(
-                                "التسويق الإعلاني",
-                                style: Constants.secondaryTitleRegularFont,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ]),
-                ),
+                              children: model.data![x].children!
+                                  .map(
+                                    (e) => Padding(
+                                      padding: const EdgeInsetsDirectional.only(
+                                          start: 12, end: 4, top: 4, bottom: 4),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                              height: 24,
+                                              width: 24,
+                                              child: Checkbox(
+                                                  value: e.selected,
+                                                  onChanged: (s) {
+                                                    setState(() {
+                                                      e.selected = s;
+                                                      if (e.selected == true) {
+                                                        sendCategory.add(e.id!);
+                                                      } else if (e.selected ==
+                                                          false) {
+                                                        sendCategory
+                                                            .removeWhere(
+                                                                (element) =>
+                                                                    element ==
+                                                                    e.id);
+                                                      }
+                                                      debugPrint(
+                                                          "the send category is ${sendCategory.toSet().toList().toString()}");
+                                                    });
+                                                  })),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            e.name!,
+                                            style: Constants
+                                                .secondaryTitleRegularFont,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                  .toList());
+                        },
+                      )
+                    : ListView.builder(
+                        itemCount: results.length,
+                        itemBuilder: (context, int x) => ExpansionTile(
+                            tilePadding: const EdgeInsets.all(0),
+                            // leading: SizedBox(
+                            //     height: 24,
+                            //     width: 24,
+                            //     child: Checkbox(value: false, onChanged: (s) {})),
+                            title: Row(
+                              children: [
+                                SizedBox(
+                                    height: 24,
+                                    width: 24,
+                                    child: Checkbox(
+                                        value: false,
+                                        onChanged: (s) {
+                                          setState(() {});
+                                        })),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    results[x].name!,
+                                    style: Constants.secondaryTitleFont,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            children: results[x]
+                                .children!
+                                .map(
+                                  (e) => Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                        start: 12, end: 4, top: 4, bottom: 4),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(
+                                            height: 24,
+                                            width: 24,
+                                            child: Checkbox(
+                                                value: false,
+                                                onChanged: (s) {})),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          e.name!,
+                                          style: Constants
+                                              .secondaryTitleRegularFont,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                .toList()),
+                      ),
               ),
               const SizedBox(
                 height: 90,
@@ -217,4 +343,11 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
   }
 
 /////////////// returns
+}
+
+class MyNewModel {
+  int id;
+  bool booleanValue;
+
+  MyNewModel({required this.id, required this.booleanValue});
 }

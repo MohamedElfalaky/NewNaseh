@@ -4,15 +4,15 @@
 
 import 'dart:convert';
 
-RegisterModel registerModelFromJson(String str) => RegisterModel.fromJson(json.decode(str));
+RegisterModel registerModelFromJson(dynamic str) => RegisterModel.fromJson(str);
 
 String registerModelToJson(RegisterModel data) => json.encode(data.toJson());
 
 class RegisterModel {
-  final Data? data;
-  final int? status;
-  final String? message;
-  final List<dynamic>? pagination;
+  Data? data;
+  int? status;
+  String? message;
+  List<dynamic>? pagination;
 
   RegisterModel({
     this.data,
@@ -37,26 +37,26 @@ class RegisterModel {
 }
 
 class Data {
-  final int? id;
-  final String? avatar;
-  final String? email;
-  final String? description;
-  final String? lang;
-  final String? token;
-  final String? fullName;
-  final String? mobile;
-  final String? userName;
-  final String? info;
-  final String? gender;
-  final Country? countryId;
-  final CityId? cityId;
-  final String? experienceYear;
-  final String? bankName;
-  final String? bankAccount;
-  final String? birthday;
-  final NationalityId? nationalityId;
-  final String? status;
-  final List<dynamic>? category;
+  int? id;
+  String? avatar;
+  String? email;
+  String? description;
+  String? lang;
+  String? token;
+  String? fullName;
+  String? mobile;
+  String? userName;
+  String? info;
+  String? gender;
+  Country? countryId;
+  CityId? cityId;
+  String? experienceYear;
+  String? bankName;
+  String? bankAccount;
+  String? birthday;
+  NationalityId? nationalityId;
+  int? status;
+  List<dynamic>? category;
 
   Data({
     this.id,
@@ -129,9 +129,9 @@ class Data {
 }
 
 class CityId {
-  final int? id;
-  final Country? country;
-  final String? name;
+  int? id;
+  Country? country;
+  String? name;
 
   CityId({
     this.id,
@@ -153,8 +153,8 @@ class CityId {
 }
 
 class Country {
-  final int? id;
-  final String? name;
+  int? id;
+  String? name;
 
   Country({
     this.id,
@@ -173,9 +173,9 @@ class Country {
 }
 
 class NationalityId {
-  final int? id;
-  final String? name;
-  final String? logo;
+  int? id;
+  String? name;
+  String? logo;
 
   NationalityId({
     this.id,

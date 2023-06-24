@@ -104,6 +104,12 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "dio",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/dio-5.2.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "dotted_border",
       "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/dotted_border-2.0.0+3",
       "packageUri": "lib/",
@@ -602,7 +608,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-06-12T06:35:31.026506Z",
+  "generated": "2023-06-21T10:44:53.537165Z",
   "generator": "pub",
-  "generatorVersion": "2.19.2"
+  "generatorVersion": "2.19.1"
 }

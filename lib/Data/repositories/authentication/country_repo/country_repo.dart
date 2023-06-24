@@ -18,9 +18,9 @@ class CountryRepo {
       );
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        print(responseMap.toString());
+        debugPrint(responseMap.toString());
         final categoryFields = countryModelFromJson(responseMap);
-        print("Data from Api is ${categoryFields.data![0].id}");
+        debugPrint("Data from Api is ${categoryFields.data![0].id}");
 
         // MyApplication.showToastView(message: responseMap["message"]);
         return categoryFields;
@@ -44,5 +44,6 @@ class CountryRepo {
         MyApplication.showToastView(message: e.toString());
       }
     }
+    return null;
   }
 }

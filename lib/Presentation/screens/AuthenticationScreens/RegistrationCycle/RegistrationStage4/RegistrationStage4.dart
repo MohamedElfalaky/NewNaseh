@@ -45,7 +45,11 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
                   onPressedHandler: () {
                     if (stage4FormKey.currentState!.validate()) {
                       debugPrint(
-                          " input experience is $inputExperience   &  inputDescription is $inputDescription &   inputSummary  is $inputSummary && List of inputs are ${certiList} ");
+                          "  inputDescription is $inputDescription &   inputSummary  is $inputSummary && List of inputs are ${certiList} ");
+
+                      inputDocuments =
+                          certiList.map((e) => e["cert"]).toList();
+                      print("The new List is ${inputDocuments.toString()}");
                       MyApplication.navigateTo(
                           context, const RegistrationStage5());
                     }

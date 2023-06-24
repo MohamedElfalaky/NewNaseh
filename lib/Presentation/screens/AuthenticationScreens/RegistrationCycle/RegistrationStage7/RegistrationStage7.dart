@@ -37,10 +37,10 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        MyApplication.dismissKeyboard(context);
-      },
-      child: Scaffold(
+        onTap: () {
+          MyApplication.dismissKeyboard(context);
+        },
+        child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             centerTitle: false,
@@ -57,100 +57,135 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
               // countryResponse = state.response;
               // return
 
-    BlocBuilder<RegisterCubit, RegisterState>(
-    builder: (context, state) =>
-
-              Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            padding: EdgeInsets.only(
-              top: 16,
-              right: 16,
-              left: 16,
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: Column(
-              children: [
-                Expanded(child: RegistrationController.r7Body()),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
+              BlocBuilder<RegisterCubit, RegisterState>(
+                  builder: (context, state) => Container(
+                        height: MediaQuery.of(context).size.height,
                         width: double.infinity,
-                        height: 48,
-                        child: Row(
+                        padding: EdgeInsets.only(
+                          top: 16,
+                          right: 16,
+                          left: 16,
+                          bottom: MediaQuery.of(context).viewInsets.bottom,
+                        ),
+                        child: Column(
                           children: [
-                            state is RegisterLoading
-                                ? const Center(child: CircularProgressIndicator())
-                                :     Flexible(
-                              flex: 2,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsetsDirectional.only(end: 8.0),
-                                child: MyButton(
-                                  isBold: true,
-                                  txt: "إتمام التسجيل",
-                                  onPressedHandler: () {
-
-                                    context.read<RegisterCubit>().registerMethod(
-                                        context: context,
-                                        userName: "Data",
-                                        nationalityId: "1",
-                                        mobile: "010121",
-                                        info:"Ahemd",
-                                        gender: "0",
-                                        fullName: "ahmed",
-                                        experienceYear: "55",
-                                        avatar: inputImagePhoto,
-                                        bankAccount: "23025",
-                                        bankName: "Ahmed",
-                                        birthday: "24/12",
-                                        category: "1",
-                                        cityId: "1",
-                                        countryId: "1",
-                                        description:"agcsadddddddddddddddddx" ,
-                                        documents:"scdddddddd" ,
-                                        );
-                                  },
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: MyButtonOutlined(
-                                isBold: false,
-                                txt: "تخطي",
-                                onPressedHandler: () {},
+                            Expanded(child: RegistrationController.r7Body()),
+                            Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: double.infinity,
+                                    height: 48,
+                                    child: Row(
+                                      children: [
+                                        state is RegisterLoading
+                                            ? const Center(
+                                                child:
+                                                    CircularProgressIndicator())
+                                            : Flexible(
+                                                flex: 2,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsetsDirectional
+                                                          .only(end: 8.0),
+                                                  child: MyButton(
+                                                    isBold: true,
+                                                    txt: "إتمام التسجيل",
+                                                    onPressedHandler: () {
+                                                      print(
+                                                          "input Email $inputEmail & inputPassword is $inputPassword inputEnglishName is $inputEnglishName  & inputNationality $inputNationality & inputPhone $inputPhone & inputSummary is $inputSummary & inputGender $inputGender ");
+                                                      print(
+                                                          "inputFullName is $inputFullName  & inputBankAccount $inputBankAccount & inputBankName $inputBankName  & inputBirthday is $inputBirthday & inputCity $inputCity  &inputCountry is $inputCountry & inputNationality is $inputNationality ");
+                                                      print(
+                                                          "inputDescription is & inputDescription & inputExperience.toString() is ${inputDocuments.toString()}");
+                                                      context
+                                                          .read<RegisterCubit>()
+                                                          .registerMethod(
+                                                            pass: inputPassword,
+                                                            email: inputEmail,
+                                                            context: context,
+                                                            userName:
+                                                                inputEnglishName,
+                                                            nationalityId:
+                                                                "5",
+                                                                // inputNationality,
+                                                            mobile: inputPhone,
+                                                            info: inputSummary,
+                                                            gender: inputGender,
+                                                            fullName:
+                                                                inputFullName,
+                                                            experienceYear:
+                                                                inputExperience,
+                                                            avatar:
+                                                                inputImagePhoto,
+                                                            bankAccount:
+                                                                inputBankAccount,
+                                                            bankName:
+                                                                inputBankName,
+                                                            birthday:
+                                                                inputBirthday,
+                                                            category:
+                                                                sendCategory
+                                                                    .toSet()
+                                                                    .toList()
+                                                                    .toString()
+                                                                    .split("[")
+                                                                    .last
+                                                                    .split("]")
+                                                                    .first,
+                                                            cityId:"19",
+                                                            // inputCity,
+                                                            countryId:"1",
+                                                                // inputCountry,
+                                                            description:
+                                                                inputDescription,
+                                                            documents:
+                                                                inputDocuments
+                                                                    .toString(),
+                                                          );
+                                                      print("xx");
+                                                      print(
+                                                          "${sendCategory.toString().split("[").last.split("]").first}");
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                        Flexible(
+                                          flex: 1,
+                                          child: MyButtonOutlined(
+                                            isBold: false,
+                                            txt: "تخطي",
+                                            onPressedHandler: () {},
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 8,
+                                    ),
+                                    child: Text(
+                                      "خطوة 7 من 7",
+                                      style: Constants.subtitleRegularFont,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.only(
-                          top: 8,
-                        ),
-                        child: Text(
-                          "خطوة 7 من 7",
-                          style: Constants.subtitleRegularFont,
-                        ),
-                      ),
-                    ],
+                      )
+                  // } else if (state is CountryError) {
+                  //   return const Center(child: Text('error'));
+                  // } else {
+                  //   return const Center(child: Text('....'));
+                  // }
+                  // })
                   ),
-                ),
-              ],
-            ),
-          )
-          // } else if (state is CountryError) {
-          //   return const Center(child: Text('error'));
-          // } else {
-          //   return const Center(child: Text('....'));
-          // }
-          // })
-          ),
-    ));
+        ));
   }
 }

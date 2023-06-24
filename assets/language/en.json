@@ -58,5 +58,7 @@
   "password data": "please enter a password and must be at least 8 character ",
   "description Required": "please enter description",
   "summary Required": "please enter summary",
-  "experience Required":  "please enter experience years"
+  "experience Required": "please enter experience years",
+  "short description": "description must be at least 3 characters" ,
+  "add image please": "please add image please"
 }

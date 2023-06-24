@@ -11,13 +11,13 @@ class RegisterCubit extends Cubit<RegisterState> {
   Register register = Register();
 
   registerMethod({
-    String? phone,
+    String? email,
     String? pass,
     String? fullName,
     String? mobile,
     String? countryId,
     String? cityId,
-    String? gender,
+    int? gender,
     String? nationalityId,
     String? category,
     String? userName,
@@ -35,7 +35,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       emit(RegisterLoading());
       register
           .register(
-        phone: phone,
+        email: email,
         pass: pass,
         experienceYear: experienceYear,
         fullName: fullName,

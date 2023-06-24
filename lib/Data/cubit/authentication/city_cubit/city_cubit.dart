@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../repositories/authentication/city_repo/city_repo.dart';
-import '../../../repositories/authentication/country_repo/country_repo.dart';
 import 'city_state.dart';
 
 class CityCubit extends Cubit<CityState> {
