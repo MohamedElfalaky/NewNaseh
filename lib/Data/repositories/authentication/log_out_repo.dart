@@ -13,14 +13,14 @@ import 'package:http/http.dart' as http;
 class LogOutRepo {
   Future<LogOutModel?> logOut() async {
     try {
-      http.Response response = await http.post(
-        Uri.parse('${Keys.baseUrl}/adviser/auth/logout'),
-        headers: {
-          'Accept': 'application/json',
-          'lang': selectedLang!,
-          "Authorization": "Bearer ${sharedPrefs.getToken()}"
-        },
-      );
+      http.Response response = await http
+          .post(Uri.parse('${Keys.baseUrl}/adviser/auth/logout'), headers: {
+        'Accept': 'application/json',
+        'lang': selectedLang!,
+        "Authorization": "Bearer ${sharedPrefs.getToken()}"
+      }, body: {
+        'device': sharedPrefs.fCMToken,
+      });
       debugPrint("the token is ${sharedPrefs.getToken()}");
       debugPrint("the response  is ${response.body}");
       Map<String, dynamic> responseMap = json.decode(response.body);
@@ -30,6 +30,7 @@ class LogOutRepo {
         final userdata = logOutModelFromJson(responseMap);
         await preferences.clear();
         sharedPrefs.removeToken();
+        sharedPrefs.removeFCM();
         // MyApplication.showToastView(message: responseMap["message"]);
         return userdata;
       } else {

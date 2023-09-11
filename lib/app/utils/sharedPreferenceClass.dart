@@ -81,6 +81,10 @@ class SharedPrefs {
     sharedPrefs!.remove(keyToken);
   }
 
+  void removeFCM() {
+    sharedPrefs!.remove(fCMToken);
+  }
+
   void removeAmount() {
     sharedPrefs!.remove(cartAmount);
   }
@@ -108,7 +112,6 @@ class SharedPrefs {
   getId() {
     return sharedPrefs!.getInt(idKey);
   }
-
 }
 
 final sharedPrefs = SharedPrefs();
