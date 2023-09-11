@@ -54,7 +54,19 @@ const String coinss = "assets/images/SVGs/coinss.svg";
 const String termsConditions = "assets/images/SVGs/termsConditions.svg";
 const String language = "assets/images/SVGs/language.svg";
 const String notifii = "assets/images/SVGs/notifii.svg";
+const String ordersIcon = "assets/images/SVGs/orders_icon.svg";
+const String checkIcon = "assets/images/SVGs/check_icon.svg";
+
 const String deletAcc = "assets/images/SVGs/deletAcc.svg";
+const String cameraIcon = "assets/images/SVGs/camera_icon.svg";
+const String closeIcon = "assets/images/SVGs/close_icon.svg";
+const String galleryIcon = "assets/images/SVGs/gallery.svg";
+const String moneyBag = "assets/images/SVGs/money_bag.svg";
+const String starIcon = "assets/images/SVGs/star.svg";
+const String notificationIcon = "assets/images/SVGs/notification_icon.svg";
+const String settingIcon = "assets/images/SVGs/setting_icon.svg";
+const String knowAboutIcon = "assets/images/SVGs/know_about_icon.svg";
+const String techIcon = "assets/images/SVGs/tech_icon.svg";
 
 ///////////////////// Jsons////////
 const String otpLotti = "assets/images/Jsons/4.json";

@@ -4,34 +4,45 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage3/RegistrationStage3.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/RegistrationStage4.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage6/RegistrationStage6.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage7/RegistrationStage7.dart';
-import 'package:nasooh/Presentation/screens/EditProfileScreen/EditProfileScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
-import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
+import 'Data/repositories/notification/fcm.dart';
 import 'app/global.dart';
 import 'app/keys.dart';
 import 'app/utils/BlocProviders.dart';
 import 'app/utils/lang/demo_localization.dart';
 import 'app/utils/lang/language_constants.dart';
 import 'app/utils/sharedPreferenceClass.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // await Firebase.initializeApp();
+  FCMNotification().showNotification(message);
+  // if(Platform.isIOS){
+  //
+  //   AudioPlayer().play(AssetSource('sounds/synth.mp3'));
+  // }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // ignore: deprecated_member_use
   FlutterNativeSplash.removeAfter(initialization);
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await SharedPrefs().init();
-  ////
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
   static void setLocale(BuildContext context, Locale locale) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state!.setAppLocale(locale);
@@ -43,6 +54,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
+  FCMNotification fcmNotification = FCMNotification();
 
   void setAppLocale(Locale locale) {
     setState(() {
@@ -66,6 +78,10 @@ class _MyAppState extends State<MyApp> {
 // }
   @override
   void initState() {
+    Firebase.initializeApp().then((value) {
+      fcmNotification.registerNotification();
+      fcmNotification.configLocalNotification();
+    });
     super.initState();
   }
 
@@ -142,7 +158,9 @@ class _MyAppState extends State<MyApp> {
               titleTextStyle: Constants.mainTitleFont,
             ),
             scaffoldBackgroundColor: Constants.whiteAppColor),
-        home: const LoginScreen(),
+        home: sharedPrefs.getToken() != ""
+            ? const HomeScreen()
+            : const LoginScreen(),
       ),
     );
   }
@@ -164,95 +182,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialColor(colorHex, color);
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   // todo set internet subscription vars
-//   late StreamSubscription<ConnectivityResult> subscription;
-//   bool? isConnected;
-
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-
-//     MyApplication.checkConnection().then((value) {
-//       if (value) {
-//         //////
-//         // todo recall data
-
-//       } else {
-//         MyApplication.showToastView(
-//             message: '${getTranslated(context, 'noInternet')}');
-//       }
-//     });
-
-//     // todo subscribe to internet change
-//     subscription = Connectivity()
-//         .onConnectivityChanged
-//         .listen((ConnectivityResult result) {
-//       setState(() {
-//         result == ConnectivityResult.none
-//             ? isConnected = false
-//             : isConnected = true;
-//       });
-
-//       /// if internet comes back
-//       if (result != ConnectivityResult.none) {
-//         /// call your apis
-//         // todo recall data
-//       }
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // todo if not connected display nointernet widget else continue to the rest build code
-//     final size = MediaQuery.of(context).size;
-//     if (isConnected == null) {
-//       MyApplication.checkConnection().then((value) {
-//         setState(() {
-//           isConnected = value;
-//         });
-//       });
-//     } else if (!isConnected!) {
-//       MyApplication.showToastView(
-//           message: '${getTranslated(context, 'noInternet')}');
-//       return NoInternetWidget(size: size);
-//     }
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.title),
-//       ),
-//       body: const Center(),
-//       // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// // todo change language example
-// //   // to change language
-//   void changeLanguage()async{
-//     Locale newLocale = await setLocale("en");
-//     GlobalVars().oldLang = "ar";
-//     sharedPrefs.setlanguage("en");
-//     setState(() {
-//       GlobalVars().headers = {
-//         'Accept': 'application/json',
-//         'lang': "en"
-//       };
-//       selectedLang = "en";
-//        MyApp.setLocale(context, newLocale);
-//     });
-//         }
-// // }
 
 Future<void> initialization(BuildContext? context) async {
   await Future.delayed(const Duration(seconds: 1));

@@ -61,10 +61,11 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
                   isBold: true,
                   txt: "التالي",
                   onPressedHandler: () {
-                    if(inputImagePhoto ==null) {
-                      MyApplication.showToastView(
-                        message: '${getTranslated(context,"add image please")}');}
-                  else   if (stage3FormKey.currentState!.validate()) {
+                  //   if(inputImagePhoto ==null) {
+                  //     MyApplication.showToastView(
+                  //       message: '${getTranslated(context,"add image please")}');}
+                  // else
+                    if (stage3FormKey.currentState!.validate()) {
                       debugPrint(inputPhone +
                           // inputImageName +
                           inputFullName +

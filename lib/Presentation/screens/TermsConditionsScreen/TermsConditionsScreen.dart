@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_checkbox_animation/flutter_checkbox_animation.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
@@ -10,6 +12,8 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
+import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
+import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_state.dart';
 import '../../../app/utils/lang/language_constants.dart';
 
 class TermsConditionsScreen extends StatefulWidget {
@@ -23,6 +27,8 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
   late StreamSubscription<ConnectivityResult> subscription;
   bool? isConnected;
   final controller = PageController(initialPage: 0);
+  bool _checked = false;
+  bool _privacy = false;
 
   @override
   void initState() {
@@ -65,6 +71,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
         ///
       }
     });
+    context.read<PrivacyCubit>().getPrivacy();
   }
 
   @override
@@ -95,66 +102,189 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
       }, // hide keyboard on tap anywhere
 
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Constants.whiteAppColor,
-          appBar: AppBar(
-              centerTitle: false,
-              leadingWidth: 70,
-              title: Row(
-                children: const [
-                  Text("الشروط والأحكام"),
-                ],
-              ),
-              leading: const MyBackButton()),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(4),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SvgPicture.asset(
-                        termsConditions,
-                        height: 40,
-                      ),
-                      SizedBox(
-                        width: 12,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "الشروط والأحكام",
-                            style: Constants.mainTitleFont,
-                          ),
-                          // ignore: prefer_const_constructors
-                          Text(
-                            "آخر تحديث 12-10-2022",
-                            style: Constants.subtitleRegularFont,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
-                  child: ListView(
-                    children: const [
-                      Text(
-                        "تقر بأن لديك الأهلية القانونية اللازمة للإبرام والموافقة على هذه الاتفاقية، وأن لديك الصلاحيات القانونية الكاملة غير المقيدة طبقًا للشروط التالية:\n(1) أهلية وموافقة الشخص الطبيعي\n1. يشترط في مُستخدِم تطبيق “يوما” أن يكون بلغ من العمر 18 عامًا فأكثر.\n2. يشترط في مستخدم تطبيق “يوما” أن يتوافر فيه الأهلية القانونية اللازمة لإبرام العقود، ونحن غير مسئولين عن التحقق من أهلية أيًا من مستخدمي الموقع.\n3. باستخدامك خدمات تطبيق “يوما” فأنت توافق على هذه الاتفاقية، وتقر بأنك ملزمًا قانونًا بالشروط والأحكام المنصوص عليها في هذه الوثيقة أو تعديلاتها.\n(2) أهلية وموافقة القاصر (من هم أقل من 18 عام)\n1. إذا كنت تحت سن 18 عامًا، يمكنك استخدام خدمات تطبيق “يوما” فقط تحت إشراف أحد الوالدين أو الوصي.\n2. مع عدم الإخلال بأي حقوق أخرى لتطبيق “يوما” بموجب هذه الاتفاقية أو القانون، يحتفظ التطبيق بالحق في تقييد وصولك إلى التطبيق أو إلغاء عضويتك إذا رأى أنك لم تبلغ سن 18 عامًا.\n(3) الصفة القانونية وموافقة المنشآت التجارية\nإذا كنت تسجل كمنشأة تجارية، فانك تقر بأن لديك سلطة إلزام هذه المنشأة باتفاقية المستخدم هذه، وأنك والمنشأة التجارية التي تمثلها سوف تخضعون لجميع القوانين السارية المتعلقة بالتداول عبر شبكة الانترنت.\nتقر بأن لديك الأهلية القانونية اللازمة للإبرام والموافقة على هذه الاتفاقية، وأن لديك الصلاحيات القانونية الكاملة غير المقيدة طبقًا للشروط التالية:\n(1) أهلية وموافقة الشخص الطبيعي\n1. يشترط في مُستخدِم تطبيق “يوما” أن يكون بلغ من العمر 18 عامًا فأكثر.\n2. يشترط في مستخدم تطبيق “يوما” أن يتوافر فيه الأهلية القانونية اللازمة لإبرام العقود، ونحن غير مسئولين عن التحقق من أهلية أيًا من مستخدمي الموقع.\n3. باستخدامك خدمات تطبيق “يوما” فأنت توافق على هذه الاتفاقية، وتقر بأنك ملزمًا قانونًا بالشروط والأحكام المنصوص عليها في هذه الوثيقة أو تعديلاتها.\n(2) أهلية وموافقة القاصر (من هم أقل من 18 عام)\n1. إذا كنت تحت سن 18 عامًا، يمكنك استخدام خدمات تطبيق “يوما” فقط تحت إشراف أحد الوالدين أو الوصي.\n2. مع عدم الإخلال بأي حقوق أخرى لتطبيق “يوما” بموجب هذه الاتفاقية أو القانون، يحتفظ التطبيق بالحق في تقييد وصولك إلى التطبيق أو إلغاء عضويتك إذا رأى أنك لم تبلغ سن 18 عامًا.\n(3) الصفة القانونية وموافقة المنشآت التجارية\nإذا كنت تسجل كمنشأة تجارية، فانك تقر بأن لديك سلطة إلزام هذه المنشأة باتفاقية المستخدم هذه، وأنك والمنشأة التجارية التي تمثلها سوف تخضعون لجميع القوانين السارية المتعلقة بالتداول عبر شبكة الانترنت.",
-                        style: Constants.subtitleRegularFont,
-                      )
-                    ],
-                  ),
-                ))
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Constants.whiteAppColor,
+        appBar: AppBar(
+            centerTitle: false,
+            leadingWidth: 70,
+            title: Row(
+              children: const [
+                Text("الشروط والأحكام"),
               ],
             ),
-          )),
+            leading: const MyBackButton()),
+        body: BlocBuilder<PrivacyCubit, PrivacyState>(
+            builder: (context, privacyState) {
+          if (privacyState is PrivacyLoading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (privacyState is PrivacyLoaded) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          termsConditions,
+                          height: 40,
+                        ),
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              "الشروط والأحكام",
+                              style: Constants.mainTitleFont,
+                            ),
+                            // ignore: prefer_const_constructors
+                            Text(
+                              "آخر تحديث 12-10-2022",
+                              style: Constants.subtitleRegularFont,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0, right: 8, top: 8),
+                    child: ListView(
+                      children: [
+                        Text(
+                          privacyState.response?.data?.description ?? "",
+                          style: Constants.subtitleRegularFont,
+                        )
+                      ],
+                    ),
+                  )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      !_checked
+                          ? InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _checked = !_checked;
+                                });
+                              },
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: Colors.black, width: 1.4)),
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _checked = !_checked;
+                                });
+                              },
+                              child: SvgPicture.asset(
+                                checkIcon,
+                                width: 24,
+                                height: 24,
+                              ),
+                            ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        "اوافق علي جميع الشروط والأحكام",
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      !_privacy
+                          ? InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _privacy = !_privacy;
+                                });
+                              },
+                              child: Container(
+                                width: 20,
+                                height: 20,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: Colors.black, width: 1.4)),
+                              ),
+                            )
+                          : InkWell(
+                              onTap: () {
+                                setState(() {
+                                  _privacy = !_privacy;
+                                });
+                              },
+                              child: SvgPicture.asset(
+                                checkIcon,
+                                width: 24,
+                                height: 24,
+                              ),
+                            ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      const Text(
+                        "اوافق علي سياسة الخصوصية",
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 25,
+                  )
+
+                  // Stack(
+                  //   children: [
+                  //     Center(
+                  //       child: Container(
+                  //         width: 24,height: 24,
+                  //         decoration: BoxDecoration(border: Border.all(color: Colors.black) , shape: BoxShape.circle),),
+                  //     ),
+                  //     Center(
+                  //       child: CheckBoxAnimation(
+                  //         check: true,
+                  //         onValueChange: (value) {
+                  //           print(value);
+                  //         },
+                  //         highlightColor: Colors.transparent,
+                  //         checkMarkColor: Colors.black,
+                  //         size: 24,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
+                ],
+              ),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        }),
+      ),
     );
   }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "523370799256",
+    "project_id": "advisornase7",
+    "storage_bucket": "advisornase7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523370799256:android:3980efc04e760950f370ed",
+        "android_client_info": {
+          "package_name": "com.lundev.nasooh.NASE7"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523370799256-e77fc55pk21g531ruba3iq91doogth3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe0NoBa7ieltNkaSs_YybRqGYwa6POo-s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523370799256-e77fc55pk21g531ruba3iq91doogth3f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

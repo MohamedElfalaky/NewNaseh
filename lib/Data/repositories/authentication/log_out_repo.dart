@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:nasooh/app/global.dart';
 import 'package:nasooh/app/keys.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import '../../models/Auth_models/log_out_model.dart';
@@ -25,7 +26,9 @@ class LogOutRepo {
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
         debugPrint("the response  is ${response.body}");
+        SharedPreferences preferences = await SharedPreferences.getInstance();
         final userdata = logOutModelFromJson(responseMap);
+        await preferences.clear();
         sharedPrefs.removeToken();
         // MyApplication.showToastView(message: responseMap["message"]);
         return userdata;

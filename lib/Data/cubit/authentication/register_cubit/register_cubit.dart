@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nasooh/app/utils/registeration_values.dart';
 import '../../../../Presentation/screens/Home/HomeScreen.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../repositories/authentication/register_repo.dart';
@@ -22,7 +23,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     String? category,
     String? userName,
     String? info,
-    XFile? avatar,
+    String? avatar,
     String? description,
     String? experienceYear,
     String? documents,
@@ -35,6 +36,8 @@ class RegisterCubit extends Cubit<RegisterState> {
       emit(RegisterLoading());
       register
           .register(
+        documents: documents,
+        avatar: avatar,
         email: email,
         pass: pass,
         experienceYear: experienceYear,
@@ -44,7 +47,6 @@ class RegisterCubit extends Cubit<RegisterState> {
         mobile: mobile,
         nationalityId: nationalityId,
         userName: userName,
-        avatar: avatar,
         bankAccount: bankAccount,
         bankName: bankName,
         birthday: birthday,
@@ -52,7 +54,6 @@ class RegisterCubit extends Cubit<RegisterState> {
         cityId: cityId,
         countryId: countryId,
         description: description,
-        documents: documents,
       )
           .then((value) {
         if (value != null) {

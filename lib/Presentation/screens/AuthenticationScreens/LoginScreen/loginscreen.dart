@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   String _sendPhone = "";
+
   @override
   void dispose() {
     // TODO: implement dispose
@@ -113,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                           const Center(
                             child: Text(
-                              "تسجيل الدخول",
+                              "تسجيل دخول",
                               style: Constants.headerNavigationFont,
                             ),
                           ),
@@ -197,28 +198,29 @@ class _LoginScreenState extends State<LoginScreen>
                                       ),
                                     ))),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(bottom: 30),
-                          //   child: Row(
-                          //     children: [
-                          //       SizedBox(
-                          //         height: 24,
-                          //         width: 30,
-                          //         child: Checkbox(
-                          //           value: false,
-                          //           onChanged: (value) {},
-                          //         ),
-                          //       ),
-                          //       const Text(
-                          //         "تذكر معلوماتي",
-                          //         style: Constants.secondaryTitleRegularFont,
-                          //       )
-                          //     ],
-                          //   ),
-                          // ),
-                          const SizedBox(
-                            height: 24,
+                          Row(
+                            children: [
+                              SizedBox(width: 10,),
+                              SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: Checkbox(
+                                  value: false,
+                                  onChanged: (value) {},
+
+                                ),
+                              ),
+                              SizedBox(width: 10,),
+                              const Text(
+                                "تذكر معلوماتي",
+                                style: Constants.secondaryTitleRegularFont,
+                              )
+                            ],
                           ),
+                          const SizedBox(
+                            height: 35,
+                          ),
+
                           state is LoginLoading
                               ? const Center(child: CircularProgressIndicator())
                               : FadeTransition(
@@ -254,7 +256,7 @@ class _LoginScreenState extends State<LoginScreen>
                             ),
                           ),
                           const SizedBox(
-                            height: 80,
+                            height: 85,
                           ),
                           const SizedBox(
                               width: double.infinity,

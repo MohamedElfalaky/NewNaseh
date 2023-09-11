@@ -180,20 +180,10 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                                       child: Checkbox(
                                           value: model.data![x].selected,
                                           onChanged: (bool? s) {
-                                            // setState(() {
-                                            //   for (var newItem in newList) {
-                                            //     newItem.booleanValue = false;
-                                            //   }
-                                            //   item.booleanValue = true;
-                                            // });
-                                            // print(item.booleanValue);
-                                            // print(item.id);
-
                                             setState(() {
                                               model.data![x].selected = s;
                                               if (model.data![x].selected ==
                                                   true) {
-                                                // print(model.data![x].id);
                                                 sendCategory
                                                     .add(model.data![x].id!);
 
@@ -209,14 +199,6 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                                                 sendCategory.removeWhere((e) =>
                                                     e == model.data![x].id);
                                               }
-
-                                              // model.data![x].selected = s;
-
-                                              // newList[x].booleanValue = s!;
-                                              // print(
-                                              //     " item bool is${newList[x].booleanValue} and item id is ${newList[x].id}");
-                                              //
-                                              // print(newList[x].booleanValue);
                                             });
                                             debugPrint(
                                                 "the send category is ${sendCategory.toSet().toList().toString()}");
@@ -280,19 +262,33 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                         itemCount: results.length,
                         itemBuilder: (context, int x) => ExpansionTile(
                             tilePadding: const EdgeInsets.all(0),
-                            // leading: SizedBox(
-                            //     height: 24,
-                            //     width: 24,
-                            //     child: Checkbox(value: false, onChanged: (s) {})),
                             title: Row(
                               children: [
                                 SizedBox(
                                     height: 24,
                                     width: 24,
                                     child: Checkbox(
-                                        value: false,
-                                        onChanged: (s) {
-                                          setState(() {});
+                                        value: results[x].selected,
+                                        onChanged: (bool? s) {
+                                          setState(() {
+                                            results[x].selected = s;
+                                            if (results[x].selected == true) {
+                                              sendCategory.add(results[x].id!);
+
+                                              for (var selectItems
+                                                  in results[x].children!) {
+                                                selectItems.selected = true;
+                                                sendCategory
+                                                    .add(selectItems.id!);
+                                              }
+                                            } else if (results[x].selected ==
+                                                false) {
+                                              sendCategory.removeWhere(
+                                                  (e) => e == results[x].id);
+                                            }
+                                          });
+                                          debugPrint(
+                                              "the send category is ${sendCategory.toSet().toList().toString()}");
                                         })),
                                 const SizedBox(
                                   width: 4,
@@ -317,8 +313,22 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                                             height: 24,
                                             width: 24,
                                             child: Checkbox(
-                                                value: false,
-                                                onChanged: (s) {})),
+                                                value: e.selected,
+                                                onChanged: (s) {
+                                                  setState(() {
+                                                    e.selected = s;
+                                                    if (e.selected == true) {
+                                                      sendCategory.add(e.id!);
+                                                    } else if (e.selected ==
+                                                        false) {
+                                                      sendCategory.removeWhere(
+                                                          (element) =>
+                                                              element == e.id);
+                                                    }
+                                                    debugPrint(
+                                                        "the send category is ${sendCategory.toSet().toList().toString()}");
+                                                  });
+                                                })),
                                         const SizedBox(
                                           width: 8,
                                         ),

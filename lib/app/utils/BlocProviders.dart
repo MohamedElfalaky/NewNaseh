@@ -10,6 +10,11 @@ import '../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart
 import '../../Data/cubit/authentication/new_mob/mob_cubit.dart';
 import '../../Data/cubit/authentication/register_cubit/register_cubit.dart';
 import 'package:provider/single_child_widget.dart';
+import '../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
+import '../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
+import '../../Data/cubit/profile/profile_cubit/profile_cubit.dart';
+import '../../Data/cubit/profile/update_profile_cubit/update_profile_cubit.dart';
+import '../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
 
 List<SingleChildWidget> providers = [
   BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
@@ -22,4 +27,9 @@ List<SingleChildWidget> providers = [
   BlocProvider<NationalityCubit>(create: (context) => NationalityCubit()),
   BlocProvider<CityCubit>(create: (context) => CityCubit()),
   BlocProvider<AddCertificateCubit>(create: (context) => AddCertificateCubit()),
+  BlocProvider<UpdateProfileCubit>(create: (context) => UpdateProfileCubit()),
+  BlocProvider<ProfileCubit>(create: (context) => ProfileCubit()),
+  BlocProvider<HomeStatusCubit>(create: (context) => HomeStatusCubit()),
+  BlocProvider<ListOneHomeCubit>(create: (context) => ListOneHomeCubit()),
+  BlocProvider<PrivacyCubit>(create: (context) => PrivacyCubit()),
 ];

@@ -142,8 +142,14 @@ class _AdviceDetailState extends State<AdviceDetail> {
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Column(
                   children: [
-                    Advicess(
-                      isAdviceDetal: true,
+                    Advices(
+                      advisedName: "",
+                      advisedPhoto: "",
+                      price: "",
+                      title: "",
+                      status: "",
+                      date: "",
+                      isAdviceDetail: true,
                     ),
                     Expanded(
                         child: ListView.builder(

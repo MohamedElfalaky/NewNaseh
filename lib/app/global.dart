@@ -2,7 +2,8 @@
 class GlobalVars {
   Map<String, String>? headers = {
     'Accept': 'application/json',
-    'lang': selectedLang!,
+    // 'lang': selectedLang!,
+    'lang': "ar",
     // 'Content-Type': 'application/json',
   };
   String? oldLang;

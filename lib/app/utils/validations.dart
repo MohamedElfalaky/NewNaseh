@@ -8,7 +8,7 @@ class Validations {
 static   String validationEmail =
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
 static String validationName = r'^[a-z A-Z]+$';
-static  String validationPassword = '@^(.{0,7}|[^0-9]*|[^A-Z])';
+static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
 
 
   static String? validateName(String? name, BuildContext context) {

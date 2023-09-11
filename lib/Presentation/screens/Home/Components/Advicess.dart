@@ -8,9 +8,25 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
-class Advicess extends StatelessWidget {
-  bool? isAdviceDetal;
-  Advicess({super.key, this.isAdviceDetal});
+class Advices extends StatelessWidget {
+  bool? isAdviceDetail;
+  final String price;
+
+  final String title;
+  final String date;
+  final String status;
+  final String advisedName;
+  final String advisedPhoto;
+
+  Advices(
+      {super.key,
+      this.isAdviceDetail,
+      required this.advisedPhoto,
+      required this.price,
+      required this.title,
+      required this.date,
+      required this.status,
+      required this.advisedName});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +38,10 @@ class Advicess extends StatelessWidget {
               width: 1, color: Constants.primaryAppColor.withOpacity(0.1))),
       // ignore: prefer_const_literals_to_create_immutables
       child: Column(children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
           child: Text(
-            " طلب نصيحة حول اختيار الجامعة المناسبة طلب نصيحة حول اختيار",
+            title,
             style: Constants.mainTitleFont,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -34,11 +50,11 @@ class Advicess extends StatelessWidget {
         Row(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            if (isAdviceDetal != true)
-              const Padding(
+            if (isAdviceDetail != true)
+              Padding(
                 padding: EdgeInsetsDirectional.only(start: 16),
                 child: Text(
-                  "12/2/2022 - 10:46 ص",
+                  date,
                   style: Constants.subtitleRegularFont,
                 ),
               ),
@@ -51,8 +67,8 @@ class Advicess extends StatelessWidget {
                   borderRadius: BorderRadiusDirectional.only(
                       topStart: Radius.circular(10),
                       bottomStart: Radius.circular(10))),
-              child: const Text(
-                "جديدة",
+              child: Text(
+                status,
                 style: TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
                 textAlign: TextAlign.center,
               ),
@@ -70,7 +86,7 @@ class Advicess extends StatelessWidget {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: '75 ',
+                          text: price,
                           style: Constants.headerNavigationFont.copyWith(
                               fontSize: 20, color: Constants.primaryAppColor)),
                       TextSpan(
@@ -93,7 +109,7 @@ class Advicess extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-          child: isAdviceDetal == true
+          child: isAdviceDetail == true
               ? SizedBox(
                   child: Row(
                     children: [
@@ -133,16 +149,19 @@ class Advicess extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(200),
                           border: Border.all(color: Constants.primaryAppColor)),
-                      child: SvgPicture.asset(
-                        logotrans,
-                        height: 28,
-                        color: Colors.amber,
-                      ),
+                      child: advisedPhoto == ""
+                          ? SvgPicture.asset(
+                              logotrans,
+                              height: 28,
+                            )
+                          : CircleAvatar(
+                              backgroundImage: NetworkImage(advisedPhoto),
+                            ),
                     ),
-                    const Padding(
-                        padding: EdgeInsetsDirectional.only(start: 6),
+                    Padding(
+                        padding: const EdgeInsetsDirectional.only(start: 6),
                         child: Text(
-                          "محمد عبدالعزيز الحميد كامل",
+                          advisedName,
                           style: Constants.subtitleFont,
                         ))
                     // Text("75 ريال سعودي",style: ,)

@@ -18,6 +18,7 @@ class Auth {
           body: {
             'mobile': '$phone',
             'password': '$pass',
+            'device': sharedPrefs.fCMToken,
           });
       // debugPrint("request is $phone & $pass");
       debugPrint("response is ${response.body.toString()}");
@@ -28,6 +29,7 @@ class Auth {
       if (response.statusCode == 200 && responseMap["status"] == 1) {
         final userdata = loginModelFromJson(responseMap);
         sharedPrefs.setToken(userdata.data!.token!);
+        sharedPrefs.setId(userdata.data!.id!);
         sharedPrefs.setUserName(userdata.data!.userName!);
         if (userdata.data!.avatar != "") {
           sharedPrefs.setUserPhoto(userdata.data!.avatar!);

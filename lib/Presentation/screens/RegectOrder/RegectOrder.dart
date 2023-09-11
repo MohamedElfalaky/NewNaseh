@@ -115,8 +115,14 @@ class _RegectOrderState extends State<RegectOrder> {
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Column(
                   children: [
-                    Advicess(
-                      isAdviceDetal: false,
+                    Advices(
+                      advisedName: "",
+                      advisedPhoto: "",
+                      price: "",
+                      title: "",
+                      status:"" ,
+                      date: "",
+                      isAdviceDetail: false,
                     ),
                     TextField(
                       maxLines: 6,

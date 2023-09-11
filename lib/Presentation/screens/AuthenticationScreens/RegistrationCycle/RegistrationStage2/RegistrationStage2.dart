@@ -28,11 +28,13 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
 
   late CountdownTimerController timerController;
   int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 120;
+  late FocusNode myFocusNode;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    myFocusNode = FocusNode();
 
     timerController = CountdownTimerController(endTime: endTime, onEnd: () {});
   }
@@ -92,29 +94,34 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                               style: Constants.secondaryTitleRegularFont,
                             ),
 
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: MyApplication.hightClc(context, 30),
-                                  bottom: MyApplication.hightClc(context, 32)),
-                              child: Pinput(
-                                errorTextStyle: Constants.subtitleFont
-                                    .copyWith(color: Colors.red),
-                                pinputAutovalidateMode:
-                                    PinputAutovalidateMode.onSubmit,
-                                showCursor: true,
-                                controller: _pinController,
-                                defaultPinTheme: Constants.defaultPinTheme,
-                                focusedPinTheme: Constants.focusedPinTheme,
-                                errorPinTheme: Constants.errorPinTheme,
-                                // errorBuilder: (errorText, pin) {},
-                                validator: (value) {
-                                  if (value!.isEmpty ||
-                                      value.length != 4 ||
-                                      !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                    return "يرجى ادخال رمز تحقق صحيح";
-                                  }
-                                },
-                                onCompleted: (pin) => print(pin),
+                            Directionality(
+                              textDirection: TextDirection.ltr,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    top: MyApplication.hightClc(context, 30),
+                                    bottom: MyApplication.hightClc(context, 32)),
+                                child: Pinput(
+                                  errorTextStyle: Constants.subtitleFont
+                                      .copyWith(color: Colors.red),
+                                  pinputAutovalidateMode:
+                                      PinputAutovalidateMode.onSubmit,
+                                  showCursor: true,
+                                  autofocus: true,
+                                  controller: _pinController,
+                                  focusNode: myFocusNode,
+                                  defaultPinTheme: Constants.defaultPinTheme,
+                                  focusedPinTheme: Constants.focusedPinTheme,
+                                  errorPinTheme: Constants.errorPinTheme,
+                                  // errorBuilder: (errorText, pin) {},
+                                  validator: (value) {
+                                    if (value!.isEmpty ||
+                                        value.length != 4 ||
+                                        !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                      return "يرجى ادخال رمز تحقق صحيح";
+                                    }
+                                  },
+                                  onCompleted: (pin) => print(pin),
+                                ),
                               ),
                             ),
                             state is CheckCodeLoading

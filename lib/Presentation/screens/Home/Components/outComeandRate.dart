@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
 class OutcomeAndRate extends StatelessWidget {
   String? title;
   String? subtitle;
-  Color? colorr;
-  var iconn;
+  Color? color;
+  String? assetName;
 
   OutcomeAndRate(
-      {super.key, this.title, this.subtitle, this.iconn, this.colorr});
+      {super.key, this.title, this.subtitle, this.assetName, this.color});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MyApplication.widthClc(context, 163),
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: colorr!.withOpacity(0.1),
+          color: color!.withOpacity(0.1),
           borderRadius: BorderRadius.circular(20)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -25,11 +26,13 @@ class OutcomeAndRate extends StatelessWidget {
           Container(
             height: 40,
             width: 40,
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: colorr!.withOpacity(0.2),
+                color: color!.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(10)),
+            child: SvgPicture.asset(assetName! )
           ),
-          SizedBox(
+          const SizedBox(
             width: 8,
           ),
           Column(
@@ -38,11 +41,11 @@ class OutcomeAndRate extends StatelessWidget {
             children: [
               Text(
                 title!,
-                style: TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
+                style: const TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
               ),
               Text(
                 subtitle!,
-                style: TextStyle(color: colorr, fontWeight: FontWeight.bold),
+                style: TextStyle(color: color, fontWeight: FontWeight.bold),
               )
             ],
           )

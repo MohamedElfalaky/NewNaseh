@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/AdviceDetail/advice_detail.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
-import 'package:nasooh/Presentation/screens/EditProfileScreen/EditProfileScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/outComeandRate.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
@@ -23,7 +21,13 @@ import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
 
 import '../../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
 import '../../../Data/cubit/authentication/log_out_cubit/log_out_state.dart';
+import '../../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
+import '../../../Data/cubit/home/home_one_cubit/home_one_state.dart';
+import '../../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
+import '../../../Data/cubit/home/home_status_cubit/home_status_state.dart';
+import '../../../Data/models/home_models/home_status_model.dart';
 import '../../../app/utils/lang/language_constants.dart';
+import '../EditProfileScreen/EditProfileScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen();
@@ -41,6 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
   late StreamSubscription<ConnectivityResult> subscription;
   bool? isConnected;
   final controller = PageController(initialPage: 0);
+
+  Future<void> getDataFromApi() async {
+    await context.read<HomeStatusCubit>().getDataHomeStatus();
+    var cubitVal = HomeStatusCubit.get(context);
+    context
+        .read<ListOneHomeCubit>()
+        .getOneHome(cubitVal.homeStatusModel!.data![0].id!);
+  }
 
   @override
   void initState() {
@@ -83,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ///
       }
     });
+    getDataFromApi();
   }
 
   @override
@@ -95,6 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
       element["isSelected"] = false;
     }
   }
+
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
           key: _scaffoldKey,
           backgroundColor: Constants.whiteAppColor,
           drawer: Drawer(
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  bottomLeft: Radius.circular(30)),
+            ),
             child: ListView(
               // crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -138,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 84,
                         width: 84,
                         decoration: BoxDecoration(
-                            image:  DecorationImage(
+                            image: DecorationImage(
                               image: NetworkImage(sharedPrefs.getUserPhoto()),
                               fit: BoxFit.cover,
                             ),
@@ -181,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 myListile(
-                    iconn: ta3delProfile,
+                    iconn: ordersIcon,
                     namee: "طلباتي",
                     onTapHandler: () => Navigator.pop(context)),
                 myListile(
@@ -197,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       MyApplication.navigateTo(context, const WalletScreen());
                     }),
                 myListile(
-                    iconn: mahfazty,
+                    iconn: notificationIcon,
                     namee: "الأشعارات",
                     onTapHandler: () {
                       Navigator.pop(context);
@@ -205,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           context, const NotificationScreen());
                     }),
                 myListile(
-                    iconn: shorot,
+                    iconn: settingIcon,
                     namee: "الإعدادات",
                     onTapHandler: () {
                       Navigator.pop(context);
@@ -219,8 +239,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       MyApplication.navigateTo(
                           context, const TermsConditionsScreen());
                     }),
-                myListile(iconn: shorot, namee: 'الدعم الفني'),
-                myListile(iconn: shorot, namee: 'تعرف علي تطبيق نصوح'),
+                myListile(iconn: techIcon, namee: 'الدعم الفني'),
+                myListile(iconn: knowAboutIcon, namee: 'تعرف علي تطبيق نصوح'),
                 BlocBuilder<LogOutCubit, LogOutState>(
                     builder: (context, state) => state is LogOutLoading
                         ? const Center(child: CircularProgressIndicator())
@@ -250,131 +270,137 @@ class _HomeScreenState extends State<HomeScreen> {
           body: SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            child: Stack(
-              children: [
-                // Appbar
-                Container(
-                  height: MyApplication.hightClc(context, 160),
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                      color: Constants.primaryAppColor,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(25),
-                          bottomRight: Radius.circular(25))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      AppbarButton(
-                          myIcon: const Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                          ),
-                          onTapHandler: () {
-                            _scaffoldKey.currentState!.openDrawer();
-                            if (_scaffoldKey.currentState!.isDrawerOpen) {
-                              // Check if the drawer is open
-                              _focusNode.unfocus(); // Unfocus the text field
-                            }
-                          }),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: BlocBuilder<HomeStatusCubit, HomeStatusState>(
+                builder: (context, homeState) {
+              if (homeState is HomeStatusLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (homeState is HomeStatusLoaded) {
+                final List<Datum> dataList = homeState.response?.data ?? [];
+                print(dataList);
+                return Stack(
+                  children: [
+                    // Appbar
+                    Container(
+                      height: MyApplication.hightClc(context, 160),
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                          color: Constants.primaryAppColor,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(25),
+                              bottomRight: Radius.circular(25))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text(
-                            "حياك الله بنصوح",
-                            style: Constants.secondaryTitleRegularFont
-                                .copyWith(color: Colors.white),
+                          AppbarButton(
+                              myIcon: const Icon(
+                                Icons.menu,
+                                color: Colors.white,
+                              ),
+                              onTapHandler: () {
+                                _scaffoldKey.currentState!.openDrawer();
+                                if (_scaffoldKey.currentState!.isDrawerOpen) {
+                                  // Check if the drawer is open
+                                  _focusNode
+                                      .unfocus(); // Unfocus the text field
+                                }
+                              }),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "حياك الله بنصوح",
+                                style: Constants.secondaryTitleRegularFont
+                                    .copyWith(color: Colors.white),
+                              ),
+                              Text(
+                                sharedPrefs.getUserName(),
+                                style: Constants.secondaryTitleFont
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Mohamed Ahmed Mohamed",
-                            style: Constants.secondaryTitleFont
-                                .copyWith(color: Colors.white),
-                          ),
+                          SvgPicture.asset(
+                            logoColor,
+                            color: Colors.white,
+                            height: 60,
+                          )
                         ],
                       ),
-                      SvgPicture.asset(
-                        logoColor,
-                        color: Colors.white,
-                        height: 60,
-                      )
-                    ],
-                  ),
-                ),
+                    ),
 
-                // starting from search field
-                Positioned(
-                  top: MyApplication.hightClc(context, 160) -
-                      25, // to overlay the appbar
-                  child: Container(
-                    // this hight to make the container takes the remaining hight of the page
-                    height: MediaQuery.of(context).size.height -
-                        MyApplication.hightClc(context, 160) +
-                        25,
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextField(
-                          controller: _textController,
-                          focusNode: _focusNode,
-                          decoration:
-                              Constants.setRegistrationTextInputDecoration(
-                            prefixIcon: SvgPicture.asset(searchIcon),
-                            hintText: "ابحث عن الطلبات...",
-                          ).copyWith(
-                            enabledBorder: OutlineInputBorder(
-                              gapPadding: 0,
-                              borderSide: BorderSide(
-                                color:
-                                    const Color(0xff0085A5).withOpacity(0.25),
-                              ),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(25),
+                    // starting from search field
+                    Positioned(
+                      top: MyApplication.hightClc(context, 160) -
+                          25, // to overlay the appbar
+                      child: Container(
+                        // this hight to make the container takes the remaining hight of the page
+                        height: MediaQuery.of(context).size.height -
+                            MyApplication.hightClc(context, 160) +
+                            25,
+                        width: MediaQuery.of(context).size.width,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              controller: _textController,
+                              focusNode: _focusNode,
+                              decoration:
+                                  Constants.setRegistrationTextInputDecoration(
+                                prefixIcon: SvgPicture.asset(searchIcon),
+                                hintText: "ابحث عن الطلبات...",
+                              ).copyWith(
+                                enabledBorder: OutlineInputBorder(
+                                  gapPadding: 0,
+                                  borderSide: BorderSide(
+                                    color: const Color(0xff0085A5)
+                                        .withOpacity(0.25),
+                                  ),
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(25),
+                                  ),
+                                ),
+                                filled: true,
+                                fillColor: Colors.white,
                               ),
                             ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            // border: const OutlineInputBorder(
-                            //   gapPadding: 0,
-                            //   borderSide: BorderSide(
-                            //     color: Color(0xff27AE60),
-                            //   ),
-                            //   borderRadius: BorderRadius.all(
-                            //     Radius.circular(24),
-                            //   ),
-                            // )
-                          ),
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.only(top: 24, bottom: 32),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                OutcomeAndRate(
-                                  title: "الأرباح الكلية",
-                                  subtitle: "12.725 SR",
-                                  colorr: Constants.primaryAppColor,
-                                ),
-                                OutcomeAndRate(
-                                  title: "التقييم الإجمالي",
-                                  subtitle: "4.8",
-                                  colorr: const Color(0xFF27AE60),
-                                )
-                              ],
-                            )),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              ...homeController.categories.map((e) =>
-                                  AnimatedContainer(
+                            Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 24, bottom: 32),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    OutcomeAndRate(
+                                      assetName: moneyBag,
+                                      title: "الأرباح الكلية",
+                                      subtitle: "12.725 SR",
+                                      color: Constants.primaryAppColor,
+                                    ),
+                                    OutcomeAndRate(
+                                      assetName: starIcon,
+                                      title: "التقييم الإجمالي",
+                                      subtitle: "4.8",
+                                      color: const Color(0xFF27AE60),
+                                    )
+                                  ],
+                                )),
+                            SizedBox(
+                              height: 30,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, int index) {
+                                  return AnimatedContainer(
+                                    height: 30,
                                     duration: const Duration(milliseconds: 500),
                                     curve: Curves.easeInOut,
                                     margin: const EdgeInsetsDirectional.only(
                                         end: 8),
                                     decoration: BoxDecoration(
-                                        color: e["isSelected"]
+                                        color: selectedIndex == index
                                             ? Constants.primaryAppColor
                                             : const Color(0xff2730431A)
                                                 .withOpacity(0.1),
@@ -384,11 +410,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(15),
                                       onTap: () {
                                         setState(() {
-                                          for (var element
-                                              in homeController.categories) {
-                                            element["isSelected"] = false;
-                                          }
-                                          e["isSelected"] = true;
+                                          selectedIndex = index;
+                                          context
+                                              .read<ListOneHomeCubit>()
+                                              .getOneHome(dataList[index].id!);
                                         });
                                       },
                                       child: Padding(
@@ -397,11 +422,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Row(
                                           children: [
                                             Text(
-                                              e["name"],
+                                              dataList[index].name ?? "",
                                               style: TextStyle(
                                                   fontFamily:
                                                       Constants.mainFont,
-                                                  color: e["isSelected"]
+                                                  color: selectedIndex == index
                                                       ? Colors.white
                                                       : Colors.black,
                                                   fontSize: 12),
@@ -410,9 +435,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 12,
                                             ),
                                             Text(
-                                              "2",
+                                              (dataList[index].total ?? 0)
+                                                  .toString(),
                                               style: TextStyle(
-                                                color: e["isSelected"]
+                                                color: selectedIndex == index
                                                     ? Colors.white
                                                     : Colors.black,
                                               ),
@@ -421,28 +447,135 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ),
-                                  ))
-                            ],
-                          ),
+                                  );
+                                },
+                                itemCount: dataList.length,
+                              ),
+                            ),
+
+                            // SingleChildScrollView(
+                            //   scrollDirection: Axis.horizontal,
+                            //   child: Row(
+                            //     children: [
+                            //       ...homeController.categories.map((e) =>
+                            //           AnimatedContainer(
+                            //             duration: const Duration(milliseconds: 500),
+                            //             curve: Curves.easeInOut,
+                            //             margin: const EdgeInsetsDirectional.only(
+                            //                 end: 8),
+                            //             decoration: BoxDecoration(
+                            //                 color: e["isSelected"]
+                            //                     ? Constants.primaryAppColor
+                            //                     : const Color(0xff2730431A)
+                            //                     .withOpacity(0.1),
+                            //                 borderRadius:
+                            //                 BorderRadius.circular(15)),
+                            //             child: InkWell(
+                            //               borderRadius: BorderRadius.circular(15),
+                            //               onTap: () {
+                            //                 setState(() {
+                            //                   for (var element
+                            //                   in homeController.categories) {
+                            //                     element["isSelected"] = false;
+                            //                   }
+                            //                   e["isSelected"] = true;
+                            //                 });
+                            //               },
+                            //               child: Padding(
+                            //                 padding: const EdgeInsets.symmetric(
+                            //                     horizontal: 12, vertical: 4),
+                            //                 child: Row(
+                            //                   children: [
+                            //                     Text(
+                            //                       e["name"],
+                            //                       style: TextStyle(
+                            //                           fontFamily:
+                            //                           Constants.mainFont,
+                            //                           color: e["isSelected"]
+                            //                               ? Colors.white
+                            //                               : Colors.black,
+                            //                           fontSize: 12),
+                            //                     ),
+                            //                     const SizedBox(
+                            //                       width: 12,
+                            //                     ),
+                            //                     Text(
+                            //                       "2",
+                            //                       style: TextStyle(
+                            //                         color: e["isSelected"]
+                            //                             ? Colors.white
+                            //                             : Colors.black,
+                            //                       ),
+                            //                     )
+                            //                   ],
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //           )
+                            //
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            const SizedBox(
+                              height: 18,
+                            ),
+                            BlocBuilder<ListOneHomeCubit, ListOneHomeState>(
+                                builder: (context, lHState) {
+                              if (lHState is ListOneHomeLoading) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (lHState is ListOneHomeLoaded) {
+                                return Expanded(
+                                    child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) => InkWell(
+                                      onTap: () => MyApplication.navigateTo(
+                                          context, const AdviceDetail()),
+                                      child: Advices(
+                                        advisedName: lHState
+                                                .response
+                                                ?.data?[index]
+                                                .client
+                                                ?.fullName ??
+                                            "",
+                                        advisedPhoto: lHState.response
+                                                ?.data?[index].client?.avatar ??
+                                            "",
+                                        date: lHState
+                                                .response?.data?[index].date ??
+                                            "",
+                                        status: lHState.response?.data?[index]
+                                                .status?.name ??
+                                            "",
+                                        title: lHState
+                                                .response?.data?[index].name ??
+                                            "",
+                                        price: lHState
+                                                .response?.data?[index].price
+                                                .toString() ??
+                                            "",
+                                        isAdviceDetail: false,
+                                      )),
+                                  itemCount:
+                                      lHState.response?.data?.length ?? 0,
+                                ));
+                              } else {
+                                return const SizedBox.shrink();
+                              }
+                            }),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 18,
-                        ),
-                        Expanded(
-                            child: ListView.builder(
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) => InkWell(
-                              onTap: () => MyApplication.navigateTo(
-                                  context, const AdviceDetail()),
-                              child: Advicess()),
-                          itemCount: 4,
-                        ))
-                      ],
-                    ),
-                  ),
-                )
-              ],
-            ),
+                      ),
+                    )
+                  ],
+                );
+              } else if (homeState is HomeStatusError) {
+                return const Center(child: SizedBox());
+              } else {
+                return const Center(child: SizedBox());
+              }
+            }),
           )),
     );
   }

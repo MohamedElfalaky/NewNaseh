@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dropdown_textfield/dropdown_textfield.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/RegistrationStage4.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificateItem.dart';
@@ -13,21 +15,30 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:photo_view/photo_view.dart';
-
-import '../../../../Data/cubit/authentication/city_cubit/city_cubit.dart';
-import '../../../../Data/cubit/authentication/city_cubit/city_state.dart';
-import '../../../../Data/cubit/authentication/country_cubit/country_cubit.dart';
-import '../../../../Data/cubit/authentication/country_cubit/country_state.dart';
-import '../../../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
-import '../../../../Data/cubit/authentication/nationality_cubit/nationality_state.dart';
-import '../../../../Data/models/Auth_models/country_model.dart';
+import 'dart:convert';
 import '../../../../app/utils/lang/language_constants.dart';
 import '../../../../app/utils/registeration_values.dart';
 import '../../../../app/utils/validations.dart';
-import 'RegistrationStage7/RegistrationStage7.dart';
+import '../../../widgets/my_drop_down_list.dart';
+import '../../../widgets/row_modal_sheet.dart';
 
 final stage3FormKey = GlobalKey<FormState>();
 final stage4FormKey = GlobalKey<FormState>();
+RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+//A function that validate user entered password
+bool validatePassword(String pass) {
+  String _password = pass.trim();
+  if (pass_valid.hasMatch(_password)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool validEnglish(String value) {
+  RegExp regex = RegExp(r'/^[A-Za-z0-9]*$');
+  return (!regex.hasMatch(value)) ? false : true;
+}
 
 class RegistrationController {
   /// r3
@@ -53,13 +64,18 @@ class RegistrationController {
   static Future pickImage(
       ImageSource source, BuildContext context, setState) async {
     try {
-      final myImage = await _picker.pickImage(source: source);
+      final myImage = await _picker.pickImage(source: source, imageQuality: 60);
       if (myImage == null) return;
 
       setState(() {
         regImage = myImage;
         inputImagePhoto = regImage;
       });
+      List<int> imageBytes = await File(regImage!.path).readAsBytesSync();
+      print(imageBytes);
+      base64Image = base64.encode(imageBytes);
+      print("inputImagePhoto!.path  is ${inputImagePhoto!.path}");
+      log("base64Image!  is ${base64Image}");
     } on PlatformException catch (e) {
       print("platform exeption : $e");
     }
@@ -121,19 +137,44 @@ class RegistrationController {
                         alignment: Alignment.bottomRight,
                         child: InkWell(
                           onTap: () {
-                            // pickImage(ImageSource.gallery);
                             showModalBottomSheet(
                               context: context,
+                              shape: const RoundedRectangleBorder(
+                                // <-- SEE HERE
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(25.0),
+                                ),
+                              ),
                               builder: (ctx) {
                                 return Container(
-                                    padding: const EdgeInsets.all(8),
+                                    padding: const EdgeInsets.all(18),
                                     // height: 100,
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                          CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        ElevatedButton(
+                                        RowModalSheet(
+                                            txt: "كاميرا",
+                                            imageIcon: cameraIcon,
+                                            onPressed: () {
+                                              RegistrationController.pickImage(
+                                                  ImageSource.camera,
+                                                  ctx,
+                                                  setState);
+                                              // inputImageName =
+                                              //     RegistrationController
+                                              //         .regImage!.path;
+                                              // inputImagePhoto =
+                                              //     RegistrationController
+                                              //         .regImage;
+                                              // print(
+                                              //     "Image PAth is $inputImageName");
+                                            }),
+                                        Divider(),
+                                        RowModalSheet(
+                                          txt: "الاستديو",
+                                          imageIcon: galleryIcon,
                                           onPressed: () {
                                             RegistrationController.pickImage(
                                                 ImageSource.gallery,
@@ -148,53 +189,15 @@ class RegistrationController {
                                             // print(
                                             //     "Image path is ${inputImagePhoto!.path}");
                                           },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: const [
-                                              Icon(Icons.photo),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text("اختر من المعرض",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontFamily:
-                                                          Constants.mainFont)),
-                                            ],
-                                          ),
                                         ),
-                                        ElevatedButton(
+                                        Divider(),
+                                        RowModalSheet(
+                                          txt: "الغاء",
+                                          imageIcon: closeIcon,
                                           onPressed: () {
-                                            RegistrationController.pickImage(
-                                                ImageSource.camera,
-                                                ctx,
-                                                setState);
-                                            // inputImageName =
-                                            //     RegistrationController
-                                            //         .regImage!.path;
-                                            // inputImagePhoto =
-                                            //     RegistrationController
-                                            //         .regImage;
-                                            // print(
-                                            //     "Image PAth is $inputImageName");
+                                            Navigator.pop(context);
                                           },
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: const [
-                                              Icon(Icons.camera_alt_outlined),
-                                              SizedBox(
-                                                width: 8,
-                                              ),
-                                              Text(
-                                                "التقط صورة",
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    fontFamily:
-                                                        Constants.mainFont),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                        )
                                       ],
                                     ));
                               },
@@ -238,9 +241,8 @@ class RegistrationController {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return getTranslated(context, "full Name Required")!;
-                    }
-                    if (value.length < 33) {
-                      return getTranslated(context, "full Name Length")!;
+                    } else if (value.length > 33 || value.length < 2) {
+                      return getTranslated(context, "name length")!;
                     }
                     return null;
                   },
@@ -262,11 +264,17 @@ class RegistrationController {
                   if (value!.isEmpty) {
                     return getTranslated(context, "User Name Required")!;
                   }
-                  if (value.length < 17) {
+                  if (value.length > 17 || value.length < 5) {
                     return getTranslated(context, "User Name Length")!;
                   }
+                  // else if   (!validEnglish(value)) {
+                  //   return 'الاسم يجب ان يحتوي علي حروف انجليزية و أرقام' ;
+                  // }
                   return null;
                 },
+                // inputFormatters: <TextInputFormatter>[
+                //   FilteringTextInputFormatter.allow(RegExp('[a-z A-Z 0-9]'))
+                // ],
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "اسم المستخدم باللغة الإنجليزية...",
                     prefixIcon: SvgPicture.asset(
@@ -287,6 +295,7 @@ class RegistrationController {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: _email,
                   onChanged: (val) {
                     inputEmail = _email.text;
@@ -317,9 +326,15 @@ class RegistrationController {
                   validator: (val) {
                     if (val!.isEmpty || val.length < 8
                         // ||
-                        // !RegExp(Validations.validationPassword).hasMatch(val)
+                        // !RegExp(Validations.validationPassword.toString()).hasMatch(val)
                         ) {
                       return getTranslated(context, "password data")!;
+                    }
+                    bool result = validatePassword(val);
+                    if (result) {
+                      return null;
+                    } else {
+                      return " Password should contain Capital, small letter & Number & Special";
                     }
                     return null;
                   },
@@ -363,7 +378,7 @@ class RegistrationController {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return getTranslated(context, "description Required")!;
-                    } else if (value.length < 3) {
+                    } else if (value.length < 4) {
                       return getTranslated(context, "short description")!;
                     }
                     return null;
@@ -390,6 +405,8 @@ class RegistrationController {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return getTranslated(context, "summary Required")!;
+                    } else if (value.length < 33) {
+                      return getTranslated(context, "summary length")!;
                     }
                     return null;
                   },
@@ -431,7 +448,7 @@ class RegistrationController {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
                   controller: certificatesController,
-                  maxLength: 10,
+                  // maxLength: 10,
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "الشهادات والإنجازات...",
                       suffixIcon: InkWell(
@@ -483,7 +500,7 @@ class RegistrationController {
   /// r6
   static bool _termsConditions = false;
 
-  static Widget r6Body(setState) {
+  static Widget r6Body(setState, BuildContext context) {
     return SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Column(
@@ -554,6 +571,28 @@ class RegistrationController {
               padding: const EdgeInsets.only(bottom: 20),
               child: TextFormField(
                 controller: _birthdayController,
+                onTap: () async {
+                  DateTime? pickedDate = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(1970),
+                      lastDate: DateTime(2030));
+
+                  if (pickedDate != null) {
+                    print(pickedDate);
+                    String formattedDate =
+                        DateFormat('yyyy-MM-dd').format(pickedDate);
+                    print(formattedDate);
+
+                    setState(() {
+                      _birthdayController.text = formattedDate;
+                    });
+                  }
+                  // else {
+                  //   showModalBottomSheet(context: context, builder: (_)=> Container(
+                  //       padding:EdgeInsets.symmetric(vertical: 20 , horizontal: 50),child: Text("Add Date")) );
+                  // }
+                },
                 onChanged: (val) {
                   inputBirthday = _birthdayController.text;
                   print(inputBirthday.toString());
@@ -617,9 +656,6 @@ class RegistrationController {
   }
 
   /// r7
-  static dynamic countryValue;
-  static dynamic cityValue;
-  static dynamic nationalityValue;
 
   static Widget r7Body() {
     return SingleChildScrollView(
@@ -627,162 +663,14 @@ class RegistrationController {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BlocBuilder<CountryCubit, CountryState>(builder: (context, state) {
-              // if (state is CountryLoading) {
-              //   return const Center(child: CircularProgressIndicator());
-              // }
-              // else
-              if (state is CountryLoaded) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: DropDownTextField(
-                    searchDecoration: const InputDecoration(
-                        hintText: "ابحث هنا...",
-                        hintStyle: TextStyle(
-                          fontFamily: Constants.mainFont,
-                          fontSize: 14,
-                          color: Constants.fontHintColor,
-                        )),
-                    listTextStyle: Constants.secondaryTitleRegularFont,
-                    textStyle: Constants.secondaryTitleRegularFont,
-                    enableSearch: true,
-                    onChanged: (val) {
-                      countryValue = val;
-                      inputCountry = countryValue
-                          .toString()
-                          .split(",")
-                          .last
-                          .split("(")
-                          .first
-                          .split(")")
-                          .first;
-                      print("${inputCountry} is countrySelected");
-                      context.read<CityCubit>().getCities(inputCountry!);
-                    },
-                    dropDownList: state.response!.data!
-                        .map((e) =>
-                            DropDownValueModel(name: e.name!, value: e.id))
-                        .toList(),
-                    textFieldDecoration:
-                        Constants.setRegistrationTextInputDecoration(
-                            hintText: "بلد الإقامة...",
-                            prefixIcon: SvgPicture.asset(
-                              countryIcon,
-                              height: 24,
-                            )),
-                  ),
-                );
-              } else if (state is CountryError) {
-                return const SizedBox();
-              } else {
-                return const SizedBox();
-              }
-            }),
-            // BlocBuilder<CityCubit, CityState>(builder: (context, cityState) {
-            //   if (cityState is CityLoading) {
-            //     return const Center(child: CircularProgressIndicator());
-            //   } else if (cityState is CityLoaded) {
-            //     return  Padding(
-            //             padding: const EdgeInsets.only(bottom: 24),
-            //             child: DropDownTextField(
-            //               searchDecoration: const InputDecoration(
-            //                   hintText: "ابحث هنا...",
-            //                   hintStyle: TextStyle(
-            //                     fontFamily: Constants.mainFont,
-            //                     fontSize: 14,
-            //                     color: Constants.fontHintColor,
-            //                   )),
-            //               listTextStyle: Constants.secondaryTitleRegularFont,
-            //               textStyle: Constants.secondaryTitleRegularFont,
-            //               enableSearch: true,
-            //               onChanged: (val) {
-            //                 cityValue = val;
-            //                 // print(
-            //                 //     "${countryValue.toString().split(",").last.split("(").first.split(")").first} is this valye");
-            //
-            //                 inputCity = cityValue
-            //                     .toString()
-            //                     .split(",")
-            //                     .last
-            //                     .split("(")
-            //                     .first
-            //                     .split(")")
-            //                     .first;
-            //                 print("${inputCity} is CityChosen");
-            //               },
-            //               dropDownList: cityState.response!.data!
-            //                   .map(
-            //                     (e) => DropDownValueModel(
-            //                         name: e.name!, value: e.id),
-            //                   )
-            //                   .toList(),
-            //               textFieldDecoration:
-            //                   Constants.setRegistrationTextInputDecoration(
-            //                       hintText: "مدينة الإقامة...",
-            //                       prefixIcon: SvgPicture.asset(
-            //                         cityIcon,
-            //                         height: 24,
-            //                       )),
-            //             ),
-            //           );
-            //   } else if (cityState is CityError) {
-            //     return const SizedBox();
-            //   } else {
-            //     return const SizedBox();
-            //   }
-            // }),
-            BlocBuilder<NationalityCubit, NationalityState>(
-                builder: (context, newState) {
-              // if (newState is NationalityLoading) {
-              //   return const Center(child: CircularProgressIndicator());
-              // }
-              // else
-              if (newState is NationalityLoaded) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 24),
-                  child: DropDownTextField(
-                    searchDecoration: const InputDecoration(
-                        hintText: "ابحث هنا...",
-                        hintStyle: TextStyle(
-                          fontFamily: Constants.mainFont,
-                          fontSize: 14,
-                          color: Constants.fontHintColor,
-                        )),
-                    listTextStyle: Constants.secondaryTitleRegularFont,
-                    textStyle: Constants.secondaryTitleRegularFont,
-                    enableSearch: true,
-                    dropDownList: newState.response!.data!
-                        .map(
-                          (e) => DropDownValueModel(name: e.name!, value: e.id),
-                        )
-                        .toList(),
-                    onChanged: (val) {
-                      nationalityValue = val;
-                      inputNationality = nationalityValue
-                          .toString()
-                          .split(",")
-                          .last
-                          .split("(")
-                          .first
-                          .split(")")
-                          .first;
-                      print("${inputNationality} is countrySelected");
-                    },
-                    textFieldDecoration:
-                        Constants.setRegistrationTextInputDecoration(
-                            hintText: "الجنسية...",
-                            prefixIcon: SvgPicture.asset(
-                              nationalityIcon,
-                              height: 24,
-                            )),
-                  ),
-                );
-              } else if (newState is NationalityError) {
-                return const Center(child: SizedBox());
-              } else {
-                return const Center(child: SizedBox());
-              }
-            }),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 16),
+              child: Text(
+                "بيانات الموقع",
+                style: Constants.mainTitleFont,
+              ),
+            ),
+            const MyColumnData(),
             const Padding(
               padding: EdgeInsets.only(bottom: 16),
               child: Text(

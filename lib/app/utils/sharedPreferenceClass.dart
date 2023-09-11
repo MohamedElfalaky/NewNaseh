@@ -73,7 +73,7 @@ class SharedPrefs {
     sharedPrefs!.setInt(cartAmount, value);
   }
 
-  setfcmtoken(String value) {
+  setFCM(String value) {
     sharedPrefs!.setString(fCMKey, value);
   }
 
@@ -100,6 +100,15 @@ class SharedPrefs {
   bool getCurrentAddress() {
     return sharedPrefs!.getBool(currentAddress) ?? true;
   }
+
+  setId(int value) {
+    sharedPrefs!.setInt(idKey, value);
+  }
+
+  getId() {
+    return sharedPrefs!.getInt(idKey);
+  }
+
 }
 
 final sharedPrefs = SharedPrefs();
@@ -117,5 +126,6 @@ String keyUserPhoto = "key_user_photo";
 const String langCode = 'languageCode';
 String currentAddress = 'currentAddress';
 String receiveMethodKey = 'receive_method_key';
+String idKey = "idKey";
 
 // String keyUserId = "key_user_id";

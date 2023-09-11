@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,6 +103,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                                           "inputFullName is $inputFullName  & inputBankAccount $inputBankAccount & inputBankName $inputBankName  & inputBirthday is $inputBirthday & inputCity $inputCity  &inputCountry is $inputCountry & inputNationality is $inputNationality ");
                                                       print(
                                                           "inputDescription is & inputDescription & inputExperience.toString() is ${inputDocuments.toString()}");
+                                                      // log(base64Image!);
                                                       context
                                                           .read<RegisterCubit>()
                                                           .registerMethod(
@@ -110,8 +113,8 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                                             userName:
                                                                 inputEnglishName,
                                                             nationalityId:
-                                                                "5",
-                                                                // inputNationality,
+                                                                inputNationality ??
+                                                                    null,
                                                             mobile: inputPhone,
                                                             info: inputSummary,
                                                             gender: inputGender,
@@ -119,27 +122,27 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                                                 inputFullName,
                                                             experienceYear:
                                                                 inputExperience,
-                                                            avatar:
-                                                                inputImagePhoto,
+                                                            avatar: base64Image,
                                                             bankAccount:
                                                                 inputBankAccount,
                                                             bankName:
                                                                 inputBankName,
                                                             birthday:
                                                                 inputBirthday,
-                                                            category:
-                                                                sendCategory
-                                                                    .toSet()
-                                                                    .toList()
-                                                                    .toString()
-                                                                    .split("[")
-                                                                    .last
-                                                                    .split("]")
-                                                                    .first,
-                                                            cityId:"19",
-                                                            // inputCity,
-                                                            countryId:"1",
-                                                                // inputCountry,
+                                                            category: "19",
+                                                                // sendCategory
+                                                                //     .toSet()
+                                                                //     .toList()
+                                                                //     .toString()
+                                                                //     .split("[")
+                                                                //     .last
+                                                                //     .split("]")
+                                                                //     .first,
+                                                            cityId: inputCity ??
+                                                                null,
+                                                            countryId:
+                                                                inputCountry ??
+                                                                    null,
                                                             description:
                                                                 inputDescription,
                                                             documents:

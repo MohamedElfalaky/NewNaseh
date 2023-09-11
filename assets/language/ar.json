@@ -55,12 +55,14 @@
   "know_nasouh": "تعرف علي تطبيق نصوح",
   "signout": "تسجيل الخروج",
   "User Name Required": "اسم المستخدم مطلوب",
-  "User Name Length": "اسم المستخدم يجب ان يكون علي الاقل 17 حرف",
+  "User Name Length": "اسم المستخدم يجب ان تكون أكثر من 5 و  أقل 17 حرف ",
   "Email data": "فضلا ادخل بريد الكتروني صحيح",
   "password data": "فضلا ادخل كلمة المرور ولا تقل عن 8 حروف او ارقام",
   "description Required": "فضلا ادخل الوصف",
   "summary Required": "فضلا ادخل النبذة التعريفية",
   "experience Required": "فضلا ادخل سنوات الخبرة",
-  "short description": "الوصف لا يقل عن 3 أحرف" ,
-  "add image please": "فضلا اختر صورة"
+  "short description": "الوصف لا يقل عن 4 أحرف" ,
+  "add image please": "فضلا اختر صورة",
+  "name length": "عدد أحرف الاسم يجب ان تكون أكثر من 2 و  أقل 33 حرف ",
+  "summary length": "النبذة التعريفية يجب الا تقل عن 33 حرف"
 }

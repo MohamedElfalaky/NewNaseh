@@ -19,4 +19,5 @@ String ?inputCountry ;
 String ?inputCity ;
 String ?inputNationality ;
 List<int> sendCategory = [];
+String ?base64Image;
 
