@@ -37,7 +37,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
         appBar: AppBar(
             leadingWidth: 70,
             title: const Text("إنشاء حساب ناصح"),
-            leading: const MyBackButton()),
+            leading:  MyBackButton()),
         body: Form(
           key: _formKey,
           child: Container(

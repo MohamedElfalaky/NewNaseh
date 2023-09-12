@@ -25,8 +25,10 @@ import '../../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
 import '../../../Data/cubit/home/home_one_cubit/home_one_state.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_state.dart';
+import '../../../Data/models/home_models/home_one_model.dart';
 import '../../../Data/models/home_models/home_status_model.dart';
 import '../../../app/utils/lang/language_constants.dart';
+import '../AdviceDetail/advice_new_detail.dart';
 import '../EditProfileScreen/EditProfileScreen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -526,35 +528,57 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               } else if (lHState is ListOneHomeLoaded) {
+                                List<HOneData> hOne =
+                                    lHState.response?.data ?? [];
                                 return Expanded(
                                     child: ListView.builder(
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) => InkWell(
-                                      onTap: () => MyApplication.navigateTo(
-                                          context, const AdviceDetail()),
+                                      onTap: hOne[index].status?.id == 2
+                                          ? () {
+                                              MyApplication.navigateTo(
+                                                  context,
+                                                  AdviceNewDetail(
+                                                      id: hOne[index].id!));
+                                            }
+                                          : () {
+                                              MyApplication.navigateTo(
+                                                  context,
+                                                  AdviceDetail(
+                                                    advisedName: hOne[index]
+                                                            .client
+                                                            ?.fullName ??
+                                                        "",
+                                                    advisedPhoto: hOne[index]
+                                                            .client
+                                                            ?.avatar ??
+                                                        "",
+                                                    date:
+                                                        hOne[index].date ?? "",
+                                                    status: hOne[index]
+                                                            .status
+                                                            ?.name ??
+                                                        "",
+                                                    title:
+                                                        hOne[index].name ?? "",
+                                                    statusId: hOne[index]
+                                                            .status
+                                                            ?.id ??
+                                                        2,
+                                                    price: hOne[index]
+                                                        .price
+                                                        .toString(),
+                                                  ));
+                                            },
                                       child: Advices(
-                                        advisedName: lHState
-                                                .response
-                                                ?.data?[index]
-                                                .client
-                                                ?.fullName ??
-                                            "",
-                                        advisedPhoto: lHState.response
-                                                ?.data?[index].client?.avatar ??
-                                            "",
-                                        date: lHState
-                                                .response?.data?[index].date ??
-                                            "",
-                                        status: lHState.response?.data?[index]
-                                                .status?.name ??
-                                            "",
-                                        title: lHState
-                                                .response?.data?[index].name ??
-                                            "",
-                                        price: lHState
-                                                .response?.data?[index].price
-                                                .toString() ??
-                                            "",
+                                        advisedName:
+                                            hOne[index].client?.fullName ?? "",
+                                        advisedPhoto:
+                                            hOne[index].client?.avatar ?? "",
+                                        date: hOne[index].date ?? "",
+                                        status: hOne[index].status?.name ?? "",
+                                        title: hOne[index].name ?? "",
+                                        price: hOne[index].price.toString(),
                                         isAdviceDetail: false,
                                       )),
                                   itemCount:

@@ -336,7 +336,6 @@ class RegistrationController {
                     } else {
                       return " Password should contain Capital, small letter & Number & Special";
                     }
-                    return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: Constants.setRegistrationTextInputDecoration(

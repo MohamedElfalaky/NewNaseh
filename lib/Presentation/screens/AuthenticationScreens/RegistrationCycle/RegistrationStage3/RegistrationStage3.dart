@@ -94,7 +94,7 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("المعلومات الشخصية"),
-            leading: const MyBackButton()),
+            leading:  MyBackButton()),
         body: Container(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,

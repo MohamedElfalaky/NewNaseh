@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
+import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
@@ -10,12 +12,34 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
+import '../../../Data/models/advice_models/advice_detail_model.dart';
 import '../../../app/utils/lang/language_constants.dart';
+import '../../widgets/MyButton.dart';
+import '../../widgets/MyButtonOutlined.dart';
+import '../RegectOrder/RegectOrder.dart';
 
 class AdviceDetail extends StatefulWidget {
-  const AdviceDetail({
-    super.key,
-  });
+  const AdviceDetail(
+      {super.key,
+      this.adviceDetailScreenModel,
+      required this.title,
+      required this.date,
+      required this.status,
+      required this.advisedName,
+      required this.advisedPhoto,
+      required this.price,
+      required this.statusId
+      });
+
+  final AdviceDetailScreenModel? adviceDetailScreenModel;
+
+  final String price;
+  final String title;
+  final String date;
+  final String status;
+  final int statusId;
+  final String advisedName;
+  final String advisedPhoto;
 
   @override
   State<AdviceDetail> createState() => _AdviceDetailState();
@@ -26,6 +50,8 @@ class _AdviceDetailState extends State<AdviceDetail> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+
+  // AdviceDetailScreenModel adviceDetailScreenModel = AdviceDetailScreenModel();
 
   late StreamSubscription<ConnectivityResult> subscription;
   bool? isConnected;
@@ -119,9 +145,9 @@ class _AdviceDetailState extends State<AdviceDetail> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("محمد عبدالعزيز الحميد كامل"),
+                      Text(widget.advisedName ),
                       Text(
-                        "12/2/2022 - 10:46 ص",
+                        widget.date,
                         style: Constants.subtitleFont
                             .copyWith(fontWeight: FontWeight.normal),
                       ),
@@ -134,95 +160,240 @@ class _AdviceDetailState extends State<AdviceDetail> {
                   )
                 ],
               ),
-              leading: const MyBackButton()),
-          body: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: Column(
-                  children: [
-                    Advices(
-                      advisedName: "",
-                      advisedPhoto: "",
-                      price: "",
-                      title: "",
-                      status: "",
-                      date: "",
-                      isAdviceDetail: true,
-                    ),
-                    Expanded(
-                        child: ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (context, index) => Container(
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        padding: EdgeInsets.all(8),
-                        // constraints: BoxConstraints(mi),
-                        decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 185, 184, 180)
-                                .withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "تفاصيل النصيحة هناك حقيقة مثبتة منذ زمن ط ويل وهي أن المقروء لصفحة ما  سيلهي القارئ عن التركيز على الشكل الخارجهناك حقيقة مثبتة منذ زمن ط ويل وهي أن المحتوىالمقروء لصفحة ما  سيلهي القارئ عن التركيز على الشكل الخارج  ",
-                          style: Constants.subtitleFont,
-                        ),
-                      ),
-                    )),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _textController,
-                              focusNode: _focusNode,
-                              decoration: Constants.setTextInputDecoration(
-                                suffixIcon: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SvgPicture.asset(attachFiles),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    SvgPicture.asset(micee),
-                                    SizedBox(
-                                      width: 8,
-                                    )
-                                  ],
-                                ),
-                                hintText: "آكتب رسالتك...",
-                              ).copyWith(
-                                hintStyle: Constants.subtitleRegularFontHint
-                                    .copyWith(color: Color(0XFF5C5E6B)),
-                                enabledBorder: const OutlineInputBorder(
-                                  gapPadding: 0,
-                                  borderSide: BorderSide.none,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(25),
-                                  ),
-                                ),
-                                filled: true,
-                                fillColor: const Color(0xffF5F4F5),
+              leading:  MyBackButton(hasValue: true, onPressed: (){
+                MyApplication.navigateTo(context, const HomeScreen());
+              },)),
+          body: widget.statusId == 2
+              ? SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, right: 16, top: 10),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 18),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              border: Border.all(
+                                  width: 1, color: Constants.primaryAppColor)),
+                          // ignore: prefer_const_literals_to_create_immutables
+                          child: Column(children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: 6, bottom: 6, left: 16, right: 16),
+                              child: Text(
+                                widget.title,
+                                style: Constants.mainTitleFont,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
-                          ),
-                          Container(
-                              margin: EdgeInsetsDirectional.only(start: 8),
-                              padding: EdgeInsets.all(10),
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  color: Color(0XFF273043)),
-                              child: SvgPicture.asset(
-                                sendChat,
-                              ))
-                        ],
-                      ),
+                            Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Spacer(),
+                                Container(
+                                  height: 22,
+                                  width: 57,
+                                  decoration: const BoxDecoration(
+                                      color: Color(0XFF99E6FC),
+                                      borderRadius:
+                                          BorderRadiusDirectional.only(
+                                              topStart: Radius.circular(10),
+                                              bottomStart:
+                                                  Radius.circular(10))),
+                                  child: Text(
+                                    widget.status,
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontFamily: Constants.mainFont),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                )
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 6),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(nasehaCost),
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.only(
+                                        start: 6),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                              text: widget.price,
+                                              style: Constants
+                                                  .headerNavigationFont
+                                                  .copyWith(
+                                                      fontSize: 20,
+                                                      color: Constants
+                                                          .primaryAppColor)),
+                                          TextSpan(
+                                              text: 'ريال سعودي',
+                                              style: Constants.subtitleFontBold
+                                                  .copyWith(
+                                                      color: Constants
+                                                          .primaryAppColor)),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                  // Text("75 ريال سعودي",style: ,)
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 8.0, left: 16, right: 16),
+                              child: DottedLine(
+                                dashColor:
+                                    const Color(0xff0085A5).withOpacity(0.2),
+                              ),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 6),
+                                child: SizedBox(
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        flex: 2,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsetsDirectional.only(
+                                                  end: 8.0),
+                                          child: MyButton(
+                                            isBold: true,
+                                            txt: "قبول",
+                                            onPressedHandler: () {
+                                              // MyApplication.navigateTo(
+                                              //     context, RegistrationStage7());
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      Flexible(
+                                        flex: 1,
+                                        child: MyButtonOutlined(
+                                          isBold: false,
+                                          txt: "رفض",
+                                          onPressedHandler: () {
+                                            MyApplication.navigateTo(
+                                                context, RejectOrder(
+                                              advisedName: widget.advisedName,
+                                              advisedPhoto: widget.advisedPhoto,
+                                              price: widget.price,
+                                              title: widget.title,
+                                              status: widget.status,
+                                              date: widget.date,
+
+                                            ));
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ]),
+                        )
+                      ],
                     ),
-                  ],
-                ),
-              ))),
+                  ))
+              : SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, right: 16, top: 10),
+                    child: Column(
+                      children: [
+                        Advices(
+                          advisedName: widget.advisedName,
+                          advisedPhoto: widget.advisedPhoto,
+                          price: widget.price,
+                          title: widget.title,
+                          status: widget.status,
+                          date: widget.date,
+                          isAdviceDetail: true,
+                        ),
+                        Expanded(
+                            child: ListView.builder(
+                          itemCount: 5,
+                          itemBuilder: (context, index) => Container(
+                            margin: EdgeInsets.symmetric(vertical: 8),
+                            padding: EdgeInsets.all(8),
+                            // constraints: BoxConstraints(mi),
+                            decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 185, 184, 180)
+                                    .withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: Text(
+                              "تفاصيل النصيحة هناك حقيقة مثبتة منذ زمن ط ويل وهي أن المقروء لصفحة ما  سيلهي القارئ عن التركيز على الشكل الخارجهناك حقيقة مثبتة منذ زمن ط ويل وهي أن المحتوىالمقروء لصفحة ما  سيلهي القارئ عن التركيز على الشكل الخارج  ",
+                              style: Constants.subtitleFont,
+                            ),
+                          ),
+                        )),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: TextField(
+                                  controller: _textController,
+                                  focusNode: _focusNode,
+                                  decoration: Constants.setTextInputDecoration(
+                                    suffixIcon: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SvgPicture.asset(attachFiles),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        SvgPicture.asset(micee),
+                                        SizedBox(
+                                          width: 8,
+                                        )
+                                      ],
+                                    ),
+                                    hintText: "آكتب رسالتك...",
+                                  ).copyWith(
+                                    hintStyle: Constants.subtitleRegularFontHint
+                                        .copyWith(color: Color(0XFF5C5E6B)),
+                                    enabledBorder: const OutlineInputBorder(
+                                      gapPadding: 0,
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(25),
+                                      ),
+                                    ),
+                                    filled: true,
+                                    fillColor: const Color(0xffF5F4F5),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                  margin: EdgeInsetsDirectional.only(start: 8),
+                                  padding: EdgeInsets.all(10),
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Color(0XFF273043)),
+                                  child: SvgPicture.asset(
+                                    sendChat,
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ))),
     );
   }
 }

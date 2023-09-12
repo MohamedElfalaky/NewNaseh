@@ -111,7 +111,9 @@ class Back extends StatelessWidget {
 }
 
 class MyBackButton extends StatelessWidget {
-  const MyBackButton({super.key});
+   MyBackButton({super.key , this.onPressed, this.hasValue=false });
+  void Function()? onPressed;
+  bool hasValue =false ;
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +122,7 @@ class MyBackButton extends StatelessWidget {
         decoration: BoxDecoration(
             color: Constants.whiteAppColor,
             border: Border.all(color: const Color(0XFFDADADA)),
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(5),
             boxShadow: [
               BoxShadow(
                   color: const Color(0XFF5C5E6B1A).withOpacity(0.2),
@@ -129,7 +131,10 @@ class MyBackButton extends StatelessWidget {
             ]),
         height: 42,
         width: 42,
-        child: const BackButton(
+        child:  BackButton(
+          onPressed: hasValue? onPressed : (){
+            Navigator.pop(context);
+          },
           color: Color(0xff575762),
         ),
       ),

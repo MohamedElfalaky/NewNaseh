@@ -50,7 +50,7 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
           appBar: AppBar(
               leadingWidth: 70,
               title: const Text("إدخال رمز التحقق"),
-              leading: const MyBackButton()),
+              leading:  MyBackButton()),
           body: Form(
             key: _formKey,
             child: Container(

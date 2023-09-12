@@ -73,7 +73,7 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("معلومات التخصص"),
-            leading: const MyBackButton()),
+            leading:  MyBackButton()),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,

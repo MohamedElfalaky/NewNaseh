@@ -112,7 +112,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
                 Text("الشروط والأحكام"),
               ],
             ),
-            leading: const MyBackButton()),
+            leading:  MyBackButton()),
         body: BlocBuilder<PrivacyCubit, PrivacyState>(
             builder: (context, privacyState) {
           if (privacyState is PrivacyLoading) {

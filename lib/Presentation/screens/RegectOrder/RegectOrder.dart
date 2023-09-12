@@ -11,14 +11,29 @@ import 'package:nasooh/app/utils/myApplication.dart';
 
 import '../../../app/utils/lang/language_constants.dart';
 
-class RegectOrder extends StatefulWidget {
-  const RegectOrder();
+class RejectOrder extends StatefulWidget {
+  const RejectOrder(
+      {required this.advisedName,
+      required this.advisedPhoto,
+      required this.price,
+      required this.title,
+      required this.status,
+      required this.date,
+      super.key});
+
+  final String advisedName;
+
+  final String advisedPhoto;
+  final String price;
+  final String title;
+  final String status;
+  final String date;
 
   @override
-  State<RegectOrder> createState() => _RegectOrderState();
+  State<RejectOrder> createState() => _RejectOrderState();
 }
 
-class _RegectOrderState extends State<RegectOrder> {
+class _RejectOrderState extends State<RejectOrder> {
   final TextEditingController _textController = TextEditingController();
 
   late StreamSubscription<ConnectivityResult> subscription;
@@ -32,12 +47,6 @@ class _RegectOrderState extends State<RegectOrder> {
 ///////////////////////////
     MyApplication.checkConnection().then((value) {
       if (value) {
-        //////
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
       } else {
         MyApplication.showToastView(
             message: '${getTranslated(context, 'noInternet')}');
@@ -57,14 +66,7 @@ class _RegectOrderState extends State<RegectOrder> {
       }
 
       /// if internet comes back
-      if (result != ConnectivityResult.none) {
-        /// call your apis
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
-      }
+      if (result != ConnectivityResult.none) {}
     });
   }
 
@@ -107,7 +109,7 @@ class _RegectOrderState extends State<RegectOrder> {
                   Text("رفض الطلب"),
                 ],
               ),
-              leading: const MyBackButton()),
+              leading: MyBackButton()),
           body: SizedBox(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
@@ -116,12 +118,12 @@ class _RegectOrderState extends State<RegectOrder> {
                 child: Column(
                   children: [
                     Advices(
-                      advisedName: "",
-                      advisedPhoto: "",
-                      price: "",
-                      title: "",
-                      status:"" ,
-                      date: "",
+                      advisedName: widget.advisedName,
+                      advisedPhoto: widget.advisedPhoto,
+                      price: widget.price,
+                      title: widget.title,
+                      status: widget.status,
+                      date: widget.date,
                       isAdviceDetail: false,
                     ),
                     TextField(

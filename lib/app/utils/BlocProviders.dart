@@ -1,9 +1,14 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasooh/Data/cubit/authentication/category_cubit/category_cubit.dart';
 import '../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
+import '../../Data/cubit/advice_cubits/approve_advice_cubit/approve_advice_cubit.dart';
+import '../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
 import '../../Data/cubit/authentication/check_code/check_code_cubit.dart';
 import '../../Data/cubit/authentication/city_cubit/city_cubit.dart';
 import '../../Data/cubit/authentication/country_cubit/country_cubit.dart';
+import '../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_cubit.dart';
+import '../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_cubit.dart';
+import '../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_cubit.dart';
 import '../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
 import '../../Data/cubit/authentication/login_cubit/login_cubit.dart';
 import '../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
@@ -32,4 +37,10 @@ List<SingleChildWidget> providers = [
   BlocProvider<HomeStatusCubit>(create: (context) => HomeStatusCubit()),
   BlocProvider<ListOneHomeCubit>(create: (context) => ListOneHomeCubit()),
   BlocProvider<PrivacyCubit>(create: (context) => PrivacyCubit()),
+  BlocProvider<CheckCheckMobCubit>(create: (context) => CheckCheckMobCubit()),
+  BlocProvider<ChangePasswordCubit>(create: (context) => ChangePasswordCubit()),
+  BlocProvider<ShowAdviceCubit>(create: (context) => ShowAdviceCubit()),
+  BlocProvider<ApproveAdviceCubit>(create: (context) => ApproveAdviceCubit()),
+  BlocProvider<CheckForgetCodeCubit>(
+      create: (context) => CheckForgetCodeCubit()),
 ];

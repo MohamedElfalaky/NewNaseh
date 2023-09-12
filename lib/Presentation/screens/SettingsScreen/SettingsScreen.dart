@@ -120,7 +120,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Text("الإعدادات"),
                 ],
               ),
-              leading: const MyBackButton()),
+              leading:  MyBackButton()),
           body: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 18),
             child: Column(

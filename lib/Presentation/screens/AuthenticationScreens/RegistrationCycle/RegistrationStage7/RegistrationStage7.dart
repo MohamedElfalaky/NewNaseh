@@ -48,7 +48,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("معلومات إضافية"),
-            leading: const MyBackButton(),
+            leading:  MyBackButton(),
           ),
           body:
               // BlocBuilder<CountryCubit, CountryState>(

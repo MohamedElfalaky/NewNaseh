@@ -108,7 +108,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   Text("محفظتي"),
                 ],
               ),
-              leading: const MyBackButton()),
+              leading:  MyBackButton()),
           body: Column(
             children: [
               Container(

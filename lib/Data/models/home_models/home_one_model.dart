@@ -9,7 +9,7 @@ ListOneHome listOneHomeFromJson(dynamic str) => ListOneHome.fromJson(str);
 String listOneHomeToJson(ListOneHome data) => json.encode(data.toJson());
 
 class ListOneHome {
-  List<Datum>? data;
+  List<HOneData>? data;
   int? status;
   String? message;
   List<dynamic>? pagination;
@@ -22,7 +22,7 @@ class ListOneHome {
   });
 
   factory ListOneHome.fromJson(Map<String, dynamic> json) => ListOneHome(
-    data: json["data"] == null ? [] : List<Datum>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+    data: json["data"] == null ? [] : List<HOneData>.from(json["data"]!.map((x) => HOneData.fromJson(x))),
     status: json["status"],
     message: json["message"],
     pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
@@ -36,7 +36,7 @@ class ListOneHome {
   };
 }
 
-class Datum {
+class HOneData {
   int? id;
   String? name;
   int? price;
@@ -44,7 +44,7 @@ class Datum {
   Status? status;
   Client? client;
 
-  Datum({
+  HOneData({
     this.id,
     this.name,
     this.price,
@@ -53,10 +53,10 @@ class Datum {
     this.client,
   });
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory HOneData.fromJson(Map<String, dynamic> json) => HOneData(
     id: json["id"],
     name: json["name"],
-    price: json["price"],
+    price: json["price"]??0,
     date: json["date"],
     status: json["status"] == null ? null : Status.fromJson(json["status"]),
     client: json["client"] == null ? null : Client.fromJson(json["client"]),

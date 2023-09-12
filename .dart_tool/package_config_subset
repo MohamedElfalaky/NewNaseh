@@ -30,6 +30,14 @@ characters
 2.12
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.2.1/
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.2.1/lib/
+checked_yaml
+2.19
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/checked_yaml-2.0.3/
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/checked_yaml-2.0.3/lib/
+cli_util
+2.19
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/cli_util-0.4.0/
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/cli_util-0.4.0/lib/
 clock
 2.12
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/clock-1.1.1/
@@ -142,6 +150,10 @@ flutter_countdown_timer
 2.12
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_countdown_timer-4.1.0/
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_countdown_timer-4.1.0/lib/
+flutter_launcher_icons
+2.18
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_launcher_icons-0.13.1/
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_launcher_icons-0.13.1/lib/
 flutter_lints
 2.17
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/flutter_lints-2.0.1/
@@ -226,6 +238,10 @@ js
 2.16
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.5/
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/js-0.6.5/lib/
+json_annotation
+2.19
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.1/
+file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/json_annotation-4.8.1/lib/
 lints
 2.17
 file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/lints-2.0.1/

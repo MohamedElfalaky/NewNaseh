@@ -11,7 +11,6 @@ import 'package:nasooh/app/utils/myApplication.dart';
 class Advices extends StatelessWidget {
   bool? isAdviceDetail;
   final String price;
-
   final String title;
   final String date;
   final String status;
@@ -35,7 +34,10 @@ class Advices extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
           border: Border.all(
-              width: 1, color: Constants.primaryAppColor.withOpacity(0.1))),
+              width: 1,
+              color: isAdviceDetail == true
+                  ? Constants.primaryAppColor
+                  : Constants.primaryAppColor.withOpacity(0.1))),
       // ignore: prefer_const_literals_to_create_immutables
       child: Column(children: [
         Padding(
@@ -133,7 +135,16 @@ class Advices extends StatelessWidget {
                           isBold: false,
                           txt: "رفض",
                           onPressedHandler: () {
-                            MyApplication.navigateTo(context, RegectOrder());
+                            MyApplication.navigateTo(
+                                context,
+                                RejectOrder(
+                                  advisedPhoto: advisedPhoto,
+                                  advisedName: advisedName,
+                                  price: price,
+                                  title: title,
+                                  status: status,
+                                  date: date,
+                                ));
                           },
                         ),
                       ),

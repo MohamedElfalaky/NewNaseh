@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_cubit.dart';
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_state.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/ChangePassword/check_mobile_forget_screen.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage1/RegistrationStage1.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/app/Style/Icons.dart';
@@ -245,14 +246,18 @@ class _LoginScreenState extends State<LoginScreen>
                           const SizedBox(
                             height: 32,
                           ),
-                          FadeTransition(
-                            opacity: _fadeController,
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: Text(
-                                  getTranslated(context, "forgot_password")!,
-                                  textAlign: TextAlign.center,
-                                  style: Constants.mainTitleFont),
+                          InkWell(
+                            onTap: () => MyApplication.navigateTo(
+                                context, const CheckForgetMobile()),
+                            child: FadeTransition(
+                              opacity: _fadeController,
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Text(
+                                    getTranslated(context, "forgot_password")!,
+                                    textAlign: TextAlign.center,
+                                    style: Constants.mainTitleFont),
+                              ),
                             ),
                           ),
                           const SizedBox(
