@@ -6,40 +6,24 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
-import 'package:nasooh/Presentation/widgets/noInternet.dart';
-import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
-
-import '../../../Data/models/advice_models/advice_detail_model.dart';
+import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../app/utils/lang/language_constants.dart';
 import '../../widgets/MyButton.dart';
 import '../../widgets/MyButtonOutlined.dart';
+import '../../widgets/noInternet.dart';
+import '../../widgets/shared.dart';
 import '../RegectOrder/RegectOrder.dart';
 
 class AdviceDetail extends StatefulWidget {
-  const AdviceDetail(
-      {super.key,
-      this.adviceDetailScreenModel,
-      required this.title,
-      required this.date,
-      required this.status,
-      required this.advisedName,
-      required this.advisedPhoto,
-      required this.price,
-      required this.statusId
-      });
+  AdviceDetail({
+    super.key,
+    required this.showAdData,
+  });
 
-  final AdviceDetailScreenModel? adviceDetailScreenModel;
-
-  final String price;
-  final String title;
-  final String date;
-  final String status;
-  final int statusId;
-  final String advisedName;
-  final String advisedPhoto;
+  ShowAdData? showAdData;
 
   @override
   State<AdviceDetail> createState() => _AdviceDetailState();
@@ -113,7 +97,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // todo if not connected display nointernet widget else continue to the rest build code
+    // todo if not connected display nointernet widget.showAdData? else continue to the rest build code
     final sizee = MediaQuery.of(context).size;
     if (isConnected == null) {
       MyApplication.checkConnection().then((value) {
@@ -145,9 +129,9 @@ class _AdviceDetailState extends State<AdviceDetail> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.advisedName ),
+                      Text(widget.showAdData?.client?.fullName ?? ""),
                       Text(
-                        widget.date,
+                        widget.showAdData?.date ?? "",
                         style: Constants.subtitleFont
                             .copyWith(fontWeight: FontWeight.normal),
                       ),
@@ -160,10 +144,13 @@ class _AdviceDetailState extends State<AdviceDetail> {
                   )
                 ],
               ),
-              leading:  MyBackButton(hasValue: true, onPressed: (){
-                MyApplication.navigateTo(context, const HomeScreen());
-              },)),
-          body: widget.statusId == 2
+              leading: MyBackButton(
+                hasValue: true,
+                onPressed: () {
+                  MyApplication.navigateTo(context, const HomeScreen());
+                },
+              )),
+          body: widget.showAdData?.status?.id == 2
               ? SizedBox(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
@@ -184,7 +171,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
                               padding: EdgeInsets.only(
                                   top: 6, bottom: 6, left: 16, right: 16),
                               child: Text(
-                                widget.title,
+                                widget.showAdData?.name ?? "",
                                 style: Constants.mainTitleFont,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -205,7 +192,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                               bottomStart:
                                                   Radius.circular(10))),
                                   child: Text(
-                                    widget.status,
+                                    widget.showAdData?.status?.name ?? "",
                                     style: TextStyle(
                                         fontSize: 10,
                                         fontFamily: Constants.mainFont),
@@ -227,7 +214,9 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                       text: TextSpan(
                                         children: <TextSpan>[
                                           TextSpan(
-                                              text: widget.price,
+                                              text: widget.showAdData?.price
+                                                      .toString() ??
+                                                  "",
                                               style: Constants
                                                   .headerNavigationFont
                                                   .copyWith(
@@ -285,15 +274,9 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                           txt: "رفض",
                                           onPressedHandler: () {
                                             MyApplication.navigateTo(
-                                                context, RejectOrder(
-                                              advisedName: widget.advisedName,
-                                              advisedPhoto: widget.advisedPhoto,
-                                              price: widget.price,
-                                              title: widget.title,
-                                              status: widget.status,
-                                              date: widget.date,
-
-                                            ));
+                                                context,
+                                                RejectOrder(showAdData:widget.showAdData,
+                                                ));
                                           },
                                         ),
                                       ),
@@ -314,12 +297,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
                     child: Column(
                       children: [
                         Advices(
-                          advisedName: widget.advisedName,
-                          advisedPhoto: widget.advisedPhoto,
-                          price: widget.price,
-                          title: widget.title,
-                          status: widget.status,
-                          date: widget.date,
+                          showAdData:widget.showAdData,
                           isAdviceDetail: true,
                         ),
                         Expanded(

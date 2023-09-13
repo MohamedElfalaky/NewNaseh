@@ -25,6 +25,7 @@ import '../../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
 import '../../../Data/cubit/home/home_one_cubit/home_one_state.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_state.dart';
+import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../Data/models/home_models/home_one_model.dart';
 import '../../../Data/models/home_models/home_status_model.dart';
 import '../../../app/utils/lang/language_constants.dart';
@@ -528,7 +529,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               } else if (lHState is ListOneHomeLoaded) {
-                                List<HOneData> hOne =
+                                List<ShowAdData> hOne =
                                     lHState.response?.data ?? [];
                                 return Expanded(
                                     child: ListView.builder(
@@ -545,40 +546,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                               MyApplication.navigateTo(
                                                   context,
                                                   AdviceDetail(
-                                                    advisedName: hOne[index]
-                                                            .client
-                                                            ?.fullName ??
-                                                        "",
-                                                    advisedPhoto: hOne[index]
-                                                            .client
-                                                            ?.avatar ??
-                                                        "",
-                                                    date:
-                                                        hOne[index].date ?? "",
-                                                    status: hOne[index]
-                                                            .status
-                                                            ?.name ??
-                                                        "",
-                                                    title:
-                                                        hOne[index].name ?? "",
-                                                    statusId: hOne[index]
-                                                            .status
-                                                            ?.id ??
-                                                        2,
-                                                    price: hOne[index]
-                                                        .price
-                                                        .toString(),
+                                                    showAdData: hOne[index],
                                                   ));
                                             },
                                       child: Advices(
-                                        advisedName:
-                                            hOne[index].client?.fullName ?? "",
-                                        advisedPhoto:
-                                            hOne[index].client?.avatar ?? "",
-                                        date: hOne[index].date ?? "",
-                                        status: hOne[index].status?.name ?? "",
-                                        title: hOne[index].name ?? "",
-                                        price: hOne[index].price.toString(),
+                                        showAdData: hOne[index],
                                         isAdviceDetail: false,
                                       )),
                                   itemCount:

@@ -8,24 +8,17 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
+import '../../../../Data/models/advice_models/show_advice_model.dart';
+
 class Advices extends StatelessWidget {
   bool? isAdviceDetail;
-  final String price;
-  final String title;
-  final String date;
-  final String status;
-  final String advisedName;
-  final String advisedPhoto;
+  ShowAdData? showAdData;
 
   Advices(
       {super.key,
       this.isAdviceDetail,
-      required this.advisedPhoto,
-      required this.price,
-      required this.title,
-      required this.date,
-      required this.status,
-      required this.advisedName});
+        required this.showAdData
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +36,7 @@ class Advices extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
           child: Text(
-            title,
+            showAdData?.name??"",
             style: Constants.mainTitleFont,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -56,7 +49,7 @@ class Advices extends StatelessWidget {
               Padding(
                 padding: EdgeInsetsDirectional.only(start: 16),
                 child: Text(
-                  date,
+                showAdData?.date??"",
                   style: Constants.subtitleRegularFont,
                 ),
               ),
@@ -70,7 +63,7 @@ class Advices extends StatelessWidget {
                       topStart: Radius.circular(10),
                       bottomStart: Radius.circular(10))),
               child: Text(
-                status,
+                showAdData?.status?.name??"",
                 style: TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
                 textAlign: TextAlign.center,
               ),
@@ -88,7 +81,7 @@ class Advices extends StatelessWidget {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: price,
+                          text: showAdData?.price.toString()??"",
                           style: Constants.headerNavigationFont.copyWith(
                               fontSize: 20, color: Constants.primaryAppColor)),
                       TextSpan(
@@ -137,13 +130,7 @@ class Advices extends StatelessWidget {
                           onPressedHandler: () {
                             MyApplication.navigateTo(
                                 context,
-                                RejectOrder(
-                                  advisedPhoto: advisedPhoto,
-                                  advisedName: advisedName,
-                                  price: price,
-                                  title: title,
-                                  status: status,
-                                  date: date,
+                                RejectOrder(showAdData:showAdData
                                 ));
                           },
                         ),
@@ -160,19 +147,19 @@ class Advices extends StatelessWidget {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(200),
                           border: Border.all(color: Constants.primaryAppColor)),
-                      child: advisedPhoto == ""
+                      child: showAdData?.client?.avatar == ""
                           ? SvgPicture.asset(
                               logotrans,
                               height: 28,
                             )
                           : CircleAvatar(
-                              backgroundImage: NetworkImage(advisedPhoto),
+                              backgroundImage: NetworkImage(showAdData!.client!.avatar!),
                             ),
                     ),
                     Padding(
                         padding: const EdgeInsetsDirectional.only(start: 6),
                         child: Text(
-                          advisedName,
+                          showAdData!.client!.fullName!,
                           style: Constants.subtitleFont,
                         ))
                     // Text("75 ريال سعودي",style: ,)

@@ -28,7 +28,6 @@ import 'advice_detail.dart';
 
 class AdviceNewDetail extends StatefulWidget {
   const AdviceNewDetail({super.key, required this.id});
-
   final int id;
 
   @override
@@ -81,7 +80,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
 
   @override
   Widget build(BuildContext context) {
-    // todo if not connected display nointernet showData else continue to the rest build code
+    // todo if not connected display nointernet showAdData else continue to the rest build code
     final sizee = MediaQuery.of(context).size;
     if (isConnected == null) {
       MyApplication.checkConnection().then((value) {
@@ -107,7 +106,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
           if (showState is ShowAdviceLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (showState is ShowAdviceLoaded) {
-            ShowAdData showData = showState.response!.data!;
+            ShowAdData showAdData = showState.response!.data!;
             return SizedBox(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -128,12 +127,12 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(showData.client?.fullName ?? "",
+                              Text(showAdData.client?.fullName ?? "",
                                   style: Constants.subtitleFont.copyWith(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15)),
                               Text(
-                                showData.date ?? "",
+                                showAdData.date ?? "",
                                 style: Constants.subtitleFont
                                     .copyWith(fontWeight: FontWeight.normal),
                               ),
@@ -159,7 +158,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                             padding: EdgeInsets.only(
                                 top: 6, bottom: 6, left: 16, right: 16),
                             child: Text(
-                              showData.name ?? "",
+                              showAdData.name ?? "",
                               style: Constants.mainTitleFont,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
@@ -178,7 +177,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                         topStart: Radius.circular(10),
                                         bottomStart: Radius.circular(10))),
                                 child: Text(
-                                  showData.status?.name ?? "",
+                                  showAdData.status?.name ?? "",
                                   style: TextStyle(
                                       fontSize: 10,
                                       fontFamily: Constants.mainFont),
@@ -200,7 +199,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                     text: TextSpan(
                                       children: <TextSpan>[
                                         TextSpan(
-                                            text: showData.price.toString(),
+                                            text: showAdData.price.toString(),
                                             style: Constants
                                                 .headerNavigationFont
                                                 .copyWith(
@@ -246,21 +245,8 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                             MyApplication.navigateTo(
                                                 context,
                                                 AdviceDetail(
-                                                    date: stateData.date ?? "",
-                                                    status: stateData
-                                                            .status?.name ??
-                                                        "",
-                                                    title: stateData.name ?? "",
-                                                    price: stateData.price
-                                                        .toString(),
-                                                    advisedName: stateData
-                                                            .client?.fullName ??
-                                                        "",
-                                                    advisedPhoto: stateData
-                                                            .client?.avatar ??
-                                                        "",
-                                                    // statusId: stateData.status?.id??2,
-                                                    statusId: 3));
+                                                  showAdData: stateData,
+                                                ));
                                             MyApplication.showToastView(
                                                 message: state.response?.data
                                                         ?.status?.name ??
@@ -283,7 +269,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                                     context
                                                         .read<
                                                             ApproveAdviceCubit>()
-                                                        .approve(showData.id!);
+                                                        .approve(showAdData.id!);
                                                   },
                                                 ),
                                               ),
@@ -297,19 +283,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                         onPressedHandler: () {
                                           MyApplication.navigateTo(
                                               context,
-                                              RejectOrder(
-                                                advisedName:
-                                                    showData.client?.fullName ??
-                                                        "",
-                                                advisedPhoto:
-                                                    showData.client?.avatar ??
-                                                        "",
-                                                price:
-                                                    showData.price.toString(),
-                                                title: showData.name ?? "",
-                                                status:
-                                                    showData.status?.name ?? "",
-                                                date: showData.date ?? "",
+                                              RejectOrder(showAdData:showAdData,
                                               ));
                                         },
                                       ),

@@ -9,25 +9,15 @@ import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
+import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../app/utils/lang/language_constants.dart';
 
 class RejectOrder extends StatefulWidget {
-  const RejectOrder(
-      {required this.advisedName,
-      required this.advisedPhoto,
-      required this.price,
-      required this.title,
-      required this.status,
-      required this.date,
+   RejectOrder(
+      {required this.showAdData,
       super.key});
 
-  final String advisedName;
-
-  final String advisedPhoto;
-  final String price;
-  final String title;
-  final String status;
-  final String date;
+ ShowAdData? showAdData;
 
   @override
   State<RejectOrder> createState() => _RejectOrderState();
@@ -117,13 +107,7 @@ class _RejectOrderState extends State<RejectOrder> {
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Column(
                   children: [
-                    Advices(
-                      advisedName: widget.advisedName,
-                      advisedPhoto: widget.advisedPhoto,
-                      price: widget.price,
-                      title: widget.title,
-                      status: widget.status,
-                      date: widget.date,
+                    Advices(showAdData:widget.showAdData,
                       isAdviceDetail: false,
                     ),
                     TextField(
