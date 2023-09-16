@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasooh/Data/cubit/authentication/category_cubit/category_cubit.dart';
 import '../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../Data/cubit/advice_cubits/approve_advice_cubit/approve_advice_cubit.dart';
+import '../../Data/cubit/advice_cubits/done_advice_cubit/done_advice_cubit.dart';
 import '../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
 import '../../Data/cubit/authentication/check_code/check_code_cubit.dart';
 import '../../Data/cubit/authentication/city_cubit/city_cubit.dart';
@@ -41,6 +42,7 @@ List<SingleChildWidget> providers = [
   BlocProvider<ChangePasswordCubit>(create: (context) => ChangePasswordCubit()),
   BlocProvider<ShowAdviceCubit>(create: (context) => ShowAdviceCubit()),
   BlocProvider<ApproveAdviceCubit>(create: (context) => ApproveAdviceCubit()),
+  BlocProvider<DoneAdviceCubit>(create: (context) => DoneAdviceCubit()),
   BlocProvider<CheckForgetCodeCubit>(
       create: (context) => CheckForgetCodeCubit()),
 ];
