@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_checkbox_animation/flutter_checkbox_animation.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
@@ -14,7 +15,6 @@ import 'package:nasooh/app/utils/myApplication.dart';
 
 import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
 import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_state.dart';
-import '../../../app/utils/lang/language_constants.dart';
 
 class TermsConditionsScreen extends StatefulWidget {
   const TermsConditionsScreen();
@@ -45,7 +45,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
         ///
       } else {
         MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+            message: "noInternet".tr );
       }
     });
 
@@ -92,7 +92,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
       });
     } else if (!isConnected!) {
       MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+          message:  "noInternet".tr );
       return NoInternetWidget(size: sizee);
     }
 

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
@@ -16,7 +17,6 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:photo_view/photo_view.dart';
 import 'dart:convert';
-import '../../../../app/utils/lang/language_constants.dart';
 import '../../../../app/utils/registeration_values.dart';
 import '../../../../app/utils/validations.dart';
 import '../../../widgets/my_drop_down_list.dart';
@@ -240,9 +240,9 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return getTranslated(context, "full Name Required")!;
+                      return  "full Name Required".tr;
                     } else if (value.length > 33 || value.length < 2) {
-                      return getTranslated(context, "name length")!;
+                      return  "name length".tr;
                     }
                     return null;
                   },
@@ -262,10 +262,10 @@ class RegistrationController {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return getTranslated(context, "User Name Required")!;
+                    return  "User Name Required".tr;
                   }
                   if (value.length > 17 || value.length < 5) {
-                    return getTranslated(context, "User Name Length")!;
+                    return  "User Name Length".tr;
                   }
                   // else if   (!validEnglish(value)) {
                   //   return 'الاسم يجب ان يحتوي علي حروف انجليزية و أرقام' ;
@@ -303,7 +303,7 @@ class RegistrationController {
                   validator: (val) {
                     if (val!.isEmpty ||
                         !RegExp(Validations.validationEmail).hasMatch(val)) {
-                      return getTranslated(context, "Email data")!;
+                      return  "Email data".tr;
                     }
                     return null;
                   },
@@ -324,17 +324,20 @@ class RegistrationController {
                     inputPassword = _password.text;
                   },
                   validator: (val) {
-                    if (val!.isEmpty || val.length < 8
+                    if (val!.isEmpty
                         // ||
                         // !RegExp(Validations.validationPassword.toString()).hasMatch(val)
                         ) {
-                      return getTranslated(context, "password data")!;
+                      return  "password data".tr;
+                    }
+                    if (val.length < 6 || val.length >10) {
+                      return  "password_length".tr;
                     }
                     bool result = validatePassword(val);
                     if (result) {
                       return null;
                     } else {
-                      return " Password should contain Capital, small letter & Number & Special";
+                      return " Password should contain Capital, small letter & Number & Special".tr;
                     }
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -376,9 +379,9 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return getTranslated(context, "description Required")!;
+                      return  "description Required".tr;
                     } else if (value.length < 4) {
-                      return getTranslated(context, "short description")!;
+                      return  "short description".tr;
                     }
                     return null;
                   },
@@ -403,9 +406,9 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return getTranslated(context, "summary Required")!;
+                      return  "summary Required".tr;
                     } else if (value.length < 33) {
-                      return getTranslated(context, "summary length")!;
+                      return  "summary length".tr;
                     }
                     return null;
                   },
@@ -431,7 +434,7 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return getTranslated(context, "experience Required")!;
+                      return  "experience Required".tr;
                     }
                     return null;
                   },

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/app/keys.dart';
 import 'package:http/http.dart' as http;
 import '../../../../app/utils/myApplication.dart';
@@ -17,7 +18,7 @@ class DoneAdviceRepo {
         Uri.parse('${Keys.baseUrl}/adviser/advice/done/$adviceId'),
         headers: {
           'Accept': 'application/json',
-          'lang': selectedLang!,
+          'lang': Get.locale?.languageCode??"ar",
           'Authorization': 'Bearer ${sharedPrefs.getToken()}',
         },
       );

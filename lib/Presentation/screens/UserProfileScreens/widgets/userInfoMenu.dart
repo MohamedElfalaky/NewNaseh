@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:get/get.dart';
 import '../../../../app/constants.dart';
-import '../../../../app/keys.dart';
-import '../../../../app/utils/lang/language_constants.dart';
 
 class SettingsMenuItem {
   final String title;
@@ -22,39 +20,38 @@ class SettingsMenuItem {
 
 class SettingsMenuItems {
   static SettingsMenuItem myOrders = SettingsMenuItem(
-    title: getTranslated(Keys.navigatorKey.currentState!.context, "my_orders")!,
+    title:  "my_orders".tr,
     svg: SvgPicture.asset('assets/images/SVGs/wallet.svg', width: 24),
   );
   static SettingsMenuItem wallet = SettingsMenuItem(
-    title: getTranslated(Keys.navigatorKey.currentState!.context, "my_wallet")!,
+    title:  "my_wallet".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/wallet.svg',
     ),
   );
   static SettingsMenuItem settings = SettingsMenuItem(
-    title: getTranslated(Keys.navigatorKey.currentState!.context, "settings")!,
+    title:  "settings".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/settings.svg',
     ),
   );
 
   static SettingsMenuItem terms = SettingsMenuItem(
-    title: getTranslated(
-        Keys.navigatorKey.currentState!.context, "terms_conditions")!,
+    title:  "terms_conditions".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/book.svg',
     ),
   );
 
   static SettingsMenuItem support = SettingsMenuItem(
-    title: getTranslated(Keys.navigatorKey.currentState!.context, "support")!,
+    title:  "support".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/help.svg',
     ),
   );
   static SettingsMenuItem nasouh = SettingsMenuItem(
     title:
-        getTranslated(Keys.navigatorKey.currentState!.context, "know_nasouh")!,
+         "know_nasouh".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/ask.svg',
     ),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/app/global.dart';
 import 'package:nasooh/app/keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +17,7 @@ class LogOutRepo {
       http.Response response = await http
           .post(Uri.parse('${Keys.baseUrl}/adviser/auth/logout'), headers: {
         'Accept': 'application/json',
-        'lang': selectedLang!,
+        'lang': Get.locale?.languageCode??"ar",
         "Authorization": "Bearer ${sharedPrefs.getToken()}"
       }, body: {
         'device': sharedPrefs.fCMToken,
@@ -47,9 +48,10 @@ class LogOutRepo {
       if (kDebugMode) {
         print(e);
       }
-    } on Error catch (e) {
+    } on Error catch (e ,st) {
       if (kDebugMode) {
         print(e);
+        print(st);
         MyApplication.showToastView(message: e.toString());
       }
     }

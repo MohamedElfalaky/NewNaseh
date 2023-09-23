@@ -314,6 +314,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "get",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/get-4.6.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "html",
       "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/html-0.15.2",
       "packageUri": "lib/",
@@ -704,7 +710,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-09-13T08:48:19.314660Z",
+  "generated": "2023-09-18T12:07:35.423833Z",
   "generator": "pub",
   "generatorVersion": "2.19.6"
 }

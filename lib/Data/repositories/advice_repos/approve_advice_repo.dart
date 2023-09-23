@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/app/keys.dart';
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
@@ -15,8 +16,7 @@ class ApproveAdviceRepo {
         Uri.parse('${Keys.baseUrl}/adviser/advice/approve/$id'),
         headers: {
           'Accept': 'application/json',
-          // 'lang': selectedLang!,
-          'lang': "ar",
+          'lang': Get.locale?.languageCode??"ar",
           "Authorization": "Bearer ${sharedPrefs.getToken()}"
         },
       );

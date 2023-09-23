@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/Components/OneNotification.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/controller/NotificationScreenController.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
-
-import '../../../app/utils/lang/language_constants.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen();
@@ -41,7 +40,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ///
       } else {
         MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+            message: "noInternet".tr );
       }
     });
 
@@ -87,7 +86,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
       });
     } else if (!isConnected!) {
       MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+          message:  "noInternet".tr );
       return NoInternetWidget(size: sizee);
     }
 
@@ -103,8 +102,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
             centerTitle: false,
             leadingWidth: 70,
             title: Row(
-              children: const [
-                Text("الإشعارات"),
+              children:  [
+                Text(  "Notifications".tr),
               ],
             ),
             leading:  MyBackButton(),

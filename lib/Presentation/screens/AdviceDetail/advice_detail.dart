@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
@@ -10,7 +11,6 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
-import '../../../app/utils/lang/language_constants.dart';
 import '../../widgets/MyButton.dart';
 import '../../widgets/MyButtonOutlined.dart';
 import '../../widgets/noInternet.dart';
@@ -56,7 +56,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
         ///
       } else {
         MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+            message: "noInternet".tr );
       }
     });
 
@@ -107,7 +107,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
       });
     } else if (!isConnected!) {
       MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+          message: "noInternet".tr );
       return NoInternetWidget(size: sizee);
     }
 

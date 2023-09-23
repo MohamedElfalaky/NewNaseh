@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:password_text_field/password_text_field.dart';
 
 import '../../../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_state.dart';
 import '../../../../app/Style/Icons.dart';
 import '../../../../app/constants.dart';
-import '../../../../app/utils/lang/language_constants.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../widgets/MyButton.dart';
 import '../../../widgets/shared.dart';
@@ -61,7 +61,7 @@ class _ChangePasswordState extends State<ChangePassword>
         child: Scaffold(
           appBar: AppBar(
               leadingWidth: 70,
-              title: Text(getTranslated(context, "change_password")!),
+              title: Text( "change_password".tr),
               leading:  MyBackButton()),
           backgroundColor: Constants.whiteAppColor,
           resizeToAvoidBottomInset: false,
@@ -86,7 +86,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                 height: 64,
                               ),
                               Text(
-                                getTranslated(context, "enter_new_password")!,
+                                 "enter_new_password".tr,
                                 textAlign: TextAlign.end,
                                 style: Constants.mainTitleRegularFont
                                     .copyWith(fontSize: 18),
@@ -95,7 +95,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                 height: 64,
                               ),
                               Text(
-                                getTranslated(context, "password")!,
+                                 "password".tr,
                                 textAlign: TextAlign.end,
                                 style: Constants.mainTitleRegularFont,
                               ),
@@ -111,18 +111,16 @@ class _ChangePasswordState extends State<ChangePassword>
                                         AutovalidateMode.onUserInteraction,
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return getTranslated(
-                                            context, "password_required");
+                                        return  "password_required".tr;
                                       }
-                                      if (value.length < 6) {
-                                        return getTranslated(
-                                            context, "password_length");
+                                      if (value.length < 6 || value.length >10) {
+                                        return  "password_length".tr;
                                       }
                                       bool result = validatePassword(value);
                                       if (result) {
                                         return null;
                                       } else {
-                                        return " Password should contain Capital, small letter & Number & Special";
+                                        return " Password should contain Capital, small letter & Number & Special".tr;
                                       }
                                       return null;
                                     },
@@ -153,7 +151,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                 height: 16,
                               ),
                               Text(
-                                getTranslated(context, 'password_confirm')!,
+                                 'password_confirm'.tr,
                                 textAlign: TextAlign.end,
                                 style: Constants.mainTitleRegularFont,
                               ),
@@ -169,22 +167,19 @@ class _ChangePasswordState extends State<ChangePassword>
                                         AutovalidateMode.onUserInteraction,
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return getTranslated(
-                                            context, "password_required");
+                                        return  "password_required".tr;
                                       }
-                                      if (value.length < 6) {
-                                        return getTranslated(
-                                            context, "password_length");
+                                      if (value.length < 6 || value.length >10) {
+                                        return  "password_length".tr;
                                       }
                                       if (value != _passwordController.text) {
-                                        return getTranslated(
-                                            context, "password_not_match");
+                                        return  "password_not_match".tr;
                                       }
                                       bool result = validatePassword(value);
                                       if (result) {
                                         return null;
                                       } else {
-                                        return " Password should contain Capital, small letter & Number & Special";
+                                        return " Password should contain Capital, small letter & Number & Special".tr;
                                       }
                                     },
                                     decoration:
@@ -223,7 +218,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                         height: 48,
                                         child: MyButton(
                                           isBold: true,
-                                          txt: getTranslated(context, "save")!,
+                                          txt:  "save".tr,
                                           onPressedHandler: () {
                                             if (_formKey.currentState!
                                                 .validate()) {

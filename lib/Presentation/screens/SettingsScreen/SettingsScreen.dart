@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
-
-import '../../../app/utils/lang/language_constants.dart';
+import '../../../app/utils/Language/get_language.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen();
@@ -39,8 +39,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ///
         ///
       } else {
-        MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -85,8 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -106,7 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               height: 48,
               child: MyButton(
                 isBold: true,
-                txt: "حفظ",
+                txt:"Save".tr,
                 onPressedHandler: () {},
               ),
             ),
@@ -116,11 +114,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               centerTitle: false,
               leadingWidth: 70,
               title: Row(
-                children: const [
-                  Text("الإعدادات"),
+                children: [
+                  Text("Settings".tr),
                 ],
               ),
-              leading:  MyBackButton()),
+              leading: MyBackButton()),
           body: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 18),
             child: Column(
@@ -132,47 +130,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       width: 8,
                     ),
                     Text(
-                      "تغيير اللغة",
+                      "change lang".tr,
                       style: Constants.secondaryTitleFont,
                     )
                   ],
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: RadioListTile(
-                          activeColor: Constants.primaryAppColor,
-                          contentPadding: const EdgeInsets.all(0),
-                          title: const Text(
-                            "العربية",
-                            style: Constants.secondaryTitleRegularFont,
-                          ),
-                          value: "العربية",
-                          groupValue: _groupValue,
-                          onChanged: (s) {
-                            setState(() {
-                              _groupValue = s;
-                            });
-                          }),
-                    ),
-                    Expanded(
-                      child: RadioListTile(
-                          activeColor: Constants.primaryAppColor,
-                          contentPadding: const EdgeInsets.all(0),
-                          title: const Text(
-                            "English",
-                            style: Constants.secondaryTitleRegularFont,
-                          ),
-                          value: "English",
-                          groupValue: _groupValue,
-                          onChanged: (s) {
-                            setState(() {
-                              _groupValue = s;
-                            });
-                          }),
-                    )
-                  ],
-                ),
+                const ChangeLangItem(),
                 Divider(
                   color: Color(0xff555B6E),
                 ),
@@ -185,7 +148,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: 8,
                       ),
                       Text(
-                        "الأشعارات",
+                        "Notifications".tr,
                         style: Constants.secondaryTitleFont,
                       ),
                       Spacer(),
@@ -207,7 +170,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: 8,
                       ),
                       Text(
-                        "استقبال طلبات",
+                        "Receive Orders".tr,
                         style: Constants.secondaryTitleFont,
                       ),
                       Spacer(),
@@ -230,7 +193,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: 8,
                       ),
                       Text(
-                        "حذف الحساب",
+                        "Delete Account".tr,
                         style: Constants.secondaryTitleFont
                             .copyWith(color: Color(0XFFED2626)),
                       ),

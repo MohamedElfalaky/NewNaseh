@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
@@ -10,7 +11,6 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
 import '../../../Data/models/advice_models/show_advice_model.dart';
-import '../../../app/utils/lang/language_constants.dart';
 
 class RejectOrder extends StatefulWidget {
    RejectOrder(
@@ -39,7 +39,7 @@ class _RejectOrderState extends State<RejectOrder> {
       if (value) {
       } else {
         MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+            message:  "noInternet".tr );
       }
     });
 
@@ -79,7 +79,7 @@ class _RejectOrderState extends State<RejectOrder> {
       });
     } else if (!isConnected!) {
       MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+          message:  "noInternet".tr );
       return NoInternetWidget(size: sizee);
     }
 

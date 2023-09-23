@@ -7,7 +7,7 @@ class ListOneHomeCubit extends Cubit<ListOneHomeState> {
   ListOneHomeRepo listHomeOne = ListOneHomeRepo();
 
 
-  getOneHome(int id) async {
+  getOneHome(String id) async {
     try {
       emit(ListOneHomeLoading());
       final mList = await listHomeOne.getHSList(id);

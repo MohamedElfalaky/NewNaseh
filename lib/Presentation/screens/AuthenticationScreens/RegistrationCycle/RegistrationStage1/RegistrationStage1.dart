@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage2/RegistrationStage2.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-
 import '../../../../../Data/cubit/authentication/new_mob/mob_cubit.dart';
 import '../../../../../Data/cubit/authentication/new_mob/mob_state.dart';
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/lang/language_constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
 import '../../../../widgets/PhoneTextField.dart';
@@ -104,7 +102,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                                   _sendPhone = phone.completeNumber;
                                 },
                                 invalidNumberMessage:
-                                    getTranslated(context, "invalid_number")!,
+                                     "invalid_number".tr,
                               ),
                             ),
                             state is MobLoading

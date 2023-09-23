@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -13,23 +12,23 @@ import 'package:http/http.dart' as http;
 class Register {
   Future<RegisterModel?> register(
       {String? email,
-        String? pass,
-        String? fullName,
-        String? mobile,
-        String? countryId,
-        String? cityId,
-        int? gender,
-        String? nationalityId,
-        String? category,
-        String? userName,
-        String? info,
-        String? description,
-        String? experienceYear,
-        String? documents,
-        String? bankName,
-        String? bankAccount,
-        String? birthday,
-        String? avatar}) async {
+      String? pass,
+      String? fullName,
+      String? mobile,
+      String? countryId,
+      String? cityId,
+      int? gender,
+      String? nationalityId,
+      String? category,
+      String? userName,
+      String? info,
+      String? description,
+      String? experienceYear,
+      String? documents,
+      String? bankName,
+      String? bankAccount,
+      String? birthday,
+      String? avatar}) async {
     try {
       http.Response response = await http.post(
           Uri.parse('${Keys.baseUrl}/adviser/auth/store'),
@@ -53,8 +52,7 @@ class Register {
             'birthday': '$birthday',
             'avatar[0][type]': 'png',
             'avatar[0][file]': '$avatar',
-            'document[][type]': '',
-            'document[][file]': documents,
+            'document': documents,
             'device': sharedPrefs.fCMToken,
           });
       Map<String, dynamic> responseMap = json.decode(response.body);
@@ -74,7 +72,7 @@ class Register {
       } else {
         // debugPrint("request is $phone & $pass");
         MyApplication.showToastView(
-          // message: responseMap["message"].values.toString());
+            // message: responseMap["message"].values.toString());
             message: responseMap["message"].toString());
       }
     } on TimeoutException catch (e) {
@@ -96,9 +94,6 @@ class Register {
     return null;
   }
 }
-
-
-
 
 // import 'dart:async';
 // import 'dart:convert';

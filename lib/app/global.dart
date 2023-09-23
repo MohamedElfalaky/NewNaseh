@@ -1,9 +1,10 @@
+import 'package:get/get.dart';
+
 /// vars with changeable values
 class GlobalVars {
   Map<String, String>? headers = {
     'Accept': 'application/json',
-    // 'lang': selectedLang!,
-    'lang': "ar",
+    'lang': Get.locale?.languageCode??"ar",
     // 'Content-Type': 'application/json',
   };
   String? oldLang;
@@ -11,4 +12,3 @@ class GlobalVars {
   String? androidRelease;
 }
 
-String? selectedLang;

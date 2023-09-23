@@ -11,7 +11,6 @@ import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:photo_view/photo_view.dart';
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/lang/language_constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
 

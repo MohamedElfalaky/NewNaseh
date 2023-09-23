@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 /// vars with fixed values
@@ -151,10 +152,13 @@ class Constants {
                           start: 12, end: 6, top: 10, bottom: 10),
                       child: Container(
                         width: 30,
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                left: BorderSide(
-                                    width: 1, color: Color(0xFFBDBDBD)))),
+                        decoration: BoxDecoration(
+                            border: Get.locale!.languageCode=="ar"?const Border(
+                                left:
+                                BorderSide(width: 1, color: Color(0xFFBDBDBD))) :const Border(
+                                right:
+                                BorderSide(width: 1, color: Color(0xFFBDBDBD)))
+                        ),
                         margin: const EdgeInsetsDirectional.only(end: 8),
                         padding: const EdgeInsetsDirectional.only(end: 8),
                         child: prefixIcon,
@@ -168,10 +172,13 @@ class Constants {
                     start: 12, end: 6, top: 10, bottom: 10),
                 child: Container(
                   width: 30,
-                  decoration: const BoxDecoration(
-                      border: Border(
+                  decoration:  BoxDecoration(
+                      border: Get.locale!.languageCode=="ar"?const Border(
                           left:
-                              BorderSide(width: 1, color: Color(0xFFBDBDBD)))),
+                              BorderSide(width: 1, color: Color(0xFFBDBDBD))) :const Border(
+                          right:
+                              BorderSide(width: 1, color: Color(0xFFBDBDBD)))
+                  ),
                   margin: const EdgeInsetsDirectional.only(end: 8),
                   padding: const EdgeInsetsDirectional.only(end: 8),
                   child: prefixIcon,

@@ -1,23 +1,23 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'Data/repositories/notification/fcm.dart';
+import 'Presentation/screens/SettingsScreen/lang_item.dart';
 import 'app/global.dart';
 import 'app/keys.dart';
 import 'app/utils/BlocProviders.dart';
-import 'app/utils/lang/demo_localization.dart';
-import 'app/utils/lang/language_constants.dart';
 import 'app/utils/sharedPreferenceClass.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -33,20 +33,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // ignore: deprecated_member_use
   FlutterNativeSplash.removeAfter(initialization);
+  await SharedPrefs().init();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  await SharedPrefs().init();
 
   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
-  static void setLocale(BuildContext context, Locale locale) {
-    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
-    state!.setAppLocale(locale);
-  }
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -55,25 +50,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
   FCMNotification fcmNotification = FCMNotification();
-
-  void setAppLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
-
-//   // to change language
-  void changeLanguage() async {
-    Locale newLocale = await setLocale("ar");
-    GlobalVars().oldLang = "en";
-    sharedPrefs.setLanguage("ar");
-    setState(() {
-      GlobalVars().headers = {'Accept': 'application/json', 'lang': "ar"};
-      selectedLang = "ar";
-
-      MyApp.setLocale(context, newLocale);
-    });
-  }
 
 // }
   @override
@@ -85,25 +61,26 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  @override
-  void didChangeDependencies() {
-    getLocale().then((locale) {
-      setState(() {
-        _locale = locale;
-        selectedLang = _locale!.languageCode;
-        GlobalVars().oldLang = _locale!.languageCode;
-      });
-    });
-
-    super.didChangeDependencies();
-  }
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: providers,
-      child: MaterialApp(
+      child: GetMaterialApp(
+        translations: Messages(),
+        // your translations
+        locale: sharedPrefs.getLanguage() == ""
+            ? const Locale('ar')
+            : Locale(sharedPrefs.getLanguage()),
+        // translations will be displayed in that locale
+        fallbackLocale: const Locale('ar'),
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          DefaultCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('ar'), Locale('en')],
         navigatorKey: Keys.navigatorKey,
         builder: (context2, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(context, widget!),
@@ -122,28 +99,6 @@ class _MyAppState extends State<MyApp> {
             ],
             background: Container(color: const Color(0xFFF5F5F5))),
         useInheritedMediaQuery: true,
-        localizationsDelegates: const [
-          DemoLocalization.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        locale: const Locale("ar", "SA"),
-        // locale: _locale,
-        supportedLocales: const [
-          Locale("ar", "SA"),
-          Locale("en", "US"),
-        ],
-        localeResolutionCallback: (currentLocale, supportedLocales) {
-          if (currentLocale != null) {
-            for (Locale locale in supportedLocales) {
-              if (currentLocale.languageCode == locale.languageCode) {
-                return currentLocale;
-              }
-            }
-          }
-          return supportedLocales.first;
-        },
         debugShowCheckedModeBanner: false,
         title: 'NASE7',
         theme: ThemeData(

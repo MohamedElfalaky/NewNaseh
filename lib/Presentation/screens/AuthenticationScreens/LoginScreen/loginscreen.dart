@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_cubit.dart';
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_state.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/ChangePassword/check_mobile_forget_screen.dart';
@@ -9,9 +10,9 @@ import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:password_text_field/password_text_field.dart';
 import '../../../../app/constants.dart';
-import '../../../../app/utils/lang/language_constants.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../widgets/PhoneTextField.dart';
+import '../RegistrationCycle/RegistrationController.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -158,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   _sendPhone = phone.completeNumber;
                                 },
                                 invalidNumberMessage:
-                                    getTranslated(context, "invalid_number")!,
+                                   "invalid_number".tr,
                               ),
                             ),
                           ),
@@ -171,14 +172,18 @@ class _LoginScreenState extends State<LoginScreen>
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return getTranslated(
-                                        context, "password_required")!;
+                                    return  "password_required".tr;
                                   }
-                                  if (value.length < 6) {
-                                    return getTranslated(
-                                        context, "password_length")!;
+
+                                 else  if (value.length < 6 || value.length >10) {
+                                    return  "password_length".tr;
                                   }
-                                  return null;
+                                  bool result = validatePassword(value);
+                                  if (result) {
+                                    return null;
+                                  } else {
+                                    return " Password should contain Capital, small letter & Number & Special".tr;
+                                  }
                                 },
                                 decoration: Constants.setTextInputDecoration(
                                     hintText: "كلمة المرور...",
@@ -254,7 +259,7 @@ class _LoginScreenState extends State<LoginScreen>
                               child: SizedBox(
                                 width: double.infinity,
                                 child: Text(
-                                    getTranslated(context, "forgot_password")!,
+                                   "forgot_password".tr,
                                     textAlign: TextAlign.center,
                                     style: Constants.mainTitleFont),
                               ),
@@ -288,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen>
                           //       onPressed: () {},
                           //       child: Center(
                           //         child: Text(
-                          //           getTranslated(context, "login_guest")!,
+                          //          "login_guest".tr,
                           //           style: Constants.secondaryTitleRegularFont.copyWith(
                           //             color: Colors.white,
                           //           ),

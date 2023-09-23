@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:get/get.dart';
 import '../../app/constants.dart';
-import '../../app/utils/lang/language_constants.dart';
 
 class AppbarButton extends StatelessWidget {
   final Icon? myIcon;
@@ -103,7 +102,7 @@ class Back extends StatelessWidget {
         const SizedBox(
           width: 16,
         ),
-        Text(getTranslated(context, header ?? "")!,
+        Text ((header ??"").tr,
             textAlign: TextAlign.right, style: Constants.headerNavigationFont),
       ],
     );

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nasooh/Presentation/screens/WalletScreen/Components/OneOrder.dart';
 import 'package:nasooh/Presentation/screens/WalletScreen/controller/WalletScreenController.dart';
@@ -10,8 +11,6 @@ import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
-
-import '../../../app/utils/lang/language_constants.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen();
@@ -42,7 +41,7 @@ class _WalletScreenState extends State<WalletScreen> {
         ///
       } else {
         MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+            message:  "noInternet".tr );
       }
     });
 
@@ -88,7 +87,7 @@ class _WalletScreenState extends State<WalletScreen> {
       });
     } else if (!isConnected!) {
       MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+          message:  "noInternet".tr) ;
       return NoInternetWidget(size: sizee);
     }
 

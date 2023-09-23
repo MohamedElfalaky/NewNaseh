@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/AdviceDetail/advice_detail.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/outComeandRate.dart';
@@ -28,7 +29,6 @@ import '../../../Data/cubit/home/home_status_cubit/home_status_state.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../Data/models/home_models/home_one_model.dart';
 import '../../../Data/models/home_models/home_status_model.dart';
-import '../../../app/utils/lang/language_constants.dart';
 import '../AdviceDetail/advice_new_detail.dart';
 import '../EditProfileScreen/EditProfileScreen.dart';
 
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var cubitVal = HomeStatusCubit.get(context);
     context
         .read<ListOneHomeCubit>()
-        .getOneHome(cubitVal.homeStatusModel!.data![0].id!);
+        .getOneHome("");
   }
 
   @override
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ///
       } else {
         MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+            message:  "noInternet".tr );
       }
     });
 
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } else if (!isConnected!) {
       MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+          message: "noInternet".tr );
       return NoInternetWidget(size: sizee);
     }
 
@@ -205,23 +205,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 myListile(
                     iconn: ordersIcon,
-                    namee: "طلباتي",
+                    namee:  "My Orders".tr,
                     onTapHandler: () => Navigator.pop(context)),
                 myListile(
                     iconn: ta3delProfile,
-                    namee: "تعديل الملف الشخصي",
+                    namee:  "Edit Profile".tr,
                     onTapHandler: () => MyApplication.navigateTo(
                         context, const EditProfileScreen())),
                 myListile(
                     iconn: mahfazty,
-                    namee: "محفظتي",
+                    namee: "My Wallet".tr,
                     onTapHandler: () {
                       Navigator.pop(context);
                       MyApplication.navigateTo(context, const WalletScreen());
                     }),
                 myListile(
                     iconn: notificationIcon,
-                    namee: "الأشعارات",
+                    namee: "Notifications".tr,
                     onTapHandler: () {
                       Navigator.pop(context);
                       MyApplication.navigateTo(
@@ -229,27 +229,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     }),
                 myListile(
                     iconn: settingIcon,
-                    namee: "الإعدادات",
+                    namee:  "Settings".tr,
                     onTapHandler: () {
                       Navigator.pop(context);
                       MyApplication.navigateTo(context, const SettingsScreen());
                     }),
                 myListile(
                     iconn: shorot,
-                    namee: 'الشروط والأحكام',
+                    namee: "terms & Conditions" .tr,
                     onTapHandler: () {
                       Navigator.pop(context);
                       MyApplication.navigateTo(
                           context, const TermsConditionsScreen());
                     }),
-                myListile(iconn: techIcon, namee: 'الدعم الفني'),
-                myListile(iconn: knowAboutIcon, namee: 'تعرف علي تطبيق نصوح'),
+                myListile(iconn: techIcon, namee:"Tech" .tr),
+                myListile(iconn: knowAboutIcon, namee:"Know".tr),
                 BlocBuilder<LogOutCubit, LogOutState>(
                     builder: (context, state) => state is LogOutLoading
                         ? const Center(child: CircularProgressIndicator())
                         : myListile(
                             iconn: logOut,
-                            namee: 'تسجيل الخروج',
+                            namee: "Sign Out" .tr,
                             onTapHandler: () {
                               context.read<LogOutCubit>().logOut(
                                     context: context,
@@ -354,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration:
                                   Constants.setRegistrationTextInputDecoration(
                                 prefixIcon: SvgPicture.asset(searchIcon),
-                                hintText: "ابحث عن الطلبات...",
+                                hintText: "Search for Orders".tr,
                               ).copyWith(
                                 enabledBorder: OutlineInputBorder(
                                   gapPadding: 0,
@@ -414,9 +414,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onTap: () {
                                         setState(() {
                                           selectedIndex = index;
+                                          if(selectedIndex==0) {context
+                                              .read<ListOneHomeCubit>()
+                                              .getOneHome("");}
+                                          else {
                                           context
                                               .read<ListOneHomeCubit>()
-                                              .getOneHome(dataList[index].id!);
+                                              .getOneHome(dataList[index].id.toString()); }
                                         });
                                       },
                                       child: Padding(

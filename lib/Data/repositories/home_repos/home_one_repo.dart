@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/app/keys.dart';
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
@@ -9,14 +10,13 @@ import 'package:http/http.dart' as http;
 import '../../models/home_models/home_one_model.dart';
 
 class ListOneHomeRepo {
-  Future<ListOneHome?> getHSList(int id) async {
+  Future<ListOneHome?> getHSList(String id) async {
     try {
       http.Response response = await http.get(
         Uri.parse('${Keys.baseUrl}/adviser/advice/list?status_id=$id'),
         headers: {
           'Accept': 'application/json',
-          // 'lang': selectedLang!,
-          'lang': "ar",
+          'lang': Get.locale?.languageCode??"ar",
           "Authorization": "Bearer ${sharedPrefs.getToken()}"
         },
       );

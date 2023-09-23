@@ -40,7 +40,7 @@ class Auth {
         return userdata;
       } else {
         // debugPrint("request is $phone & $pass");
-        MyApplication.showToastView(message: responseMap["message"]);
+        MyApplication.showToastView(message: responseMap["message"].toString());
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());

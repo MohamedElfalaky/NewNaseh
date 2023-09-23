@@ -4,21 +4,15 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:nasooh/Data/cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
-import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
-import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
-
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
-
 import '../../../Data/cubit/advice_cubits/approve_advice_cubit/approve_advice_cubit.dart';
 import '../../../Data/cubit/advice_cubits/approve_advice_cubit/approve_advice_state.dart';
 import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_state.dart';
-import '../../../Data/models/advice_models/advice_detail_model.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
-import '../../../app/utils/lang/language_constants.dart';
-
 import '../../widgets/MyButton.dart';
 import '../../widgets/MyButtonOutlined.dart';
 import '../../widgets/noInternet.dart';
@@ -49,7 +43,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
       if (value) {
       } else {
         MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+            message:  "noInternet".tr );
       }
     });
 
@@ -90,7 +84,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
       });
     } else if (!isConnected!) {
       MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+          message:  "noInternet".tr );
       return NoInternetWidget(size: sizee);
     }
 
@@ -114,14 +108,14 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                   padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           MyBackButton(),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Column(
@@ -138,7 +132,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                               ),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           SvgPicture.asset(
                             logoColor,
                             color: Constants.primaryAppColor,
@@ -155,7 +149,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                         // ignore: prefer_const_literals_to_create_immutables
                         child: Column(children: [
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                                 top: 6, bottom: 6, left: 16, right: 16),
                             child: Text(
                               showAdData.name ?? "",
@@ -178,7 +172,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                         bottomStart: Radius.circular(10))),
                                 child: Text(
                                   showAdData.status?.name ?? "",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 10,
                                       fontFamily: Constants.mainFont),
                                   textAlign: TextAlign.center,

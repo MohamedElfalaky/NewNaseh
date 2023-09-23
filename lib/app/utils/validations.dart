@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'lang/language_constants.dart';
+import 'package:get/get.dart';
 
 
 class Validations {
@@ -17,9 +17,9 @@ static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.
     Pattern pattern = r'[a-zA-zء-ي]{2,}[\s]{1,}[a-zA-Zء-ي]{2,}$';
     RegExp regex = RegExp(pattern.toString());
     if (name!.trim().isEmpty) {
-      validateString = "${getTranslated(context, 'pleaseentername')}";
+      validateString =  'pleaseentername'.tr;
     } else if (!regex.hasMatch(name.trim()) && name.trim().length <= 15) {
-      validateString = "${getTranslated(context, 'invaliddata')}";
+      validateString =  'invaliddata'.tr;
     } else {
       validateString = null;
     }
@@ -34,7 +34,7 @@ static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.
     if (name!.trim().isEmpty) {
       validateString = null;
     } else if (!regex.hasMatch(name.trim()) && name.trim().length <= 15) {
-      validateString = "${getTranslated(context, 'invaliddata')}";
+      validateString =  'invaliddata'.tr;
     } else {
       validateString = null;
     }
@@ -49,7 +49,7 @@ static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.
     if (email == null || email.trim().isEmpty) {
       validateString = null;
     } else if (!regex.hasMatch(email.trim())) {
-      validateString = "${getTranslated(context, 'invaliddata')}";
+      validateString =  'invaliddata'.tr;
     } else {
       validateString = null;
     }
@@ -60,11 +60,11 @@ static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.
     String? validateString = '';
 
     if (phone.trim().isEmpty) {
-      validateString = "${getTranslated(context, 'emptyfield')}";
+      validateString =  'emptyfield'.tr;
     } else if (phone.trim().length != 9) {
-      validateString = "${getTranslated(context, 'invaliddata')}";
+      validateString =  'invaliddata'.tr;
     } else if (!phone.startsWith("5", 0)) {
-      validateString = getTranslated(context, "invaliddata");
+      validateString =  "invaliddata".tr;
     } else {
       validateString = null;
     }
@@ -75,7 +75,7 @@ static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.
     String? validateString = '';
 
     if (password.trim().isEmpty) {
-      validateString = "${getTranslated(context, 'emptyfield')}";
+      validateString =  'emptyfield'.tr;
     }
     // else if (password.length < 6) {
     //   validateString = "invalid password";
@@ -91,9 +91,9 @@ static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.
     String? validateString = '';
 
     if (conpass.trim().isEmpty) {
-      validateString = "${getTranslated(context, 'emptyfield')}";
+      validateString =  'emptyfield'.tr;
     } else if (password.toString() != conpass.toString()) {
-      validateString = "${getTranslated(context, 'DifferentPasswords')}";
+      validateString =  'DifferentPasswords'.tr;
     } else {
       validateString = null;
     }
@@ -103,7 +103,7 @@ static  RegExp  validationPassword = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.
   static String? validateField(String value, BuildContext context) {
     String? validateString = '';
     if (value.trim().isEmpty) {
-      validateString = "${getTranslated(context, 'emptyfield')}";
+      validateString =  'emptyfield'.tr;
     } else {
       validateString = null;
     }

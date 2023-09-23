@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nasooh/Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage5/RegistrationStage5.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
@@ -18,8 +18,6 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:nasooh/app/utils/registeration_values.dart';
-import 'package:photo_view/photo_view.dart';
-
 import '../../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../../Data/cubit/authentication/category_cubit/category_cubit.dart';
 import '../../../Data/cubit/authentication/category_cubit/category_state.dart';
@@ -29,7 +27,6 @@ import '../../../Data/cubit/profile/profile_cubit/profile_state.dart';
 import '../../../Data/cubit/profile/update_profile_cubit/update_profile_cubit.dart';
 import '../../../Data/cubit/profile/update_profile_cubit/update_profile_state.dart';
 import '../../../Data/models/Auth_models/category_model.dart';
-import '../../../app/utils/lang/language_constants.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import '../../../app/utils/validations.dart';
 import '../../widgets/my_drop_down_list.dart';
@@ -140,8 +137,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ///
         ///
       } else {
-        MyApplication.showToastView(
-            message: '${getTranslated(context, 'noInternet')}');
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -186,8 +182,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message: '${getTranslated(context, 'noInternet')}');
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -209,7 +204,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: 48,
                           child: MyButton(
                             isBold: true,
-                            txt: "حفظ",
+                            txt: "save".tr,
                             onPressedHandler: () {
                               print(inputCity);
                               print(inputCountry);
@@ -261,11 +256,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           centerTitle: false,
           leadingWidth: 70,
           title: Row(
-            children: const [
-              Text("تعديل الملف الشخصي"),
+            children: [
+              Text("Edit Profile".tr),
             ],
           ),
-          leading:  MyBackButton(),
+          leading: MyBackButton(),
         ),
         body: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, profileState) {
@@ -291,8 +286,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     children: [
                       ExpansionTile(
                           tilePadding: const EdgeInsets.all(0),
-                          title: const Text(
-                            "المعلومات الشخصية",
+                          title: Text(
+                            "personal information".tr,
                             style: Constants.mainTitleFont,
                           ),
                           children: [
@@ -376,7 +371,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                             MainAxisSize.min,
                                                         children: [
                                                           RowModalSheet(
-                                                              txt: "كاميرا",
+                                                              txt: "camera".tr,
                                                               imageIcon:
                                                                   cameraIcon,
                                                               onPressed: () {
@@ -387,7 +382,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                               }),
                                                           Divider(),
                                                           RowModalSheet(
-                                                            txt: "الاستديو",
+                                                            txt: "gellery".tr,
                                                             imageIcon:
                                                                 galleryIcon,
                                                             onPressed: () {
@@ -399,7 +394,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                           ),
                                                           Divider(),
                                                           RowModalSheet(
-                                                            txt: "الغاء",
+                                                            txt: "cancel".tr,
                                                             imageIcon:
                                                                 closeIcon,
                                                             onPressed: () {
@@ -448,12 +443,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         AutovalidateMode.onUserInteraction,
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return getTranslated(
-                                            context, "full Name Required")!;
+                                        return "full Name Required".tr;
                                       } else if (value.length > 33 ||
                                           value.length < 2) {
-                                        return getTranslated(
-                                            context, "name length")!;
+                                        return "name length".tr;
                                       }
                                       return null;
                                     },
@@ -473,12 +466,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       AutovalidateMode.onUserInteraction,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return getTranslated(
-                                          context, "User Name Required")!;
+                                      return "User Name Required".tr;
                                     }
                                     if (value.length > 17 || value.length < 5) {
-                                      return getTranslated(
-                                          context, "User Name Length")!;
+                                      return "User Name Length".tr;
                                     }
                                     // else if   (!validEnglish(value)) {
                                     //   return 'الاسم يجب ان يحتوي علي حروف انجليزية و أرقام' ;
@@ -512,8 +503,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       if (val!.isEmpty ||
                                           !RegExp(Validations.validationEmail)
                                               .hasMatch(val)) {
-                                        return getTranslated(
-                                            context, "Email data")!;
+                                        return "Email data".tr;
                                       }
                                       return null;
                                     },
@@ -521,7 +511,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         AutovalidateMode.onUserInteraction,
                                     decoration: Constants
                                         .setRegistrationTextInputDecoration(
-                                            hintText: "البريد الإلكتروني...",
+                                            hintText: "Email ...".tr,
                                             prefixIcon: SvgPicture.asset(
                                               mailLink,
                                               height: 24,
@@ -533,7 +523,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 //   validator: (val) {
                                 //     if (val!.isEmpty || val.length < 8) {
                                 //       return getTranslated(
-                                //           context, "password data")!;
+                                //           context, "password data".tr;
                                 //     }
                                 //     return null;
                                 //   },
@@ -575,11 +565,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           AutovalidateMode.onUserInteraction,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return getTranslated(
-                                              context, "description Required")!;
+                                          return "description Required".tr;
                                         } else if (value.length < 3) {
-                                          return getTranslated(
-                                              context, "short description")!;
+                                          return "short description".tr;
                                         }
                                         return null;
                                       },
@@ -603,8 +591,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           AutovalidateMode.onUserInteraction,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return getTranslated(
-                                              context, "summary Required")!;
+                                          return "summary Required".tr;
                                         }
                                         return null;
                                       },
@@ -629,8 +616,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           AutovalidateMode.onUserInteraction,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return getTranslated(
-                                              context, "experience Required")!;
+                                          return "experience Required".tr;
                                         }
                                         return null;
                                       },
@@ -750,8 +736,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       //     ),
                       ExpansionTile(
                           tilePadding: const EdgeInsets.all(0),
-                          title: const Text(
-                            "معلومات إضافية",
+                          title: Text(
+                            "additional information".tr,
                             style: Constants.mainTitleFont,
                           ),
                           children: [
@@ -831,8 +817,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             )),
                                   ),
                                 ),
-                                const Text(
-                                  "الجنس",
+                                Text(
+                                  "gender".tr,
                                   style: Constants.secondaryTitleFont,
                                 ),
                                 StatefulBuilder(
@@ -846,8 +832,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                 Constants.primaryAppColor,
                                             contentPadding:
                                                 const EdgeInsets.all(0),
-                                            title: const Text(
-                                              "ذكر",
+                                            title: Text(
+                                              "male".tr,
                                               style: Constants
                                                   .secondaryTitleRegularFont,
                                             ),
@@ -866,8 +852,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                 Constants.primaryAppColor,
                                             contentPadding:
                                                 const EdgeInsets.all(0),
-                                            title: const Text(
-                                              "أنثى",
+                                            title: Text(
+                                              "female".tr,
                                               style: Constants
                                                   .secondaryTitleRegularFont,
                                             ),
