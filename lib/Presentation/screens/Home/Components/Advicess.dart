@@ -1,6 +1,9 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nasooh/Data/cubit/advice_cubits/done_advice_cubit/done_advice_cubit.dart';
+import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/screens/RegectOrder/RegectOrder.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/MyButtonOutlined.dart';
@@ -8,17 +11,15 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
+import '../../../../Data/cubit/advice_cubits/done_advice_cubit/done_advice_state.dart';
 import '../../../../Data/models/advice_models/show_advice_model.dart';
+import '../../../widgets/alerts.dart';
 
 class Advices extends StatelessWidget {
   bool? isAdviceDetail;
   ShowAdData? showAdData;
 
-  Advices(
-      {super.key,
-      this.isAdviceDetail,
-        required this.showAdData
-      });
+  Advices({super.key, this.isAdviceDetail, required this.showAdData});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class Advices extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
           child: Text(
-            showAdData?.name??"",
+            showAdData?.name ?? "",
             style: Constants.mainTitleFont,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -49,7 +50,7 @@ class Advices extends StatelessWidget {
               Padding(
                 padding: EdgeInsetsDirectional.only(start: 16),
                 child: Text(
-                showAdData?.date??"",
+                  showAdData?.date ?? "",
                   style: Constants.subtitleRegularFont,
                 ),
               ),
@@ -63,7 +64,7 @@ class Advices extends StatelessWidget {
                       topStart: Radius.circular(10),
                       bottomStart: Radius.circular(10))),
               child: Text(
-                showAdData?.status?.name??"",
+                showAdData?.status?.name ?? "",
                 style: TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
                 textAlign: TextAlign.center,
               ),
@@ -81,7 +82,7 @@ class Advices extends StatelessWidget {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                          text: showAdData?.price.toString()??"",
+                          text: showAdData?.price.toString() ?? "",
                           style: Constants.headerNavigationFont.copyWith(
                               fontSize: 20, color: Constants.primaryAppColor)),
                       TextSpan(
@@ -108,18 +109,32 @@ class Advices extends StatelessWidget {
               ? SizedBox(
                   child: Row(
                     children: [
-                      Flexible(
-                        flex: 2,
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.only(end: 8.0),
-                          child: MyButton(
-                            isBold: true,
-                            txt: "تسليم",
-                            onPressedHandler: () {
-                              // MyApplication.navigateTo(
-                              //     context, RegistrationStage7());
-                            },
-                          ),
+                      BlocConsumer<DoneAdviceCubit, DoneAdviceState>(
+                        listener: (context, state) {
+                          if (state is DoneAdviceLoaded) {
+                            Alert.alert(context: context , action: (){
+                              MyApplication.navigateTo(context, const HomeScreen());
+                            } ,content:"تم تسليم نصيحتك بنجاح" ,titleAction: "الرئيسية" );
+
+                          }
+                        },
+                        builder: (context, state) => Flexible(
+                          flex: 2,
+                          child: state is DoneAdviceLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                      end: 8.0),
+                                  child: MyButton(
+                                    isBold: true,
+                                    txt: "تسليم",
+                                    onPressedHandler: () {
+                                      context
+                                          .read<DoneAdviceCubit>()
+                                          .done(adviceId: showAdData!.id!);
+                                    },
+                                  ),
+                                ),
                         ),
                       ),
                       Flexible(
@@ -129,9 +144,7 @@ class Advices extends StatelessWidget {
                           txt: "رفض",
                           onPressedHandler: () {
                             MyApplication.navigateTo(
-                                context,
-                                RejectOrder(showAdData:showAdData
-                                ));
+                                context, RejectOrder(showAdData: showAdData));
                           },
                         ),
                       ),
@@ -153,7 +166,8 @@ class Advices extends StatelessWidget {
                               height: 28,
                             )
                           : CircleAvatar(
-                              backgroundImage: NetworkImage(showAdData!.client!.avatar!),
+                              backgroundImage:
+                                  NetworkImage(showAdData!.client!.avatar!),
                             ),
                     ),
                     Padding(

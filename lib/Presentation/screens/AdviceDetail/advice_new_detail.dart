@@ -295,11 +295,10 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                 width: 1, color: Constants.outLineColor)),
                         // ignore: prefer_const_literals_to_create_immutables
                         child: Column(children: [
-                          const Padding(
-                            padding: EdgeInsets.only(
+                           Padding(
+                            padding: const EdgeInsets.only(
                                 top: 6, bottom: 6, left: 16, right: 16),
-                            child: Text(
-                              " showState.response.data.",
+                            child: Text(showState.response?.data?.description??"",
                               style: Constants.mainTitleRegularFont,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

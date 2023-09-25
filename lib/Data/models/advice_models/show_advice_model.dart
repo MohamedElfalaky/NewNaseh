@@ -41,6 +41,7 @@ class ShowAdData {
   String? name;
   int? price;
   String? date;
+  String? description;
   Status? status;
   Client? client;
   List<Chat>? chat;
@@ -49,6 +50,7 @@ class ShowAdData {
     this.id,
     this.name,
     this.price,
+    this.description,
     this.date,
     this.status,
     this.client,
@@ -57,9 +59,10 @@ class ShowAdData {
 
   factory ShowAdData.fromJson(Map<String, dynamic> json) => ShowAdData(
     id: json["id"],
-    name: json["name"],
-    price: json["price"],
-    date: json["date"],
+    name: json["name"]??"",
+    price: json["price"]??0,
+    description: json["description"]??"",
+    date: json["date"]??"",
     status: json["status"] == null ? null : Status.fromJson(json["status"]),
     client: json["client"] == null ? null : Client.fromJson(json["client"]),
     chat: json["chat"] == null ? [] : List<Chat>.from(json["chat"]!.map((x) => Chat.fromJson(x))),
@@ -70,6 +73,7 @@ class ShowAdData {
     "name": name,
     "price": price,
     "date": date,
+    "description": description,
     "status": status?.toJson(),
     "client": client?.toJson(),
     "chat": chat == null ? [] : List<dynamic>.from(chat!.map((x) => x.toJson())),

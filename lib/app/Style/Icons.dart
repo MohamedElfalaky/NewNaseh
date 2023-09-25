@@ -71,3 +71,4 @@ const String techIcon = "assets/images/SVGs/tech_icon.svg";
 ///////////////////// Jsons////////
 const String otpLotti = "assets/images/Jsons/4.json";
 const String myWallet = "assets/images/Jsons/7455-loading1.json";
+const String dialogIcon = "assets/images/reject.gif";

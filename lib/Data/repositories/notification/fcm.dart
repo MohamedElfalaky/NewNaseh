@@ -201,33 +201,33 @@ class FCMNotification {
     // NotificationDetails platformChannelSpecifics = NotificationDetails(
     //     android: androidPlatformChannelSpecifics,
     //     iOS: darwinNotificationDetails);
-    if (notification != null ) {
-
-    await flutterLocalNotificationsPlugin.show(
-      notification.hashCode,
-        notification.title,
-        notification.body,
-               NotificationDetails(
-          android: AndroidNotificationDetails(
-            Platform.isAndroid
-                ? 'com.dfa.flutterchatdemo'
-                : 'com.duytq.flutterchatdemo',
-            'Flutter chat demo',
-            // channelDescription: "channel.description",
-            icon: 'app_icon',
-            playSound: true,
-            sound:  const RawResourceAndroidNotificationSound('synth'),
-            enableVibration: true,
-            importance: Importance.max,
-            priority: Priority.high,
-          ),
-    ));
-    if(Keys.navigatorKey.currentState != null) {
-      // print (remoteNotification.data["text"]);
-      // print (remoteNotification.data["title"]);
-      // BlocProvider.of<ListOrdersCubit>(navigatorKey.currentState!.context)
-      //     .listAllOrders(false);
-    }}
+    if (notification != null) {
+      await flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              Platform.isAndroid
+                  ? 'com.dfa.flutterchatdemo'
+                  : 'com.duytq.flutterchatdemo',
+              'Flutter chat demo',
+              // channelDescription: "channel.description",
+              icon: 'app_icon',
+              playSound: true,
+              sound: const RawResourceAndroidNotificationSound('synth'),
+              enableVibration: true,
+              importance: Importance.max,
+              priority: Priority.high,
+            ),
+          ));
+      if (Keys.navigatorKey.currentState != null) {
+        // print (remoteNotification.data["text"]);
+        // print (remoteNotification.data["title"]);
+        // BlocProvider.of<ListOrdersCubit>(navigatorKey.currentState!.context)
+        //     .listAllOrders(false);
+      }
+    }
   }
 
   void configLocalNotification() {
