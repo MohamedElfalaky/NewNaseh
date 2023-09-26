@@ -42,8 +42,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
     MyApplication.checkConnection().then((value) {
       if (value) {
       } else {
-        MyApplication.showToastView(
-            message:  "noInternet".tr );
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -83,8 +82,7 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message:  "noInternet".tr );
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -263,7 +261,8 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                                     context
                                                         .read<
                                                             ApproveAdviceCubit>()
-                                                        .approve(showAdData.id!);
+                                                        .approve(
+                                                            showAdData.id!);
                                                   },
                                                 ),
                                               ),
@@ -277,7 +276,8 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                         onPressedHandler: () {
                                           MyApplication.navigateTo(
                                               context,
-                                              RejectOrder(showAdData:showAdData,
+                                              RejectOrder(
+                                                showAdData: showAdData,
                                               ));
                                         },
                                       ),
@@ -295,10 +295,11 @@ class _AdviceNewDetailState extends State<AdviceNewDetail> {
                                 width: 1, color: Constants.outLineColor)),
                         // ignore: prefer_const_literals_to_create_immutables
                         child: Column(children: [
-                           Padding(
+                          Padding(
                             padding: const EdgeInsets.only(
                                 top: 6, bottom: 6, left: 16, right: 16),
-                            child: Text(showState.response?.data?.description??"",
+                            child: Text(
+                              showState.response?.data?.description ?? "",
                               style: Constants.mainTitleRegularFont,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,

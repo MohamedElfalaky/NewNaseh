@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,6 +19,8 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
 
+import '../../../Data/cubit/authentication/get_user_cubit/get_user_cubit.dart';
+import '../../../Data/cubit/authentication/get_user_cubit/get_user_state.dart';
 import '../../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
 import '../../../Data/cubit/authentication/log_out_cubit/log_out_state.dart';
 import '../../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
@@ -27,13 +28,12 @@ import '../../../Data/cubit/home/home_one_cubit/home_one_state.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_state.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
-import '../../../Data/models/home_models/home_one_model.dart';
 import '../../../Data/models/home_models/home_status_model.dart';
 import '../AdviceDetail/advice_new_detail.dart';
 import '../EditProfileScreen/EditProfileScreen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen();
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -52,9 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> getDataFromApi() async {
     await context.read<HomeStatusCubit>().getDataHomeStatus();
     var cubitVal = HomeStatusCubit.get(context);
-    context
-        .read<ListOneHomeCubit>()
-        .getOneHome("");
+    context.read<ListOneHomeCubit>().getOneHome("");
+    context.read<GetUserCubit>().getUserMethod();
   }
 
   @override
@@ -64,15 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
 ///////////////////////////
     MyApplication.checkConnection().then((value) {
       if (value) {
-        //////
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
+        getDataFromApi();
       } else {
-        MyApplication.showToastView(
-            message:  "noInternet".tr );
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -90,15 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
       /// if internet comes back
       if (result != ConnectivityResult.none) {
-        /// call your apis
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
+        getDataFromApi();
       }
     });
-    getDataFromApi();
   }
 
   @override
@@ -125,8 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message: "noInternet".tr );
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -205,11 +191,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 myListile(
                     iconn: ordersIcon,
-                    namee:  "My Orders".tr,
+                    namee: "My Orders".tr,
                     onTapHandler: () => Navigator.pop(context)),
                 myListile(
                     iconn: ta3delProfile,
-                    namee:  "Edit Profile".tr,
+                    namee: "Edit Profile".tr,
                     onTapHandler: () => MyApplication.navigateTo(
                         context, const EditProfileScreen())),
                 myListile(
@@ -229,27 +215,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     }),
                 myListile(
                     iconn: settingIcon,
-                    namee:  "Settings".tr,
+                    namee: "Settings".tr,
                     onTapHandler: () {
                       Navigator.pop(context);
                       MyApplication.navigateTo(context, const SettingsScreen());
                     }),
                 myListile(
                     iconn: shorot,
-                    namee: "terms & Conditions" .tr,
+                    namee: "terms & Conditions".tr,
                     onTapHandler: () {
                       Navigator.pop(context);
                       MyApplication.navigateTo(
                           context, const TermsConditionsScreen());
                     }),
-                myListile(iconn: techIcon, namee:"Tech" .tr),
-                myListile(iconn: knowAboutIcon, namee:"Know".tr),
+                myListile(iconn: techIcon, namee: "Tech".tr),
+                myListile(iconn: knowAboutIcon, namee: "Know".tr),
                 BlocBuilder<LogOutCubit, LogOutState>(
                     builder: (context, state) => state is LogOutLoading
                         ? const Center(child: CircularProgressIndicator())
                         : myListile(
                             iconn: logOut,
-                            namee: "Sign Out" .tr,
+                            namee: "Sign Out".tr,
                             onTapHandler: () {
                               context.read<LogOutCubit>().logOut(
                                     context: context,
@@ -371,26 +357,34 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 24, bottom: 32),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    OutcomeAndRate(
-                                      assetName: moneyBag,
-                                      title: "الأرباح الكلية",
-                                      subtitle: "12.725 SR",
-                                      color: Constants.primaryAppColor,
-                                    ),
-                                    OutcomeAndRate(
-                                      assetName: starIcon,
-                                      title: "التقييم الإجمالي",
-                                      subtitle: "4.8",
-                                      color: const Color(0xFF27AE60),
-                                    )
-                                  ],
-                                )),
+                              padding:
+                                  const EdgeInsets.only(top: 24, bottom: 32),
+                              child: BlocBuilder<GetUserCubit, GetUserState>(
+                                  builder: (context, stateUser) {
+                              if (stateUser is GetUserLoaded) {
+                                  return Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      OutcomeAndRate(
+                                        assetName: moneyBag,
+                                        title: "الأرباح الكلية",
+                                        subtitle: "${stateUser.response?.data?.walletBalance??0} SR",
+                                        color: Constants.primaryAppColor,
+                                      ),
+                                      OutcomeAndRate(
+                                        assetName: starIcon,
+                                        title: "التقييم الإجمالي",
+                                        subtitle: stateUser.response?.data?.rate??"0",
+                                        color: const Color(0xFF27AE60),
+                                      )
+                                    ],
+                                  );
+                                } else {
+                                  return SizedBox();
+                                }
+                              }),
+                            ),
                             SizedBox(
                               height: 30,
                               child: ListView.builder(
@@ -414,13 +408,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onTap: () {
                                         setState(() {
                                           selectedIndex = index;
-                                          if(selectedIndex==0) {context
-                                              .read<ListOneHomeCubit>()
-                                              .getOneHome("");}
-                                          else {
-                                          context
-                                              .read<ListOneHomeCubit>()
-                                              .getOneHome(dataList[index].id.toString()); }
+                                          if (selectedIndex == 0) {
+                                            context
+                                                .read<ListOneHomeCubit>()
+                                                .getOneHome("");
+                                          } else {
+                                            context
+                                                .read<ListOneHomeCubit>()
+                                                .getOneHome(dataList[index]
+                                                    .id
+                                                    .toString());
+                                          }
                                         });
                                       },
                                       child: Padding(

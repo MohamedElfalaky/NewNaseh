@@ -86,9 +86,9 @@ class Advices extends StatelessWidget {
                           style: Constants.headerNavigationFont.copyWith(
                               fontSize: 20, color: Constants.primaryAppColor)),
                       TextSpan(
-                          text: 'ريال سعودي',
-                          style: Constants.subtitleFontBold
-                              .copyWith(color: Constants.primaryAppColor)),
+                          text: ' ريال سعودي',
+                          style: Constants.subtitleFontBold.copyWith(
+                              fontSize: 13, color: Constants.primaryAppColor)),
                     ],
                   ),
                 ),
@@ -112,10 +112,14 @@ class Advices extends StatelessWidget {
                       BlocConsumer<DoneAdviceCubit, DoneAdviceState>(
                         listener: (context, state) {
                           if (state is DoneAdviceLoaded) {
-                            Alert.alert(context: context , action: (){
-                              MyApplication.navigateTo(context, const HomeScreen());
-                            } ,content:"تم تسليم نصيحتك بنجاح" ,titleAction: "الرئيسية" );
-
+                            Alert.alert(
+                                context: context,
+                                action: () {
+                                  MyApplication.navigateTo(
+                                      context, const HomeScreen());
+                                },
+                                content: "تم تسليم نصيحتك بنجاح",
+                                titleAction: "الرئيسية");
                           }
                         },
                         builder: (context, state) => Flexible(

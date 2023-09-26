@@ -55,8 +55,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
         ///
         ///
       } else {
-        MyApplication.showToastView(
-            message: "noInternet".tr );
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -106,8 +105,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message: "noInternet".tr );
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -275,7 +273,8 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                           onPressedHandler: () {
                                             MyApplication.navigateTo(
                                                 context,
-                                                RejectOrder(showAdData:widget.showAdData,
+                                                RejectOrder(
+                                                  showAdData: widget.showAdData,
                                                 ));
                                           },
                                         ),
@@ -297,7 +296,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
                     child: Column(
                       children: [
                         Advices(
-                          showAdData:widget.showAdData,
+                          showAdData: widget.showAdData,
                           isAdviceDetail: true,
                         ),
                         Expanded(

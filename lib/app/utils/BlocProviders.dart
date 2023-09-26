@@ -10,6 +10,7 @@ import '../../Data/cubit/authentication/country_cubit/country_cubit.dart';
 import '../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_cubit.dart';
 import '../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_cubit.dart';
 import '../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_cubit.dart';
+import '../../Data/cubit/authentication/get_user_cubit/get_user_cubit.dart';
 import '../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
 import '../../Data/cubit/authentication/login_cubit/login_cubit.dart';
 import '../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
@@ -43,6 +44,7 @@ List<SingleChildWidget> providers = [
   BlocProvider<ShowAdviceCubit>(create: (context) => ShowAdviceCubit()),
   BlocProvider<ApproveAdviceCubit>(create: (context) => ApproveAdviceCubit()),
   BlocProvider<DoneAdviceCubit>(create: (context) => DoneAdviceCubit()),
+  BlocProvider<GetUserCubit>(create: (context) => GetUserCubit()),
   BlocProvider<CheckForgetCodeCubit>(
       create: (context) => CheckForgetCodeCubit()),
 ];

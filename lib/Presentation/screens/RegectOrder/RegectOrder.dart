@@ -13,11 +13,9 @@ import 'package:nasooh/app/utils/myApplication.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
 
 class RejectOrder extends StatefulWidget {
-   RejectOrder(
-      {required this.showAdData,
-      super.key});
+  RejectOrder({required this.showAdData, super.key});
 
- ShowAdData? showAdData;
+  ShowAdData? showAdData;
 
   @override
   State<RejectOrder> createState() => _RejectOrderState();
@@ -38,8 +36,7 @@ class _RejectOrderState extends State<RejectOrder> {
     MyApplication.checkConnection().then((value) {
       if (value) {
       } else {
-        MyApplication.showToastView(
-            message:  "noInternet".tr );
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -78,8 +75,7 @@ class _RejectOrderState extends State<RejectOrder> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message:  "noInternet".tr );
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -107,7 +103,8 @@ class _RejectOrderState extends State<RejectOrder> {
                 padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Column(
                   children: [
-                    Advices(showAdData:widget.showAdData,
+                    Advices(
+                      showAdData: widget.showAdData,
                       isAdviceDetail: false,
                     ),
                     TextField(
