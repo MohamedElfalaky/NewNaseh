@@ -21,6 +21,7 @@ import '../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
 import '../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
 import '../../Data/cubit/profile/profile_cubit/profile_cubit.dart';
 import '../../Data/cubit/profile/update_profile_cubit/update_profile_cubit.dart';
+import '../../Data/cubit/send_chat_cubit/send_chat_cubit.dart';
 import '../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
 
 List<SingleChildWidget> providers = [
@@ -47,4 +48,5 @@ List<SingleChildWidget> providers = [
   BlocProvider<GetUserCubit>(create: (context) => GetUserCubit()),
   BlocProvider<CheckForgetCodeCubit>(
       create: (context) => CheckForgetCodeCubit()),
+  BlocProvider<SendChatCubit>(create: (context) => SendChatCubit()),
 ];
