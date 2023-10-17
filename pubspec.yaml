@@ -67,6 +67,8 @@ dependencies:
   firebase_core: ^2.15.1
   flutter_checkbox_animation: ^1.0.1
   flutter_launcher_icons: ^0.13.1
+  audioplayers:
+  file_picker: ^5.2.4
 
 dev_dependencies:
   flutter_test:

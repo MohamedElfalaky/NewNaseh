@@ -17,7 +17,7 @@ class LogOutCubit extends Cubit<LogOutState> {
       logOutRepo.logOut().then((value) {
         if (value != null) {
           emit(LogOutLoaded(value));
-          MyApplication.navigateTo(context!, const LoginScreen());
+          MyApplication.navigateToReplaceAllPrevious(context!, const LoginScreen());
         } else {
           emit(LogOutError());
         }

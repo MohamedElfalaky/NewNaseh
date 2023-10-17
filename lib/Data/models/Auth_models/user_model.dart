@@ -22,18 +22,22 @@ class LoginModel {
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    data: json["data"] == null ? null : Data.fromJson(json["data"]),
-    status: json["status"],
-    message: json["message"],
-    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-  );
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        status: json["status"],
+        message: json["message"],
+        pagination: json["pagination"] == null
+            ? []
+            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data?.toJson(),
-    "status": status,
-    "message": message,
-    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
-  };
+        "data": data?.toJson(),
+        "status": status,
+        "message": message,
+        "pagination": pagination == null
+            ? []
+            : List<dynamic>.from(pagination!.map((x) => x)),
+      };
 }
 
 class Data {
@@ -43,6 +47,8 @@ class Data {
   String? description;
   String? lang;
   String? token;
+  int? isNotification;
+  int? isAdvice;
   String? fullName;
   String? mobile;
   String? userName;
@@ -65,6 +71,8 @@ class Data {
     this.description,
     this.lang,
     this.token,
+    this.isNotification,
+    this.isAdvice,
     this.fullName,
     this.mobile,
     this.userName,
@@ -82,50 +90,60 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    id: json["id"],
-    avatar: json["avatar"],
-    email: json["email"],
-    description: json["description"],
-    lang: json["lang"],
-    token: json["token"],
-    fullName: json["full_name"],
-    mobile: json["mobile"],
-    userName: json["user_name"],
-    info: json["info"],
-    gender: json["gender"],
-    countryId: json["country_id"] == null ? null : Country.fromJson(json["country_id"]),
-    cityId: json["city_id"] == null ? null : CityId.fromJson(json["city_id"]),
-    experienceYear: json["experience_year"],
-    bankName: json["bank_name"],
-    bankAccount: json["bank_account"],
-    birthday: json["birthday"],
-    nationalityId: json["nationality_id"] == null ? null : NationalityId.fromJson(json["nationality_id"]),
-    status: json["status"],
-    category: json["category"] == null ? [] : List<dynamic>.from(json["category"]!.map((x) => x)),
-  );
+        id: json["id"],
+        avatar: json["avatar"],
+        email: json["email"],
+        description: json["description"],
+        lang: json["lang"],
+        token: json["token"],
+        isNotification: json["is_notification"],
+        isAdvice: json["is_advice"],
+        fullName: json["full_name"],
+        mobile: json["mobile"],
+        userName: json["user_name"],
+        info: json["info"],
+        gender: json["gender"],
+        countryId: json["country_id"] == null
+            ? null
+            : Country.fromJson(json["country_id"]),
+        cityId:
+            json["city_id"] == null ? null : CityId.fromJson(json["city_id"]),
+        experienceYear: json["experience_year"],
+        bankName: json["bank_name"],
+        bankAccount: json["bank_account"],
+        birthday: json["birthday"],
+        nationalityId: json["nationality_id"] == null
+            ? null
+            : NationalityId.fromJson(json["nationality_id"]),
+        status: json["status"],
+        category: json["category"] == null
+            ? []
+            : List<dynamic>.from(json["category"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "avatar": avatar,
-    "email": email,
-    "description": description,
-    "lang": lang,
-    "token": token,
-    "full_name": fullName,
-    "mobile": mobile,
-    "user_name": userName,
-    "info": info,
-    "gender": gender,
-    "country_id": countryId?.toJson(),
-    "city_id": cityId?.toJson(),
-    "experience_year": experienceYear,
-    "bank_name": bankName,
-    "bank_account": bankAccount,
-    "birthday": birthday,
-    "nationality_id": nationalityId?.toJson(),
-    "status": status,
-    "category": category == null ? [] : List<dynamic>.from(category!.map((x) => x)),
-  };
+        "id": id,
+        "avatar": avatar,
+        "email": email,
+        "description": description,
+        "lang": lang,
+        "token": token,
+        "full_name": fullName,
+        "mobile": mobile,
+        "user_name": userName,
+        "info": info,
+        "gender": gender,
+        "country_id": countryId?.toJson(),
+        "city_id": cityId?.toJson(),
+        "experience_year": experienceYear,
+        "bank_name": bankName,
+        "bank_account": bankAccount,
+        "birthday": birthday,
+        "nationality_id": nationalityId?.toJson(),
+        "status": status,
+        "category":
+            category == null ? [] : List<dynamic>.from(category!.map((x) => x)),
+      };
 }
 
 class CityId {
@@ -140,16 +158,17 @@ class CityId {
   });
 
   factory CityId.fromJson(Map<String, dynamic> json) => CityId(
-    id: json["id"],
-    country: json["country"] == null ? null : Country.fromJson(json["country"]),
-    name: json["name"],
-  );
+        id: json["id"],
+        country:
+            json["country"] == null ? null : Country.fromJson(json["country"]),
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "country": country?.toJson(),
-    "name": name,
-  };
+        "id": id,
+        "country": country?.toJson(),
+        "name": name,
+      };
 }
 
 class Country {
@@ -162,14 +181,14 @@ class Country {
   });
 
   factory Country.fromJson(Map<String, dynamic> json) => Country(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }
 
 class NationalityId {
@@ -184,14 +203,14 @@ class NationalityId {
   });
 
   factory NationalityId.fromJson(Map<String, dynamic> json) => NationalityId(
-    id: json["id"],
-    name: json["name"],
-    logo: json["logo"],
-  );
+        id: json["id"],
+        name: json["name"],
+        logo: json["logo"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "logo": logo,
-  };
+        "id": id,
+        "name": name,
+        "logo": logo,
+      };
 }

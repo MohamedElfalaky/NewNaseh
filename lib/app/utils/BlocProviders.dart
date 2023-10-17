@@ -19,10 +19,16 @@ import '../../Data/cubit/authentication/register_cubit/register_cubit.dart';
 import 'package:provider/single_child_widget.dart';
 import '../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
 import '../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
+import '../../Data/cubit/notification_cubit/notification_cubit.dart';
 import '../../Data/cubit/profile/profile_cubit/profile_cubit.dart';
 import '../../Data/cubit/profile/update_profile_cubit/update_profile_cubit.dart';
+import '../../Data/cubit/rejections_cubit/reject_cubit/post_reject_cubit.dart';
+import '../../Data/cubit/rejections_cubit/rejection_list_cubit/rejection_list_cubit.dart';
 import '../../Data/cubit/send_chat_cubit/send_chat_cubit.dart';
+import '../../Data/cubit/settings_cubits/is_advice_cubit/is_advice_cubit.dart';
+import '../../Data/cubit/settings_cubits/is_notification_cubit/is_notification_cubit.dart';
 import '../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
+import '../../Data/cubit/wallet_cubit/wallet_cubit.dart';
 
 List<SingleChildWidget> providers = [
   BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
@@ -49,4 +55,10 @@ List<SingleChildWidget> providers = [
   BlocProvider<CheckForgetCodeCubit>(
       create: (context) => CheckForgetCodeCubit()),
   BlocProvider<SendChatCubit>(create: (context) => SendChatCubit()),
+  BlocProvider<PostRejectCubit>(create: (context) => PostRejectCubit()),
+  BlocProvider<ListRejectionCubit>(create: (context) => ListRejectionCubit()),
+  BlocProvider<WalletCubit>(create: (context) => WalletCubit()),
+  BlocProvider<NotificationCubit>(create: (context) => NotificationCubit()),
+  BlocProvider<IsNotificationCubit>(create: (context) => IsNotificationCubit()),
+  BlocProvider<IsAdviceCubit>(create: (context) => IsAdviceCubit()),
 ];

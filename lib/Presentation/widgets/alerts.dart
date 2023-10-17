@@ -5,9 +5,9 @@ import '../../app/Style/Icons.dart';
 class Alert {
   static Future<void> alert(
       {BuildContext? context,
-        String? titleAction,
-        String? content,
-        void Function()? action}) async {
+      String? titleAction,
+      String? content,
+      void Function()? action}) async {
     showDialog(
       context: context!,
       barrierDismissible: false,

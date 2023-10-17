@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nasooh/Presentation/screens/WalletScreen/Components/OneOrder.dart';
@@ -12,8 +13,11 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
+import '../../../Data/cubit/wallet_cubit/wallet_cubit.dart';
+import '../../../Data/cubit/wallet_cubit/wallet_state.dart';
+
 class WalletScreen extends StatefulWidget {
-  const WalletScreen();
+  const WalletScreen({super.key});
 
   @override
   State<WalletScreen> createState() => _WalletScreenState();
@@ -33,15 +37,9 @@ class _WalletScreenState extends State<WalletScreen> {
 ///////////////////////////
     MyApplication.checkConnection().then((value) {
       if (value) {
-        //////
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
+        context.read<WalletCubit>().getDataWallet();
       } else {
-        MyApplication.showToastView(
-            message:  "noInternet".tr );
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -59,12 +57,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
       /// if internet comes back
       if (result != ConnectivityResult.none) {
-        /// call your apis
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
+        context.read<WalletCubit>().getDataWallet();
       }
     });
   }
@@ -86,8 +79,7 @@ class _WalletScreenState extends State<WalletScreen> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message:  "noInternet".tr) ;
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -107,58 +99,79 @@ class _WalletScreenState extends State<WalletScreen> {
                   Text("محفظتي"),
                 ],
               ),
-              leading:  MyBackButton()),
-          body: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 120,
-                      width: 120,
-                      child: Lottie.asset(
-                        myWallet,
-                        // fit: BoxFit.none,
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              leading: MyBackButton()),
+          body:
+              BlocBuilder<WalletCubit, WalletState>(builder: (context, state) {
+            if (state is WalletLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is WalletLoaded) {
+              // print(state.response!.transaction.toString());
+              return Column(
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text(
-                          "رصيد محفظتي",
-                          style: Constants.secondaryTitleRegularFont,
+                        Container(
+                          height: 120,
+                          width: 120,
+                          child: Lottie.asset(
+                            myWallet,
+                            // fit: BoxFit.none,
+                          ),
                         ),
-                        // Text(
-                        //   "1.435.83",
-                        //   style: Constants.headerNavigationFont
-                        //       .copyWith(fontSize: 32),
-                        // ),
-                        RichText(
-                            text: TextSpan(
-                                text: "1.435.83",
-                                style: Constants.headerNavigationFont
-                                    .copyWith(fontSize: 32),
-                                children: [
-                              TextSpan(
-                                  text: "ريال سعودي",
-                                  style: Constants.subtitleFont
-                                      .copyWith(fontWeight: FontWeight.normal))
-                            ]))
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "رصيد محفظتي",
+                              style: Constants.secondaryTitleRegularFont,
+                            ),
+                            // Text(
+                            //   "1.435.83",
+                            //   style: Constants.headerNavigationFont
+                            //       .copyWith(fontSize: 32),
+                            // ),
+                            RichText(
+                                text: TextSpan(
+                                    text:state.response?.balance.toString()??"0",
+                                    style: Constants.headerNavigationFont
+                                        .copyWith(fontSize: 32),
+                                    children: [
+                                  TextSpan(
+                                      text: "ريال سعودي",
+                                      style: Constants.subtitleFont.copyWith(
+                                          fontWeight: FontWeight.normal))
+                                ]))
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
-              ),
-              Expanded(
-                  child: ListView.builder(
-                itemBuilder: (context, index) => OneOreder(),
-                itemCount: 10,
-              ))
-            ],
-          )),
+                    ),
+                  ),
+                  Expanded(
+                      child: ListView.builder(
+                    itemBuilder: (context, index) => OneOrder(
+                      description:
+                          state.response?.transaction?[index].description ?? "",
+                      value: state.response?.transaction?[index].balance
+                              .toString() ??
+                          "0",
+                      transactionId:
+                          state.response?.transaction?[index].id.toString() ??
+                              "0",
+                    ),
+                    itemCount: state.response?.transaction?.length ?? 0,
+                  ))
+                ],
+              );
+            } else if (state is WalletError) {
+              return const Center(child: Text('error'));
+            } else {
+              return const Center(child: Text('....'));
+            }
+          })),
     );
   }
 }

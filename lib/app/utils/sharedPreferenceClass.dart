@@ -61,8 +61,24 @@ class SharedPrefs {
     sharedPrefs!.setString(keyToken, value);
   }
 
+  int getIsAdvice() {
+    return sharedPrefs!.getInt("isAdvice") ?? 0;
+  }
+
+  setIsAdvice(int value) {
+    sharedPrefs!.setInt("isAdvice", value);
+  }
+
+  int getIsNotification() {
+    return sharedPrefs!.getInt("isNotification") ?? 0;
+  }
+
+  setIsNotification(int value) {
+    sharedPrefs!.setInt("isNotification", value);
+  }
+
   int? getReceiveMethod() {
-    return sharedPrefs!.getInt(receiveMethodKey) ?? null;
+    return sharedPrefs!.getInt(receiveMethodKey);
   }
 
   setReceiveMethod(int value) {
@@ -82,7 +98,7 @@ class SharedPrefs {
   }
 
   void removeFCM() {
-    sharedPrefs!.remove(fCMToken);
+    sharedPrefs!.remove(fCMKey);
   }
 
   void removeAmount() {

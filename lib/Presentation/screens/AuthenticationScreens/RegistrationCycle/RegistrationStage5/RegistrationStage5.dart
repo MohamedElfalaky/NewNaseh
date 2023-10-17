@@ -50,6 +50,8 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                     isBold: true,
                     txt: "التالي",
                     onPressedHandler: () {
+                      debugPrint(
+                          "the صهفا سحمهف is ${sendCategory.toSet().toList().toString().split("[").last.split("]").first}");
                       MyApplication.navigateTo(
                           context, const RegistrationStage6());
                     },
@@ -325,8 +327,10 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                                                           (element) =>
                                                               element == e.id);
                                                     }
+                                                    // debugPrint(
+                                                    //     "the send category is ${sendCategory.toSet().toList().toString()}");
                                                     debugPrint(
-                                                        "the send category is ${sendCategory.toSet().toList().toString()}");
+                                                        "the صهفا سحمهف is ${sendCategory.toSet().join().split("[").last.split("]").first}");
                                                   });
                                                 })),
                                         const SizedBox(

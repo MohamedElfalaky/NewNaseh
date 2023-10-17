@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:nasooh/app/constants.dart';
 
 class OneNotification extends StatelessWidget {
-  const OneNotification({super.key});
+  const OneNotification({super.key, required this.date, required this.description, required this.notificationId});
+
+  final String date;
+  final String description;
+  final String notificationId;
 
   @override
   Widget build(BuildContext context) {
@@ -42,26 +46,27 @@ class OneNotification extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "لديك طلب جديد من محمدلديك طلب جديد من محمدلديك طلب جديد من محمدلديك طلب جديد من محمدلديك طلب جديد من محمد لديك طلب جديد من محمد عبد العزيز",
+                  Text(
+                    description,
                     style: Constants.secondaryTitleFont,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  const Text(
-                    "12/2/2022 - 10:46 ص",
+                  Text(
+                    date,
+                    // "12/2/2022 - 10:46 ص",
                     style: Constants.subtitleRegularFont,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
                     child: RichText(
-                        text: const TextSpan(children: [
-                      TextSpan(
+                        text:  TextSpan(children: [
+                      const TextSpan(
                         text: "رقم الطلب  ",
                         style: Constants.subtitleRegularFont,
                       ),
                       TextSpan(
-                        text: "#738477202",
+                        text: description,
                         style: Constants.secondaryTitleFont,
                       )
                     ])),

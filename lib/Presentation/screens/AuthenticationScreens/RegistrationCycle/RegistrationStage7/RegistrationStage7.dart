@@ -48,7 +48,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("معلومات إضافية"),
-            leading:  MyBackButton(),
+            leading: MyBackButton(),
           ),
           body:
               // BlocBuilder<CountryCubit, CountryState>(
@@ -97,6 +97,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                                     isBold: true,
                                                     txt: "إتمام التسجيل",
                                                     onPressedHandler: () {
+                                                      print("image is ${base64Image}");
                                                       print(
                                                           "input Email $inputEmail & inputPassword is $inputPassword inputEnglishName is $inputEnglishName  & inputNationality $inputNationality & inputPhone $inputPhone & inputSummary is $inputSummary & inputGender $inputGender ");
                                                       print(
@@ -122,22 +123,16 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                                                 inputFullName,
                                                             experienceYear:
                                                                 inputExperience,
-                                                            avatar: base64Image,
+                                                            avatar: base64Image ??"" ,
                                                             bankAccount:
                                                                 inputBankAccount,
                                                             bankName:
                                                                 inputBankName,
                                                             birthday:
                                                                 inputBirthday,
-                                                            category: "19",
-                                                                // sendCategory
-                                                                //     .toSet()
-                                                                //     .toList()
-                                                                //     .toString()
-                                                                //     .split("[")
-                                                                //     .last
-                                                                //     .split("]")
-                                                                //     .first,
+                                                            category:
+                                                                // "19",
+                                                            sendCategory.toSet().toList().toString().split("[").last.split("]").first,
                                                             cityId: inputCity ??
                                                                 null,
                                                             countryId:
@@ -147,7 +142,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                                                 inputDescription,
                                                             documents:
                                                                 inputDocuments
-                                                                    .toString(),
+                                                                    .toString().split("[").last.split("]").first,
                                                           );
                                                       print("xx");
                                                       print(

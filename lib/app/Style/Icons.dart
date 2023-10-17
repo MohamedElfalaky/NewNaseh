@@ -56,7 +56,6 @@ const String language = "assets/images/SVGs/language.svg";
 const String notifii = "assets/images/SVGs/notifii.svg";
 const String ordersIcon = "assets/images/SVGs/orders_icon.svg";
 const String checkIcon = "assets/images/SVGs/check_icon.svg";
-
 const String deletAcc = "assets/images/SVGs/deletAcc.svg";
 const String cameraIcon = "assets/images/SVGs/camera_icon.svg";
 const String closeIcon = "assets/images/SVGs/close_icon.svg";
@@ -67,8 +66,11 @@ const String notificationIcon = "assets/images/SVGs/notification_icon.svg";
 const String settingIcon = "assets/images/SVGs/setting_icon.svg";
 const String knowAboutIcon = "assets/images/SVGs/know_about_icon.svg";
 const String techIcon = "assets/images/SVGs/tech_icon.svg";
+const String rejectIcon = "assets/images/SVGs/reject_icon.svg";
+const String titleIcon = "assets/images/SVGs/title.svg";
 
 ///////////////////// Jsons////////
 const String otpLotti = "assets/images/Jsons/4.json";
 const String myWallet = "assets/images/Jsons/7455-loading1.json";
 const String dialogIcon = "assets/images/reject.gif";
+const String rejeIcon = "assets/images/reje.gif";

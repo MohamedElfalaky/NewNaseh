@@ -25,10 +25,11 @@ class SendChatRepo {
       }, body: {
         'message': msg,
         'advice_id': '$adviceId',
-        'document[0][type]': '$type',
+        'document[0][type]': 'png',
         'document[0][file]': '$file',
       });
       Map<String, dynamic> responseMap = json.decode(response.body);
+      print("the sended file is $file");
       if (response.statusCode == 200 && responseMap["status"] == 1) {
         print(response.body);
         // MyApplication.showToastView(message: responseMap["message"]);

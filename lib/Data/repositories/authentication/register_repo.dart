@@ -51,7 +51,7 @@ class Register {
             'bank_account': '$bankAccount',
             'birthday': '$birthday',
             'avatar[0][type]': 'png',
-            'avatar[0][file]': '$avatar',
+            'avatar[0][file]': avatar,
             'document': documents,
             'device': sharedPrefs.fCMToken,
           });
@@ -61,6 +61,8 @@ class Register {
         final userdata = registerModelFromJson(responseMap);
         sharedPrefs.setToken(userdata.data!.token!);
         sharedPrefs.setId(userdata.data!.id!);
+        sharedPrefs.setIsAdvice(userdata.data!.isAdvice!);
+        sharedPrefs.setIsNotification(userdata.data!.isNotification!);
         sharedPrefs.setUserName(userdata.data!.userName!);
         if (userdata.data!.avatar != "") {
           sharedPrefs.setUserPhoto(userdata.data!.avatar!);

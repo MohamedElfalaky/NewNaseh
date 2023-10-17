@@ -13,7 +13,7 @@ class CategoryRepo {
   Future<CategoryModel?> getData() async {
     try {
       http.Response response = await http.get(
-        Uri.parse('${Keys.baseUrl}/adviser/coredata/category/list'),
+        Uri.parse('${Keys.baseUrl}/adviser/coredata/category/list?parent_id=0'),
         // headers: GlobalVars().headers,
       );
       Map<String, dynamic> responseMap = json.decode(response.body);

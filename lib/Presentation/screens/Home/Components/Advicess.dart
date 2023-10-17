@@ -23,6 +23,7 @@ class Advices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("showAdData!.chat!.length is ${showAdData!.chat!.length}");
     return Container(
       margin: const EdgeInsets.only(bottom: 18),
       decoration: BoxDecoration(
@@ -64,7 +65,7 @@ class Advices extends StatelessWidget {
                       topStart: Radius.circular(10),
                       bottomStart: Radius.circular(10))),
               child: Text(
-                showAdData?.status?.name ?? "",
+                showAdData?.label?.name ?? "",
                 style: TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
                 textAlign: TextAlign.center,
               ),
@@ -115,7 +116,7 @@ class Advices extends StatelessWidget {
                             Alert.alert(
                                 context: context,
                                 action: () {
-                                  MyApplication.navigateTo(
+                                  MyApplication.navigateToReplaceAllPrevious(
                                       context, const HomeScreen());
                                 },
                                 content: "تم تسليم نصيحتك بنجاح",
@@ -133,9 +134,14 @@ class Advices extends StatelessWidget {
                                     isBold: true,
                                     txt: "تسليم",
                                     onPressedHandler: () {
-                                      context
-                                          .read<DoneAdviceCubit>()
-                                          .done(adviceId: showAdData!.id!);
+                                      print("showAdData!.chat!.length is ${showAdData!.chat!.length}");
+                                      if (showAdData!.chat!.length == 1) {
+                                        return;
+                                      }
+                                      else
+                                        context
+                                            .read<DoneAdviceCubit>()
+                                            .done(adviceId: showAdData!.id!);
                                     },
                                   ),
                                 ),

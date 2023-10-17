@@ -2,18 +2,22 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:nasooh/Data/cubit/settings_cubits/is_notification_cubit/is_notification_cubit.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+import '../../../Data/cubit/settings_cubits/is_advice_cubit/is_advice_cubit.dart';
 import '../../../app/utils/Language/get_language.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen();
+  const SettingsScreen({super.key});
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -24,10 +28,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   late StreamSubscription<ConnectivityResult> subscription;
   bool? isConnected;
+  bool? isNotificationValue;
+  bool? isAdviceValue;
 
   @override
   void initState() {
     super.initState();
+
+    isNotificationValue = sharedPrefs.getIsNotification() == 1 ? true : false;
+    isAdviceValue = sharedPrefs.getIsAdvice() == 1 ? true : false;
+    print("isNotificationValue is $isNotificationValue");
+    print("isAdviceValue is $isAdviceValue");
 
 ///////////////////////////
     MyApplication.checkConnection().then((value) {
@@ -104,7 +115,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               height: 48,
               child: MyButton(
                 isBold: true,
-                txt:"Save".tr,
+                txt: "Save".tr,
                 onPressedHandler: () {},
               ),
             ),
@@ -126,7 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Row(
                   children: [
                     SvgPicture.asset(language),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Text(
@@ -136,7 +147,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ],
                 ),
                 const ChangeLangItem(),
-                Divider(
+                const Divider(
                   color: Color(0xff555B6E),
                 ),
                 Padding(
@@ -144,44 +155,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Row(
                     children: [
                       SvgPicture.asset(notifii),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       Text(
                         "Notifications".tr,
                         style: Constants.secondaryTitleFont,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Switch(
-                        value: false,
-                        onChanged: (value) {},
+                        value: isNotificationValue!,
+                        onChanged: (value) {
+
+                          setState(() {
+                            isNotificationValue =value;
+                          });
+                          context.read<IsNotificationCubit>().isNotify();
+                        },
                       )
                     ],
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Color(0xff555B6E),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: Row(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       Text(
                         "Receive Orders".tr,
                         style: Constants.secondaryTitleFont,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Switch(
-                        value: false,
-                        onChanged: (value) {},
+                        value: isAdviceValue!,
+                        onChanged: (value) {
+                          setState(() {
+                            isAdviceValue =value;
+                          });
+                          context.read<IsAdviceCubit>().isAdvice();
+                        },
                       )
                     ],
                   ),
                 ),
-                Divider(
+                const Divider(
                   color: Color(0xff555B6E),
                 ),
                 Padding(
@@ -189,13 +211,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Row(
                     children: [
                       SvgPicture.asset(deletAcc),
-                      SizedBox(
+                      const SizedBox(
                         width: 8,
                       ),
                       Text(
                         "Delete Account".tr,
                         style: Constants.secondaryTitleFont
-                            .copyWith(color: Color(0XFFED2626)),
+                            .copyWith(color: const Color(0XFFED2626)),
                       ),
                     ],
                   ),

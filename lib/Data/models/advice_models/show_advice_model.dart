@@ -43,6 +43,7 @@ class ShowAdData {
   String? date;
   String? description;
   Status? status;
+  Status? label;
   Client? client;
   List<Chat>? chat;
 
@@ -53,6 +54,7 @@ class ShowAdData {
     this.description,
     this.date,
     this.status,
+    this.label,
     this.client,
     this.chat,
   });
@@ -64,6 +66,7 @@ class ShowAdData {
     description: json["description"]??"",
     date: json["date"]??"",
     status: json["status"] == null ? null : Status.fromJson(json["status"]),
+    label: json["label"] == null ? null : Status.fromJson(json["label"]),
     client: json["client"] == null ? null : Client.fromJson(json["client"]),
     chat: json["chat"] == null ? [] : List<Chat>.from(json["chat"]!.map((x) => Chat.fromJson(x))),
   );

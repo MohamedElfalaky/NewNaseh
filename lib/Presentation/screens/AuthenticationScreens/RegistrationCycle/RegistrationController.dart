@@ -15,6 +15,7 @@ import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCy
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:password_text_field/password_text_field.dart';
 import 'package:photo_view/photo_view.dart';
 import 'dart:convert';
 import '../../../../app/utils/registeration_values.dart';
@@ -318,37 +319,81 @@ class RegistrationController {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
-                child: TextFormField(
-                  controller: _password,
-                  onChanged: (val) {
-                    inputPassword = _password.text;
-                  },
-                  validator: (val) {
-                    if (val!.isEmpty
-                        // ||
-                        // !RegExp(Validations.validationPassword.toString()).hasMatch(val)
-                        ) {
-                      return  "password data".tr;
-                    }
-                    if (val.length < 6 || val.length >10) {
-                      return  "password_length".tr;
-                    }
-                    bool result = validatePassword(val);
-                    if (result) {
-                      return null;
-                    } else {
-                      return " Password should contain Capital, small letter & Number & Special".tr;
-                    }
-                  },
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: Constants.setRegistrationTextInputDecoration(
-                      hintText: "كلمة المرور...",
-                      prefixIcon: SvgPicture.asset(
-                        passField,
-                        height: 24,
-                      )),
-                ),
+                child: PasswordTextFormField(
+                    controller: _password,
+                    style: Constants.subtitleFont1,
+                    autovalidateMode:
+                    AutovalidateMode.onUserInteraction,
+                        onChanged: (val) {
+                          inputPassword = _password.text;
+                        },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return  "password_required".tr;
+                      }
+
+                      else  if (value.length < 6 || value.length >10) {
+                        return  "password_length".tr;
+                      }
+                      bool result = validatePassword(value);
+                      if (result) {
+                        return null;
+                      } else {
+                        return " Password should contain Capital, small letter & Number & Special".tr;
+                      }
+                    },
+                    decoration: Constants.setTextInputDecoration(
+                        hintText: "كلمة المرور...",
+                        prefixIcon: Container(
+                          width: 30,
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  left: BorderSide(
+                                      width: 1,
+                                      color: Color(0xFFBDBDBD)))),
+                          margin: const EdgeInsetsDirectional.only(
+                              end: 8),
+                          padding:
+                          const EdgeInsetsDirectional.all(8),
+                          child: SvgPicture.asset(
+                            passField,
+                            height: 24,
+                          ),
+                        ))),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.only(bottom: 24),
+              //   child: TextFormField(
+              //     controller: _password,
+              //     onChanged: (val) {
+              //       inputPassword = _password.text;
+              //     },
+              //     validator: (val) {
+              //       if (val!.isEmpty
+              //           // ||
+              //           // !RegExp(Validations.validationPassword.toString()).hasMatch(val)
+              //           ) {
+              //         return  "password data".tr;
+              //       }
+              //       if (val.length < 6 || val.length >10) {
+              //         return  "password_length".tr;
+              //       }
+              //       bool result = validatePassword(val);
+              //       if (result) {
+              //         return null;
+              //       } else {
+              //         return " Password should contain Capital, small letter & Number & Special".tr;
+              //       }
+              //     },
+              //     autovalidateMode: AutovalidateMode.onUserInteraction,
+              //     decoration: Constants.setRegistrationTextInputDecoration(
+              //         hintText: "كلمة المرور...",
+              //         prefixIcon: SvgPicture.asset(
+              //           passField,
+              //           height: 24,
+              //         )),
+              //   ),
+              // ),
               const SizedBox(
                 height: 90,
               )
@@ -453,27 +498,30 @@ class RegistrationController {
                   // maxLength: 10,
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "الشهادات والإنجازات...",
-                      suffixIcon: InkWell(
-                        onTap: () {
-                          if (certificatesController.text.isNotEmpty) {
-                            var idd = DateTime.now().toString();
-                            certiList.add({
-                              "widget": certificateItem(
-                                  cert: certificatesController.text,
-                                  staticId: idd),
-                              "cert": certificatesController.text,
-                              "id": idd
-                            });
-                            certificatesController.clear();
-                            MyApplication.dismissKeyboard(context);
-                            BlocProvider.of<AddCertificateCubit>(context)
-                                .addCertificate();
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.only(end: 8),
-                          child: SvgPicture.asset(
-                            certIcaddCertIconon,
+                      suffixIcon:   Padding(
+                        padding: const EdgeInsets.all(4),
+                        child: InkWell(
+                          onTap: () {
+                            if (certificatesController.text.isNotEmpty) {
+                              var idd = DateTime.now().toString();
+                              certiList.add({
+                                "widget": certificateItem(
+                                    cert: certificatesController.text,
+                                    staticId: idd),
+                                "cert": certificatesController.text,
+                                "id": idd
+                              });
+                              certificatesController.clear();
+                              MyApplication.dismissKeyboard(context);
+                              BlocProvider.of<AddCertificateCubit>(context)
+                                  .addCertificate();
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.only(end: 8),
+                            child: SvgPicture.asset(
+                              certIcaddCertIconon,
+                            ),
                           ),
                         ),
                       ),

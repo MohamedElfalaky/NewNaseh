@@ -45,7 +45,7 @@ class UpdateProfile {
             'city_id': '$cityId',
             'gender': '$gender',
             'nationality_id': '$nationalityId',
-            'category[0]': '$category',
+            'category': '$category',
             'user_name': '$userName',
             'info': '$info',
             'description': '$description',
@@ -54,9 +54,8 @@ class UpdateProfile {
             'bank_account': '$bankAccount',
             'birthday': '$birthday',
             'avatar[0][type]': 'png',
-            'avatar[0][file]': '$avatar',
-            'document[][type]': '',
-            'document[][file]': documents,
+            'avatar[0][file]': avatar,
+            'document': documents,
           });
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {

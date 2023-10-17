@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/sizes.dart';
 import 'package:nasooh/app/constants.dart';
 
-class OneOreder extends StatelessWidget {
-  const OneOreder({super.key});
+class OneOrder extends StatelessWidget {
+  const OneOrder({super.key, required this.value, required this.transactionId, required this.description});
+  final String value ;
+  final String transactionId ;
+  final String description ;
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +41,24 @@ class OneOreder extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(start: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children:  [
                 Text(
-                  "طلب #6532810",
+                  " طلب # $transactionId",
                   style: Constants.subtitleRegularFont,
                 ),
-                Text(
-                  "لقد استلمت ارباحك بنجاح",
-                  style: Constants.secondaryTitleRegularFont,
+                SizedBox(
+                  width: width(context)*0.5,
+                  child: Text(
+                   description,
+                    style: Constants.secondaryTitleRegularFont,
+                  ),
                 )
               ],
             ),
           ),
           const Spacer(),
-          const Text(
-            "120 SR",
+           Text(
+            "$value SR",
             style: Constants.mainTitleFont,
           )
         ],

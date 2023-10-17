@@ -361,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const EdgeInsets.only(top: 24, bottom: 32),
                               child: BlocBuilder<GetUserCubit, GetUserState>(
                                   builder: (context, stateUser) {
-                              if (stateUser is GetUserLoaded) {
+                                if (stateUser is GetUserLoaded) {
                                   return Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -369,13 +369,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       OutcomeAndRate(
                                         assetName: moneyBag,
                                         title: "الأرباح الكلية",
-                                        subtitle: "${stateUser.response?.data?.walletBalance??0} SR",
+                                        subtitle:
+                                            "${stateUser.response?.data?.walletBalance ?? 0} SR",
                                         color: Constants.primaryAppColor,
                                       ),
                                       OutcomeAndRate(
                                         assetName: starIcon,
                                         title: "التقييم الإجمالي",
-                                        subtitle: stateUser.response?.data?.rate??"0",
+                                        subtitle:
+                                            stateUser.response?.data?.rate ??
+                                                "0",
                                         color: const Color(0xFF27AE60),
                                       )
                                     ],
@@ -537,20 +540,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: ListView.builder(
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) => InkWell(
-                                      onTap: hOne[index].status?.id == 2
-                                          ? () {
-                                              MyApplication.navigateTo(
-                                                  context,
-                                                  AdviceNewDetail(
-                                                      id: hOne[index].id!));
-                                            }
-                                          : () {
-                                              MyApplication.navigateTo(
-                                                  context,
-                                                  AdviceDetail(
-                                                    showAdData: hOne[index],
-                                                  ));
-                                            },
+                                      onTap:
+                                          // hOne[index].status?.id == 2
+                                          //     ? () {
+                                          //         MyApplication.navigateTo(
+                                          //             context,
+                                          //             AdviceNewDetail(
+                                          //                 id: hOne[index].id!));
+                                          //       }
+                                          //     :
+                                          () {
+                                        MyApplication.navigateTo(
+                                            context,
+                                            AdviceDetail(
+                                              showAdData: hOne[index],
+                                            ));
+                                      },
                                       child: Advices(
                                         showAdData: hOne[index],
                                         isAdviceDetail: false,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/Components/OneNotification.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/controller/NotificationScreenController.dart';
@@ -10,8 +11,11 @@ import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
+import '../../../Data/cubit/notification_cubit/notification_cubit.dart';
+import '../../../Data/cubit/notification_cubit/notification_state.dart';
+
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen();
+  const NotificationScreen({super.key});
 
   @override
   State<NotificationScreen> createState() => _NotificationScreenState();
@@ -32,15 +36,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
 ///////////////////////////
     MyApplication.checkConnection().then((value) {
       if (value) {
-        //////
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
+        context.read<NotificationCubit>().getDataNotification();
       } else {
-        MyApplication.showToastView(
-            message: "noInternet".tr );
+        MyApplication.showToastView(message: "noInternet".tr);
       }
     });
 
@@ -58,12 +56,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
       /// if internet comes back
       if (result != ConnectivityResult.none) {
-        /// call your apis
-        // todo recall data
-        ///
-        ///
-        ///
-        ///
+        context.read<NotificationCubit>().getDataNotification();
       }
     });
   }
@@ -85,8 +78,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         });
       });
     } else if (!isConnected!) {
-      MyApplication.showToastView(
-          message:  "noInternet".tr );
+      MyApplication.showToastView(message: "noInternet".tr);
       return NoInternetWidget(size: sizee);
     }
 
@@ -102,11 +94,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
             centerTitle: false,
             leadingWidth: 70,
             title: Row(
-              children:  [
-                Text(  "Notifications".tr),
+              children: [
+                Text("Notifications".tr),
               ],
             ),
-            leading:  MyBackButton(),
+            leading: MyBackButton(),
             actions: [
               Switch(
                 value: false,
@@ -114,15 +106,32 @@ class _NotificationScreenState extends State<NotificationScreen> {
               )
             ],
           ),
-          body: Column(
-            children: [
-              Expanded(
-                  child: ListView.builder(
-                itemBuilder: (context, index) => OneNotification(),
-                itemCount: 10,
-              ))
-            ],
-          )),
+          body: BlocBuilder<NotificationCubit, NotificationState>(
+              builder: (context, state) {
+            if (state is NotificationLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is NotificationLoaded) {
+              // print(state.response!.transaction.toString());
+              return Column(
+                children: [
+                  Expanded(
+                      child: ListView.builder(
+                    itemBuilder: (context, index) => OneNotification(
+                      description: state.response?[index].description ?? "",
+                      date: state.response?[index].date ?? "",
+                      notificationId:
+                          state.response?[index].id.toString() ?? "0",
+                    ),
+                    itemCount: state.response?.length ?? 0,
+                  ))
+                ],
+              );
+            } else if (state is NotificationError) {
+              return const Center(child: Text('error'));
+            } else {
+              return const Center(child: Text('....'));
+            }
+          })),
     );
   }
 }

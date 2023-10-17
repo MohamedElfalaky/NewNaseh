@@ -21,7 +21,49 @@
     },
     {
       "name": "async",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.10.0",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "audioplayers",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "audioplayers_android",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_android-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "audioplayers_darwin",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_darwin-4.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "audioplayers_linux",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_linux-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "audioplayers_platform_interface",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_platform_interface-5.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "audioplayers_web",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_web-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "audioplayers_windows",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/audioplayers_windows-2.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -45,7 +87,7 @@
     },
     {
       "name": "characters",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.2.1",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -69,9 +111,9 @@
     },
     {
       "name": "collection",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.0",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/collection-1.17.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.18"
     },
     {
       "name": "connectivity_plus",
@@ -176,6 +218,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "file_picker",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/file_picker-5.2.10",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "firebase_core",
       "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/firebase_core-2.15.1",
       "packageUri": "lib/",
@@ -215,7 +263,7 @@
       "name": "flutter",
       "rootUri": "file:///C:/src/flutter/packages/flutter",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_bloc",
@@ -269,7 +317,7 @@
       "name": "flutter_localizations",
       "rootUri": "file:///C:/src/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_native_splash",
@@ -299,13 +347,13 @@
       "name": "flutter_test",
       "rootUri": "file:///C:/src/flutter/packages/flutter_test",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter_web_plugins",
       "rootUri": "file:///C:/src/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "fluttertoast",
@@ -375,7 +423,7 @@
     },
     {
       "name": "intl",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.17.0",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/intl-0.18.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -411,19 +459,19 @@
     },
     {
       "name": "matcher",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.13",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/matcher-0.12.16",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
     {
       "name": "material_color_utilities",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.2.0",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/material_color_utilities-0.5.0",
       "packageUri": "lib/",
-      "languageVersion": "2.13"
+      "languageVersion": "2.17"
     },
     {
       "name": "meta",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.8.0",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/meta-1.9.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -447,7 +495,7 @@
     },
     {
       "name": "path",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.2",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -462,6 +510,24 @@
       "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/path_parsing-1.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "path_provider",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider-2.0.15",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "path_provider_android",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_android-2.0.27",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "path_provider_foundation",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/path_provider_foundation-2.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "path_provider_linux",
@@ -581,7 +647,7 @@
       "name": "sky_engine",
       "rootUri": "file:///C:/src/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "smart_auth",
@@ -597,9 +663,9 @@
     },
     {
       "name": "source_span",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.9.1",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/source_span-1.10.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "2.18"
     },
     {
       "name": "stack_trace",
@@ -620,6 +686,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "synchronized",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/synchronized-3.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "term_glyph",
       "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/term_glyph-1.2.1",
       "packageUri": "lib/",
@@ -627,7 +699,7 @@
     },
     {
       "name": "test_api",
-      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.4.16",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/test_api-0.6.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -656,6 +728,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "uuid",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/uuid-3.0.7",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_graphics",
       "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/vector_graphics-1.1.4",
       "packageUri": "lib/",
@@ -678,6 +756,12 @@
       "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
       "languageVersion": "2.14"
+    },
+    {
+      "name": "web",
+      "rootUri": "file:///C:/Users/ahmed/AppData/Local/Pub/Cache/hosted/pub.dev/web-0.1.4-beta",
+      "packageUri": "lib/",
+      "languageVersion": "3.1"
     },
     {
       "name": "win32",
@@ -710,7 +794,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-09-18T12:07:35.423833Z",
+  "generated": "2023-10-16T09:45:40.307643Z",
   "generator": "pub",
-  "generatorVersion": "2.19.6"
+  "generatorVersion": "3.1.3"
 }

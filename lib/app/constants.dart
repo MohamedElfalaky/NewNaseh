@@ -186,10 +186,8 @@ class Constants {
               ),
         prefixIconColor: prefixColor,
         suffixIconColor: suffixColor,
-        suffixIcon: Padding(
-          padding: const EdgeInsets.all(4),
-          child: suffixIcon,
-        ),
+        suffixIcon:
+        suffixIcon,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         border: const OutlineInputBorder(

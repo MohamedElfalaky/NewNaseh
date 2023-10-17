@@ -5,8 +5,7 @@ import 'show_advice_state.dart';
 class ShowAdviceCubit extends Cubit<ShowAdviceState> {
   ShowAdviceCubit() : super(ShowAdviceInitial());
   ShowAdviceRepo showAdvice = ShowAdviceRepo();
-
-  show(int id) async {
+  Future show({required int id}) async {
     try {
       emit(ShowAdviceLoading());
       final mList = await showAdvice.show(id);

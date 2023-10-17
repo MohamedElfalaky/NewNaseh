@@ -58,7 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController certificatesController = TextEditingController();
   bool _termsConditions = false;
   String? genderValue;
-  String base64NewImage = "";
+  String? base64NewImage;
   List<CategoryData> categoryData = [];
   final TextEditingController _searchController = TextEditingController();
   List<CategoryData> results = [];
@@ -83,6 +83,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   List<Map<String, dynamic>> certiList = [];
+  List<int> _selectedCategory = [];
 
   Future<void> getDataFromApi() async {
     await context.read<ProfileCubit>().getDataProfile();
@@ -98,6 +99,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _summaryController.text = profileCubit.profileModel?.data?.info ?? "";
     _experienceController.text =
         profileCubit.profileModel?.data?.experienceYear ?? "";
+    _selectedCategory =
+        profileCubit.profileModel!.data!.category!.map((e) => e.id!).toList();
+    print(_selectedCategory);
+    print("_selectedCategory");
 
     // _password.text = profileState.response!.data!.!;
     // _phoneController.text =
@@ -208,16 +213,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             onPressedHandler: () {
                               print(inputCity);
                               print(inputCountry);
-                              print(sendCategory
-                                  .toSet()
-                                  .toList()
-                                  .toString()
-                                  .split("[")
-                                  .last
-                                  .split("]")
-                                  .first);
+                              print("base64NewImage is ${base64NewImage}");
+                              print(inputCountry);
+                              print(
+                                  "selectedCategory is ${_selectedCategory.toSet().toList().toString().split("[").last.split("]").first}");
+
                               var documents =
                                   certiList.map((e) => e["cert"]).toList();
+                              print(
+                                  "selectedCategory is ${documents.toString().split("[").last.split("]").first}");
                               print(documents.toString());
                               context.read<UpdateProfileCubit>().updateMethod(
                                     context: context,
@@ -226,7 +230,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     fullName: _fullName.text,
                                     email: _email.text,
                                     cityId: inputCity,
-                                    category: sendCategory
+                                    category:
+                                    // "635,637",
+                                    _selectedCategory
                                         .toSet()
                                         .toList()
                                         .toString()
@@ -234,7 +240,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         .last
                                         .split("]")
                                         .first,
-                                    documents: documents.toString(),
+                                    documents: documents
+                                        .toString()
+                                        .split("[")
+                                        .last
+                                        .split("]")
+                                        .first,
                                     description: _descriptionController.text,
                                     birthday: _birthdayController.text,
                                     bankName: _bankNameController.text,
@@ -243,7 +254,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     info: _summaryController.text,
                                     userName: _englishName.text,
                                     countryId: inputCountry,
-                                    avatar: base64NewImage,
+                                    avatar: base64NewImage??"" ,
                                     // mobile: "0101258631255",
                                   );
                             },
@@ -319,27 +330,37 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               16)),
-                                                  child: regImage == null
-                                                      ? Image.network(
+                                                  child: regImage == null &&
                                                           sharedPrefs
-                                                              .getUserPhoto(),
-                                                        )
-                                                      : ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(16),
-                                                          child: Image.file(
-                                                            File(
-                                                                regImage!.path),
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                          // PhotoView(
-                                                          //     imageProvider:
-                                                          //         FileImage(
-                                                          //   File(
-                                                          //       regImage!.path),
-                                                          // )),
-                                                        )),
+                                                                  .getUserPhoto() ==
+                                                              ""
+                                                      ? Image.network(
+                                                          "https://th.bing.com/th/id/R.daced5c5d9871280ca8e2de03bf8bee5?rik=sUyBpUyNvR6IqQ&pid=ImgRaw&r=0")
+                                                      : regImage == null &&
+                                                              sharedPrefs
+                                                                      .getUserPhoto() !=
+                                                                  ""
+                                                          ? Image.network(
+                                                              sharedPrefs
+                                                                  .getUserPhoto())
+                                                          : ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16),
+                                                              child: Image.file(
+                                                                File(regImage!
+                                                                    .path),
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                              // PhotoView(
+                                                              //     imageProvider:
+                                                              //         FileImage(
+                                                              //   File(
+                                                              //       regImage!.path),
+                                                              // )),
+                                                            )),
                                             ),
                                           ),
                                         ),
@@ -638,40 +659,44 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           .setRegistrationTextInputDecoration(
                                               hintText:
                                                   "الشهادات والإنجازات...",
-                                              suffixIcon: InkWell(
-                                                onTap: () {
-                                                  if (certificatesController
-                                                      .text.isNotEmpty) {
-                                                    var idd = DateTime.now()
-                                                        .toString();
-                                                    certiList.add({
-                                                      "widget": certificateItem(
-                                                          cert:
-                                                              certificatesController
-                                                                  .text,
-                                                          staticId: idd),
-                                                      "cert":
-                                                          certificatesController
-                                                              .text,
-                                                      "id": idd
-                                                    });
-                                                    certificatesController
-                                                        .clear();
-                                                    MyApplication
-                                                        .dismissKeyboard(
-                                                            context);
-                                                    BlocProvider.of<
-                                                                AddCertificateCubit>(
-                                                            context)
-                                                        .addCertificate();
-                                                  }
-                                                },
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsetsDirectional
-                                                          .only(end: 8),
-                                                  child: SvgPicture.asset(
-                                                    certIcaddCertIconon,
+                                              suffixIcon: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    if (certificatesController
+                                                        .text.isNotEmpty) {
+                                                      var idd = DateTime.now()
+                                                          .toString();
+                                                      certiList.add({
+                                                        "widget": certificateItem(
+                                                            cert:
+                                                                certificatesController
+                                                                    .text,
+                                                            staticId: idd),
+                                                        "cert":
+                                                            certificatesController
+                                                                .text,
+                                                        "id": idd
+                                                      });
+                                                      certificatesController
+                                                          .clear();
+                                                      MyApplication
+                                                          .dismissKeyboard(
+                                                              context);
+                                                      BlocProvider.of<
+                                                                  AddCertificateCubit>(
+                                                              context)
+                                                          .addCertificate();
+                                                    }
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsetsDirectional
+                                                            .only(end: 8),
+                                                    child: SvgPicture.asset(
+                                                      certIcaddCertIconon,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -1054,24 +1079,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               model.data![x].selected = s;
                                               if (model.data![x].selected ==
                                                   true) {
-                                                sendCategory
+                                                _selectedCategory
                                                     .add(model.data![x].id!);
 
                                                 for (var selectItems in model
                                                     .data![x].children!) {
                                                   selectItems.selected = true;
-                                                  sendCategory
+                                                  _selectedCategory
                                                       .add(selectItems.id!);
                                                 }
                                               } else if (model
                                                       .data![x].selected ==
                                                   false) {
-                                                sendCategory.removeWhere((e) =>
-                                                    e == model.data![x].id);
+                                                _selectedCategory.removeWhere(
+                                                    (e) =>
+                                                        e == model.data![x].id);
                                               }
                                             });
                                             debugPrint(
-                                                "the send category is ${sendCategory.toSet().toList().toString()}");
+                                                "the send category is ${_selectedCategory.toSet().toList().toString()}");
                                           })),
                                   const SizedBox(
                                     width: 4,
@@ -1100,17 +1126,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                     setState(() {
                                                       e.selected = s;
                                                       if (e.selected == true) {
-                                                        sendCategory.add(e.id!);
+                                                        _selectedCategory
+                                                            .add(e.id!);
                                                       } else if (e.selected ==
                                                           false) {
-                                                        sendCategory
+                                                        _selectedCategory
                                                             .removeWhere(
                                                                 (element) =>
                                                                     element ==
                                                                     e.id);
                                                       }
                                                       debugPrint(
-                                                          "the send category is ${sendCategory.toSet().toList().toString()}");
+                                                          "the send category is ${_selectedCategory.toSet().toList().toString()}");
                                                     });
                                                   })),
                                           const SizedBox(
@@ -1143,22 +1170,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           setState(() {
                                             results[x].selected = s;
                                             if (results[x].selected == true) {
-                                              sendCategory.add(results[x].id!);
+                                              _selectedCategory
+                                                  .add(results[x].id!);
 
                                               for (var selectItems
                                                   in results[x].children!) {
                                                 selectItems.selected = true;
-                                                sendCategory
+                                                _selectedCategory
                                                     .add(selectItems.id!);
                                               }
                                             } else if (results[x].selected ==
                                                 false) {
-                                              sendCategory.removeWhere(
+                                              _selectedCategory.removeWhere(
                                                   (e) => e == results[x].id);
                                             }
                                           });
                                           debugPrint(
-                                              "the send category is ${sendCategory.toSet().toList().toString()}");
+                                              "the send category is ${_selectedCategory.toSet().toList().toString()}");
                                         })),
                                 const SizedBox(
                                   width: 4,
@@ -1188,15 +1216,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                   setState(() {
                                                     e.selected = s;
                                                     if (e.selected == true) {
-                                                      sendCategory.add(e.id!);
+                                                      _selectedCategory
+                                                          .add(e.id!);
                                                     } else if (e.selected ==
                                                         false) {
-                                                      sendCategory.removeWhere(
-                                                          (element) =>
-                                                              element == e.id);
+                                                      _selectedCategory
+                                                          .removeWhere(
+                                                              (element) =>
+                                                                  element ==
+                                                                  e.id);
                                                     }
                                                     debugPrint(
-                                                        "the send category is ${sendCategory.toSet().toList().toString()}");
+                                                        "the send category is ${_selectedCategory.toSet().toList().toString()}");
                                                   });
                                                 })),
                                         const SizedBox(

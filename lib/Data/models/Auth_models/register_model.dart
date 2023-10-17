@@ -45,8 +45,8 @@ class Data {
   String? mobile;
   String? userName;
   String? token;
-  String? isNotification;
-  String? isAdvice;
+  int? isNotification;
+  int? isAdvice;
   String? rate;
   int? walletBalance;
   int? bankComplete;
