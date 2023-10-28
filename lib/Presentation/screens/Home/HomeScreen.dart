@@ -553,6 +553,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MyApplication.navigateTo(
                                             context,
                                             AdviceDetail(
+                                              isAdviceDetail:
+                                                  hOne[index].label!.id == 2,
                                               showAdData: hOne[index],
                                             ));
                                       },

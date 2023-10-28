@@ -116,6 +116,7 @@
 // }
 
 //// ignore_for_file: avoid_print
+import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -123,6 +124,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../../../app/keys.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
+import '../../cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
 
 class FCMNotification {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
@@ -151,8 +153,19 @@ class FCMNotification {
         print('l');
       }
     });
-    FirebaseMessaging.onBackgroundMessage(
-        (message) async => {print('hhhhhhhhhhhhhh')});
+    // FirebaseMessaging.onBackgroundMessage(
+    //     (message) async {
+    //       return {print('hhhhhhhhhhhhhh')};
+    //     });
+    // FirebaseMessaging.onBackgroundMessage(
+    //         (message) {
+    //       showNotification(message);
+    //       // return ;
+    //     });
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      showNotification(message);
+      return;
+    });
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       showNotification(message);
       return;
@@ -163,6 +176,34 @@ class FCMNotification {
     print("Notification Data: ${remoteNotification?.data}");
     print("Notification Title: ${remoteNotification?.data["title"]}");
     print("Notification Text: ${remoteNotification?.data["text"]}");
+
+    ///==========from here this is the new ===================
+
+    var msg = jsonDecode(remoteNotification!.notification!.body!);
+    // var msg = jsonDecode(message.data["advice_id"]);
+    // var msg = jsonDecode(message.data["is_chat"]);
+
+    // print('notification response: ${msg["body"]}');
+    // print('notification response: ${message.data}');
+    // print('notification response: ${message.data["advice_id"]}');
+    // print('notification response: ${message.data["is_chat"]}');
+    // print('notification Contxt: ${Keys.navigatorKey.currentContext}');
+    // print(
+    //     'notification secon contxt: ${Keys.navigatorKey.currentState!.context}');
+    // print('notification response: ${message.notification!.body!}');
+
+    if (remoteNotification.data["is_chat"] == "1") {
+      // print("render chat");
+      Keys.navigatorKey.currentState!.context
+          .read<ShowAdviceCubit>()
+          .show(id: int.parse(remoteNotification.data["advice_id"]))
+          .then((value) {
+        // print("hello $value");
+      });
+    }
+
+    ///==========from here this is the new ===================
+
     RemoteNotification? notification = remoteNotification?.notification;
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =

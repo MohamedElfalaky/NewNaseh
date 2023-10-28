@@ -23,9 +23,11 @@ import '../../widgets/noInternet.dart';
 import '../../widgets/shared.dart';
 
 class AdviceDetail extends StatefulWidget {
-  AdviceDetail({super.key, required this.showAdData});
+  AdviceDetail(
+      {super.key, required this.showAdData, this.isAdviceDetail = false});
 
   ShowAdData? showAdData;
+  final bool isAdviceDetail;
 
   @override
   State<AdviceDetail> createState() => _AdviceDetailState();
@@ -172,7 +174,7 @@ class _AdviceDetailState extends State<AdviceDetail> {
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Advices(
                             showAdData: widget.showAdData,
-                            isAdviceDetail: true,
+                            isAdviceDetail: widget.isAdviceDetail,
                           ),
                         ),
                         Expanded(
@@ -214,16 +216,24 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                   .withOpacity(0.6),
                                           borderRadius:
                                               BorderRadius.circular(20)),
-                                      child: Text(
-                                        state.response!.data!.chat![index]
-                                            .message
-                                            .toString(),
-                                        style: Constants.subtitleFont,
-                                        // textAlign: state.response!.data!
-                                        //             .chat![index].client ==
-                                        //         null
-                                        //     ? TextAlign.start
-                                        //     : TextAlign.end,
+                                      child: Column(
+                                        children: [
+                                          // state.response!.data!.chat![index]
+                                          //     .mediaType=="1" ? Text( state.response!.data!.chat![index]
+                                          //     .document?[0].file??"",
+                                          //   style: Constants.subtitleFont)  :const SizedBox(),
+                                          Text(
+                                            state.response!.data!.chat![index]
+                                                    .message ??
+                                                "",
+                                            style: Constants.subtitleFont,
+                                            // textAlign: state.response!.data!
+                                            //             .chat![index].client ==
+                                            //         null
+                                            //     ? TextAlign.start
+                                            //     : TextAlign.end,
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -341,15 +351,14 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                     context
                                                         .read<SendChatCubit>()
                                                         .sendChatFunction(
-                                                        filee:
-                                                        fileSelected,
-                                                        msg:
-                                                        pickedFile!
-                                                            .path.split("/").last,
-                                                        adviceId: widget
-                                                            .showAdData!
-                                                            .id
-                                                            .toString());
+                                                            filee: fileSelected,
+                                                            msg: pickedFile!
+                                                                .path
+                                                                .split("/")
+                                                                .last,
+                                                            adviceId: widget
+                                                                .showAdData!.id
+                                                                .toString());
                                                     print("new");
                                                     print(fileSelected);
                                                   } else if (value) {

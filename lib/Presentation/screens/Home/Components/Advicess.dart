@@ -134,11 +134,11 @@ class Advices extends StatelessWidget {
                                     isBold: true,
                                     txt: "تسليم",
                                     onPressedHandler: () {
-                                      print("showAdData!.chat!.length is ${showAdData!.chat!.length}");
+                                      print(
+                                          "showAdData!.chat!.length is ${showAdData!.chat!.length}");
                                       if (showAdData!.chat!.length == 1) {
                                         return;
-                                      }
-                                      else
+                                      } else
                                         context
                                             .read<DoneAdviceCubit>()
                                             .done(adviceId: showAdData!.id!);
