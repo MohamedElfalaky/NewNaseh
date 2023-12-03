@@ -14,6 +14,7 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/Style/sizes.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
 import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_state.dart';
 import '../../../Data/cubit/send_chat_cubit/send_chat_cubit.dart';
@@ -216,25 +217,69 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                   .withOpacity(0.6),
                                           borderRadius:
                                               BorderRadius.circular(20)),
-                                      child: Column(
-                                        children: [
-                                          // state.response!.data!.chat![index]
-                                          //     .mediaType=="1" ? Text( state.response!.data!.chat![index]
-                                          //     .document?[0].file??"",
-                                          //   style: Constants.subtitleFont)  :const SizedBox(),
-                                          Text(
-                                            state.response!.data!.chat![index]
-                                                    .message ??
-                                                "",
-                                            style: Constants.subtitleFont,
-                                            // textAlign: state.response!.data!
-                                            //             .chat![index].client ==
-                                            //         null
-                                            //     ? TextAlign.start
-                                            //     : TextAlign.end,
-                                          ),
-                                        ],
-                                      ),
+                                      child: state.response!.data!.chat![index]
+                                                  .mediaType ==
+                                              "1"
+                                          ? Column(
+                                            children: [
+                                              Text(
+                                                state
+                                                    .response!
+                                                    .data!
+                                                    .chat![index]
+                                                    .document?[0]
+                                                    .file ??
+                                                    "",
+                                                style:
+                                                Constants.subtitleFont,
+                                              ),
+                                              InkWell(
+                                                  onTap: () {
+                                                    launchUrl(Uri.parse(state
+                                                            .response!
+                                                            .data!
+                                                            .chat![index]
+                                                            .document?[0]
+                                                            .file ??
+                                                        ""));
+                                                  },
+                                                  child: Text(
+                                                    state
+                                                            .response!
+                                                            .data!
+                                                            .chat![index]
+                                                            .document?[0]
+                                                            .file ??
+                                                        "",
+                                                    style:
+                                                        Constants.subtitleFont,
+                                                  ),
+                                                ),
+                                            ],
+                                          )
+
+                                          // Image.network(
+                                          //   state
+                                          //       .response!
+                                          //       .data!
+                                          //       .chat![index]
+                                          //       .document?[0]
+                                          //       .file ??
+                                          //       "",)
+                                          : Text(
+                                              state
+                                                      .response!
+                                                      .data!
+                                                      .chat![index]
+                                                      .message ??
+                                                  "",
+                                              style: Constants.subtitleFont,
+                                              // textAlign: state.response!.data!
+                                              //             .chat![index].client ==
+                                              //         null
+                                              //     ? TextAlign.start
+                                              //     : TextAlign.end,
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -352,13 +397,16 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                         .read<SendChatCubit>()
                                                         .sendChatFunction(
                                                             filee: fileSelected,
-                                                            msg: pickedFile!
+                                                            msg: _textController.text,
+                                                            typee: pickedFile!
                                                                 .path
-                                                                .split("/")
+                                                                .split(".")
                                                                 .last,
                                                             adviceId: widget
                                                                 .showAdData!.id
                                                                 .toString());
+
+                                                    fileSelected = null;
                                                     print("new");
                                                     print(fileSelected);
                                                   } else if (value) {

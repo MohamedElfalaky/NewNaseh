@@ -53,6 +53,8 @@ class _LoginScreenState extends State<LoginScreen>
     _fadeController.dispose();
   }
 
+  bool valueChanged= false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -211,8 +213,12 @@ class _LoginScreenState extends State<LoginScreen>
                                 height: 16,
                                 width: 16,
                                 child: Checkbox(
-                                  value: false,
-                                  onChanged: (value) {},
+                                  value: valueChanged,
+                                  onChanged: (bool ?value) {
+                                    setState(() {
+                                      valueChanged=value!;
+                                    });
+                                  },
 
                                 ),
                               ),

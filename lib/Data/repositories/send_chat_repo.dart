@@ -8,7 +8,6 @@ import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import 'package:http/http.dart' as http;
 
-
 class SendChatRepo {
   Future<bool?> sendChat({
     String? msg,
@@ -17,17 +16,22 @@ class SendChatRepo {
     String? type,
   }) async {
     try {
-      http.Response response = await http
-          .post(Uri.parse('${Keys.baseUrl}/adviser/chat/store'), headers: {
-        'Accept': 'application/json',
-        'lang':  Get.locale?.languageCode ?? "ar",
-        "Authorization": "Bearer ${sharedPrefs.getToken()}"
-      }, body: {
+      Map<String, dynamic> map = {
         'message': msg,
         'advice_id': '$adviceId',
-        'document[0][type]': 'png',
-        'document[0][file]': '$file',
-      });
+        if (file != null) 'document[0][type]': type,
+        if (file != null) 'document[0][file]': file,
+      };
+
+      http.Response response =
+          await http.post(Uri.parse('${Keys.baseUrl}/adviser/chat/store'),
+              headers: {
+                'Accept': 'application/json',
+                'lang': Get.locale?.languageCode ?? "ar",
+                "Authorization": "Bearer ${sharedPrefs.getToken()}"
+              },
+              body: map);
+      print("map sending is $map");
       Map<String, dynamic> responseMap = json.decode(response.body);
       print("the sended file is $file");
       if (response.statusCode == 200 && responseMap["status"] == 1) {
