@@ -68,6 +68,10 @@ const String knowAboutIcon = "assets/images/SVGs/know_about_icon.svg";
 const String techIcon = "assets/images/SVGs/tech_icon.svg";
 const String rejectIcon = "assets/images/SVGs/reject_icon.svg";
 const String titleIcon = "assets/images/SVGs/title.svg";
+const String pdf = "assets/images/SVGs/pdf.svg";
+const String photo = "assets/images/SVGs/photo.svg";
+const String mp4Icon = "assets/images/SVGs/mp4_icon.svg";
+const String voice = "assets/images/SVGs/voice.svg";
 
 ///////////////////// Jsons////////
 const String otpLotti = "assets/images/Jsons/4.json";

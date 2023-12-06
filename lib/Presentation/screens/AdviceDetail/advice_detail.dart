@@ -189,101 +189,183 @@ class _AdviceDetailState extends State<AdviceDetail> {
                               return Padding(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 16.0),
-                                child: ListView.builder(
+                                child:ListView.builder(
                                   reverse: true,
                                   itemCount: state.response!.data!.chat!.length,
                                   itemBuilder: (context, index) => Align(
-                                    alignment: state.response!.data!
-                                                .chat![index].client ==
-                                            null
+                                    alignment: state.response!.data!.chat![index]
+                                        .adviser ==
+                                        null
                                         ? AlignmentDirectional.centerStart
                                         : AlignmentDirectional.centerEnd,
-                                    child: Container(
-                                      constraints:
-                                          const BoxConstraints(maxWidth: 220),
+                                    child: state.response!.data!.chat![index]
+                                        .mediaType ==
+                                        "1"
+                                        ? Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            constraints:
+                                            const BoxConstraints(
+                                                maxWidth: 220),
+                                            // width: 100,
+                                            margin:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 8),
+                                            padding:
+                                            const EdgeInsets.all(8),
+                                            // constraints: BoxConstraints(mi),
+                                            decoration: BoxDecoration(
+                                                color: state
+                                                    .response!
+                                                    .data!
+                                                    .chat![index]
+                                                    .adviser ==
+                                                    null
+                                                    ? const Color.fromARGB(
+                                                    255,
+                                                    185,
+                                                    184,
+                                                    180)
+                                                    .withOpacity(0.2)
+                                                    : Constants
+                                                    .primaryAppColor
+                                                    .withOpacity(0.6),
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    20)),
+                                            child: Text(
+                                              state
+                                                  .response!
+                                                  .data!
+                                                  .chat![index]
+                                                  .message ??
+                                                  "",
+                                              style: Constants.subtitleFont,
+                                            )),
+                                        InkWell(
+                                          onTap: () {
+                                            launchUrl(Uri.parse(state
+                                                .response!
+                                                .data!
+                                                .chat![index]
+                                                .document?[0]
+                                                .file ??
+                                                ""));
+                                          },
+                                          child: Container(
+                                            width: width(context) * 0.6,
+                                            margin:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            padding:
+                                            const EdgeInsets.all(7),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    10),
+                                                border: Border.all(
+                                                    color: Colors
+                                                        .grey.shade400)),
+                                            child: Row(
+                                              children: [
+                                                state
+                                                    .response
+                                                    ?.data
+                                                    ?.chat?[index]
+                                                    .document?[0]
+                                                    .file
+                                                    ?.endsWith(
+                                                    "png") ??
+                                                    false
+                                                    ? SvgPicture.asset(
+                                                    photo)
+                                                    : state
+                                                    .response
+                                                    ?.data
+                                                    ?.chat?[
+                                                index]
+                                                    .document?[
+                                                0]
+                                                    .file
+                                                    ?.endsWith(
+                                                    "jpg") ??
+                                                    false
+                                                    ? SvgPicture.asset(
+                                                    photo)
+                                                    : state
+                                                    .response
+                                                    ?.data
+                                                    ?.chat?[
+                                                index]
+                                                    .document?[0]
+                                                    .file
+                                                    ?.endsWith("jpeg") ??
+                                                    false
+                                                    ? SvgPicture.asset(photo)
+                                                    : state.response?.data?.chat?[index].document?[0].file?.endsWith("pdf") ?? false
+                                                    ? SvgPicture.asset(pdf)
+                                                    : state.response?.data?.chat?[index].document?[0].file?.endsWith("mp3") ?? false
+                                                    ? SvgPicture.asset(voice)
+                                                    : state.response?.data?.chat?[index].document?[0].file?.endsWith("mp4") ?? false
+                                                    ? SvgPicture.asset(mp4Icon)
+                                                    : const SizedBox(),
+                                                const SizedBox(
+                                                  width: 7,
+                                                ),
+                                                Expanded(
+                                                  child: Text(
+                                                    state
+                                                        .response!
+                                                        .data!
+                                                        .chat![index]
+                                                        .document?[0]
+                                                        .file
+                                                        ?.split("/")
+                                                        .last ??
+                                                        "",
+                                                    style: Constants
+                                                        .subtitleFont,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                        : Container(
+                                      constraints: const BoxConstraints(
+                                          maxWidth: 220),
                                       // width: 100,
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 8),
                                       padding: const EdgeInsets.all(8),
                                       // constraints: BoxConstraints(mi),
                                       decoration: BoxDecoration(
-                                          color: state.response!.data!
-                                                      .chat![index].client ==
-                                                  null
+                                          color: state
+                                              .response!
+                                              .data!
+                                              .chat![index]
+                                              .adviser ==
+                                              null
                                               ? const Color.fromARGB(
-                                                      255, 185, 184, 180)
-                                                  .withOpacity(0.2)
+                                              255, 185, 184, 180)
+                                              .withOpacity(0.2)
                                               : Constants.primaryAppColor
-                                                  .withOpacity(0.6),
+                                              .withOpacity(0.6),
                                           borderRadius:
-                                              BorderRadius.circular(20)),
-                                      child: state.response!.data!.chat![index]
-                                                  .mediaType ==
-                                              "1"
-                                          ? Column(
-                                            children: [
-                                              Text(
-                                                state
-                                                    .response!
-                                                    .data!
-                                                    .chat![index]
-                                                    .document?[0]
-                                                    .file ??
-                                                    "",
-                                                style:
-                                                Constants.subtitleFont,
-                                              ),
-                                              InkWell(
-                                                  onTap: () {
-                                                    launchUrl(Uri.parse(state
-                                                            .response!
-                                                            .data!
-                                                            .chat![index]
-                                                            .document?[0]
-                                                            .file ??
-                                                        ""));
-                                                  },
-                                                  child: Text(
-                                                    state
-                                                            .response!
-                                                            .data!
-                                                            .chat![index]
-                                                            .document?[0]
-                                                            .file ??
-                                                        "",
-                                                    style:
-                                                        Constants.subtitleFont,
-                                                  ),
-                                                ),
-                                            ],
-                                          )
-
-                                          // Image.network(
-                                          //   state
-                                          //       .response!
-                                          //       .data!
-                                          //       .chat![index]
-                                          //       .document?[0]
-                                          //       .file ??
-                                          //       "",)
-                                          : Text(
-                                              state
-                                                      .response!
-                                                      .data!
-                                                      .chat![index]
-                                                      .message ??
-                                                  "",
-                                              style: Constants.subtitleFont,
-                                              // textAlign: state.response!.data!
-                                              //             .chat![index].client ==
-                                              //         null
-                                              //     ? TextAlign.start
-                                              //     : TextAlign.end,
-                                            ),
+                                          BorderRadius.circular(20)),
+                                      child: Text(
+                                        state.response!.data!.chat![index]
+                                            .message ??
+                                            "",
+                                        style: Constants.subtitleFont,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
+                                ));
                             } else if (state is ShowAdviceError) {
                               return const Center(
                                 child: Text("Error"),
