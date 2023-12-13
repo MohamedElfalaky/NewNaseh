@@ -70,6 +70,12 @@ dependencies:
   audioplayers:
   file_picker: ^5.2.4
   url_launcher: ^6.2.1
+  record: ^5.0.1
+  permission_handler:
+  path_provider:
+  uuid: ^4.2.1
+
+
 
 dev_dependencies:
   flutter_test:

@@ -22,7 +22,7 @@ class ShowAdviceRepo {
         },
       );
       Map<String, dynamic> responseMap = json.decode(response.body);
-      if (response.statusCode == 200 && responseMap["status"] == 1) {
+      if (response.statusCode == 202 && responseMap["status"] == 1) {
         print(response.body);
         final homeStatusData = showAdviceModelFromJson(responseMap);
         return homeStatusData;

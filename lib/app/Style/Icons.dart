@@ -51,6 +51,7 @@ const String attachFiles = "assets/images/SVGs/attachFiles.svg";
 const String micee = "assets/images/SVGs/mice.svg";
 const String sendChat = "assets/images/SVGs/sendChat.svg";
 const String coinss = "assets/images/SVGs/coinss.svg";
+const String voiceShape = "assets/images/SVGs/voice_shape.svg";
 const String termsConditions = "assets/images/SVGs/termsConditions.svg";
 const String language = "assets/images/SVGs/language.svg";
 const String notifii = "assets/images/SVGs/notifii.svg";

@@ -34,7 +34,7 @@ class SendChatRepo {
       print("map sending is $map");
       Map<String, dynamic> responseMap = json.decode(response.body);
       print("the sended file is $file");
-      if (response.statusCode == 200 && responseMap["status"] == 1) {
+      if (response.statusCode == 201 && responseMap["status"] == 1) {
         print(response.body);
         // MyApplication.showToastView(message: responseMap["message"]);
         return true;

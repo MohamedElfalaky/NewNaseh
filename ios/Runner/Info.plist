@@ -12,6 +12,8 @@
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
 		<string>NASE7</string>
+		<key>NSMicrophoneUsageDescription</key>
+        <string>take voice to send message in chat</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
