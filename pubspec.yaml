@@ -84,7 +84,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/PNG/nase7_icon.png"
+  image_path: "assets/images/PNG/logo.png"
 
 flutter_native_splash:
   # color: "#0085A5"
