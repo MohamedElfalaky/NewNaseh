@@ -18,6 +18,7 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../Data/cubit/authentication/get_user_cubit/get_user_cubit.dart';
 import '../../../Data/cubit/authentication/get_user_cubit/get_user_state.dart';
@@ -228,7 +229,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       MyApplication.navigateTo(
                           context, const TermsConditionsScreen());
                     }),
-                myListile(iconn: techIcon, namee: "Tech".tr),
+                myListile(
+                    iconn: techIcon,
+                    namee: "Tech".tr,
+                    onTapHandler: () async {
+                      await launchUrl(Uri.parse(
+                        "whatsapp://send?phone=00966502374223",
+                      ));
+                      Navigator.pop(context);
+                    }),
                 myListile(iconn: knowAboutIcon, namee: "Know".tr),
                 BlocBuilder<LogOutCubit, LogOutState>(
                     builder: (context, state) => state is LogOutLoading

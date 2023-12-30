@@ -69,7 +69,7 @@ dependencies:
   flutter_launcher_icons: ^0.13.1
   audioplayers:
   file_picker: ^5.2.4
-  url_launcher: ^6.2.1
+  url_launcher:
   record: ^5.0.1
   permission_handler:
   path_provider:

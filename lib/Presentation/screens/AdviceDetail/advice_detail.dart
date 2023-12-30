@@ -360,7 +360,9 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                                     child: SvgPicture
                                                                         .asset(
                                                                             voiceShape)),
-                                                                const SizedBox(width: 10,),
+                                                                const SizedBox(
+                                                                  width: 10,
+                                                                ),
                                                                 CircleAvatar(
                                                                     child: SvgPicture
                                                                         .asset(
@@ -487,6 +489,8 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                 child: Column(
                                   children: [
                                     if (isRecording) const Text("recording"),
+                                    if (voiceSelected != null)
+                                      SvgPicture.asset(voiceShape),
                                     Row(
                                       children: [
                                         Expanded(
@@ -635,8 +639,10 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                                       .id
                                                                       .toString());
                                                               // isRecording = false;
-                                                              voiceSelected =
-                                                                  null;
+                                                              setState(() {
+                                                                voiceSelected =
+                                                                    null;
+                                                              });
 
                                                               print("new");
                                                               print(
