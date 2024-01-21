@@ -19,22 +19,22 @@ import 'app/utils/sharedPreferenceClass.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // await Firebase.initializeApp();
-  FCMNotification().showNotification(message);
-  // if(Platform.isIOS){
-  //
-  //   AudioPlayer().play(AssetSource('sounds/synth.mp3'));
-  // }
-}
+// @pragma('vm:entry-point')
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // await Firebase.initializeApp();
+//   // FCMNotification().showNotification(message);
+//   // if(Platform.isIOS){
+//   //
+//   //   AudioPlayer().play(AssetSource('sounds/synth.mp3'));
+//   // }
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // ignore: deprecated_member_use
   FlutterNativeSplash.removeAfter(initialization);
   await SharedPrefs().init();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());
@@ -48,18 +48,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // Locale? _locale;
   // FCMNotification fcmNotification = FCMNotification();
 
-// }
-//   @override
-//   void initState() {
-//     Firebase.initializeApp().then((value) {
-//       fcmNotification.registerNotification();
-//       fcmNotification.configLocalNotification();
-//     });
-//     super.initState();
-//   }
+  // @override
+  // void initState() {
+  //   Firebase.initializeApp().then((value) {
+  //     fcmNotification.registerNotification();
+  //     fcmNotification.configLocalNotification();
+  //   });
+  //   super.initState();
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseCustomNotification.setUpFirebase();
+  }
 
   // This widget is the root of your application.
   @override

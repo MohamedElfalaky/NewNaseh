@@ -87,8 +87,9 @@ class _AdviceDetailState extends State<AdviceDetail> {
   @override
   void dispose() {
     super.dispose();
-    _textController.dispose();
+    _textController.clear();
     _focusNode.dispose();
+    player.dispose();
     subscription.cancel();
   }
 
@@ -107,9 +108,14 @@ class _AdviceDetailState extends State<AdviceDetail> {
     await openTheRecorder();
     String uniqueKey = const Uuid().v4() +
         DateTime.now().toIso8601String().replaceAll('.', '-');
-    Directory tempDir = await getTemporaryDirectory();
+    Directory tempDir = await getApplicationDocumentsDirectory();
+    // Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
-    voiceFile = File('$tempPath/$uniqueKey.mp3');
+    if (Platform.isIOS) {
+      voiceFile = File('$tempPath/$uniqueKey.m4a');
+    } else {
+      voiceFile = File('$tempPath/$uniqueKey.mp3');
+    }
 
     record.start(const RecordConfig(), path: voiceFile!.path).then((value) {
       isRecording = true;
@@ -122,9 +128,19 @@ class _AdviceDetailState extends State<AdviceDetail> {
   stopRecord() async {
     await record.stop();
     isRecording = false;
-    List<int> imageBytes = await File(voiceFile!.path).readAsBytesSync();
-    // print(imageBytes);
-    voiceSelected = base64.encode(imageBytes);
+    if (voiceFile!.existsSync()) {
+      List<int> imageBytes = await File(voiceFile!.path).readAsBytesSync();
+      // print(imageBytes);
+      voiceSelected = base64.encode(imageBytes);
+      print("xxxxxx");
+    } else {
+      print("yyyyyyyyyyy");
+      // final x =
+      //     await File('${voiceFile!.path}/file.mp3').create(recursive: true);
+      // List<int> imageBytes = await File(voiceFile!.path).readAsBytesSync();
+      // // print(imageBytes);
+      // voiceSelected = base64.encode(imageBytes);
+    }
     print(voiceFile);
     print("voiceFile");
     setState(() {});
@@ -143,6 +159,8 @@ class _AdviceDetailState extends State<AdviceDetail> {
   }
 
   final player = AudioPlayer();
+
+  bool isPlay = false;
 
   Future<void> playAudioFromUrl(String url) async {
     await player.play(UrlSource(url));
@@ -344,16 +362,13 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                                     "mp3") ??
                                                             false
                                                         ? InkWell(
-                                                            onTap: () =>
-                                                                playAudioFromUrl(state
-                                                                        .response
-                                                                        ?.data
-                                                                        ?.chat?[
-                                                                            index]
-                                                                        .document?[
-                                                                            0]
-                                                                        .file ??
-                                                                    ""),
+                                                            onTap: () => playAudioFromUrl(state
+                                                                    .response
+                                                                    ?.data
+                                                                    ?.chat?[index]
+                                                                    .document?[0]
+                                                                    .file ??
+                                                                ""),
                                                             child: Row(
                                                               children: [
                                                                 Expanded(
@@ -369,59 +384,61 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                                             voice)),
                                                               ],
                                                             ))
-                                                        : Row(
-                                                            children: [
-                                                              state
-                                                                          .response
-                                                                          ?.data
-                                                                          ?.chat?[
-                                                                              index]
-                                                                          .document?[
-                                                                              0]
-                                                                          .file
-                                                                          ?.endsWith(
+                                                        : state.response?.data?.chat?[index].document?[0].file?.endsWith("m4a") ?? false
+                                                            ? InkWell(
+                                                                onTap: () => playAudioFromUrl(state.response?.data?.chat?[index].document?[0].file ?? ""),
+                                                                child: Row(
+                                                                  children: [
+                                                                    // isPlay ? Text("playing") :
+                                                                    Expanded(
+                                                                        child: SvgPicture.asset(
+                                                                            voiceShape)),
+                                                                    const SizedBox(
+                                                                      width: 10,
+                                                                    ),
+                                                                    CircleAvatar(
+                                                                        child: SvgPicture.asset(
+                                                                            voice)),
+                                                                  ],
+                                                                ))
+                                                            : Row(
+                                                                children: [
+                                                                  state.response?.data?.chat?[index].document?[0].file?.endsWith(
                                                                               "png") ??
-                                                                      false
-                                                                  ? SvgPicture
-                                                                      .asset(
-                                                                          photo)
-                                                                  : state.response?.data?.chat?[index].document?[0].file?.endsWith(
-                                                                              "jpg") ??
                                                                           false
                                                                       ? SvgPicture.asset(
                                                                           photo)
-                                                                      : state.response?.data?.chat?[index].document?[0].file?.endsWith("jpeg") ??
+                                                                      : state.response?.data?.chat?[index].document?[0].file?.endsWith("jpg") ??
                                                                               false
                                                                           ? SvgPicture.asset(
                                                                               photo)
-                                                                          : state.response?.data?.chat?[index].document?[0].file?.endsWith("pdf") ?? false
-                                                                              ? SvgPicture.asset(pdf)
-                                                                              : state.response?.data?.chat?[index].document?[0].file?.endsWith("mp4") ?? false
-                                                                                  ? SvgPicture.asset(mp4Icon)
-                                                                                  : const SizedBox(),
-                                                              const SizedBox(
-                                                                width: 7,
+                                                                          : state.response?.data?.chat?[index].document?[0].file?.endsWith("jpeg") ?? false
+                                                                              ? SvgPicture.asset(photo)
+                                                                              : state.response?.data?.chat?[index].document?[0].file?.endsWith("pdf") ?? false
+                                                                                  ? SvgPicture.asset(pdf)
+                                                                                  : state.response?.data?.chat?[index].document?[0].file?.endsWith("mp4") ?? false
+                                                                                      ? SvgPicture.asset(mp4Icon)
+                                                                                      : const SizedBox(),
+                                                                  const SizedBox(
+                                                                    width: 7,
+                                                                  ),
+                                                                  Expanded(
+                                                                    child: Text(
+                                                                      state
+                                                                              .response
+                                                                              ?.data
+                                                                              ?.chat?[index]
+                                                                              .document?[0]
+                                                                              .file
+                                                                              ?.split("/")
+                                                                              .last ??
+                                                                          "",
+                                                                      style: Constants
+                                                                          .subtitleFont,
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              Expanded(
-                                                                child: Text(
-                                                                  state
-                                                                          .response
-                                                                          ?.data
-                                                                          ?.chat?[
-                                                                              index]
-                                                                          .document?[
-                                                                              0]
-                                                                          .file
-                                                                          ?.split(
-                                                                              "/")
-                                                                          .last ??
-                                                                      "",
-                                                                  style: Constants
-                                                                      .subtitleFont,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
                                                   ),
                                                 ),
                                               ],
@@ -476,7 +493,6 @@ class _AdviceDetailState extends State<AdviceDetail> {
                             }
                           },
                         )),
-
                         widget.showAdData!.label!.id == 1 ||
                                 widget.showAdData!.label!.id == 2
                             ? Padding(
@@ -539,7 +555,10 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                                   ),
                                                   isRecording
                                                       ? InkWell(
-                                                          onTap: stopRecord,
+                                                          onTap: () {
+                                                            stopRecord();
+                                                            print("Stopping");
+                                                          },
                                                           child: const Icon(Icons
                                                               .stop_circle_outlined))
                                                       : InkWell(
@@ -758,62 +777,6 @@ class _AdviceDetailState extends State<AdviceDetail> {
                                   ],
                                 ),
                               ),
-                        // Padding(
-                        //   padding: const EdgeInsets.symmetric(vertical: 12),
-                        //   child: Row(
-                        //     children: [
-                        //       Expanded(
-                        //         child: TextField(
-                        //           controller: _textController,
-                        //           focusNode: _focusNode,
-                        //           decoration:
-                        //               Constants.setTextInputDecoration(
-                        //             suffixIcon: Row(
-                        //               mainAxisSize: MainAxisSize.min,
-                        //               children: [
-                        //                 SvgPicture.asset(attachFiles),
-                        //                 SizedBox(
-                        //                   width: 8,
-                        //                 ),
-                        //                 SvgPicture.asset(micee),
-                        //                 SizedBox(
-                        //                   width: 8,
-                        //                 )
-                        //               ],
-                        //             ),
-                        //             hintText: "آكتب رسالتك...",
-                        //           ).copyWith(
-                        //             hintStyle: Constants
-                        //                 .subtitleRegularFontHint
-                        //                 .copyWith(color: Color(0XFF5C5E6B)),
-                        //             enabledBorder: const OutlineInputBorder(
-                        //               gapPadding: 0,
-                        //               borderSide: BorderSide.none,
-                        //               borderRadius: BorderRadius.all(
-                        //                 Radius.circular(25),
-                        //               ),
-                        //             ),
-                        //             filled: true,
-                        //             fillColor: const Color(0xffF5F4F5),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //       Container(
-                        //           margin:
-                        //               EdgeInsetsDirectional.only(start: 8),
-                        //           padding: EdgeInsets.all(10),
-                        //           height: 40,
-                        //           width: 40,
-                        //           decoration: BoxDecoration(
-                        //               borderRadius:
-                        //                   BorderRadius.circular(15),
-                        //               color: Color(0XFF273043)),
-                        //           child: SvgPicture.asset(
-                        //             sendChat,
-                        //           ))
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
                   ))),

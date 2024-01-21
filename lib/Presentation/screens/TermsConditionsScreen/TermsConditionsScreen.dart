@@ -170,26 +170,27 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
                       const SizedBox(
                         width: 10,
                       ),
-                      !_checked
-                          ? InkWell(
+                      // !_checked
+                      //     ? InkWell(
+                      //         onTap: () {
+                      //           setState(() {
+                      //             _checked = !_checked;
+                      //           });
+                      //         },
+                      //         child: Container(
+                      //           width: 20,
+                      //           height: 20,
+                      //           decoration: BoxDecoration(
+                      //               shape: BoxShape.circle,
+                      //               border: Border.all(
+                      //                   color: Colors.black, width: 1.4)),
+                      //         ),
+                      //       )
+                      //     :
+                      InkWell(
                               onTap: () {
                                 setState(() {
-                                  _checked = !_checked;
-                                });
-                              },
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: Colors.black, width: 1.4)),
-                              ),
-                            )
-                          : InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _checked = !_checked;
+                                  // _checked = !_checked;
                                 });
                               },
                               child: SvgPicture.asset(
@@ -216,26 +217,27 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
                       const SizedBox(
                         width: 10,
                       ),
-                      !_privacy
-                          ? InkWell(
+                      // !_privacy
+                      //     ? InkWell(
+                      //         onTap: () {
+                      //           setState(() {
+                      //             _privacy = !_privacy;
+                      //           });
+                      //         },
+                      //         child: Container(
+                      //           width: 20,
+                      //           height: 20,
+                      //           decoration: BoxDecoration(
+                      //               shape: BoxShape.circle,
+                      //               border: Border.all(
+                      //                   color: Colors.black, width: 1.4)),
+                      //         ),
+                      //       )
+                      //     :
+                      InkWell(
                               onTap: () {
                                 setState(() {
-                                  _privacy = !_privacy;
-                                });
-                              },
-                              child: Container(
-                                width: 20,
-                                height: 20,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: Colors.black, width: 1.4)),
-                              ),
-                            )
-                          : InkWell(
-                              onTap: () {
-                                setState(() {
-                                  _privacy = !_privacy;
+                                  // _privacy = !_privacy;
                                 });
                               },
                               child: SvgPicture.asset(
