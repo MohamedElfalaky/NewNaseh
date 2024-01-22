@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nasooh/Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
+import 'package:nasooh/Data/models/profile_models/profile_model.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
@@ -62,6 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   List<CategoryData> categoryData = [];
   final TextEditingController _searchController = TextEditingController();
   List<CategoryData> results = [];
+  List<Document> documentsFromAPI = [];
 
   Future pickImage(ImageSource source, BuildContext context) async {
     try {
@@ -83,7 +85,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   List<Map<String, dynamic>> certiList = [];
-  List<int> _selectedCategory = [];
+  List<MySelectedModel> _selectedCategory = [];
 
   Future<void> getDataFromApi() async {
     await context.read<ProfileCubit>().getDataProfile();
@@ -99,10 +101,38 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _summaryController.text = profileCubit.profileModel?.data?.info ?? "";
     _experienceController.text =
         profileCubit.profileModel?.data?.experienceYear ?? "";
-    _selectedCategory =
-        profileCubit.profileModel!.data!.category!.map((e) => e.id!).toList();
-    print(_selectedCategory);
-    print("_selectedCategory");
+
+    setState(() {
+      documentsFromAPI = profileCubit.profileModel!.data!.document ?? [];
+      // _selectedCategory =
+      //     profileCubit.profileModel!.data!.category!.map((e) =>
+      //         MySelectedModel(id: e.id!,value:e.selected??true )
+      //     ).toList();
+    });
+
+    // print(documentsFromAPI);
+    // print("documentsFromAPI");
+
+    // results.map((e) {
+    //   _selectedCategory.where((element) => element == e.id);
+    //   return e.selected = true;
+    // }).toList();
+
+    // for (var category in profileCubit.profileModel!.data!.category??[]) {
+    //   if (_selectedCategory.contains(category.id)) {
+    //
+    //     setState(() {
+    //       category.selected = true;
+    //     });
+    //   }
+    // }
+
+    // print(_selectedCategory);
+    // for (MySelectedModel item in _selectedCategory) {
+    //   print('ID: ${item.id}, Name: ${item.value}');
+    // }
+    // print("_selectedCategory");
+    _birthdayController.text = profileCubit.profileModel!.data?.birthday ?? "";
 
     // _password.text = profileState.response!.data!.!;
     // _phoneController.text =
@@ -231,15 +261,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     email: _email.text,
                                     cityId: inputCity,
                                     category:
-                                    // "635,637",
-                                    _selectedCategory
-                                        .toSet()
-                                        .toList()
-                                        .toString()
-                                        .split("[")
-                                        .last
-                                        .split("]")
-                                        .first,
+                                        // "635,637",
+                                        _selectedCategory
+                                            .map((e) => e.id)
+                                            .toSet()
+                                            .toList()
+                                            .toString()
+                                            .split("[")
+                                            .last
+                                            .split("]")
+                                            .first,
                                     documents: documents
                                         .toString()
                                         .split("[")
@@ -254,7 +285,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     info: _summaryController.text,
                                     userName: _englishName.text,
                                     countryId: inputCountry,
-                                    avatar: base64NewImage??"" ,
+                                    avatar: base64NewImage ?? "",
                                     // mobile: "0101258631255",
                                   );
                             },
@@ -669,7 +700,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                       var idd = DateTime.now()
                                                           .toString();
                                                       certiList.add({
-                                                        "widget": certificateItem(
+                                                        "widget": CertificateItem(
+                                                            register: true,
                                                             cert:
                                                                 certificatesController
                                                                     .text,
@@ -705,6 +737,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                 height: 24,
                                               )),
                                     ),
+                                  ),
+                                  Wrap(
+                                    children: documentsFromAPI
+                                        .map((e) => CertificateItem(
+                                              register: false,
+                                              cert: e.value ?? "",
+                                              staticId: e.id.toString() ?? "0",
+                                            ))
+                                        .toList(),
                                   ),
                                   BlocBuilder<AddCertificateCubit,
                                       AddCertificateState>(
@@ -1063,10 +1104,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                           return ExpansionTile(
                               tilePadding: const EdgeInsets.all(0),
-                              // leading: SizedBox(
-                              //     height: 24,
-                              //     width: 24,
-                              //     child: Checkbox(value: false, onChanged: (s) {})),
                               title: Row(
                                 children: [
                                   SizedBox(
@@ -1079,21 +1116,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               model.data![x].selected = s;
                                               if (model.data![x].selected ==
                                                   true) {
-                                                _selectedCategory
-                                                    .add(model.data![x].id!);
+                                                _selectedCategory.add(
+                                                    MySelectedModel(
+                                                        id: model.data![x].id!,
+                                                        value: model.data![x]
+                                                            .selected!));
 
                                                 for (var selectItems in model
                                                     .data![x].children!) {
                                                   selectItems.selected = true;
-                                                  _selectedCategory
-                                                      .add(selectItems.id!);
+                                                  _selectedCategory.add(
+                                                      MySelectedModel(
+                                                          id: selectItems.id!,
+                                                          value: selectItems
+                                                              .selected!));
                                                 }
                                               } else if (model
                                                       .data![x].selected ==
                                                   false) {
                                                 _selectedCategory.removeWhere(
                                                     (e) =>
-                                                        e == model.data![x].id);
+                                                        e.id ==
+                                                        model.data![x].id);
                                               }
                                             });
                                             debugPrint(
@@ -1126,14 +1170,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                     setState(() {
                                                       e.selected = s;
                                                       if (e.selected == true) {
-                                                        _selectedCategory
-                                                            .add(e.id!);
+                                                        _selectedCategory.add(
+                                                            MySelectedModel(
+                                                                id: e.id!,
+                                                                value: e
+                                                                    .selected!));
                                                       } else if (e.selected ==
                                                           false) {
                                                         _selectedCategory
                                                             .removeWhere(
                                                                 (element) =>
-                                                                    element ==
+                                                                    element
+                                                                        .id ==
                                                                     e.id);
                                                       }
                                                       debugPrint(
@@ -1170,19 +1218,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           setState(() {
                                             results[x].selected = s;
                                             if (results[x].selected == true) {
-                                              _selectedCategory
-                                                  .add(results[x].id!);
+                                              _selectedCategory.add(
+                                                  MySelectedModel(
+                                                      id: results[x].id!,
+                                                      value: results[x]
+                                                          .selected!));
 
                                               for (var selectItems
                                                   in results[x].children!) {
                                                 selectItems.selected = true;
-                                                _selectedCategory
-                                                    .add(selectItems.id!);
+                                                _selectedCategory.add(
+                                                    MySelectedModel(
+                                                        id: selectItems.id!,
+                                                        value: selectItems
+                                                            .selected!));
                                               }
                                             } else if (results[x].selected ==
                                                 false) {
                                               _selectedCategory.removeWhere(
-                                                  (e) => e == results[x].id);
+                                                  (e) => e.id == results[x].id);
                                             }
                                           });
                                           debugPrint(
@@ -1216,14 +1270,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                   setState(() {
                                                     e.selected = s;
                                                     if (e.selected == true) {
-                                                      _selectedCategory
-                                                          .add(e.id!);
+                                                      _selectedCategory.add(
+                                                          MySelectedModel(
+                                                              id: e.id!,
+                                                              value:
+                                                                  e.selected!));
                                                     } else if (e.selected ==
                                                         false) {
                                                       _selectedCategory
                                                           .removeWhere(
                                                               (element) =>
-                                                                  element ==
+                                                                  element.id ==
                                                                   e.id);
                                                     }
                                                     debugPrint(
@@ -1252,4 +1309,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           )),
     );
   }
+}
+
+class MySelectedModel {
+  final int id;
+  final bool value;
+  MySelectedModel({required this.id, required this.value});
 }

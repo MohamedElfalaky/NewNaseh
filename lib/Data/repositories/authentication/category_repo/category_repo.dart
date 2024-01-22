@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:nasooh/Data/models/Auth_models/category_model.dart';
@@ -20,6 +21,7 @@ class CategoryRepo {
       if (response.statusCode == 200 && responseMap["status"] == 1) {
 
         final categoryFields = categoryModelFromJson(responseMap);
+        // log("categories response is ${responseMap.toString()}");
 
         // MyApplication.showToastView(message: responseMap["message"]);
         return categoryFields;

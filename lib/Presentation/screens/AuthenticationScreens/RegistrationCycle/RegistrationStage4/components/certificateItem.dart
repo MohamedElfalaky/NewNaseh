@@ -5,17 +5,13 @@ import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCy
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
-class certificateItem extends StatefulWidget {
+class CertificateItem extends StatelessWidget {
   final String cert;
   final String staticId;
-  const certificateItem(
-      {super.key, required this.cert, required this.staticId});
+  final bool register ;
+  const CertificateItem(
+      {super.key, required this.cert, required this.staticId, required this.register});
 
-  @override
-  State<certificateItem> createState() => _certificateItemState();
-}
-
-class _certificateItemState extends State<certificateItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,13 +24,13 @@ class _certificateItemState extends State<certificateItem> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            widget.cert,
+            cert,
             style: const TextStyle(fontFamily: Constants.mainFont, fontSize: 10),
           ),
           const SizedBox(
             width: 8,
           ),
-          Container(
+       if(register==true)   Container(
             height: 14,
             width: 14,
             decoration: BoxDecoration(
@@ -44,7 +40,7 @@ class _certificateItemState extends State<certificateItem> {
               child: InkWell(
                 onTap: () {
                   certiList.removeWhere(
-                      (element) => element["id"].toString() == widget.staticId);
+                      (element) => element["id"].toString() == staticId);
 
                   BlocProvider.of<AddCertificateCubit>(context)
                       .addCertificate();

@@ -505,7 +505,8 @@ class RegistrationController {
                             if (certificatesController.text.isNotEmpty) {
                               var idd = DateTime.now().toString();
                               certiList.add({
-                                "widget": certificateItem(
+                                "widget": CertificateItem(
+                                  register: true,
                                     cert: certificatesController.text,
                                     staticId: idd),
                                 "cert": certificatesController.text,

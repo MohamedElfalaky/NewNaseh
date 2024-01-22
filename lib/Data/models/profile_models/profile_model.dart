@@ -57,6 +57,7 @@ class Data {
   NationalityId? nationalityId;
   int? status;
   List<Category>? category;
+  List<Document>? document;
 
   Data({
     this.id,
@@ -79,6 +80,7 @@ class Data {
     this.nationalityId,
     this.status,
     this.category,
+    this.document,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -102,6 +104,7 @@ class Data {
     nationalityId: json["nationality_id"] == null ? null : NationalityId.fromJson(json["nationality_id"]),
     status: json["status"],
     category: json["category"] == null ? [] : List<Category>.from(json["category"]!.map((x) => Category.fromJson(x))),
+    document: json["document"] == null ? [] : List<Document>.from(json["document"]!.map((x) => Document.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -125,6 +128,7 @@ class Data {
     "nationality_id": nationalityId?.toJson(),
     "status": status,
     "category": category == null ? [] : List<dynamic>.from(category!.map((x) => x.toJson())),
+    "document": document == null ? [] : List<dynamic>.from(document!.map((x) => x.toJson())),
   };
 }
 
@@ -157,6 +161,26 @@ class Category {
     "children": children == null ? [] : List<dynamic>.from(children!.map((x) => x.toJson())),
     "parent_id": parentId,
     "selected": selected,
+  };
+}
+class Document {
+  int? id;
+  String? value;
+
+  Document({
+    this.id,
+    this.value,
+  });
+
+  factory Document.fromJson(Map<String, dynamic> json) => Document(
+    id: json["id"],
+    value: json["value"],
+
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "value": value,
   };
 }
 

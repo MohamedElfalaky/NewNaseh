@@ -73,6 +73,8 @@ const String pdf = "assets/images/SVGs/pdf.svg";
 const String photo = "assets/images/SVGs/photo.svg";
 const String mp4Icon = "assets/images/SVGs/mp4_icon.svg";
 const String voice = "assets/images/SVGs/voice.svg";
+const String fileImage = "assets/images/SVGs/file_image.svg";
+const String filePdf = "assets/images/SVGs/file_pdf.svg";
 
 ///////////////////// Jsons////////
 const String otpLotti = "assets/images/Jsons/4.json";
