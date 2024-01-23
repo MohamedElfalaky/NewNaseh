@@ -84,6 +84,8 @@ Map<String, String> getArabicLanguage() {
     "cancel" :"الغاء" ,
     "Email ..." : "البريد الإلكتروني...",
     "additional information": "معلومات إضافية",
-
+    "delete tile":"تأكيد حذف الحساب ؟",
+    "Yes": "نعم",
+    "No": "لأ",
   };
 }

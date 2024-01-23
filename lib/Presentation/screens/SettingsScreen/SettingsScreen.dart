@@ -13,6 +13,8 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_cubit.dart';
+import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_state.dart';
 import '../../../Data/cubit/settings_cubits/is_advice_cubit/is_advice_cubit.dart';
 import '../../../app/utils/Language/get_language.dart';
 
@@ -166,9 +168,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Switch(
                         value: isNotificationValue!,
                         onChanged: (value) {
-
                           setState(() {
-                            isNotificationValue =value;
+                            isNotificationValue = value;
                           });
                           context.read<IsNotificationCubit>().isNotify();
                         },
@@ -195,7 +196,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         value: isAdviceValue!,
                         onChanged: (value) {
                           setState(() {
-                            isAdviceValue =value;
+                            isAdviceValue = value;
                           });
                           context.read<IsAdviceCubit>().isAdvice();
                         },
@@ -214,10 +215,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(
                         width: 8,
                       ),
-                      Text(
-                        "Delete Account".tr,
-                        style: Constants.secondaryTitleFont
-                            .copyWith(color: const Color(0XFFED2626)),
+                      InkWell(
+                        onTap: () => _showDeleteDialog(context),
+                        child: Text(
+                          "Delete Account".tr,
+                          style: Constants.secondaryTitleFont
+                              .copyWith(color: const Color(0XFFED2626)),
+                        ),
                       ),
                     ],
                   ),
@@ -227,4 +231,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
           )),
     );
   }
+}
+
+Future<void> _showDeleteDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return BlocBuilder<DeleteAccountCubit, DeleteAccountState>(
+          builder: (context, state) => AlertDialog(
+                // <-- SEE HERE
+                // title: const Text('Cancel booking'),
+                content: SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Text("delete tile".tr),
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text("No".tr),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  state is DeleteAccountLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : TextButton(
+                          child: Text("Yes".tr),
+                          onPressed: () {
+                            context.read<DeleteAccountCubit>().delete(
+                                  context: context,
+                                );
+                            // Navigator.pop(context);
+                          },
+                        ),
+                ],
+              ));
+    },
+  );
 }

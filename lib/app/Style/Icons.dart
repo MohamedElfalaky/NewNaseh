@@ -81,3 +81,4 @@ const String otpLotti = "assets/images/Jsons/4.json";
 const String myWallet = "assets/images/Jsons/7455-loading1.json";
 const String dialogIcon = "assets/images/reject.gif";
 const String rejeIcon = "assets/images/reje.gif";
+const String soundGIF = "assets/images/Sound.gif";

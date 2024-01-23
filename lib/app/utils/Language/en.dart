@@ -88,6 +88,9 @@ Map<String, String> getEnglishLanguage() {
     "camera":"Camera",
     "gellery": "Gellery" ,
     "cancel": "Cancel" ,  "Email ...":  "Email ..." ,
-    "additional information":"Additional Information"
+    "additional information":"Additional Information",
+    "delete tile":"Confirm Delete Account?",
+    "Yes": "Yes",
+    "No": "No",
   };
 }

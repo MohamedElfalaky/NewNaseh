@@ -7,6 +7,7 @@ import '../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart'
 import '../../Data/cubit/authentication/check_code/check_code_cubit.dart';
 import '../../Data/cubit/authentication/city_cubit/city_cubit.dart';
 import '../../Data/cubit/authentication/country_cubit/country_cubit.dart';
+import '../../Data/cubit/authentication/delete_account_cubit/delete_account_cubit.dart';
 import '../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_cubit.dart';
 import '../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_cubit.dart';
 import '../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_cubit.dart';
@@ -61,4 +62,5 @@ List<SingleChildWidget> providers = [
   BlocProvider<NotificationCubit>(create: (context) => NotificationCubit()),
   BlocProvider<IsNotificationCubit>(create: (context) => IsNotificationCubit()),
   BlocProvider<IsAdviceCubit>(create: (context) => IsAdviceCubit()),
+  BlocProvider<DeleteAccountCubit>(create: (context) => DeleteAccountCubit()),
 ];
