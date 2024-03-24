@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_countdown_timer/index.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage3/RegistrationStage3.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
+import 'package:pinput/pinput.dart';
+
 import '../../../../../Data/cubit/authentication/check_code/check_code_cubit.dart';
 import '../../../../../Data/cubit/authentication/check_code/check_code_state.dart';
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
-import 'package:pinput/pinput.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
-
 import '../../../../../app/utils/registeration_values.dart';
 
 class RegistrationStage2 extends StatefulWidget {
@@ -32,7 +30,6 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     myFocusNode = FocusNode();
 
@@ -50,7 +47,7 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
           appBar: AppBar(
               leadingWidth: 70,
               title: const Text("إدخال رمز التحقق"),
-              leading:  MyBackButton()),
+              leading: MyBackButton()),
           body: Form(
             key: _formKey,
             child: Container(
@@ -99,7 +96,8 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                               child: Padding(
                                 padding: EdgeInsets.only(
                                     top: MyApplication.hightClc(context, 30),
-                                    bottom: MyApplication.hightClc(context, 32)),
+                                    bottom:
+                                        MyApplication.hightClc(context, 32)),
                                 child: Pinput(
                                   errorTextStyle: Constants.subtitleFont
                                       .copyWith(color: Colors.red),
@@ -119,6 +117,7 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                                         !RegExp(r'^[0-9]+$').hasMatch(value)) {
                                       return "يرجى ادخال رمز تحقق صحيح";
                                     }
+                                    return null;
                                   },
                                   onCompleted: (pin) => print(pin),
                                 ),

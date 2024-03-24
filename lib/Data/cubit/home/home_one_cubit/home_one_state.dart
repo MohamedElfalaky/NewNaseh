@@ -7,7 +7,7 @@ class ListOneHomeInitial extends ListOneHomeState {}
 class ListOneHomeLoading extends ListOneHomeState {}
 
 class ListOneHomeLoaded extends ListOneHomeState {
-  ListOneHome? response;
+  HomeOrdersList? response;
 
   ListOneHomeLoaded(this.response);
 }

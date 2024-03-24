@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../repositories/authentication/log_out_repo.dart';
@@ -17,7 +18,8 @@ class LogOutCubit extends Cubit<LogOutState> {
       logOutRepo.logOut().then((value) {
         if (value != null) {
           emit(LogOutLoaded(value));
-          MyApplication.navigateToReplaceAllPrevious(context!, const LoginScreen());
+          MyApplication.navigateToReplaceAllPrevious(
+              context!, const LoginScreen());
         } else {
           emit(LogOutError());
         }

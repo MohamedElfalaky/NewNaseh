@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_countdown_timer/index.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
+import 'package:pinput/pinput.dart';
+
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
-import 'package:pinput/pinput.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_state.dart';
 import 'check_mobile_forget_screen.dart';
@@ -48,7 +48,7 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
           appBar: AppBar(
               leadingWidth: 70,
               title: const Text("إدخال رمز التحقق"),
-              leading:  MyBackButton()),
+              leading: MyBackButton()),
           body: Form(
             key: _formKey,
             child: Container(
@@ -106,9 +106,9 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
                                         !RegExp(r'^[0-9]+$').hasMatch(value)) {
                                       return "يرجى ادخال رمز تحقق صحيح";
                                     }
+                                    return null;
                                   },
-                                  onCompleted: (pin) => print(pin),
-                                ),
+                                 ),
                               ),
                             ),
                             state is ForgetCodeLoading

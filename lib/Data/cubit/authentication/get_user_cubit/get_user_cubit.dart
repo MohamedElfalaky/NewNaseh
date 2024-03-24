@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../repositories/authentication/get_user_by_token.dart';
 import 'get_user_state.dart';
 

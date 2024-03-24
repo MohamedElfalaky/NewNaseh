@@ -13,6 +13,7 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_cubit.dart';
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_state.dart';
 import '../../../Data/cubit/settings_cubits/is_advice_cubit/is_advice_cubit.dart';
@@ -26,7 +27,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  var _groupValue;
 
   late StreamSubscription<ConnectivityResult> subscription;
   bool? isConnected;
@@ -88,7 +88,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // todo if not connected display nointernet widget else continue to the rest build code
     final sizee = MediaQuery.of(context).size;
     if (isConnected == null) {
       MyApplication.checkConnection().then((value) {

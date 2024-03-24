@@ -4,15 +4,14 @@ import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
+
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
-import '../../../../../app/utils/registeration_values.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_state.dart';
 import '../../../widgets/PhoneTextField.dart';
-import 'check_forget_code_screen.dart';
 
-String ?forgetMob;
+String? forgetMob;
 
 class CheckForgetMobile extends StatefulWidget {
   const CheckForgetMobile({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _CheckForgetMobileState extends State<CheckForgetMobile> {
         appBar: AppBar(
             leadingWidth: 70,
             title: const Text("تغير كلمة المرور"),
-            leading:  MyBackButton()),
+            leading: MyBackButton()),
         body: Form(
           key: _formKey,
           child: Container(
@@ -82,7 +81,7 @@ class _CheckForgetMobileState extends State<CheckForgetMobile> {
                                   top: MyApplication.hightClc(context, 10),
                                   bottom: MyApplication.hightClc(context, 50)),
                               child: MyIntlPhoneField(
-                                countries: ['SA'],
+                                countries: const ['SA'],
                                 controller: _phoneController,
                                 showDropdownIcon: true,
                                 dropdownIcon: const Icon(
@@ -111,11 +110,9 @@ class _CheckForgetMobileState extends State<CheckForgetMobile> {
                                 ),
                                 initialCountryCode: 'SA',
                                 onChanged: (phone) {
-                                  print(phone.completeNumber);
                                   _sendPhone = phone.completeNumber;
                                 },
-                                invalidNumberMessage:
-                                     "invalid_number".tr,
+                                invalidNumberMessage: "invalid_number".tr,
                               ),
                             ),
                             state is CheckMobLoading
@@ -129,9 +126,11 @@ class _CheckForgetMobileState extends State<CheckForgetMobile> {
                                       txt: "التالي",
                                       onPressedHandler: () {
                                         if (_formKey.currentState!.validate()) {
-                                          context.read<CheckCheckMobCubit>().register(
-                                              context: context,
-                                              phone: _sendPhone);
+                                          context
+                                              .read<CheckCheckMobCubit>()
+                                              .register(
+                                                  context: context,
+                                                  phone: _sendPhone);
                                           forgetMob = _sendPhone;
                                         }
                                         //  MyApplication.navigateTo(context, const CheckForgetCode());

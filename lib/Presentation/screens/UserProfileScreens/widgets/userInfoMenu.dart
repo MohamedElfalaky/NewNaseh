@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+
 import '../../../../app/constants.dart';
 
 class SettingsMenuItem {
@@ -20,38 +21,37 @@ class SettingsMenuItem {
 
 class SettingsMenuItems {
   static SettingsMenuItem myOrders = SettingsMenuItem(
-    title:  "my_orders".tr,
+    title: "my_orders".tr,
     svg: SvgPicture.asset('assets/images/SVGs/wallet.svg', width: 24),
   );
   static SettingsMenuItem wallet = SettingsMenuItem(
-    title:  "my_wallet".tr,
+    title: "my_wallet".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/wallet.svg',
     ),
   );
   static SettingsMenuItem settings = SettingsMenuItem(
-    title:  "settings".tr,
+    title: "settings".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/settings.svg',
     ),
   );
 
   static SettingsMenuItem terms = SettingsMenuItem(
-    title:  "terms_conditions".tr,
+    title: "terms_conditions".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/book.svg',
     ),
   );
 
   static SettingsMenuItem support = SettingsMenuItem(
-    title:  "support".tr,
+    title: "support".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/help.svg',
     ),
   );
   static SettingsMenuItem nasouh = SettingsMenuItem(
-    title:
-         "know_nasouh".tr,
+    title: "know_nasouh".tr,
     svg: SvgPicture.asset(
       'assets/images/SVGs/ask.svg',
     ),

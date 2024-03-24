@@ -10,7 +10,7 @@
 //
 // class CountryModel {
 //   List<CountryData>? data;
-//   int? status;
+//   dynamic status;
 //   String? message;
 //   Pagination? pagination;
 //
@@ -44,7 +44,7 @@
 // }
 //
 // class CountryData {
-//   int? id;
+//   dynamic id;
 //   String? name;
 //
 //   CountryData({
@@ -64,10 +64,10 @@
 // }
 //
 // class Pagination {
-//   int? total;
-//   int? perPage;
-//   int? currentPage;
-//   int? totalPages;
+//   dynamic total;
+//   dynamic perPage;
+//   dynamic currentPage;
+//   dynamic totalPages;
 //
 //   Pagination({
 //     this.total,
@@ -103,7 +103,7 @@ String countryModelToJson(CountryModel data) => json.encode(data.toJson());
 
 class CountryModel {
   final List<CountryData>? data;
-  final int? status;
+  final dynamic status;
   final String? message;
   final List<dynamic>? pagination;
 
@@ -115,22 +115,31 @@ class CountryModel {
   });
 
   factory CountryModel.fromJson(Map<String, dynamic> json) => CountryModel(
-    data: json["data"] == null ? [] : List<CountryData>.from(json["data"]!.map((x) => CountryData.fromJson(x))),
-    status: json["status"],
-    message: json["message"],
-    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-  );
+        data: json["data"] == null
+            ? []
+            : List<CountryData>.from(
+                json["data"]!.map((x) => CountryData.fromJson(x))),
+        status: json["status"],
+        message: json["message"],
+        pagination: json["pagination"] == null
+            ? []
+            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "status": status,
-    "message": message,
-    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "status": status,
+        "message": message,
+        "pagination": pagination == null
+            ? []
+            : List<dynamic>.from(pagination!.map((x) => x)),
+      };
 }
 
 class CountryData {
-  final int? id;
+  final dynamic id;
   final String? name;
 
   CountryData({
@@ -139,12 +148,12 @@ class CountryData {
   });
 
   factory CountryData.fromJson(Map<String, dynamic> json) => CountryData(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }

@@ -6,42 +6,51 @@ import 'dart:convert';
 
 import '../advice_models/show_advice_model.dart';
 
-ListOneHome listOneHomeFromJson(dynamic str) => ListOneHome.fromJson(str);
+HomeOrdersList listOneHomeFromJson(dynamic str) => HomeOrdersList.fromJson(str);
 
-String listOneHomeToJson(ListOneHome data) => json.encode(data.toJson());
+String listOneHomeToJson(HomeOrdersList data) => json.encode(data.toJson());
 
-class ListOneHome {
+class HomeOrdersList {
   List<ShowAdData>? data;
-  int? status;
+  dynamic status;
   String? message;
   List<dynamic>? pagination;
 
-  ListOneHome({
+  HomeOrdersList({
     this.data,
     this.status,
     this.message,
     this.pagination,
   });
 
-  factory ListOneHome.fromJson(Map<String, dynamic> json) => ListOneHome(
-    data: json["data"] == null ? [] : List<ShowAdData>.from(json["data"]!.map((x) => ShowAdData.fromJson(x))),
-    status: json["status"],
-    message: json["message"],
-    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-  );
+  factory HomeOrdersList.fromJson(Map<String, dynamic> json) => HomeOrdersList(
+        data: json["data"] == null
+            ? []
+            : List<ShowAdData>.from(
+                json["data"]!.map((x) => ShowAdData.fromJson(x))),
+        status: json["status"],
+        message: json["message"],
+        pagination: json["pagination"] == null
+            ? []
+            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
-    "status": status,
-    "message": message,
-    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
-  };
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
+        "status": status,
+        "message": message,
+        "pagination": pagination == null
+            ? []
+            : List<dynamic>.from(pagination!.map((x) => x)),
+      };
 }
 
 // class HOneData {
-//   int? id;
+//   dynamic id;
 //   String? name;
-//   int? price;
+//   dynamic price;
 //   String? date;
 //   Status? status;
 //   Client? client;
@@ -75,7 +84,7 @@ class ListOneHome {
 // }
 //
 // class Client {
-//   int? id;
+//   dynamic id;
 //   String? avatar;
 //   String? fullName;
 //
@@ -99,7 +108,7 @@ class ListOneHome {
 // }
 //
 // class Status {
-//   int? id;
+//   dynamic id;
 //   String? name;
 //
 //   Status({

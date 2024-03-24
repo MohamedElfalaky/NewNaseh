@@ -9,6 +9,7 @@ import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCy
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:password_text_field/password_text_field.dart';
+
 import '../../../../app/constants.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../widgets/PhoneTextField.dart';
@@ -47,13 +48,12 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     _animationController.dispose();
     _fadeController.dispose();
   }
 
-  bool valueChanged= false;
+  bool valueChanged = false;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen>
                               padding:
                                   const EdgeInsets.only(top: 34, bottom: 10),
                               child: MyIntlPhoneField(
-                                countries: ['SA'],
+                                countries: const ['SA'],
                                 controller: _phoneController,
                                 showDropdownIcon: true,
                                 dropdownIcon: const Icon(
@@ -157,11 +157,9 @@ class _LoginScreenState extends State<LoginScreen>
                                 ),
                                 initialCountryCode: 'SA',
                                 onChanged: (phone) {
-                                  print(phone.completeNumber);
                                   _sendPhone = phone.completeNumber;
                                 },
-                                invalidNumberMessage:
-                                   "invalid_number".tr,
+                                invalidNumberMessage: "invalid_number".tr,
                               ),
                             ),
                           ),
@@ -174,17 +172,17 @@ class _LoginScreenState extends State<LoginScreen>
                                     AutovalidateMode.onUserInteraction,
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return  "password_required".tr;
-                                  }
-
-                                 else  if (value.length < 6 || value.length >10) {
-                                    return  "password_length".tr;
+                                    return "password_required".tr;
+                                  } else if (value.length < 6 ||
+                                      value.length > 10) {
+                                    return "password_length".tr;
                                   }
                                   bool result = validatePassword(value);
                                   if (result) {
                                     return null;
                                   } else {
-                                    return " Password should contain Capital, small letter & Number & Special".tr;
+                                    return " Password should contain Capital, small letter & Number & Special"
+                                        .tr;
                                   }
                                 },
                                 decoration: Constants.setTextInputDecoration(
@@ -208,21 +206,24 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                           Row(
                             children: [
-                              SizedBox(width: 10,),
+                              const SizedBox(
+                                width: 10,
+                              ),
                               SizedBox(
                                 height: 16,
                                 width: 16,
                                 child: Checkbox(
                                   value: valueChanged,
-                                  onChanged: (bool ?value) {
+                                  onChanged: (bool? value) {
                                     setState(() {
-                                      valueChanged=value!;
+                                      valueChanged = value!;
                                     });
                                   },
-
                                 ),
                               ),
-                              SizedBox(width: 10,),
+                              const SizedBox(
+                                width: 10,
+                              ),
                               const Text(
                                 "تذكر معلوماتي",
                                 style: Constants.secondaryTitleRegularFont,
@@ -232,7 +233,6 @@ class _LoginScreenState extends State<LoginScreen>
                           const SizedBox(
                             height: 35,
                           ),
-
                           state is LoginLoading
                               ? const Center(child: CircularProgressIndicator())
                               : FadeTransition(
@@ -264,8 +264,7 @@ class _LoginScreenState extends State<LoginScreen>
                               opacity: _fadeController,
                               child: SizedBox(
                                 width: double.infinity,
-                                child: Text(
-                                   "forgot_password".tr,
+                                child: Text("forgot_password".tr,
                                     textAlign: TextAlign.center,
                                     style: Constants.mainTitleFont),
                               ),
@@ -291,23 +290,6 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                           ),
-
-                          // Center(
-                          //   child: SizedBox(
-                          //     width: MediaQuery.of(context).size.width * 0.3,
-                          //     child: ElevatedButton(
-                          //       onPressed: () {},
-                          //       child: Center(
-                          //         child: Text(
-                          //          "login_guest".tr,
-                          //           style: Constants.secondaryTitleRegularFont.copyWith(
-                          //             color: Colors.white,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                     )),

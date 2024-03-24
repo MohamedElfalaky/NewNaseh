@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/app/global.dart';
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import '../../models/Auth_models/register_model.dart';
-import 'package:http/http.dart' as http;
 
 class Register {
   Future<RegisterModel?> register(
@@ -17,7 +19,7 @@ class Register {
       String? mobile,
       String? countryId,
       String? cityId,
-      int? gender,
+      dynamic gender,
       String? nationalityId,
       String? category,
       String? userName,
@@ -119,7 +121,7 @@ class Register {
 //       String? mobile,
 //       String? countryId,
 //       String? cityId,
-//       int? gender,
+//       dynamic gender,
 //       String? nationalityId,
 //       String? category,
 //       String? userName,
@@ -243,7 +245,7 @@ class Register {
 // //       String? mobile,
 // //       String? countryId,
 // //       String? cityId,
-// //       int? gender,
+// //       dynamic gender,
 // //       String? nationalityId,
 // //       String? category,
 // //       String? userName,
@@ -377,7 +379,7 @@ class Register {
 // //       String? mobile,
 // //       String? countryId,
 // //       String? cityId,
-// //       int? gender,
+// //       dynamic gender,
 // //       String? nationalityId,
 // //       String? category,
 // //       String? userName,

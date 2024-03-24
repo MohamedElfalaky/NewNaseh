@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
-import 'package:http/http.dart' as http;
 import '../../models/advice_models/show_advice_model.dart';
-
 
 class ShowAdviceRepo {
   Future<ShowAdviceModel?> show(int id) async {
@@ -17,7 +18,7 @@ class ShowAdviceRepo {
         Uri.parse('${Keys.baseUrl}/adviser/advice/show/$id'),
         headers: {
           'Accept': 'application/json',
-          'lang': Get.locale?.languageCode??"ar",
+          'lang': Get.locale?.languageCode ?? "ar",
           "Authorization": "Bearer ${sharedPrefs.getToken()}"
         },
       );

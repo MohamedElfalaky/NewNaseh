@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+
 import '../../app/constants.dart';
 
 class AppbarButton extends StatelessWidget {
@@ -102,7 +103,7 @@ class Back extends StatelessWidget {
         const SizedBox(
           width: 16,
         ),
-        Text ((header ??"").tr,
+        Text((header ?? "").tr,
             textAlign: TextAlign.right, style: Constants.headerNavigationFont),
       ],
     );
@@ -110,9 +111,10 @@ class Back extends StatelessWidget {
 }
 
 class MyBackButton extends StatelessWidget {
-   MyBackButton({super.key , this.onPressed, this.hasValue=false });
+  MyBackButton({super.key, this.onPressed, this.hasValue = false});
+
   void Function()? onPressed;
-  bool hasValue =false ;
+  bool hasValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -124,17 +126,19 @@ class MyBackButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(5),
             boxShadow: [
               BoxShadow(
-                  color: const Color(0XFF5C5E6B1A).withOpacity(0.2),
+                  color: const Color(0xff5c5e6b1a).withOpacity(0.2),
                   offset: const Offset(0, 4),
                   blurRadius: 4)
             ]),
         height: 42,
         width: 42,
-        child:  BackButton(
-          onPressed: hasValue? onPressed : (){
-            Navigator.pop(context);
-          },
-          color: Color(0xff575762),
+        child: BackButton(
+          onPressed: hasValue
+              ? onPressed
+              : () {
+                  Navigator.pop(context);
+                },
+          color: const Color(0xff575762),
         ),
       ),
     );

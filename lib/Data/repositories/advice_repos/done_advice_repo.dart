@@ -1,24 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/app/keys.dart';
 import 'package:http/http.dart' as http;
+import 'package:nasooh/app/keys.dart';
+
 import '../../../../app/utils/myApplication.dart';
-import '../../../app/global.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import '../../models/advice_models/show_advice_model.dart';
 
 class DoneAdviceRepo {
-  Future<ShowAdviceModel?> doneAdvice(
-      {required int adviceId}) async {
+  Future<ShowAdviceModel?> doneAdvice({required int adviceId}) async {
     try {
       http.Response response = await http.post(
         Uri.parse('${Keys.baseUrl}/adviser/advice/done/$adviceId'),
         headers: {
           'Accept': 'application/json',
-          'lang': Get.locale?.languageCode??"ar",
+          'lang': Get.locale?.languageCode ?? "ar",
           'Authorization': 'Bearer ${sharedPrefs.getToken()}',
         },
       );
@@ -41,7 +41,7 @@ class DoneAdviceRepo {
       if (kDebugMode) {
         print(e);
       }
-    } on Error catch (e,st) {
+    } on Error catch (e, st) {
       if (kDebugMode) {
         print(e);
         print(st);

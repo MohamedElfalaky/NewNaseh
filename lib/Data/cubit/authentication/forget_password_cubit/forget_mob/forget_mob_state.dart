@@ -1,4 +1,3 @@
-
 import '../../../../models/Auth_models/check_mobile_model.dart';
 
 abstract class CheckMobState {}

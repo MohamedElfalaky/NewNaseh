@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
 import '../../../../app/keys.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
@@ -16,7 +18,7 @@ class ListRejectionRepo {
           Uri.parse('${Keys.baseUrl}/adviser/coredata/comment/list'),
           headers: {
             'Accept': 'application/json',
-            'lang': Get.locale?.languageCode ??"ar",
+            'lang': Get.locale?.languageCode ?? "ar",
             'Authorization': 'Bearer ${sharedPrefs.getToken()}',
           });
       Map<String, dynamic> responseMap = json.decode(response.body);

@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificateItem.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage5/RegistrationStage5.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
@@ -45,10 +41,9 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
                   onPressedHandler: () {
                     if (stage4FormKey.currentState!.validate()) {
                       debugPrint(
-                          "  inputDescription is $inputDescription &   inputSummary  is $inputSummary && List of inputs are ${certiList} ");
+                          "  inputDescription is $inputDescription &   inputSummary  is $inputSummary && List of inputs are $certiList ");
 
-                      inputDocuments =
-                          certiList.map((e) => e["cert"]).toList();
+                      inputDocuments = certiList.map((e) => e["cert"]).toList();
                       print("The new List is ${inputDocuments.toString()}");
                       MyApplication.navigateTo(
                           context, const RegistrationStage5());
@@ -73,7 +68,7 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("معلومات التخصص"),
-            leading:  MyBackButton()),
+            leading: MyBackButton()),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,

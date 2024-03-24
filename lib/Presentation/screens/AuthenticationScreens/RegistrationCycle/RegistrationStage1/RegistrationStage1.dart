@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
+
 import '../../../../../Data/cubit/authentication/new_mob/mob_cubit.dart';
 import '../../../../../Data/cubit/authentication/new_mob/mob_state.dart';
 import '../../../../../app/constants.dart';
@@ -35,7 +36,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
         appBar: AppBar(
             leadingWidth: 70,
             title: const Text("إنشاء حساب ناصح"),
-            leading:  MyBackButton()),
+            leading: MyBackButton()),
         body: Form(
           key: _formKey,
           child: Container(
@@ -101,8 +102,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                                   print(phone.completeNumber);
                                   _sendPhone = phone.completeNumber;
                                 },
-                                invalidNumberMessage:
-                                     "invalid_number".tr,
+                                invalidNumberMessage: "invalid_number".tr,
                               ),
                             ),
                             state is MobLoading

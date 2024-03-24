@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/Data/models/profile_models/profile_model.dart';
-import 'package:nasooh/app/global.dart';
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
-import '../../models/Auth_models/check_mobile_model.dart';
-import 'package:http/http.dart' as http;
 
 class GetProfileRepo {
   Future<ProfileModel?> getProfile() async {
@@ -19,7 +19,7 @@ class GetProfileRepo {
         Uri.parse('${Keys.baseUrl}/adviser/profile/${sharedPrefs.getId()}'),
         headers: {
           'Accept': 'application/json',
-          'lang': Get.locale?.languageCode??"ar",
+          'lang': Get.locale?.languageCode ?? "ar",
           "Authorization": "Bearer ${sharedPrefs.getToken()}"
         },
       );

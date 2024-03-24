@@ -10,7 +10,7 @@ String mobModelToJson(MobModel data) => json.encode(data.toJson());
 
 class MobModel {
   final List<dynamic>? data;
-  final int? status;
+  final dynamic status;
   final String? message;
   final List<dynamic>? pagination;
 
@@ -22,16 +22,22 @@ class MobModel {
   });
 
   factory MobModel.fromJson(Map<String, dynamic> json) => MobModel(
-    data: json["data"] == null ? [] : List<dynamic>.from(json["data"]!.map((x) => x)),
-    status: json["status"],
-    message: json["message"],
-    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-  );
+        data: json["data"] == null
+            ? []
+            : List<dynamic>.from(json["data"]!.map((x) => x)),
+        status: json["status"],
+        message: json["message"],
+        pagination: json["pagination"] == null
+            ? []
+            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x)),
-    "status": status,
-    "message": message,
-    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
-  };
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x)),
+        "status": status,
+        "message": message,
+        "pagination": pagination == null
+            ? []
+            : List<dynamic>.from(pagination!.map((x) => x)),
+      };
 }

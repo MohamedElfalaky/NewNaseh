@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../repositories/advice_repos/done_advice_repo.dart';
 import 'done_advice_state.dart';
 
@@ -16,4 +17,3 @@ class DoneAdviceCubit extends Cubit<DoneAdviceState> {
     }
   }
 }
-

@@ -10,7 +10,7 @@ String languageModelToJson(LanguageModel data) => json.encode(data.toJson());
 
 class LanguageModel {
   List<LanguageData>? data;
-  int? status;
+  dynamic status;
   String? message;
   List<dynamic>? pagination;
 
@@ -46,7 +46,7 @@ class LanguageModel {
 }
 
 class LanguageData {
-  int? id;
+  dynamic id;
   String? name;
   String? code;
 

@@ -1,13 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/app/global.dart';
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import '../../models/Auth_models/user_model.dart';
-import 'package:http/http.dart' as http;
 
 class Auth {
   Future<LoginModel?> login({String? phone, String? pass}) async {

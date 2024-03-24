@@ -7,7 +7,7 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
 class OnBoarding extends StatefulWidget {
-  const OnBoarding();
+  const OnBoarding({super.key});
 
   @override
   State<OnBoarding> createState() => _OnBoardingState();
@@ -23,7 +23,7 @@ class _OnBoardingState extends State<OnBoarding>
     super.initState();
 
     _animationController = AnimationController(
-        vsync: this, duration: Duration(milliseconds: 1500));
+        vsync: this, duration: const Duration(milliseconds: 1500));
     _animationController.forward();
   }
 
@@ -63,7 +63,7 @@ class _OnBoardingState extends State<OnBoarding>
                       ),
                       SlideTransition(
                         position: Tween<Offset>(
-                                begin: Offset(0, -4), end: Offset(0, 0.1))
+                                begin: const Offset(0, -4), end: const Offset(0, 0.1))
                             .animate(_animationController),
                         child: SizedBox(
                             height: 150,
@@ -72,29 +72,29 @@ class _OnBoardingState extends State<OnBoarding>
                               // color: Colors.amber,
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 47,
                       ),
                       SlideTransition(
                         position: Tween<Offset>(
-                                begin: Offset(-2, 0), end: Offset(0, 0))
+                                begin: const Offset(-2, 0), end: const Offset(0, 0))
                             .animate(_animationController),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               "حياك الله بنصوح",
                               style: TextStyle(
                                   fontFamily: Constants.mainFont,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 24),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 12,
                             ),
                             Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 25),
-                              child: Text(
+                              child: const Text(
                                 "مبدع في مجالك؟ عندك وقت تجاوب على أسئلة سريعة بمقابل مالي؟ حياك معنا",
                                 style: Constants.mainTitleFont,
                                 textAlign: TextAlign.center,
@@ -106,7 +106,7 @@ class _OnBoardingState extends State<OnBoarding>
                             Container(
                               margin:
                                   const EdgeInsets.symmetric(horizontal: 25),
-                              child: Text(
+                              child: const Text(
                                 "نصوح تطبيق يوفر إجابة وافية وسريعة لكل سؤال من خبراء ومختصين في جميع المجالات",
                                 style: Constants.subtitleFont1,
                                 textAlign: TextAlign.center,
@@ -115,7 +115,7 @@ class _OnBoardingState extends State<OnBoarding>
                           ],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       SizedBox(
                         height: 48,
                         child: MyButton(

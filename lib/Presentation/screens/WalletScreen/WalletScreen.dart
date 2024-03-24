@@ -34,7 +34,6 @@ class _WalletScreenState extends State<WalletScreen> {
   void initState() {
     super.initState();
 
-///////////////////////////
     MyApplication.checkConnection().then((value) {
       if (value) {
         context.read<WalletCubit>().getDataWallet();
@@ -43,7 +42,6 @@ class _WalletScreenState extends State<WalletScreen> {
       }
     });
 
-    // todo subscribe to internet change
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -114,7 +112,7 @@ class _WalletScreenState extends State<WalletScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container(
+                        SizedBox(
                           height: 120,
                           width: 120,
                           child: Lottie.asset(
@@ -136,7 +134,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             // ),
                             RichText(
                                 text: TextSpan(
-                                    text:state.response?.balance.toString()??"0",
+                                    text: '${state.response?.balance ?? 0}',
                                     style: Constants.headerNavigationFont
                                         .copyWith(fontSize: 32),
                                     children: [

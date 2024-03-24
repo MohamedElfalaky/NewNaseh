@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
-import 'package:nasooh/app/keys.dart';
 import 'package:http/http.dart' as http;
+import 'package:nasooh/app/keys.dart';
+
 import '../../../../app/utils/myApplication.dart';
 import '../../../models/Auth_models/city_model.dart';
 
 class CityRepo {
-  Future<CityModel?> getCities({String ?id}) async {
+  Future<CityModel?> getCities({String? id}) async {
     try {
       http.Response response = await http.get(
         Uri.parse('${Keys.baseUrl}/adviser/coredata/city/list?country_id=$id'),

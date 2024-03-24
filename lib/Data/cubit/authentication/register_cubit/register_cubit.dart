@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../Presentation/screens/Home/HomeScreen.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../repositories/authentication/register_repo.dart';
@@ -16,7 +17,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     String? mobile,
     String? countryId,
     String? cityId,
-    int? gender,
+    dynamic gender,
     String? nationalityId,
     String? category,
     String? userName,
@@ -56,7 +57,8 @@ class RegisterCubit extends Cubit<RegisterState> {
           .then((value) {
         if (value != null) {
           emit(RegisterLoaded(value));
-          MyApplication.navigateToReplaceAllPrevious(context!, const HomeScreen());
+          MyApplication.navigateToReplaceAllPrevious(
+              context!, const HomeScreen());
         } else {
           emit(RegisterError());
         }

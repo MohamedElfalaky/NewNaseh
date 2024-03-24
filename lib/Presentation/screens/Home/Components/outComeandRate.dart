@@ -24,14 +24,13 @@ class OutcomeAndRate extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            height: 40,
-            width: 40,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: color!.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10)),
-            child: SvgPicture.asset(assetName! )
-          ),
+              height: 40,
+              width: 40,
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: color!.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(10)),
+              child: SvgPicture.asset(assetName!)),
           const SizedBox(
             width: 8,
           ),
@@ -41,7 +40,8 @@ class OutcomeAndRate extends StatelessWidget {
             children: [
               Text(
                 title!,
-                style: const TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
+                style: const TextStyle(
+                    fontSize: 10, fontFamily: Constants.mainFont),
               ),
               Text(
                 subtitle!,

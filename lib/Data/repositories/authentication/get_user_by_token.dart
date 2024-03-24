@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Data/models/profile_models/profile_model.dart';
-import 'package:nasooh/app/global.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
-import '../../models/Auth_models/check_mobile_model.dart';
-import 'package:http/http.dart' as http;
-
 import '../../models/Auth_models/register_model.dart';
 
 class GetUserRepo {
@@ -24,7 +22,7 @@ class GetUserRepo {
           "Authorization": "Bearer ${sharedPrefs.getToken()}"
         },
       );
-      print ('${Keys.baseUrl}/adviser/auth/get_user}');
+      print('${Keys.baseUrl}/adviser/auth/get_user}');
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
         print("response of get user by token is ${response.body}");

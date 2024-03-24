@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../models/profile_models/profile_model.dart';
 import '../../../repositories/profile/profile_repo.dart';
 import 'profile_state.dart';

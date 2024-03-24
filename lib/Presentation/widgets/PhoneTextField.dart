@@ -142,7 +142,7 @@ class MyIntlPhoneField extends StatefulWidget {
   final Color? cursorColor;
 
   /// How tall the cursor will be.
-  final double? cursorHeight;
+  final dynamic cursorHeight;
 
   /// How rounded the corners of the cursor should be.
   final Radius? cursorRadius;
@@ -201,7 +201,7 @@ class MyIntlPhoneField extends StatefulWidget {
     this.enabled = true,
     this.keyboardAppearance,
     @Deprecated('Use searchFieldInputDecoration of PickerDialogStyle instead')
-        this.searchText = 'Search country',
+    this.searchText = 'Search country',
     this.dropdownIconPosition = IconPosition.leading,
     this.dropdownIcon = const Icon(Icons.arrow_drop_down),
     this.autofocus = false,
@@ -290,7 +290,7 @@ class _MyIntlPhoneFieldState extends State<MyIntlPhoneField> {
             _selectedCountry = country;
             widget.onCountryChanged?.call(country);
             setState(() {});
-          },
+          }, languageCode: 'SA',
         ),
       ),
     );
@@ -370,8 +370,7 @@ class _MyIntlPhoneFieldState extends State<MyIntlPhoneField> {
           return "رجاء ادخال رقم الهاتف";
         } else if (!value.toString().startsWith("5")) {
           return "رقم الهاتف يبدأ ب 5";
-        } else if (!widget.disableLengthCheck && value != null) {
-          // print("hahahaahaha $value");
+        } else if (!widget.disableLengthCheck) {
           return value.length >= _selectedCountry.minLength &&
                   value.length <= _selectedCountry.maxLength
               ? null

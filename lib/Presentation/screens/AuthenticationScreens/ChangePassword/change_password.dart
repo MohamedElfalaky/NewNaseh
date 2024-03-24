@@ -61,8 +61,8 @@ class _ChangePasswordState extends State<ChangePassword>
         child: Scaffold(
           appBar: AppBar(
               leadingWidth: 70,
-              title: Text( "change_password".tr),
-              leading:  MyBackButton()),
+              title: Text("change_password".tr),
+              leading: MyBackButton()),
           backgroundColor: Constants.whiteAppColor,
           resizeToAvoidBottomInset: false,
           body: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
@@ -86,7 +86,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                 height: 64,
                               ),
                               Text(
-                                 "enter_new_password".tr,
+                                "enter_new_password".tr,
                                 textAlign: TextAlign.end,
                                 style: Constants.mainTitleRegularFont
                                     .copyWith(fontSize: 18),
@@ -95,7 +95,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                 height: 64,
                               ),
                               Text(
-                                 "password".tr,
+                                "password".tr,
                                 textAlign: TextAlign.end,
                                 style: Constants.mainTitleRegularFont,
                               ),
@@ -111,18 +111,19 @@ class _ChangePasswordState extends State<ChangePassword>
                                         AutovalidateMode.onUserInteraction,
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return  "password_required".tr;
+                                        return "password_required".tr;
                                       }
-                                      if (value.length < 6 || value.length >10) {
-                                        return  "password_length".tr;
+                                      if (value.length < 6 ||
+                                          value.length > 10) {
+                                        return "password_length".tr;
                                       }
                                       bool result = validatePassword(value);
                                       if (result) {
                                         return null;
                                       } else {
-                                        return " Password should contain Capital, small letter & Number & Special".tr;
+                                        return " Password should contain Capital, small letter & Number & Special"
+                                            .tr;
                                       }
-                                      return null;
                                     },
                                     decoration:
                                         Constants.setTextInputDecoration(
@@ -151,7 +152,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                 height: 16,
                               ),
                               Text(
-                                 'password_confirm'.tr,
+                                'password_confirm'.tr,
                                 textAlign: TextAlign.end,
                                 style: Constants.mainTitleRegularFont,
                               ),
@@ -167,19 +168,21 @@ class _ChangePasswordState extends State<ChangePassword>
                                         AutovalidateMode.onUserInteraction,
                                     validator: (value) {
                                       if (value!.isEmpty) {
-                                        return  "password_required".tr;
+                                        return "password_required".tr;
                                       }
-                                      if (value.length < 6 || value.length >10) {
-                                        return  "password_length".tr;
+                                      if (value.length < 6 ||
+                                          value.length > 10) {
+                                        return "password_length".tr;
                                       }
                                       if (value != _passwordController.text) {
-                                        return  "password_not_match".tr;
+                                        return "password_not_match".tr;
                                       }
                                       bool result = validatePassword(value);
                                       if (result) {
                                         return null;
                                       } else {
-                                        return " Password should contain Capital, small letter & Number & Special".tr;
+                                        return " Password should contain Capital, small letter & Number & Special"
+                                            .tr;
                                       }
                                     },
                                     decoration:
@@ -218,7 +221,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                         height: 48,
                                         child: MyButton(
                                           isBold: true,
-                                          txt:  "save".tr,
+                                          txt: "save".tr,
                                           onPressedHandler: () {
                                             if (_formKey.currentState!
                                                 .validate()) {

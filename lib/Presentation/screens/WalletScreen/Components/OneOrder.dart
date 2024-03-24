@@ -5,10 +5,17 @@ import 'package:nasooh/app/Style/sizes.dart';
 import 'package:nasooh/app/constants.dart';
 
 class OneOrder extends StatelessWidget {
-  const OneOrder({super.key, required this.value, required this.transactionId, required this.description});
-  final String value ;
-  final String transactionId ;
-  final String description ;
+  const OneOrder(
+      {super.key,
+      required this.value,
+      required this.transactionId,
+      required this.description});
+
+  final String value;
+
+  final String transactionId;
+
+  final String description;
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +48,15 @@ class OneOrder extends StatelessWidget {
             padding: const EdgeInsetsDirectional.only(start: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:  [
+              children: [
                 Text(
                   " طلب # $transactionId",
                   style: Constants.subtitleRegularFont,
                 ),
                 SizedBox(
-                  width: width(context)*0.5,
+                  width: width(context) * 0.5,
                   child: Text(
-                   description,
+                    description,
                     style: Constants.secondaryTitleRegularFont,
                   ),
                 )
@@ -57,7 +64,7 @@ class OneOrder extends StatelessWidget {
             ),
           ),
           const Spacer(),
-           Text(
+          Text(
             "$value SR",
             style: Constants.mainTitleFont,
           )

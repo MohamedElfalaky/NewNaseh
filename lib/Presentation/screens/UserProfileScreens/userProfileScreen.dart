@@ -27,7 +27,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Back(
+                const Back(
                   header: "personal_profile",
                 ),
                 const SizedBox(

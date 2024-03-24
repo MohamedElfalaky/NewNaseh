@@ -1,7 +1,7 @@
-import 'dart:developer';
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
-import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +17,7 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 import 'package:password_text_field/password_text_field.dart';
 import 'package:photo_view/photo_view.dart';
-import 'dart:convert';
+
 import '../../../../app/utils/registeration_values.dart';
 import '../../../../app/utils/validations.dart';
 import '../../../widgets/my_drop_down_list.dart';
@@ -28,8 +28,8 @@ final stage4FormKey = GlobalKey<FormState>();
 RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
 //A function that validate user entered password
 bool validatePassword(String pass) {
-  String _password = pass.trim();
-  if (pass_valid.hasMatch(_password)) {
+  String password = pass.trim();
+  if (pass_valid.hasMatch(password)) {
     return true;
   } else {
     return false;
@@ -64,23 +64,20 @@ class RegistrationController {
 
   static Future pickImage(
       ImageSource source, BuildContext context, setState) async {
-    try {
-      final myImage = await _picker.pickImage(source: source, imageQuality: 60);
+       final myImage = await _picker.pickImage(source: source, imageQuality: 60);
       if (myImage == null) return;
 
       setState(() {
         regImage = myImage;
         inputImagePhoto = regImage;
       });
-      List<int> imageBytes = await File(regImage!.path).readAsBytesSync();
-      print(imageBytes);
+      List<int> imageBytes = File(regImage!.path).readAsBytesSync();
+      // print(imageBytes);
       base64Image = base64.encode(imageBytes);
-      print("inputImagePhoto!.path  is ${inputImagePhoto!.path}");
-      log("base64Image!  is ${base64Image}");
-    } on PlatformException catch (e) {
-      print("platform exeption : $e");
+
+    if(context.mounted) {
+      Navigator.pop(context);
     }
-    Navigator.pop(context);
   }
 
   static Widget r3Body(context, setState) {
@@ -172,7 +169,7 @@ class RegistrationController {
                                               // print(
                                               //     "Image PAth is $inputImageName");
                                             }),
-                                        Divider(),
+                                        const Divider(),
                                         RowModalSheet(
                                           txt: "الاستديو",
                                           imageIcon: galleryIcon,
@@ -191,7 +188,7 @@ class RegistrationController {
                                             //     "Image path is ${inputImagePhoto!.path}");
                                           },
                                         ),
-                                        Divider(),
+                                        const Divider(),
                                         RowModalSheet(
                                           txt: "الغاء",
                                           imageIcon: closeIcon,
@@ -241,9 +238,9 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return  "full Name Required".tr;
+                      return "full Name Required".tr;
                     } else if (value.length > 33 || value.length < 2) {
-                      return  "name length".tr;
+                      return "name length".tr;
                     }
                     return null;
                   },
@@ -263,10 +260,10 @@ class RegistrationController {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return  "User Name Required".tr;
+                    return "User Name Required".tr;
                   }
                   if (value.length > 17 || value.length < 5) {
-                    return  "User Name Length".tr;
+                    return "User Name Length".tr;
                   }
                   // else if   (!validEnglish(value)) {
                   //   return 'الاسم يجب ان يحتوي علي حروف انجليزية و أرقام' ;
@@ -304,7 +301,7 @@ class RegistrationController {
                   validator: (val) {
                     if (val!.isEmpty ||
                         !RegExp(Validations.validationEmail).hasMatch(val)) {
-                      return  "Email data".tr;
+                      return "Email data".tr;
                     }
                     return null;
                   },
@@ -322,24 +319,22 @@ class RegistrationController {
                 child: PasswordTextFormField(
                     controller: _password,
                     style: Constants.subtitleFont1,
-                    autovalidateMode:
-                    AutovalidateMode.onUserInteraction,
-                        onChanged: (val) {
-                          inputPassword = _password.text;
-                        },
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    onChanged: (val) {
+                      inputPassword = _password.text;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return  "password_required".tr;
-                      }
-
-                      else  if (value.length < 6 || value.length >10) {
-                        return  "password_length".tr;
+                        return "password_required".tr;
+                      } else if (value.length < 6 || value.length > 10) {
+                        return "password_length".tr;
                       }
                       bool result = validatePassword(value);
                       if (result) {
                         return null;
                       } else {
-                        return " Password should contain Capital, small letter & Number & Special".tr;
+                        return " Password should contain Capital, small letter & Number & Special"
+                            .tr;
                       }
                     },
                     decoration: Constants.setTextInputDecoration(
@@ -349,12 +344,9 @@ class RegistrationController {
                           decoration: const BoxDecoration(
                               border: Border(
                                   left: BorderSide(
-                                      width: 1,
-                                      color: Color(0xFFBDBDBD)))),
-                          margin: const EdgeInsetsDirectional.only(
-                              end: 8),
-                          padding:
-                          const EdgeInsetsDirectional.all(8),
+                                      width: 1, color: Color(0xFFBDBDBD)))),
+                          margin: const EdgeInsetsDirectional.only(end: 8),
+                          padding: const EdgeInsetsDirectional.all(8),
                           child: SvgPicture.asset(
                             passField,
                             height: 24,
@@ -424,9 +416,9 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return  "description Required".tr;
+                      return "description Required".tr;
                     } else if (value.length < 4) {
-                      return  "short description".tr;
+                      return "short description".tr;
                     }
                     return null;
                   },
@@ -451,9 +443,9 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return  "summary Required".tr;
+                      return "summary Required".tr;
                     } else if (value.length < 33) {
-                      return  "summary length".tr;
+                      return "summary length".tr;
                     }
                     return null;
                   },
@@ -479,7 +471,7 @@ class RegistrationController {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return  "experience Required".tr;
+                      return "experience Required".tr;
                     }
                     return null;
                   },
@@ -498,7 +490,7 @@ class RegistrationController {
                   // maxLength: 10,
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "الشهادات والإنجازات...",
-                      suffixIcon:   Padding(
+                      suffixIcon: Padding(
                         padding: const EdgeInsets.all(4),
                         child: InkWell(
                           onTap: () {
@@ -506,7 +498,7 @@ class RegistrationController {
                               var idd = DateTime.now().toString();
                               certiList.add({
                                 "widget": CertificateItem(
-                                  register: true,
+                                    register: true,
                                     cert: certificatesController.text,
                                     staticId: idd),
                                 "cert": certificatesController.text,

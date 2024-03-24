@@ -3,6 +3,7 @@
 //     final listRejectionModel = listRejectionModelFromJson(jsonString);
 
 import 'dart:convert';
+
 ListRejectionModel listRejectionModelFromJson(dynamic str) =>
     ListRejectionModel.fromJson(str);
 
@@ -11,7 +12,7 @@ String listRejectionModelToJson(ListRejectionModel data) =>
 
 class ListRejectionModel {
   List<RejectData>? data;
-  int? status;
+  dynamic status;
   String? message;
   List<dynamic>? pagination;
 
@@ -26,7 +27,8 @@ class ListRejectionModel {
       ListRejectionModel(
         data: json["data"] == null
             ? []
-            : List<RejectData>.from(json["data"]!.map((x) => RejectData.fromJson(x))),
+            : List<RejectData>.from(
+                json["data"]!.map((x) => RejectData.fromJson(x))),
         status: json["status"],
         message: json["message"],
         pagination: json["pagination"] == null
@@ -47,7 +49,7 @@ class ListRejectionModel {
 }
 
 class RejectData {
-  int? id;
+  dynamic id;
   String? name;
 
   RejectData({

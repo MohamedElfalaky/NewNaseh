@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+
 import '../../Data/cubit/authentication/city_cubit/city_cubit.dart';
 import '../../Data/cubit/authentication/city_cubit/city_state.dart';
 import '../../Data/cubit/authentication/country_cubit/country_cubit.dart';
@@ -87,11 +88,10 @@ class _MyColumnDataState extends State<MyColumnData> {
   String? cityValue;
   String? nationalityValue;
 
-
-  Future<void> getData()async{
-  await  context.read<CountryCubit>().getCountries();
-   await context.read<NationalityCubit>().getNationalities();
-  var profileCubit = ProfileCubit.get(context);
+  Future<void> getData() async {
+    await context.read<CountryCubit>().getCountries();
+    await context.read<NationalityCubit>().getNationalities();
+    var profileCubit = ProfileCubit.get(context);
     if (profileCubit.profileModel?.data?.nationalityId != null) {
       nationalityValue =
           profileCubit.profileModel?.data?.nationalityId?.id.toString();
@@ -161,8 +161,7 @@ class _MyColumnDataState extends State<MyColumnData> {
                       cityValue = val;
                       inputCity = cityValue;
                     });
-                    print("${inputCity} is CityChosen");
-                  },
+                   },
                   items: cityState.response!.data!
                       .map(
                         (e) => DropdownMenuItem(

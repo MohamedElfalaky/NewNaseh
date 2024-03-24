@@ -4,13 +4,15 @@
 
 import 'dart:convert';
 
-ShowAdviceModel showAdviceModelFromJson(dynamic str) => ShowAdviceModel.fromJson(str);
+ShowAdviceModel showAdviceModelFromJson(dynamic str) =>
+    ShowAdviceModel.fromJson(str);
 
-String showAdviceModelToJson(ShowAdviceModel data) => json.encode(data.toJson());
+String showAdviceModelToJson(ShowAdviceModel data) =>
+    json.encode(data.toJson());
 
 class ShowAdviceModel {
   ShowAdData? data;
-  int? status;
+  dynamic status;
   String? message;
   List<dynamic>? pagination;
 
@@ -21,25 +23,30 @@ class ShowAdviceModel {
     this.pagination,
   });
 
-  factory ShowAdviceModel.fromJson(Map<String, dynamic> json) => ShowAdviceModel(
-    data: json["data"] == null ? null : ShowAdData.fromJson(json["data"]),
-    status: json["status"],
-    message: json["message"],
-    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-  );
+  factory ShowAdviceModel.fromJson(Map<String, dynamic> json) =>
+      ShowAdviceModel(
+        data: json["data"] == null ? null : ShowAdData.fromJson(json["data"]),
+        status: json["status"],
+        message: json["message"],
+        pagination: json["pagination"] == null
+            ? []
+            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data?.toJson(),
-    "status": status,
-    "message": message,
-    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
-  };
+        "data": data?.toJson(),
+        "status": status,
+        "message": message,
+        "pagination": pagination == null
+            ? []
+            : List<dynamic>.from(pagination!.map((x) => x)),
+      };
 }
 
 class ShowAdData {
-  int? id;
+  dynamic id;
   String? name;
-  int? price;
+  dynamic price;
   String? date;
   String? description;
   Status? status;
@@ -60,31 +67,35 @@ class ShowAdData {
   });
 
   factory ShowAdData.fromJson(Map<String, dynamic> json) => ShowAdData(
-    id: json["id"],
-    name: json["name"]??"",
-    price: json["price"]??0,
-    description: json["description"]??"",
-    date: json["date"]??"",
-    status: json["status"] == null ? null : Status.fromJson(json["status"]),
-    label: json["label"] == null ? null : Status.fromJson(json["label"]),
-    client: json["client"] == null ? null : Client.fromJson(json["client"]),
-    chat: json["chat"] == null ? [] : List<Chat>.from(json["chat"]!.map((x) => Chat.fromJson(x))),
-  );
+        id: json["id"],
+        name: json["name"] ?? "",
+        price: json["price"] ?? 0,
+        description: json["description"] ?? "",
+        date: json["date"] ?? "",
+        status: json["status"] == null ? null : Status.fromJson(json["status"]),
+        label: json["label"] == null ? null : Status.fromJson(json["label"]),
+        client: json["client"] == null ? null : Client.fromJson(json["client"]),
+        chat: json["chat"] == null
+            ? []
+            : List<Chat>.from(json["chat"]!.map((x) => Chat.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "price": price,
-    "date": date,
-    "description": description,
-    "status": status?.toJson(),
-    "client": client?.toJson(),
-    "chat": chat == null ? [] : List<dynamic>.from(chat!.map((x) => x.toJson())),
-  };
+        "id": id,
+        "name": name,
+        "price": price,
+        "date": date,
+        "description": description,
+        "status": status?.toJson(),
+        "client": client?.toJson(),
+        "chat": chat == null
+            ? []
+            : List<dynamic>.from(chat!.map((x) => x.toJson())),
+      };
 }
 
 class Chat {
-  int? id;
+  dynamic id;
   dynamic adviser;
   Client? client;
   String? message;
@@ -101,26 +112,31 @@ class Chat {
   });
 
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
-    id: json["id"],
-    adviser: json["adviser"],
-    client: json["client"] == null ? null : Client.fromJson(json["client"]),
-    message: json["message"],
-    mediaType: json["media_type"],
-    document: json["document"] == null ? [] : List<Document>.from(json["document"]!.map((x) => Document.fromJson(x))),
-  );
+        id: json["id"],
+        adviser: json["adviser"],
+        client: json["client"] == null ? null : Client.fromJson(json["client"]),
+        message: json["message"],
+        mediaType: json["media_type"],
+        document: json["document"] == null
+            ? []
+            : List<Document>.from(
+                json["document"]!.map((x) => Document.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "adviser": adviser,
-    "client": client?.toJson(),
-    "message": message,
-    "media_type": mediaType,
-    "document": document == null ? [] : List<dynamic>.from(document!.map((x) => x.toJson())),
-  };
+        "id": id,
+        "adviser": adviser,
+        "client": client?.toJson(),
+        "message": message,
+        "media_type": mediaType,
+        "document": document == null
+            ? []
+            : List<dynamic>.from(document!.map((x) => x.toJson())),
+      };
 }
 
 class Client {
-  int? id;
+  dynamic id;
   String? avatar;
   String? fullName;
 
@@ -131,20 +147,20 @@ class Client {
   });
 
   factory Client.fromJson(Map<String, dynamic> json) => Client(
-    id: json["id"],
-    avatar: json["avatar"],
-    fullName: json["full_name"],
-  );
+        id: json["id"],
+        avatar: json["avatar"],
+        fullName: json["full_name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "avatar": avatar,
-    "full_name": fullName,
-  };
+        "id": id,
+        "avatar": avatar,
+        "full_name": fullName,
+      };
 }
 
 class Document {
-  int? id;
+  dynamic id;
   String? file;
 
   Document({
@@ -153,18 +169,18 @@ class Document {
   });
 
   factory Document.fromJson(Map<String, dynamic> json) => Document(
-    id: json["id"],
-    file: json["file"],
-  );
+        id: json["id"],
+        file: json["file"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "file": file,
-  };
+        "id": id,
+        "file": file,
+      };
 }
 
 class Status {
-  int? id;
+  dynamic id;
   String? name;
 
   Status({
@@ -173,12 +189,12 @@ class Status {
   });
 
   factory Status.fromJson(Map<String, dynamic> json) => Status(
-    id: json["id"],
-    name: json["name"],
-  );
+        id: json["id"],
+        name: json["name"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-  };
+        "id": id,
+        "name": name,
+      };
 }

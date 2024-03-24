@@ -10,7 +10,7 @@ String walletModelToJson(WalletModel data) => json.encode(data.toJson());
 
 class WalletModel {
   WalletData? data;
-  int? status;
+  dynamic status;
   String? message;
   List<dynamic>? pagination;
 
@@ -22,23 +22,27 @@ class WalletModel {
   });
 
   factory WalletModel.fromJson(Map<String, dynamic> json) => WalletModel(
-    data: json["data"] == null ? null : WalletData.fromJson(json["data"]),
-    status: json["status"],
-    message: json["message"],
-    pagination: json["pagination"] == null ? [] : List<dynamic>.from(json["pagination"]!.map((x) => x)),
-  );
+        data: json["data"] == null ? null : WalletData.fromJson(json["data"]),
+        status: json["status"],
+        message: json["message"],
+        pagination: json["pagination"] == null
+            ? []
+            : List<dynamic>.from(json["pagination"]!.map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
-    "data": data?.toJson(),
-    "status": status,
-    "message": message,
-    "pagination": pagination == null ? [] : List<dynamic>.from(pagination!.map((x) => x)),
-  };
+        "data": data?.toJson(),
+        "status": status,
+        "message": message,
+        "pagination": pagination == null
+            ? []
+            : List<dynamic>.from(pagination!.map((x) => x)),
+      };
 }
 
 class WalletData {
-  int? id;
-  int? balance;
+  dynamic id;
+  dynamic balance;
   List<Transaction>? transaction;
 
   WalletData({
@@ -48,21 +52,26 @@ class WalletData {
   });
 
   factory WalletData.fromJson(Map<String, dynamic> json) => WalletData(
-    id: json["id"],
-    balance: json["balance"],
-    transaction: json["transaction"] == null ? [] : List<Transaction>.from(json["transaction"]!.map((x) => Transaction.fromJson(x))),
-  );
+        id: json["id"],
+        balance: json["balance"],
+        transaction: json["transaction"] == null
+            ? []
+            : List<Transaction>.from(
+                json["transaction"]!.map((x) => Transaction.fromJson(x))),
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "balance": balance,
-    "transaction": transaction == null ? [] : List<dynamic>.from(transaction!.map((x) => x.toJson())),
-  };
+        "id": id,
+        "balance": balance,
+        "transaction": transaction == null
+            ? []
+            : List<dynamic>.from(transaction!.map((x) => x.toJson())),
+      };
 }
 
 class Transaction {
-  int? id;
-  double? balance;
+  dynamic id;
+  dynamic balance;
   String? key;
   String? description;
 
@@ -74,16 +83,16 @@ class Transaction {
   });
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
-    id: json["id"],
-    balance: json["balance"]?.toDouble(),
-    key: json["key"],
-    description: json["description"],
-  );
+        id: json["id"],
+        balance: json["balance"]?.toDouble(),
+        key: json["key"],
+        description: json["description"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "balance": balance,
-    "key": key,
-    "description": description,
-  };
+        "id": id,
+        "balance": balance,
+        "key": key,
+        "description": description,
+      };
 }

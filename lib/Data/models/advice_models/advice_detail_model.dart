@@ -1,6 +1,6 @@
 class AdviceDetailScreenModel {
   String? price;
-  int? id;
+  dynamic id;
 
   String? title;
 

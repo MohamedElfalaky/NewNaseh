@@ -77,7 +77,7 @@ class SharedPrefs {
     sharedPrefs!.setInt("isNotification", value);
   }
 
-  int? getReceiveMethod() {
+  dynamic getReceiveMethod() {
     return sharedPrefs!.getInt(receiveMethodKey);
   }
 

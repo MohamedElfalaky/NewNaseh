@@ -1,23 +1,25 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
-import 'package:http/http.dart' as http;
 import '../../models/advice_models/show_advice_model.dart';
 
 class RejectAdviceRepo {
   Future<ShowAdviceModel?> reject(
-      {int? id, String? reject, String? rejectOther}) async {
+      {dynamic id, String? reject, String? rejectOther}) async {
     try {
       http.Response response = await http.post(
           Uri.parse('${Keys.baseUrl}/adviser/advice/reject/$id'),
           headers: {
             'Accept': 'application/json',
-            'lang': Get.locale?.languageCode??"ar",
+            'lang': Get.locale?.languageCode ?? "ar",
             "Authorization": "Bearer ${sharedPrefs.getToken()}"
           },
           body: {

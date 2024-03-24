@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/Components/OneNotification.dart';
-import 'package:nasooh/Presentation/screens/NotificationScreen/controller/NotificationScreenController.dart';
 import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
@@ -22,8 +21,6 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  NotificationScreenController notificationScreenController =
-      NotificationScreenController();
 
   late StreamSubscription<ConnectivityResult> subscription;
   bool? isConnected;
@@ -33,7 +30,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
   void initState() {
     super.initState();
 
-///////////////////////////
     MyApplication.checkConnection().then((value) {
       if (value) {
         context.read<NotificationCubit>().getDataNotification();
@@ -42,7 +38,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
       }
     });
 
-    // todo subscribe to internet change
     subscription = Connectivity()
         .onConnectivityChanged
         .listen((ConnectivityResult result) {
@@ -54,7 +49,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
         });
       }
 
-      /// if internet comes back
       if (result != ConnectivityResult.none) {
         context.read<NotificationCubit>().getDataNotification();
       }
@@ -69,7 +63,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // todo if not connected display nointernet widget else continue to the rest build code
     final sizee = MediaQuery.of(context).size;
     if (isConnected == null) {
       MyApplication.checkConnection().then((value) {
@@ -92,17 +85,19 @@ class _NotificationScreenState extends State<NotificationScreen> {
           backgroundColor: Constants.whiteAppColor,
           appBar: AppBar(
             centerTitle: false,
-            leadingWidth: 70,
-            title: Row(
-              children: [
-                Text("Notifications".tr),
-              ],
+            leadingWidth: 80,
+            title: Text("Notifications".tr),
+            leading: Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: MyBackButton(),
             ),
-            leading: MyBackButton(),
             actions: [
-              Switch(
-                value: false,
-                onChanged: (value) {},
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 17),
+                child: Switch(
+                  value: false,
+                  onChanged: (value) {},
+                ),
               )
             ],
           ),
@@ -111,12 +106,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
             if (state is NotificationLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is NotificationLoaded) {
-              // print(state.response!.transaction.toString());
               return Column(
                 children: [
                   Expanded(
                       child: ListView.builder(
                     itemBuilder: (context, index) => OneNotification(
+                      orderId: state.response?[index].id ?? 0,
                       description: state.response?[index].description ?? "",
                       date: state.response?[index].date ?? "",
                       notificationId:

@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasooh/Data/cubit/authentication/category_cubit/category_cubit.dart';
+import 'package:provider/single_child_widget.dart';
+
 import '../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../Data/cubit/advice_cubits/approve_advice_cubit/approve_advice_cubit.dart';
 import '../../Data/cubit/advice_cubits/done_advice_cubit/done_advice_cubit.dart';
@@ -17,7 +19,6 @@ import '../../Data/cubit/authentication/login_cubit/login_cubit.dart';
 import '../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
 import '../../Data/cubit/authentication/new_mob/mob_cubit.dart';
 import '../../Data/cubit/authentication/register_cubit/register_cubit.dart';
-import 'package:provider/single_child_widget.dart';
 import '../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
 import '../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
 import '../../Data/cubit/notification_cubit/notification_cubit.dart';

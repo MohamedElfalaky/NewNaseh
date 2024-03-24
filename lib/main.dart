@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,32 +12,22 @@ import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
+
 import 'Data/repositories/notification/fcm.dart';
 import 'Presentation/screens/SettingsScreen/lang_item.dart';
-import 'app/global.dart';
 import 'app/keys.dart';
 import 'app/utils/BlocProviders.dart';
 import 'app/utils/sharedPreferenceClass.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
-// @pragma('vm:entry-point')
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   // await Firebase.initializeApp();
-//   // FCMNotification().showNotification(message);
-//   // if(Platform.isIOS){
-//   //
-//   //   AudioPlayer().play(AssetSource('sounds/synth.mp3'));
-//   // }
-// }
-
+// todo
+// 0562131705
+// Aa@123123
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // ignore: deprecated_member_use
   FlutterNativeSplash.removeAfter(initialization);
   await SharedPrefs().init();
   await Firebase.initializeApp();
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   runApp(const MyApp());
 }
@@ -48,16 +40,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // FCMNotification fcmNotification = FCMNotification();
 
-  // @override
-  // void initState() {
-  //   Firebase.initializeApp().then((value) {
-  //     fcmNotification.registerNotification();
-  //     fcmNotification.configLocalNotification();
-  //   });
-  //   super.initState();
-  // }
 
   @override
   void initState() {
@@ -65,18 +48,15 @@ class _MyAppState extends State<MyApp> {
     FirebaseCustomNotification.setUpFirebase();
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: providers,
       child: GetMaterialApp(
         translations: Messages(),
-        // your translations
         locale: sharedPrefs.getLanguage() == ""
             ? const Locale('ar')
             : Locale(sharedPrefs.getLanguage()),
-        // translations will be displayed in that locale
         fallbackLocale: const Locale('ar'),
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,
@@ -104,11 +84,10 @@ class _MyAppState extends State<MyApp> {
             background: Container(color: const Color(0xFFF5F5F5))),
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
-        title: 'NASE7',
+        title: 'ناصح',
         theme: ThemeData(
-            primarySwatch: getMaterialColor(
-                colorHex:
-                    0xFFbac0085A55), // todo change color to use default app color
+            primaryColor: Constants.primaryAppColor,
+            primarySwatch: Colors.lightBlue,
             appBarTheme: const AppBarTheme().copyWith(
               toolbarHeight: 70,
               titleSpacing: 4,
@@ -124,22 +103,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  getMaterialColor({required int colorHex}) {
-    Map<int, Color> color = {
-      // ignore: use_full_hex_values_for_flutter_colors
-      50: const Color.fromRGBO(0, 123, 165, .1),
-      100: const Color.fromRGBO(0, 123, 165, .2),
-      200: const Color.fromRGBO(0, 123, 165, .3),
-      300: const Color.fromRGBO(0, 123, 165, .4),
-      400: const Color.fromRGBO(0, 123, 165, .5),
-      500: const Color.fromRGBO(0, 123, 165, .6),
-      600: const Color.fromRGBO(0, 123, 165, .7),
-      700: const Color.fromRGBO(0, 123, 165, .8),
-      800: const Color.fromRGBO(0, 123, 165, .9),
-      900: const Color.fromRGBO(0, 123, 165, 1),
-    };
-    return MaterialColor(colorHex, color);
-  }
 }
 
 Future<void> initialization(BuildContext? context) async {

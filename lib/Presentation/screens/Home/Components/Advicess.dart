@@ -23,7 +23,7 @@ class Advices extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("showAdData!.chat!.length is ${showAdData!.chat!.length}");
+    // print("showAdData!.chat!.length is ${showAdData!.chat!.length}");
     return Container(
       margin: const EdgeInsets.only(bottom: 18),
       decoration: BoxDecoration(
@@ -36,7 +36,7 @@ class Advices extends StatelessWidget {
       // ignore: prefer_const_literals_to_create_immutables
       child: Column(children: [
         Padding(
-          padding: EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
+          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
           child: Text(
             showAdData?.name ?? "",
             style: Constants.mainTitleFont,
@@ -49,7 +49,7 @@ class Advices extends StatelessWidget {
           children: [
             if (isAdviceDetail != true)
               Padding(
-                padding: EdgeInsetsDirectional.only(start: 16),
+                padding: const EdgeInsetsDirectional.only(start: 16),
                 child: Text(
                   showAdData?.date ?? "",
                   style: Constants.subtitleRegularFont,
@@ -57,8 +57,10 @@ class Advices extends StatelessWidget {
               ),
             const Spacer(),
             Container(
-              height: 22,
-              width: 57,
+              padding: const EdgeInsets.all(6.5),
+              // height: 2,
+              // width: 65,
+
               decoration: const BoxDecoration(
                   color: Color(0XFF99E6FC),
                   borderRadius: BorderRadiusDirectional.only(
@@ -66,7 +68,7 @@ class Advices extends StatelessWidget {
                       bottomStart: Radius.circular(10))),
               child: Text(
                 showAdData?.label?.name ?? "",
-                style: TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
+                style: const TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
                 textAlign: TextAlign.center,
               ),
             )
@@ -134,14 +136,15 @@ class Advices extends StatelessWidget {
                                     isBold: true,
                                     txt: "تسليم",
                                     onPressedHandler: () {
-                                      print(
-                                          "showAdData!.chat!.length is ${showAdData!.chat!.length}");
+                                      // print(
+                                      //     "showAdData!.chat!.length is ${showAdData!.chat!.length}");
                                       if (showAdData!.chat!.length == 1) {
                                         return;
-                                      } else
+                                      } else {
                                         context
                                             .read<DoneAdviceCubit>()
                                             .done(adviceId: showAdData!.id!);
+                                      }
                                     },
                                   ),
                                 ),

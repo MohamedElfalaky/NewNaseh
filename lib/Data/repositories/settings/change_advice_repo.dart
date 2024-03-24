@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/app/global.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import '../../models/Auth_models/user_model.dart';
-import 'package:http/http.dart' as http;
 
 class IsAdviceRepo {
   Future<LoginModel?> isAdvice() async {
@@ -55,7 +56,7 @@ class IsAdviceRepo {
       if (kDebugMode) {
         print(e);
       }
-    } on Error catch (e ,st) {
+    } on Error catch (e, st) {
       if (kDebugMode) {
         print(e);
         print(st);

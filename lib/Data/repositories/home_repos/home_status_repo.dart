@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Data/models/profile_models/profile_model.dart';
-import 'package:nasooh/app/global.dart';
+import 'package:http/http.dart' as http;
 import 'package:nasooh/app/keys.dart';
+
 import '../../../app/utils/myApplication.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
-import '../../models/Auth_models/check_mobile_model.dart';
-import 'package:http/http.dart' as http;
-
 import '../../models/home_models/home_status_model.dart';
 
 class HomeStatusRepo {
@@ -20,7 +18,7 @@ class HomeStatusRepo {
         Uri.parse('${Keys.baseUrl}/adviser/coredata/status/list'),
         headers: {
           'Accept': 'application/json',
-          'lang': Get.locale?.languageCode??"ar",
+          'lang': Get.locale?.languageCode ?? "ar",
           "Authorization": "Bearer ${sharedPrefs.getToken()}"
         },
       );

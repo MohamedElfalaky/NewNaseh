@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../repositories/authentication/country_repo/country_repo.dart';
 import 'country_state.dart';
 
@@ -11,7 +12,7 @@ class CountryCubit extends Cubit<CountryState> {
       emit(CountryLoading());
       final mList = await countryRepo.getCountries();
       // if (mList?.status == 1) {
-        emit(CountryLoaded(mList));
+      emit(CountryLoaded(mList));
       // } else {
       //   emit(CountryError());
       // }

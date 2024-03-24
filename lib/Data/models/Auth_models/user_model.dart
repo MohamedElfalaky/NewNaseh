@@ -10,7 +10,7 @@ String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
   Data? data;
-  int? status;
+  dynamic status;
   String? message;
   List<dynamic>? pagination;
 
@@ -41,14 +41,14 @@ class LoginModel {
 }
 
 class Data {
-  int? id;
+  dynamic id;
   String? avatar;
   String? email;
   String? description;
   String? lang;
   String? token;
-  int? isNotification;
-  int? isAdvice;
+  dynamic isNotification;
+  dynamic isAdvice;
   String? fullName;
   String? mobile;
   String? userName;
@@ -61,7 +61,7 @@ class Data {
   String? bankAccount;
   String? birthday;
   NationalityId? nationalityId;
-  int? status;
+  dynamic status;
   List<dynamic>? category;
 
   Data({
@@ -147,7 +147,7 @@ class Data {
 }
 
 class CityId {
-  int? id;
+  dynamic id;
   Country? country;
   String? name;
 
@@ -172,7 +172,7 @@ class CityId {
 }
 
 class Country {
-  int? id;
+  dynamic id;
   String? name;
 
   Country({
@@ -192,7 +192,7 @@ class Country {
 }
 
 class NationalityId {
-  int? id;
+  dynamic id;
   String? name;
   String? logo;
 

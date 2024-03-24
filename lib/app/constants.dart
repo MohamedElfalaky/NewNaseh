@@ -153,12 +153,13 @@ class Constants {
                       child: Container(
                         width: 30,
                         decoration: BoxDecoration(
-                            border: Get.locale!.languageCode=="ar"?const Border(
-                                left:
-                                BorderSide(width: 1, color: Color(0xFFBDBDBD))) :const Border(
-                                right:
-                                BorderSide(width: 1, color: Color(0xFFBDBDBD)))
-                        ),
+                            border: Get.locale!.languageCode == "ar"
+                                ? const Border(
+                                    left: BorderSide(
+                                        width: 1, color: Color(0xFFBDBDBD)))
+                                : const Border(
+                                    right: BorderSide(
+                                        width: 1, color: Color(0xFFBDBDBD)))),
                         margin: const EdgeInsetsDirectional.only(end: 8),
                         padding: const EdgeInsetsDirectional.only(end: 8),
                         child: prefixIcon,
@@ -172,13 +173,14 @@ class Constants {
                     start: 12, end: 6, top: 10, bottom: 10),
                 child: Container(
                   width: 30,
-                  decoration:  BoxDecoration(
-                      border: Get.locale!.languageCode=="ar"?const Border(
-                          left:
-                              BorderSide(width: 1, color: Color(0xFFBDBDBD))) :const Border(
-                          right:
-                              BorderSide(width: 1, color: Color(0xFFBDBDBD)))
-                  ),
+                  decoration: BoxDecoration(
+                      border: Get.locale!.languageCode == "ar"
+                          ? const Border(
+                              left: BorderSide(
+                                  width: 1, color: Color(0xFFBDBDBD)))
+                          : const Border(
+                              right: BorderSide(
+                                  width: 1, color: Color(0xFFBDBDBD)))),
                   margin: const EdgeInsetsDirectional.only(end: 8),
                   padding: const EdgeInsetsDirectional.only(end: 8),
                   child: prefixIcon,
@@ -186,8 +188,11 @@ class Constants {
               ),
         prefixIconColor: prefixColor,
         suffixIconColor: suffixColor,
-        suffixIcon:
-        suffixIcon,
+        suffixIcon: suffixIcon,
+        labelStyle: TextStyle(
+          fontFamily: 'Cairo',
+
+        ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         border: const OutlineInputBorder(
@@ -207,9 +212,6 @@ class Constants {
         ));
   }
 
-  /// strings
-
-  /// integers
 
   static final defaultPinTheme = PinTheme(
     width: 70,

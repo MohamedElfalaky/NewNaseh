@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/app/constants.dart';
 
 class MyButton extends StatelessWidget {
-  final void Function()?  onPressedHandler;
+  final void Function()? onPressedHandler;
   final String? txt;
   final Color? btnColor;
   final Color? txtColor;
-  final double? txtSize;
+  final dynamic txtSize;
   final bool? isBold;
   final Widget? prefixWidget;
+
   const MyButton(
-      {super.key, this.onPressedHandler,
+      {super.key,
+      this.onPressedHandler,
       this.txt,
       this.btnColor,
       this.txtColor,

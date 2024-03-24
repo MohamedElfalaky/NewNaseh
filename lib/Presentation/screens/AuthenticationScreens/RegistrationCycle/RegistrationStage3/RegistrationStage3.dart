@@ -1,15 +1,9 @@
-import 'dart:io';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/RegistrationStage4.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
-import 'package:photo_view/photo_view.dart';
+
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
@@ -60,10 +54,10 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
                   isBold: true,
                   txt: "التالي",
                   onPressedHandler: () {
-                  //   if(inputImagePhoto ==null) {
-                  //     MyApplication.showToastView(
-                  //       message: '${getTranslated(context,"add image please")}');}
-                  // else
+                    //   if(inputImagePhoto ==null) {
+                    //     MyApplication.showToastView(
+                    //       message: '${getTranslated(context,"add image please")}');}
+                    // else
                     if (stage3FormKey.currentState!.validate()) {
                       debugPrint(inputPhone +
                           // inputImageName +
@@ -93,7 +87,7 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("المعلومات الشخصية"),
-            leading:  MyBackButton()),
+            leading: MyBackButton()),
         body: Container(
             height: MediaQuery.of(context).size.height,
             width: double.infinity,
