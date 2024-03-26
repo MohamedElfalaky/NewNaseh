@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,7 +42,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-
   final ImagePicker _picker = ImagePicker();
   XFile? regImage;
   final TextEditingController _fullName = TextEditingController();
@@ -258,7 +256,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   left: 16,
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -318,8 +315,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                             child: Image.file(
                                                               File(regImage!
                                                                   .path),
-                                                              fit: BoxFit
-                                                                  .cover,
+                                                              fit: BoxFit.cover,
                                                             ),
                                                             // PhotoView(
                                                             //     imageProvider:
@@ -383,8 +379,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                         const Divider(),
                                                         RowModalSheet(
                                                           txt: "cancel".tr,
-                                                          imageIcon:
-                                                              closeIcon,
+                                                          imageIcon: closeIcon,
                                                           onPressed: () {
                                                             Navigator.pop(
                                                                 context);
@@ -396,8 +391,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             );
                                           },
                                           child: const CircleAvatar(
-                                            backgroundColor:
-                                                Color(0XFF444444),
+                                            backgroundColor: Color(0XFF444444),
                                             radius: 20,
                                             child: Icon(
                                               Icons.camera_alt_outlined,
@@ -423,8 +417,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 34, bottom: 24),
+                                padding:
+                                    const EdgeInsets.only(top: 34, bottom: 24),
                                 child: TextFormField(
                                   controller: _fullName,
                                   autovalidateMode:
@@ -603,11 +597,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     // maxLength: 10,
                                     decoration: Constants
                                         .setRegistrationTextInputDecoration(
-                                            hintText:
-                                                "الشهادات والإنجازات...",
+                                            hintText: "الشهادات والإنجازات...",
                                             suffixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(4),
+                                              padding: const EdgeInsets.all(4),
                                               child: InkWell(
                                                 onTap: () {
                                                   if (certificatesController
@@ -690,7 +682,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             builder: (context, state) {
                           if (state is CategoryLoading) {
                             return const Center(
-                                child: CircularProgressIndicator());
+                                child: CircularProgressIndicator.adaptive());
                           } else if (state is CategoryLoaded) {
                             return _buildCard(context, state.response!);
                           } else if (state is CategoryError) {
@@ -717,8 +709,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   controller: _bankNameController,
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
-                                          hintText:
-                                              "اسم صاحب الحساب البنكي...",
+                                          hintText: "اسم صاحب الحساب البنكي...",
                                           prefixIcon: SvgPicture.asset(
                                             ipanIcon,
                                             height: 24,
@@ -789,8 +780,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 style: Constants.secondaryTitleFont,
                               ),
                               StatefulBuilder(
-                                builder: (context, StateSetter setState) =>
-                                    Row(
+                                builder: (context, StateSetter setState) => Row(
                                   children: [
                                     SizedBox(
                                       width: 120,
@@ -936,14 +926,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                           // RegistrationController.r7Body()
                         ]),
-                    const SizedBox(
-                      height: 90
-                    )
+                    const SizedBox(height: 90)
                   ],
                 ));
-          }             return const SizedBox.shrink();
-
-            }),
+          }
+          return const SizedBox.shrink();
+        }),
       ),
     );
   }
@@ -951,12 +939,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget _buildCard(BuildContext context, CategoryModel model) {
     return SingleChildScrollView(
         padding: EdgeInsets.only(
-        top: 16,
-        right: 16,
-        left: 16,
-        bottom: MediaQuery.of(context).viewInsets.bottom, ),
-
-            child: Column(
+          top: 16,
+          right: 16,
+          left: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
@@ -1012,11 +1000,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               _selectedCategory.add(
                                                   MySelectedModel(
                                                       id: model.data![x].id!,
-                                                      value: model.data![x]
-                                                          .selected!));
+                                                      value: model
+                                                          .data![x].selected!));
 
-                                              for (var selectItems in model
-                                                  .data![x].children!) {
+                                              for (var selectItems
+                                                  in model.data![x].children!) {
                                                 selectItems.selected = true;
                                                 _selectedCategory.add(
                                                     MySelectedModel(
@@ -1024,21 +1012,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                         value: selectItems
                                                             .selected!));
                                               }
-                                            } else if (model
-                                                    .data![x].selected ==
-                                                false) {
+                                            } else {
                                               _selectedCategory.removeWhere(
                                                   (e) =>
                                                       e.id ==
                                                       model.data![x].id);
+                                              for (var selectItems
+                                                  in model.data![x].children!) {
+                                                selectItems.selected = false;
+                                                _selectedCategory.remove(
+                                                    MySelectedModel(
+                                                        id: selectItems.id!,
+                                                        value: selectItems
+                                                            .selected!));
+                                              }
                                             }
                                           });
-                                          debugPrint(
-                                              "the send category is ${_selectedCategory.toSet().toList().toString()}");
                                         })),
-                                const SizedBox(
-                                  width: 4,
-                                ),
+                                const SizedBox(width: 4),
                                 Expanded(
                                   child: Text(
                                     model.data![x].name!,
@@ -1066,15 +1057,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                       _selectedCategory.add(
                                                           MySelectedModel(
                                                               id: e.id!,
-                                                              value: e
-                                                                  .selected!));
+                                                              value:
+                                                                  e.selected!));
                                                     } else if (e.selected ==
                                                         false) {
                                                       _selectedCategory
                                                           .removeWhere(
                                                               (element) =>
-                                                                  element
-                                                                      .id ==
+                                                                  element.id ==
                                                                   e.id);
                                                     }
                                                     debugPrint(
@@ -1114,8 +1104,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             _selectedCategory.add(
                                                 MySelectedModel(
                                                     id: results[x].id!,
-                                                    value: results[x]
-                                                        .selected!));
+                                                    value:
+                                                        results[x].selected!));
 
                                             for (var selectItems
                                                 in results[x].children!) {
@@ -1185,8 +1175,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       ),
                                       Text(
                                         e.name!,
-                                        style: Constants
-                                            .secondaryTitleRegularFont,
+                                        style:
+                                            Constants.secondaryTitleRegularFont,
                                       ),
                                     ],
                                   ),
@@ -1197,14 +1187,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             const SizedBox(height: 90)
           ],
-        )
-        );
+        ));
   }
 }
 
 class MySelectedModel {
   final int id;
   final bool value;
-
   MySelectedModel({required this.id, required this.value});
 }

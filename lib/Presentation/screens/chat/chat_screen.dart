@@ -478,7 +478,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
                 MyApplication.dismissKeyboard(context);
 
-                MyApplication.checkConnection().then((value) {
                   if (fileSelected != null) {
                     context.read<SendChatCubit>().sendChatFunction(
                         filee: fileSelected,
@@ -499,20 +498,16 @@ class _ChatScreenState extends State<ChatScreen> {
                     });
 
                     print(fileSelected);
-                  } else if (value) {
-                    if (messageController.text.isEmpty) {
-                      MyApplication.showToastView(
-                          message: "لا يمكن ارسال رسالة فارغة!");
-                    } else {
+                  }
+                  else
+                    {
                       context.read<SendChatCubit>().sendChatFunction(
                           filee: fileSelected,
                           msg: messageController.text,
                           adviceId: widget.showAdData!.id.toString());
                     }
-                  } else {
-                    MyApplication.showToastView(message: "لا يوجد اتصال");
-                  }
-                });
+
+
               },
               child: Container(
                   margin: const EdgeInsetsDirectional.only(start: 8),

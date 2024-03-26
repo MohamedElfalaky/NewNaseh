@@ -1,6 +1,5 @@
 // ignore_for_file: file_names, prefer_typing_uninitialized_variables
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
@@ -16,15 +15,6 @@ class MyApplication {
     return MediaQuery.of(context).size.width * myWidth / 375;
   }
 
-  static Future<bool> checkConnection() async {
-    var connectivityResult;
-
-    connectivityResult = await (Connectivity().checkConnectivity());
-
-    {
-      return connectivityResult == ConnectivityResult.none ? false : true;
-    }
-  }
 
   static void navigateToReplace(BuildContext context, Widget page) async {
     Navigator.of(context)

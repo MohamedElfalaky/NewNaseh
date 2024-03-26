@@ -20,7 +20,7 @@ import 'app/utils/BlocProviders.dart';
 import 'app/utils/sharedPreferenceClass.dart';
 
 // todo
-// 0562131705
+// 562131705
 // Aa@123123
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,25 +28,13 @@ void main() async {
   FlutterNativeSplash.removeAfter(initialization);
   await SharedPrefs().init();
   await Firebase.initializeApp();
+  FirebaseCustomNotification.setUpFirebase();
 
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-
-
-  @override
-  void initState() {
-    super.initState();
-    FirebaseCustomNotification.setUpFirebase();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +60,7 @@ class _MyAppState extends State<MyApp> {
             minWidth: 450,
             defaultScale: false,
             mediaQueryData:
-                MediaQuery.of(context2).copyWith(textScaleFactor: 1.0),
+                MediaQuery.of(context2).copyWith(textScaler: const TextScaler.linear(1.0)),
             breakpoints: [
               const ResponsiveBreakpoint.resize(450, name: MOBILE),
               const ResponsiveBreakpoint.autoScale(800, name: TABLET),
@@ -102,7 +90,6 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
 }
 
 Future<void> initialization(BuildContext? context) async {

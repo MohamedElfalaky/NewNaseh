@@ -631,10 +631,7 @@ class RegistrationController {
                       _birthdayController.text = formattedDate;
                     });
                   }
-                  // else {
-                  //   showModalBottomSheet(context: context, builder: (_)=> Container(
-                  //       padding:EdgeInsets.symmetric(vertical: 20 , horizontal: 50),child: Text("Add Date")) );
-                  // }
+
                 },
                 onChanged: (val) {
                   inputBirthday = _birthdayController.text;

@@ -1,11 +1,8 @@
-import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/Components/OneNotification.dart';
-import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
@@ -22,58 +19,22 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
 
-  late StreamSubscription<ConnectivityResult> subscription;
-  bool? isConnected;
-  final controller = PageController(initialPage: 0);
+   final controller = PageController(initialPage: 0);
 
   @override
   void initState() {
     super.initState();
 
-    MyApplication.checkConnection().then((value) {
-      if (value) {
-        context.read<NotificationCubit>().getDataNotification();
-      } else {
-        MyApplication.showToastView(message: "noInternet".tr);
-      }
-    });
 
-    subscription = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      if (mounted) {
-        setState(() {
-          result == ConnectivityResult.none
-              ? isConnected = false
-              : isConnected = true;
-        });
-      }
 
-      if (result != ConnectivityResult.none) {
-        context.read<NotificationCubit>().getDataNotification();
-      }
-    });
+    context.read<NotificationCubit>().getDataNotification();
+
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    subscription.cancel();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final sizee = MediaQuery.of(context).size;
-    if (isConnected == null) {
-      MyApplication.checkConnection().then((value) {
-        setState(() {
-          isConnected = value;
-        });
-      });
-    } else if (!isConnected!) {
-      MyApplication.showToastView(message: "noInternet".tr);
-      return NoInternetWidget(size: sizee);
-    }
+
 
     return GestureDetector(
       onTap: () {

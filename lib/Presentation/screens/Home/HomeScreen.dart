@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,7 +11,6 @@ import 'package:nasooh/Presentation/screens/NotificationScreen/NotificationScree
 import 'package:nasooh/Presentation/screens/SettingsScreen/SettingsScreen.dart';
 import 'package:nasooh/Presentation/screens/TermsConditionsScreen/TermsConditionsScreen.dart';
 import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
-import 'package:nasooh/Presentation/widgets/noInternet.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/constants.dart';
@@ -46,8 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  late StreamSubscription<ConnectivityResult> subscription;
-  bool? isConnected;
   final controller = PageController(initialPage: 0);
 
   late ListOneHomeCubit homeCubit;
@@ -61,30 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     homeCubit = context.read<ListOneHomeCubit>();
-    MyApplication.checkConnection().then((value) {
-      if (value) {
-        getDataFromApi();
-      } else {
-        MyApplication.showToastView(message: "noInternet".tr);
-      }
-    });
+    getDataFromApi();
 
-    subscription = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      if (mounted) {
-        setState(() {
-          result == ConnectivityResult.none
-              ? isConnected = false
-              : isConnected = true;
-        });
-      }
 
-      /// if internet comes back
-      if (result != ConnectivityResult.none) {
-        getDataFromApi();
-      }
-    });
   }
 
   @override
@@ -92,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
     _textController.dispose();
     _focusNode.dispose();
-    subscription.cancel();
     for (var element in homeController.categories) {
       element["isSelected"] = false;
     }
@@ -102,17 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    if (isConnected == null) {
-      MyApplication.checkConnection().then((value) {
-        setState(() {
-          isConnected = value;
-        });
-      });
-    } else if (!isConnected!) {
-      MyApplication.showToastView(message: "noInternet".tr);
-      return NoInternetWidget(size: size);
-    }
+
 
     return GestureDetector(
       onTap: () {
