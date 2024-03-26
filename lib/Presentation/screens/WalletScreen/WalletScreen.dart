@@ -106,7 +106,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   ),
                   Expanded(
                       child: ListView.builder(
-                    itemBuilder: (context, index) => OneOrder(
+                    itemBuilder: (context, index) => WalletWidget(
                       description:
                           state.response?.transaction?[index].description ?? "",
                       value: state.response?.transaction?[index].balance

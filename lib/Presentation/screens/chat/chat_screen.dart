@@ -141,8 +141,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return GestureDetector(
         onTap: () {
           MyApplication.dismissKeyboard(context);
-        }, // hide keyboard on tap anywhere
-
+        },
         child: Scaffold(
             backgroundColor: Constants.whiteAppColor,
             appBar: AppBar(
@@ -233,17 +232,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 if (voiceSelected != null)
                                   Row(
                                     children: [
-                                      buildExpanded(context),
-                                      if (voiceFile != null)
-                                        IconButton(
-                                          icon: const Icon(Icons.close),
-                                          onPressed: () {
-                                            setState(() {
-                                              voiceFile = null;
-                                              voiceSelected = null;
-                                            });
-                                          },
-                                        ),
+                                      buildVoiceShapeWidget(context),
                                     ],
                                   ),
                                 if (pickedFile != null)
@@ -282,7 +271,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           .replaceRange(
                                                               0, 56, "")),
                                                       const SizedBox(
-                                                        width: 10,
+                                                        width: 10
                                                       ),
                                                       SvgPicture.asset(
                                                         filePdf,
@@ -308,58 +297,56 @@ class _ChatScreenState extends State<ChatScreen> {
                                               ),
                                           ],
                                         )
-                                      : Expanded(
-                                          child: Container(
-                                              padding: const EdgeInsets.all(5),
-                                              margin:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 5),
-                                              height: 50,
-                                              width: width(context),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      offset: const Offset(
-                                                        5.0,
-                                                        5.0,
-                                                      ),
-                                                      blurRadius: 10.0,
-                                                      spreadRadius: 2.0,
-                                                    )
-                                                  ],
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              child: Row(
-                                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Flexible(
-                                                      child: Text(pickedFile!
-                                                          .path
-                                                          .replaceRange(
-                                                              0, 40, ""))),
-                                                  const SizedBox(width: 10),
-                                                  SvgPicture.asset(
-                                                    fileImage,
-                                                    width: 20,
-                                                    height: 20,
-                                                  ),
-                                                  if (pickedFile != null)
-                                                    IconButton(
+                                      : Container(
+                                          padding: const EdgeInsets.all(5),
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 5),
+                                          height: 50,
+                                          width: width(context),
+                                          decoration: BoxDecoration(
+                                              color: Colors.grey.shade200,
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: Row(
+                                            children: [
+                                              Flexible(
+                                                  child: Text(
+                                                pickedFile!.path,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ),
+                                                maxLines: 1,
+                                              )),
+                                              const SizedBox(width: 5),
+                                              SvgPicture.asset(
+                                                fileImage,
+                                                width: 25,
+                                                height: 25,
+                                              ),
+                                              if (pickedFile != null)
+                                                Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 10),
+                                                  child: CircleAvatar(
+                                                    radius: 15,
+                                                    backgroundColor:
+                                                        Colors.grey.shade200,
+                                                    child: IconButton(
+                                                      padding: EdgeInsets.zero,
                                                       icon: const Icon(
                                                           Icons.close),
                                                       onPressed: () {
                                                         setState(() {
                                                           pickedFile = null;
+                                                          fileSelected = null;
                                                         });
                                                       },
                                                     ),
-                                                ],
-                                              )),
-                                        ),
+                                                  ),
+                                                ),
+                                            ],
+                                          )),
                                 const SizedBox(width: 20),
                                 Row(
                                   children: [
@@ -478,36 +465,31 @@ class _ChatScreenState extends State<ChatScreen> {
 
                 MyApplication.dismissKeyboard(context);
 
-                  if (fileSelected != null) {
-                    context.read<SendChatCubit>().sendChatFunction(
-                        filee: fileSelected,
-                        msg: messageController.text,
-                        typee: pickedFile?.path.split(".").last,
-                        adviceId: widget.showAdData!.id.toString());
+                if (fileSelected != null) {
+                  context.read<SendChatCubit>().sendChatFunction(
+                      filee: fileSelected,
+                      msg: messageController.text,
+                      typee: pickedFile?.path.split(".").last,
+                      adviceId: widget.showAdData!.id.toString());
 
-                    fileSelected = null;
-                  } else if (voiceFile != null) {
-                    context.read<SendChatCubit>().sendChatFunction(
-                        filee: voiceSelected,
-                        msg: messageController.text,
-                        typee: voiceFile!.path.split(".").last,
-                        adviceId: widget.showAdData!.id.toString());
-                    // isRecording = false;
-                    setState(() {
-                      voiceSelected = null;
-                    });
-
-                    print(fileSelected);
-                  }
-                  else
-                    {
-                      context.read<SendChatCubit>().sendChatFunction(
-                          filee: fileSelected,
-                          msg: messageController.text,
-                          adviceId: widget.showAdData!.id.toString());
-                    }
-
-
+                  fileSelected = null;
+                } else if (voiceFile != null) {
+                  context.read<SendChatCubit>().sendChatFunction(
+                      filee: voiceSelected,
+                      msg: messageController.text,
+                      typee: voiceFile!.path.split(".").last,
+                      adviceId: widget.showAdData!.id.toString());
+                  // isRecording = false;
+                  setState(() {
+                    voiceSelected = null;
+                    voiceFile = null;
+                  });
+                } else if (messageController.text.isNotEmpty) {
+                  context.read<SendChatCubit>().sendChatFunction(
+                      filee: fileSelected,
+                      msg: messageController.text,
+                      adviceId: widget.showAdData!.id.toString());
+                }
               },
               child: Container(
                   margin: const EdgeInsetsDirectional.only(start: 8),
@@ -532,30 +514,49 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Expanded buildExpanded(BuildContext context) {
-    return Expanded(
-      child: Container(
-          padding: const EdgeInsets.all(5),
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          height: 50,
-          width: width(context),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black12),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.shade300,
-                  offset: const Offset(
-                    5.0,
-                    5.0,
+  buildVoiceShapeWidget(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.all(5),
+        margin: const EdgeInsets.symmetric(vertical: 5),
+        height: 50,
+        // width: width(context),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black12),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.shade300,
+                offset: const Offset(
+                  5.0,
+                  5.0,
+                ),
+                blurRadius: 10.0,
+                spreadRadius: 2.0,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10)),
+        child: Row(
+          children: [
+            SvgPicture.asset(voiceShape),
+            if (voiceFile != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade400,
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(Icons.close),
+                    onPressed: () {
+                      setState(() {
+                        voiceFile = null;
+                        voiceSelected = null;
+                      });
+                    },
                   ),
-                  blurRadius: 10.0,
-                  spreadRadius: 2.0,
-                )
-              ],
-              borderRadius: BorderRadius.circular(10)),
-          child: SvgPicture.asset(voiceShape)),
-    );
+                ),
+              ),
+          ],
+        ));
   }
 
   Align buildAlign(ShowAdviceLoaded state, int index, BuildContext context) {
@@ -601,29 +602,24 @@ class _ChatScreenState extends State<ChatScreen> {
                             true) {
                       showDialog(
                           context: context,
+                          barrierDismissible: true,
                           builder: (context) {
                             return AlertDialog(
-                              content: SizedBox(
-                                height: 250,
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    const Center(
-                                      child: Center(
-                                        child: CircularProgressIndicator
-                                            .adaptive(),
-                                      ),
+                              content: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  const Center(
+                                    child: Center(
+                                      child:
+                                          CircularProgressIndicator.adaptive(),
                                     ),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(
-                                        state.response!.data!.chat![index]
-                                            .document![0].file!,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Image.network(
+                                        '${state.response!.data!.chat![index].document![0].file}'),
+                                  )
+                                ],
                               ),
                             );
                           });
@@ -717,7 +713,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ?.endsWith("mp4") ??
                                 false
                             ? SvgPicture.asset(mp4Icon)
-                            : const SizedBox(),
+                            : const SizedBox.shrink(),
         const SizedBox(width: 7),
         Expanded(
           child: Text(
@@ -766,7 +762,6 @@ class _ChatScreenState extends State<ChatScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Advices(
-
         showAdData: widget.showAdData,
         isAdviceDetail: widget.isAdviceDetail,
       ),

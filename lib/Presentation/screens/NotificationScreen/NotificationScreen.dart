@@ -52,15 +52,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               padding: const EdgeInsets.only(right: 10),
               child: MyBackButton(),
             ),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 17),
-                child: Switch(
-                  value: false,
-                  onChanged: (value) {},
-                ),
-              )
-            ],
+
           ),
           body: BlocBuilder<NotificationCubit, NotificationState>(
               builder: (context, state) {
@@ -85,7 +77,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             } else if (state is NotificationError) {
               return const Center(child: Text('error'));
             } else {
-              return const Center(child: Text('....'));
+              return const Center(child: CircularProgressIndicator.adaptive());
             }
           })),
     );

@@ -52,33 +52,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return GestureDetector(
       onTap: () {
         MyApplication.dismissKeyboard(context);
-      }, // hide keyboard on tap anywhere
+      },
 
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: MyButton(
-                isBold: true,
-                txt: "Save".tr,
-                onPressedHandler: () {},
-              ),
-            ),
-          ),
-          backgroundColor: Constants.whiteAppColor,
-          appBar: AppBar(
+
+           appBar: AppBar(
               centerTitle: false,
               leadingWidth: 70,
-              title: Row(
-                children: [
-                  Text("Settings".tr),
-                ],
-              ),
+              title: Text("Settings".tr),
               leading: MyBackButton()),
           body: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 18),

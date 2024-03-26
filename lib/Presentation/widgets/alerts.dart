@@ -11,7 +11,7 @@ class Alert {
       void Function()? action}) async {
     showDialog(
       context: context!,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (context) {
         return Center(
           child: Container(

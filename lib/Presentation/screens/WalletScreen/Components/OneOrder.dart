@@ -4,8 +4,8 @@ import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/Style/sizes.dart';
 import 'package:nasooh/app/constants.dart';
 
-class OneOrder extends StatelessWidget {
-  const OneOrder(
+class WalletWidget extends StatelessWidget {
+  const WalletWidget(
       {super.key,
       required this.value,
       required this.transactionId,
@@ -54,7 +54,7 @@ class OneOrder extends StatelessWidget {
                   style: Constants.subtitleRegularFont,
                 ),
                 SizedBox(
-                  width: width(context) * 0.5,
+                  width: width(context) * 0.4,
                   child: Text(
                     description,
                     style: Constants.secondaryTitleRegularFont,
