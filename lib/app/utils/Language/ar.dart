@@ -72,7 +72,7 @@ Map<String, String> getArabicLanguage() {
     "Edit Profile": "تعديل الملف الشخصي",
     "My Orders": "طلباتي",
     "Settings": "الإعدادات",
-    "Notifications": "الأشعارات",
+    "Notifications": "الإشعارات",
     "terms & Conditions": 'الشروط والأحكام',
     "Tech": 'الدعم الفني',
     "Know": 'تعرف علي تطبيق نصوح',

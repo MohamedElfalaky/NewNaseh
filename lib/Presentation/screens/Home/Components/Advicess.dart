@@ -22,7 +22,7 @@ class AdviceWidget extends StatelessWidget {
   final ShowAdData? showAdData;
     AdviceWidget({super.key, this.isAdviceDetail, required this.showAdData});
 
-final  List <String> dummyData=['Mohamed Hany',"Fahad Almansour","Ahmed Fawzy","Hassan Aedros"];
+// final  List <String> dummyData=['Mohamed Hany',"Fahad Almansour","Ahmed Fawzy","Hassan Aedros"];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,8 +38,8 @@ final  List <String> dummyData=['Mohamed Hany',"Fahad Almansour","Ahmed Fawzy","
         Padding(
           padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
           child: Text(
-           dummyData[ Random().nextInt(3)],
-            // showAdData?.name ?? "",
+           // dummyData[ Random().nextInt(3)],
+            showAdData?.name ?? "",
             style: Constants.mainTitleFont,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

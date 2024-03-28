@@ -197,10 +197,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       OutcomeAndRate(
-                                        assetName: moneyBag,
-                                        title: "الأرباح الكلية",
+                                        assetName: ordersIcon,
+                                        title: "عدد الطلبات",
                                         subtitle:
-                                            "${stateUser.response?.data?.walletBalance ?? 0} SR",
+                                            "${18} ",
                                         color: Constants.primaryAppColor,
                                       ),
                                       OutcomeAndRate(
@@ -411,28 +411,28 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: mahfazty,
               name: "My Wallet".tr,
               onTapHandler: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
                 MyApplication.navigateTo(context, const WalletScreen());
               }),
           myListTile(
               icon: notificationIcon,
               name: "Notifications".tr,
               onTapHandler: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
                 MyApplication.navigateTo(context, const NotificationScreen());
               }),
           myListTile(
               icon: settingIcon,
               name: "Settings".tr,
               onTapHandler: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
                 MyApplication.navigateTo(context, const SettingsScreen());
               }),
           myListTile(
               icon: shorot,
               name: "terms & Conditions".tr,
               onTapHandler: () {
-                Navigator.pop(context);
+                // Navigator.pop(context);
                 MyApplication.navigateTo(
                     context, const TermsConditionsScreen());
               }),
@@ -441,7 +441,7 @@ class _HomeScreenState extends State<HomeScreen> {
               name: "Tech".tr,
               onTapHandler: () async {
                 await launchUrl(Uri.parse(
-                  "whatsapp://send?phone=00966502374223",
+                  "whatsapp://send?phone=+966502374223",
                 ));
                 Navigator.pop(context);
               }),
@@ -464,7 +464,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const Padding(
             padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 25),
             child: Text(
-              "رقم الأصدار 1.0.0.1",
+              "رقم الإصدار 1.0.0.1",
               style: Constants.subtitleFont,
             ),
           )
