@@ -318,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               showAdData: homeData[index],
                                             ));
                                       },
-                                      child: Advices(
+                                      child: AdviceWidget(
                                         showAdData: homeData[index],
                                         isAdviceDetail: false,
                                       )),

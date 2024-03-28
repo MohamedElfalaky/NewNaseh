@@ -221,10 +221,10 @@ class MyIntlPhoneField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MyIntlPhoneFieldState createState() => _MyIntlPhoneFieldState();
+  MyIntlPhoneFieldState createState() => MyIntlPhoneFieldState();
 }
 
-class _MyIntlPhoneFieldState extends State<MyIntlPhoneField> {
+class MyIntlPhoneFieldState extends State<MyIntlPhoneField> {
   late List<Country> _countryList;
   late Country _selectedCountry;
   late List<Country> filteredCountries;

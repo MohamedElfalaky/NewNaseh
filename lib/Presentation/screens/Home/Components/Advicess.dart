@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,15 +17,14 @@ import '../../../../Data/cubit/advice_cubits/done_advice_cubit/done_advice_state
 import '../../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../widgets/alerts.dart';
 
-class Advices extends StatelessWidget {
-  bool? isAdviceDetail;
-  ShowAdData? showAdData;
+class AdviceWidget extends StatelessWidget {
+  final bool? isAdviceDetail;
+  final ShowAdData? showAdData;
+    AdviceWidget({super.key, this.isAdviceDetail, required this.showAdData});
 
-  Advices({super.key, this.isAdviceDetail, required this.showAdData});
-
+final  List <String> dummyData=['Mohamed Hany',"Fahad Almansour","Ahmed Fawzy","Hassan Aedros"];
   @override
   Widget build(BuildContext context) {
-    // print("showAdData!.chat!.length is ${showAdData!.chat!.length}");
     return Container(
       margin: const EdgeInsets.only(bottom: 18),
       decoration: BoxDecoration(
@@ -33,12 +34,12 @@ class Advices extends StatelessWidget {
               color: isAdviceDetail == true
                   ? Constants.primaryAppColor
                   : Constants.primaryAppColor.withOpacity(0.1))),
-      // ignore: prefer_const_literals_to_create_immutables
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
           child: Text(
-            showAdData?.name ?? "",
+           dummyData[ Random().nextInt(3)],
+            // showAdData?.name ?? "",
             style: Constants.mainTitleFont,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

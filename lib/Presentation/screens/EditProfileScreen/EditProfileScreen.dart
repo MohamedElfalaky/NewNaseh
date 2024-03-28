@@ -71,12 +71,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         regImage = myImage;
       });
       List<int> imageBytes = File(regImage!.path).readAsBytesSync();
-      print("regImage is $regImage");
+      debugPrint("regImage is $regImage");
       base64NewImage = base64.encode(imageBytes);
-      print("inputImagePhoto!.path  is ${regImage!.path}");
+      debugPrint("inputImagePhoto!.path  is ${regImage!.path}");
       // log("base64Image!  is ${base64NewImage}");
     } on PlatformException catch (e) {
-      print("platform exeption : $e");
+      debugPrint("platform exeption : $e");
     }
     if (mounted) {
       Navigator.pop(context);

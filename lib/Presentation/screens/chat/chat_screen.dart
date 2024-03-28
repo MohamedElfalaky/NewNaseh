@@ -761,7 +761,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Padding buildAdviceWidget() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Advices(
+      child: AdviceWidget(
         showAdData: widget.showAdData,
         isAdviceDetail: widget.isAdviceDetail,
       ),

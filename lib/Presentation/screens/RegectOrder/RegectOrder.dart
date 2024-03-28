@@ -108,7 +108,7 @@ class _RejectOrderState extends State<RejectOrder> {
                     const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Column(
                   children: [
-                    Advices(
+                    AdviceWidget(
                       showAdData: widget.showAdData,
                       isAdviceDetail: false,
                     ),
@@ -130,7 +130,7 @@ class _RejectOrderState extends State<RejectOrder> {
                             return Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Image.asset(
                                   rejeIcon,
                                   height: 80,
@@ -148,7 +148,7 @@ class _RejectOrderState extends State<RejectOrder> {
                                           groupValue: 0,
                                           onChanged: (val) {},
                                         ),
-                                        title: Text(list[index].name!,style: TextStyle(
+                                        title: Text(list[index].name!,style: const TextStyle(
                                           fontFamily: 'Cairo',
                                           fontSize: 13,
                                           fontWeight: FontWeight.w500,

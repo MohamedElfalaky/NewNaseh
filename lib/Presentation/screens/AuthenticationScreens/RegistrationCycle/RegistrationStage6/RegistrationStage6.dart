@@ -47,7 +47,7 @@ class _RegistrationStage6State extends State<RegistrationStage6> {
                           txt: "التالي",
                           onPressedHandler: () {
                             MyApplication.navigateTo(
-                                context, RegistrationStage7());
+                                context, const RegistrationStage7());
                           },
                         ),
                       ),

@@ -79,13 +79,13 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                                 isBold: true,
                                                 txt: "إتمام التسجيل",
                                                 onPressedHandler: () {
-                                                  print(
+                                                  debugPrint(
                                                       "image is $base64Image");
-                                                  print(
+                                                  debugPrint(
                                                       "input Email $inputEmail & inputPassword is $inputPassword inputEnglishName is $inputEnglishName  & inputNationality $inputNationality & inputPhone $inputPhone & inputSummary is $inputSummary & inputGender $inputGender ");
-                                                  print(
+                                                  debugPrint(
                                                       "inputFullName is $inputFullName  & inputBankAccount $inputBankAccount & inputBankName $inputBankName  & inputBirthday is $inputBirthday & inputCity $inputCity  &inputCountry is $inputCountry & inputNationality is $inputNationality ");
-                                                  print(
+                                                  debugPrint(
                                                       "inputDescription is & inputDescription & inputExperience.toString() is ${inputDocuments.toString()}");
                                                   // log(base64Image!);
                                                   context
