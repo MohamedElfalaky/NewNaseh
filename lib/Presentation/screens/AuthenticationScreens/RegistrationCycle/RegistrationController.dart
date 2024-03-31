@@ -24,11 +24,11 @@ import '../../../widgets/row_modal_sheet.dart';
 
 final stage3FormKey = GlobalKey<FormState>();
 final stage4FormKey = GlobalKey<FormState>();
-RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+RegExp passValid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
 //A function that validate user entered password
 bool validatePassword(String pass) {
   String password = pass.trim();
-  if (pass_valid.hasMatch(password)) {
+  if (passValid.hasMatch(password)) {
     return true;
   } else {
     return false;

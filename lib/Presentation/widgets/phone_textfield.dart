@@ -174,7 +174,7 @@ class MyIntlPhoneField extends StatefulWidget {
   /// If unset, defaults to [EdgeInsets.zero].
   final EdgeInsets flagsButtonMargin;
 
-  MyIntlPhoneField({
+  const MyIntlPhoneField({
     Key? key,
     this.initialCountryCode,
     this.obscureText = false,

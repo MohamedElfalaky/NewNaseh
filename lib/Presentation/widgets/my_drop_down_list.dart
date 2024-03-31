@@ -14,14 +14,14 @@ import '../../app/constants.dart';
 import '../../app/utils/registeration_values.dart';
 import 'custom_loading_widget.dart';
 
-class CusDropData<T> extends StatelessWidget {
-  dynamic value;
+class CustomDropdownData<T> extends StatelessWidget {
+  final value;
   final String hintData;
   final List<DropdownMenuItem<String>>? items;
   final void Function(dynamic)? onChanged;
-  Widget? prefixIcon;
+ final Widget? prefixIcon;
 
-  CusDropData({
+    const CustomDropdownData({
     Key? key,
     this.prefixIcon,
     required this.value,
@@ -121,7 +121,7 @@ class _MyColumnDataState extends State<MyColumnData> {
           if (state is CountryLoaded) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 24),
-              child: CusDropData(
+              child: CustomDropdownData(
                   hintData: "بلد الإقامة...",
                   value: countryValue,
                   onChanged: (val) {
@@ -151,7 +151,7 @@ class _MyColumnDataState extends State<MyColumnData> {
           } else if (cityState is CityLoaded) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 24),
-              child: CusDropData(
+              child: CustomDropdownData(
                   hintData: "مدينة الإقامة...",
                   value: cityValue,
                   onChanged: (val) {
@@ -179,7 +179,7 @@ class _MyColumnDataState extends State<MyColumnData> {
           if (newState is NationalityLoaded) {
             return Padding(
                 padding: const EdgeInsets.only(bottom: 24),
-                child: CusDropData(
+                child: CustomDropdownData(
                     hintData: "الجنسية...",
                     value: nationalityValue,
                     items: newState.response!.data!

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
-import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
+import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';

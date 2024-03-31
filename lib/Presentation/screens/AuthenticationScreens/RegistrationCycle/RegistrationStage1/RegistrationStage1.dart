@@ -10,7 +10,7 @@ import '../../../../../Data/cubit/authentication/new_mob/mob_state.dart';
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
-import '../../../../widgets/PhoneTextField.dart';
+import '../../../../widgets/phone_textfield.dart';
 import '../../../../widgets/custom_loading_widget.dart';
 
 class RegistrationStage1 extends StatefulWidget {
@@ -100,7 +100,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                                 ),
                                 initialCountryCode: 'SA',
                                 onChanged: (phone) {
-                                  print(phone.completeNumber);
+                                  // degu(phone.completeNumber);
                                   _sendPhone = phone.completeNumber;
                                 },
                                 invalidNumberMessage: "invalid_number".tr,

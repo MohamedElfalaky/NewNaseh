@@ -9,7 +9,7 @@ import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_state.dart';
-import '../../../widgets/PhoneTextField.dart';
+import '../../../widgets/phone_textfield.dart';
 import '../../../widgets/custom_loading_widget.dart';
 
 String? forgetMob;
