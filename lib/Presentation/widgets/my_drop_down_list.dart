@@ -12,6 +12,7 @@ import '../../Data/cubit/profile/profile_cubit/profile_cubit.dart';
 import '../../app/Style/Icons.dart';
 import '../../app/constants.dart';
 import '../../app/utils/registeration_values.dart';
+import 'custom_loading_widget.dart';
 
 class CusDropData<T> extends StatelessWidget {
   dynamic value;
@@ -90,7 +91,9 @@ class _MyColumnDataState extends State<MyColumnData> {
 
   Future<void> getData() async {
     await context.read<CountryCubit>().getCountries();
-    await context.read<NationalityCubit>().getNationalities();
+    if(mounted) {
+      await context.read<NationalityCubit>().getNationalities();
+    }
     var profileCubit = ProfileCubit.get(context);
     if (profileCubit.profileModel?.data?.nationalityId != null) {
       nationalityValue =
@@ -114,10 +117,7 @@ class _MyColumnDataState extends State<MyColumnData> {
     return Column(
       children: [
         BlocBuilder<CountryCubit, CountryState>(builder: (context, state) {
-          // if (state is CountryLoading) {
-          //   return const Center(child: CircularProgressIndicator());
-          // }
-          // else
+
           if (state is CountryLoaded) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 24),
@@ -141,15 +141,13 @@ class _MyColumnDataState extends State<MyColumnData> {
                     height: 24,
                   )),
             );
-          } else if (state is CountryError) {
-            return const SizedBox();
-          } else {
-            return const SizedBox();
           }
+            return const SizedBox.shrink();
+
         }),
         BlocBuilder<CityCubit, CityState>(builder: (context, cityState) {
           if (cityState is CityLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const CustomLoadingIndicator();
           } else if (cityState is CityLoaded) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 24),
@@ -173,18 +171,11 @@ class _MyColumnDataState extends State<MyColumnData> {
                     height: 24,
                   )),
             );
-          } else if (cityState is CityError) {
-            return const SizedBox();
-          } else {
-            return const SizedBox();
-          }
+          } return const SizedBox.shrink();
         }),
         BlocBuilder<NationalityCubit, NationalityState>(
             builder: (context, newState) {
-          // if (newState is NationalityLoading) {
-          //   return const Center(child: CircularProgressIndicator());
-          // }
-          // else
+
           if (newState is NationalityLoaded) {
             return Padding(
                 padding: const EdgeInsets.only(bottom: 24),

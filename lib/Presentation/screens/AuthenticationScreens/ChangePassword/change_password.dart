@@ -10,6 +10,7 @@ import '../../../../app/Style/Icons.dart';
 import '../../../../app/constants.dart';
 import '../../../../app/utils/myApplication.dart';
 import '../../../widgets/MyButton.dart';
+import '../../../widgets/custom_loading_widget.dart';
 import '../../../widgets/shared.dart';
 import '../RegistrationCycle/RegistrationController.dart';
 import 'check_mobile_forget_screen.dart';
@@ -212,8 +213,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                 height: 64,
                               ),
                               state is ChangePasswordLoading
-                                  ? const Center(
-                                      child: CircularProgressIndicator())
+                                  ? const CustomLoadingIndicator()
                                   : FadeTransition(
                                       opacity: _fadeController,
                                       child: SizedBox(

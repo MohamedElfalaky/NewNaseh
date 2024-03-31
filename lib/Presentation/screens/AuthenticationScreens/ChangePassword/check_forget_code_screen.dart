@@ -11,6 +11,7 @@ import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_state.dart';
+import '../../../widgets/custom_loading_widget.dart';
 import 'check_mobile_forget_screen.dart';
 
 class CheckForgetCode extends StatefulWidget {
@@ -112,8 +113,7 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
                               ),
                             ),
                             state is ForgetCodeLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator())
+                                ? const CustomLoadingIndicator()
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,

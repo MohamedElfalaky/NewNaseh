@@ -30,6 +30,7 @@ import '../../../Data/cubit/profile/update_profile_cubit/update_profile_state.da
 import '../../../Data/models/Auth_models/category_model.dart';
 import '../../../app/utils/sharedPreferenceClass.dart';
 import '../../../app/utils/validations.dart';
+import '../../widgets/custom_loading_widget.dart';
 import '../../widgets/my_drop_down_list.dart';
 import '../../widgets/row_modal_sheet.dart';
 import '../AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificateItem.dart';
@@ -173,7 +174,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         floatingActionButton:
             BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
                 builder: (context, state) => state is UpdateProfileLoading
-                    ? const CircularProgressIndicator()
+                    ? const CustomLoadingIndicator()
                     : Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: SizedBox(
@@ -245,9 +246,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         body: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, profileState) {
           if (profileState is ProfileLoading) {
-            return const Center(
-              child: CircularProgressIndicator.adaptive(),
-            );
+            return const CustomLoadingIndicator();
           } else if (profileState is ProfileLoaded) {
             return SingleChildScrollView(
                 padding: EdgeInsets.only(
@@ -681,15 +680,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         BlocBuilder<CategoryCubit, CategoryState>(
                             builder: (context, state) {
                           if (state is CategoryLoading) {
-                            return const Center(
-                                child: CircularProgressIndicator.adaptive());
+                            return const CustomLoadingIndicator();
                           } else if (state is CategoryLoaded) {
                             return _buildCard(context, state.response!);
-                          } else if (state is CategoryError) {
-                            return const Center(child: Text('error'));
-                          } else {
-                            return const Center(child: Text('....'));
                           }
+                            return const SizedBox.shrink();
+
                         })
                       ],
                     ),

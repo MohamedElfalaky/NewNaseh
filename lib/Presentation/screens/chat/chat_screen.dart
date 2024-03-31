@@ -8,7 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
+import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
 import 'package:nasooh/app/Style/Icons.dart';
 import 'package:nasooh/app/Style/sizes.dart';
 import 'package:nasooh/app/constants.dart';
@@ -23,6 +23,7 @@ import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_state.da
 import '../../../Data/cubit/send_chat_cubit/send_chat_cubit.dart';
 import '../../../Data/cubit/send_chat_cubit/send_chat_state.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
+import '../../widgets/custom_loading_widget.dart';
 import '../../widgets/shared.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
@@ -47,7 +48,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     context.read<ShowAdviceCubit>().show(id: widget.showAdData!.id!);
-    context.read<SendChatCubit>().emit(SendChatInitial());
+    context.read<SendChatCubit>().emitChatInitial();
   }
 
   @override
@@ -213,8 +214,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             child: Text("Error"),
                           );
                         } else {
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return const CustomLoadingIndicator();
                         }
                       },
                     )),

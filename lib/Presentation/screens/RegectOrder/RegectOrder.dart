@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
+import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
 import 'package:nasooh/Presentation/screens/Home/HomeScreen.dart';
 import 'package:nasooh/Presentation/widgets/MyButton.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
@@ -16,6 +16,7 @@ import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../Data/models/rejection_models/list_rejection_model.dart';
 import '../../../app/Style/Icons.dart';
 import '../../widgets/alerts.dart';
+import '../../widgets/custom_loading_widget.dart';
 
 class RejectOrder extends StatefulWidget {
   const RejectOrder({required this.showAdData, super.key});
@@ -69,7 +70,7 @@ class _RejectOrderState extends State<RejectOrder> {
                 margin: const EdgeInsets.symmetric(horizontal: 10),
                 height: 50,
                 child: state is PostRejectLoading
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const CustomLoadingIndicator()
                     : MyButton(
                         txt: "رفض الطلب",
                         isBold: true,
@@ -98,9 +99,7 @@ class _RejectOrderState extends State<RejectOrder> {
           body: BlocBuilder<ListRejectionCubit, ListRejectionState>(
               builder: (context, homeState) {
             if (homeState is ListRejectionLoading) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
+              return const CustomLoadingIndicator();
             } else if (homeState is ListRejectionLoaded) {
               final List<RejectData> list = homeState.response!.data!;
               return Padding(
@@ -276,7 +275,7 @@ class _RejectOrderState extends State<RejectOrder> {
               margin: const EdgeInsets.symmetric(horizontal: 10),
               height: 50,
               child: state is PostRejectLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const CustomLoadingIndicator()
                   : MyButton(
                       txt: "رفض الطلب",
                       isBold: true,

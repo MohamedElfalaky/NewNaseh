@@ -11,6 +11,7 @@ import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
 import '../../../../widgets/PhoneTextField.dart';
+import '../../../../widgets/custom_loading_widget.dart';
 
 class RegistrationStage1 extends StatefulWidget {
   const RegistrationStage1({Key? key}) : super(key: key);
@@ -70,7 +71,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                               padding: EdgeInsets.only(
                                   bottom: MyApplication.hightClc(context, 8)),
                               child: MyIntlPhoneField(
-                                countries: ['SA'],
+                                countries: const ['SA'],
                                 controller: _phoneController,
                                 showDropdownIcon: true,
                                 dropdownIcon: const Icon(
@@ -106,8 +107,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                               ),
                             ),
                             state is MobLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator())
+                                ? const CustomLoadingIndicator()
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,

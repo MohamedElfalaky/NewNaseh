@@ -22,10 +22,10 @@ class GetUserRepo {
           "Authorization": "Bearer ${sharedPrefs.getToken()}"
         },
       );
-      print('${Keys.baseUrl}/adviser/auth/get_user}');
+      debugPrint('${Keys.baseUrl}/adviser/auth/get_user}');
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        print("response of get user by token is ${response.body}");
+        debugPrint("response of get user by token is ${response.body}");
         final userdata = registerModelFromJson(responseMap);
         return userdata;
       } else {

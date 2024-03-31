@@ -58,7 +58,7 @@ class UpdateProfile {
       });
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        print(response.body);
+        debugPrint(response.body);
         final userdata = registerModelFromJson(responseMap);
         // sharedPrefs.setToken(userdata.data!.token!);
         // sharedPrefs.setId(userdata.data!.id!);
@@ -74,7 +74,7 @@ class UpdateProfile {
         MyApplication.showToastView(
             // message: responseMap["message"].values.toString());
             message: responseMap["message"].toString());
-        print(responseMap);
+        debugPrint(responseMap.toString());
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());

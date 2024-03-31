@@ -208,7 +208,7 @@ class FirebaseCustomNotification {
     bool notificationStatus = await requestNotificationPermission();
     FirebaseMessaging.instance.getToken().then((token) {
       sharedPrefs.setFCM(token!);
-      print("FIREBASE TOKEN $token");
+      debugPrint("FIREBASE TOKEN $token");
     }).catchError((err) {});
     if (notificationStatus) {
       await CustomLocalNotification.setupLocalNotifications();
@@ -268,7 +268,7 @@ class CustomLocalNotification {
         message.notification?.title,
         message.notification?.body,
         NotificationDetails(
-          iOS: DarwinNotificationDetails(
+          iOS: const DarwinNotificationDetails(
             presentAlert: true,
             presentBadge: true,
             presentSound: true,

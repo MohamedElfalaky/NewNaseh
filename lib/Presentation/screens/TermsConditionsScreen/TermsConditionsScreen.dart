@@ -9,9 +9,10 @@ import 'package:nasooh/app/utils/myApplication.dart';
 
 import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
 import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_state.dart';
+import '../../widgets/custom_loading_widget.dart';
 
 class TermsConditionsScreen extends StatefulWidget {
-  const TermsConditionsScreen();
+  const TermsConditionsScreen({super.key});
 
   @override
   State<TermsConditionsScreen> createState() => _TermsConditionsScreenState();
@@ -37,8 +38,8 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
         appBar: AppBar(
             centerTitle: false,
             leadingWidth: 70,
-            title: Row(
-              children: const [
+            title: const Row(
+              children: [
                 Text("الشروط والأحكام"),
               ],
             ),
@@ -46,7 +47,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
         body: BlocBuilder<PrivacyCubit, PrivacyState>(
             builder: (context, privacyState) {
           if (privacyState is PrivacyLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const CustomLoadingIndicator();
           } else if (privacyState is PrivacyLoaded) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -65,9 +66,9 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
                         const SizedBox(
                           width: 12,
                         ),
-                        Column(
+                        const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
+                          children: [
                             Text(
                               "الشروط والأحكام",
                               style: Constants.mainTitleFont,

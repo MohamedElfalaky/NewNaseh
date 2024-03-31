@@ -59,7 +59,7 @@ class Register {
           });
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        print(response.body);
+        debugPrint(response.body);
         final userdata = registerModelFromJson(responseMap);
         sharedPrefs.setToken(userdata.data!.token!);
         sharedPrefs.setId(userdata.data!.id!);

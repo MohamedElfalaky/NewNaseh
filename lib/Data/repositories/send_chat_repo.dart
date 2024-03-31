@@ -33,12 +33,11 @@ class SendChatRepo {
                 "Authorization": "Bearer ${sharedPrefs.getToken()}"
               },
               body: map);
-      print("map sending is $map");
+      debugPrint("map sending is $map");
       Map<String, dynamic> responseMap = json.decode(response.body);
-      print("the sended file is $file");
+      debugPrint("the sended file is $file");
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        print(response.body);
-        // MyApplication.showToastView(message: responseMap["message"]);
+        debugPrint(response.body);
         return true;
       } else {
         MyApplication.showToastView(

@@ -15,6 +15,7 @@ import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_c
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_state.dart';
 import '../../../Data/cubit/settings_cubits/is_advice_cubit/is_advice_cubit.dart';
 import '../../../app/utils/Language/get_language.dart';
+import '../../widgets/custom_loading_widget.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -35,8 +36,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     isNotificationValue = sharedPrefs.getIsNotification() == 1 ? true : false;
     isAdviceValue = sharedPrefs.getIsAdvice() == 1 ? true : false;
-    print("isNotificationValue is $isNotificationValue");
-    print("isAdviceValue is $isAdviceValue");
+    debugPrint("isNotificationValue is $isNotificationValue");
+    debugPrint("isAdviceValue is $isAdviceValue");
 
 
 
@@ -185,7 +186,7 @@ Future<void> _showDeleteDialog(BuildContext context) async {
                     },
                   ),
                   state is DeleteAccountLoading
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const CustomLoadingIndicator()
                       : TextButton(
                           child: Text("Yes".tr),
                           onPressed: () {

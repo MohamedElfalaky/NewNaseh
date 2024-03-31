@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +15,13 @@ import 'package:nasooh/app/utils/myApplication.dart';
 import '../../../../Data/cubit/advice_cubits/done_advice_cubit/done_advice_state.dart';
 import '../../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../widgets/alerts.dart';
+import '../../../widgets/custom_loading_widget.dart';
 
 class AdviceWidget extends StatelessWidget {
   final bool? isAdviceDetail;
   final ShowAdData? showAdData;
-    AdviceWidget({super.key, this.isAdviceDetail, required this.showAdData});
+    const AdviceWidget({super.key, this.isAdviceDetail, required this.showAdData});
 
-// final  List <String> dummyData=['Mohamed Hany',"Fahad Almansour","Ahmed Fawzy","Hassan Aedros"];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -129,7 +128,7 @@ class AdviceWidget extends StatelessWidget {
                         builder: (context, state) => Flexible(
                           flex: 2,
                           child: state is DoneAdviceLoading
-                              ? const Center(child: CircularProgressIndicator())
+                              ? const CustomLoadingIndicator()
                               : Padding(
                                   padding: const EdgeInsetsDirectional.only(
                                       end: 8.0),

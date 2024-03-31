@@ -12,6 +12,7 @@ import '../../../../../Data/cubit/authentication/check_code/check_code_state.dar
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
+import '../../../../widgets/custom_loading_widget.dart';
 
 class RegistrationStage2 extends StatefulWidget {
   const RegistrationStage2({Key? key}) : super(key: key);
@@ -124,8 +125,7 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                               ),
                             ),
                             state is CheckCodeLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator())
+                                ? const CustomLoadingIndicator()
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,

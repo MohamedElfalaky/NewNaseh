@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Presentation/screens/Home/Components/Advicess.dart';
-import 'package:nasooh/Presentation/screens/Home/Components/outComeandRate.dart';
+import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
+import 'package:nasooh/Presentation/screens/Home/Components/outcome_and_rate.dart';
 import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
 import 'package:nasooh/Presentation/screens/NotificationScreen/NotificationScreen.dart';
 import 'package:nasooh/Presentation/screens/SettingsScreen/SettingsScreen.dart';
@@ -28,6 +28,7 @@ import '../../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_state.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../Data/models/home_models/home_status_model.dart';
+import '../../widgets/custom_loading_widget.dart';
 import '../EditProfileScreen/EditProfileScreen.dart';
 import '../chat/chat_screen.dart';
 
@@ -50,7 +51,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> getDataFromApi() async {
     await context.read<HomeStatusCubit>().getDataHomeStatus();
     homeCubit.getOneHome("");
-    context.read<GetUserCubit>().getUserMethod();
+    if (context.mounted) {
+      context.read<GetUserCubit>().getUserMethod();
+    }
   }
 
   @override
@@ -58,8 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     homeCubit = context.read<ListOneHomeCubit>();
     getDataFromApi();
-
-
   }
 
   @override
@@ -76,13 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return GestureDetector(
       onTap: () {
         MyApplication.dismissKeyboard(context);
-      }, // hide keyboard on tap anywhere
-
+      },
       child: Scaffold(
           key: _scaffoldKey,
           backgroundColor: Constants.whiteAppColor,
@@ -93,12 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: BlocBuilder<HomeStatusCubit, HomeStatusState>(
                 builder: (context, homeState) {
               if (homeState is HomeStatusLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const CustomLoadingIndicator();
               } else if (homeState is HomeStatusLoaded) {
                 final List<Datum> dataList = homeState.response?.data ?? [];
-                print(dataList);
+                // print(dataList);
                 return Stack(
                   children: [
                     // Appbar
@@ -121,7 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTapHandler: () {
                                 _scaffoldKey.currentState!.openDrawer();
                                 if (_scaffoldKey.currentState!.isDrawerOpen) {
-                                  // Check if the drawer is open
                                   _focusNode
                                       .unfocus(); // Unfocus the text field
                                 }
@@ -147,7 +142,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       ),
                     ),
-
                     Positioned(
                       top: MyApplication.hightClc(context, 160) - 25,
                       child: Container(
@@ -199,8 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       OutcomeAndRate(
                                         assetName: ordersIcon,
                                         title: "عدد الطلبات",
-                                        subtitle:
-                                            "${18} ",
+                                        subtitle: "${18} ",
                                         color: Constants.primaryAppColor,
                                       ),
                                       OutcomeAndRate(
@@ -294,15 +287,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             BlocBuilder<ListOneHomeCubit, ListOneHomeState>(
                                 builder: (context, state) {
                               if (state is ListOneHomeLoading) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
+                                return const CustomLoadingIndicator();
                               } else if (state is ListOneHomeLoaded) {
-                                List<ShowAdData> homeData=[];
+                                List<ShowAdData> homeData = [];
 
-                                if(homeCubit.homeSearchList?.isEmpty==true) {
+                                if (homeCubit.homeSearchList?.isEmpty == true) {
                                   homeData = state.response?.data ?? [];
                                 } else {
-                                  homeData=homeCubit.homeSearchList!;
+                                  homeData = homeCubit.homeSearchList!;
                                 }
                                 return Expanded(
                                     child: ListView.builder(
@@ -322,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         showAdData: homeData[index],
                                         isAdviceDetail: false,
                                       )),
-                                  itemCount: homeData.length ,
+                                  itemCount: homeData.length,
                                 ));
                               } else {
                                 return const SizedBox.shrink();
@@ -334,11 +326,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   ],
                 );
-              } else if (homeState is HomeStatusError) {
-                return const Center(child: SizedBox());
-              } else {
-                return const Center(child: SizedBox());
               }
+              return const SizedBox.shrink();
             }),
           )),
     );
@@ -377,7 +366,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       border: Border.all(
                           width: 6,
                           color: const Color(0XFF7C7C84).withOpacity(0.2))),
-
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 4),
@@ -401,7 +389,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-
           myListTile(
               icon: ta3delProfile,
               name: "Edit Profile".tr,
@@ -443,12 +430,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 await launchUrl(Uri.parse(
                   "whatsapp://send?phone=+966502374223",
                 ));
-                Navigator.pop(context);
               }),
           myListTile(icon: knowAboutIcon, name: "Know".tr),
           BlocBuilder<LogOutCubit, LogOutState>(
               builder: (context, state) => state is LogOutLoading
-                  ? const Center(child: CircularProgressIndicator())
+                  ? const CustomLoadingIndicator()
                   : myListTile(
                       icon: logOut,
                       name: "Sign Out".tr,
@@ -456,18 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context.read<LogOutCubit>().logOut(
                               context: context,
                             );
-                        // Navigator.pop(context);
-
-                        // MyApplication.navigateTo(
-                        //     context, const LoginScreen());
                       })),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 25),
-            child: Text(
-              "رقم الإصدار 1.0.0.1",
-              style: Constants.subtitleFont,
-            ),
-          )
         ],
       ),
     );

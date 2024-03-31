@@ -4,12 +4,12 @@ import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/utils/myApplication.dart';
 
 class OutcomeAndRate extends StatelessWidget {
-  String? title;
-  String? subtitle;
-  Color? color;
-  String? assetName;
+  final String? title;
+  final String? subtitle;
+  final Color? color;
+  final String? assetName;
 
-  OutcomeAndRate(
+  const OutcomeAndRate(
       {super.key, this.title, this.subtitle, this.assetName, this.color});
 
   @override
@@ -31,20 +31,18 @@ class OutcomeAndRate extends StatelessWidget {
                   color: color!.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(10)),
               child: SvgPicture.asset(assetName!)),
-          const SizedBox(
-            width: 8,
-          ),
+          const SizedBox(width: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                title!,
+                '$title',
                 style: const TextStyle(
                     fontSize: 10, fontFamily: Constants.mainFont),
               ),
               Text(
-                subtitle!,
+                '$subtitle',
                 style: TextStyle(color: color, fontWeight: FontWeight.bold),
               )
             ],

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -622,10 +621,10 @@ class RegistrationController {
                       lastDate: DateTime(2030));
 
                   if (pickedDate != null) {
-                    print(pickedDate);
+                    debugPrint(pickedDate.toString());
                     String formattedDate =
                         DateFormat('yyyy-MM-dd').format(pickedDate);
-                    print(formattedDate);
+                    debugPrint(formattedDate);
 
                     setState(() {
                       _birthdayController.text = formattedDate;
@@ -635,8 +634,8 @@ class RegistrationController {
                 },
                 onChanged: (val) {
                   inputBirthday = _birthdayController.text;
-                  print(inputBirthday.toString());
-                  print("the birthday is $inputBirthday");
+                  debugPrint(inputBirthday.toString());
+                  debugPrint("the birthday is $inputBirthday");
                 },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "تاريخ الميلاد...",

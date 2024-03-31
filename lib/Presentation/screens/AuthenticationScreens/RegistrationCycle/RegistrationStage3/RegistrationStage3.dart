@@ -65,7 +65,7 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
                           inputEnglishName +
                           inputEmail +
                           inputPassword);
-                      MyApplication.navigateTo(context, RegistrationStage4());
+                      MyApplication.navigateTo(context, const RegistrationStage4());
                     }
                   },
                 ),

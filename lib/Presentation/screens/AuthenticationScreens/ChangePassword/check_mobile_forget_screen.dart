@@ -10,6 +10,7 @@ import '../../../../../app/utils/myApplication.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_state.dart';
 import '../../../widgets/PhoneTextField.dart';
+import '../../../widgets/custom_loading_widget.dart';
 
 String? forgetMob;
 
@@ -116,8 +117,7 @@ class _CheckForgetMobileState extends State<CheckForgetMobile> {
                               ),
                             ),
                             state is CheckMobLoading
-                                ? const Center(
-                                    child: CircularProgressIndicator())
+                                ? const CustomLoadingIndicator()
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,

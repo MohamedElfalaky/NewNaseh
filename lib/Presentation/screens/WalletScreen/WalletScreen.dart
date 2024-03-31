@@ -10,6 +10,7 @@ import 'package:nasooh/app/utils/myApplication.dart';
 
 import '../../../Data/cubit/wallet_cubit/wallet_cubit.dart';
 import '../../../Data/cubit/wallet_cubit/wallet_state.dart';
+import '../../widgets/custom_loading_widget.dart';
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -57,7 +58,7 @@ class _WalletScreenState extends State<WalletScreen> {
           body:
               BlocBuilder<WalletCubit, WalletState>(builder: (context, state) {
             if (state is WalletLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const CustomLoadingIndicator();
             } else if (state is WalletLoaded) {
               // print(state.response!.transaction.toString());
               return Column(

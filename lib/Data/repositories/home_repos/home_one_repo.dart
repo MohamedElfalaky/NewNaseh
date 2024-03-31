@@ -24,7 +24,7 @@ class ListOneHomeRepo {
       );
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        print(response.body);
+        debugPrint(response.body);
         final homeStatusData = listOneHomeFromJson(responseMap);
         return homeStatusData;
       } else {
@@ -32,9 +32,7 @@ class ListOneHomeRepo {
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());
-      if (kDebugMode) {
-        print(e);
-      }
+
     } on SocketException catch (e) {
       MyApplication.showToastView(message: e.toString());
       if (kDebugMode) {

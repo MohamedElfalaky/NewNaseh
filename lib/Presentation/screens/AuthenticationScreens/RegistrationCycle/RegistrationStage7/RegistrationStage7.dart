@@ -12,6 +12,7 @@ import '../../../../../Data/cubit/authentication/register_cubit/register_cubit.d
 import '../../../../../Data/cubit/authentication/register_cubit/register_state.dart';
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
+import '../../../../widgets/custom_loading_widget.dart';
 
 class RegistrationStage7 extends StatefulWidget {
   const RegistrationStage7({Key? key}) : super(key: key);
@@ -67,8 +68,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                 child: Row(
                                   children: [
                                     state is RegisterLoading
-                                        ? const Center(
-                                            child: CircularProgressIndicator())
+                                        ? const CustomLoadingIndicator()
                                         : Flexible(
                                             flex: 2,
                                             child: Padding(

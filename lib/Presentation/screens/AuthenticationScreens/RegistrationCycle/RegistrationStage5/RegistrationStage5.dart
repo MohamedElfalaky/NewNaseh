@@ -12,6 +12,7 @@ import '../../../../../Data/models/Auth_models/category_model.dart';
 import '../../../../../app/constants.dart';
 import '../../../../../app/utils/myApplication.dart';
 import '../../../../../app/utils/registeration_values.dart';
+import '../../../../widgets/custom_loading_widget.dart';
 
 class RegistrationStage5 extends StatefulWidget {
   const RegistrationStage5({Key? key}) : super(key: key);
@@ -104,14 +105,11 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
           body: BlocBuilder<CategoryCubit, CategoryState>(
               builder: (context, state) {
             if (state is CategoryLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const CustomLoadingIndicator();
             } else if (state is CategoryLoaded) {
               return _buildCard(context, state.response!);
-            } else if (state is CategoryError) {
-              return const Center(child: Text('error'));
-            } else {
-              return const Center(child: Text('....'));
-            }
+            } return const SizedBox.shrink(
+            );
           })),
     );
   }
@@ -147,7 +145,7 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                       }
 
                       results = searchList(_searchController.text);
-                      print(results.length);
+                      debugPrint(results.length.toString());
                     });
                   },
                   decoration: Constants.setRegistrationTextInputDecoration(

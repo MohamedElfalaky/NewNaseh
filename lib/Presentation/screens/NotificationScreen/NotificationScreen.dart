@@ -9,6 +9,7 @@ import 'package:nasooh/app/utils/myApplication.dart';
 
 import '../../../Data/cubit/notification_cubit/notification_cubit.dart';
 import '../../../Data/cubit/notification_cubit/notification_state.dart';
+import '../../widgets/custom_loading_widget.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -57,7 +58,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           body: BlocBuilder<NotificationCubit, NotificationState>(
               builder: (context, state) {
             if (state is NotificationLoading) {
-              return const Center(child: CircularProgressIndicator());
+              return const CustomLoadingIndicator();
             } else if (state is NotificationLoaded) {
               return Column(
                 children: [
@@ -77,7 +78,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             } else if (state is NotificationError) {
               return const Center(child: Text('error'));
             } else {
-              return const Center(child: CircularProgressIndicator.adaptive());
+              return const CustomLoadingIndicator();
             }
           })),
     );

@@ -6,6 +6,10 @@ class SendChatCubit extends Cubit<SendChatState> {
   SendChatCubit() : super(SendChatInitial());
   SendChatRepo sendChatRepo = SendChatRepo();
 
+  void emitChatInitial(){
+    emit(SendChatInitial());
+  }
+
   sendChatFunction({
     required String msg,
     required String adviceId,
