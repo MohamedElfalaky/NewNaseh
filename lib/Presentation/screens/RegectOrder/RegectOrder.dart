@@ -111,12 +111,8 @@ class _RejectOrderState extends State<RejectOrder> {
                       showAdData: widget.showAdData,
                       isAdviceDetail: false,
                     ),
-                    TextField(
-                      controller: _textController,
-                      maxLines: 1,
-                      autofocus: false,
-                      cursorHeight: 0,
-                      onTap: () {
+                    InkWell(
+                      onTap: (){
                         showModalBottomSheet(
                           backgroundColor: Colors.white,
                           shape: const RoundedRectangleBorder(
@@ -156,19 +152,19 @@ class _RejectOrderState extends State<RejectOrder> {
                                           Navigator.pop(
                                               context); // Close the bottom sheet
                                           _textController.text =
-                                              list[index].name!;
+                                          list[index].name!;
                                           selectedId = list[index].id!;
                                           if (object.id == 0) {
                                             showModalBottomSheet(
                                               context: context,
                                               backgroundColor:
-                                                  Constants.whiteAppColor,
+                                              Constants.whiteAppColor,
                                               shape:
-                                                  const RoundedRectangleBorder(
+                                              const RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.vertical(
+                                                BorderRadius.vertical(
                                                   top:
-                                                      Radius.circular(25.0),
+                                                  Radius.circular(25.0),
                                                 ),
                                               ),
                                               builder:
@@ -187,20 +183,28 @@ class _RejectOrderState extends State<RejectOrder> {
                           },
                         );
                       },
-                      decoration:
-                          Constants.setRegistrationTextInputDecoration(
-                        hintText: "سبب الرفض",
+                      child: TextField(
+                        controller: _textController,
+                        maxLines: 1,
+                        autofocus: false,
+                         enabled: false,
+                        cursorHeight: 0,
 
-                        prefixIcon: SvgPicture.asset(
-                          rejectIcon,
-                          color: const Color(0xffED2626),
-                          height: 24,
-                        ),
+                        decoration:
+                            Constants.setRegistrationTextInputDecoration(
+                          hintText: "سبب الرفض",
 
-                        suffixIcon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          color: Colors.black,
-                          size: 24,
+                          prefixIcon: SvgPicture.asset(
+                            rejectIcon,
+                            color: const Color(0xffED2626),
+                            height: 24,
+                          ),
+
+                          suffixIcon: const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: Colors.black,
+                            size: 24,
+                          ),
                         ),
                       ),
                     ),

@@ -113,13 +113,15 @@ class Back extends StatelessWidget {
 class MyBackButton extends StatelessWidget {
   MyBackButton({super.key, this.onPressed, this.hasValue = false});
 
- final  void Function()? onPressed;
+  void Function()? onPressed;
   bool hasValue = false;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
+        // margin: EdgeInsets.zero,
+        // padding: EdgeInsets.zero,
         decoration: BoxDecoration(
             color: Constants.whiteAppColor,
             border: Border.all(color: const Color(0XFFDADADA)),
@@ -130,15 +132,20 @@ class MyBackButton extends StatelessWidget {
                   offset: const Offset(0, 4),
                   blurRadius: 4)
             ]),
-        height: 42,
-        width: 42,
-        child: BackButton(
-          onPressed: hasValue
-              ? onPressed
-              : () {
-                  Navigator.pop(context);
-                },
-          color: const Color(0xff575762),
+        height: 40,
+        width: 40,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 8),
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: hasValue
+                ? onPressed
+                : () {
+                    Navigator.pop(context);
+                  },
+            color: const Color(0xff575762),
+          ),
         ),
       ),
     );
