@@ -426,10 +426,10 @@ class _HomeScreenState extends State<HomeScreen> {
           myListTile(
               icon: techIcon,
               name: "Tech".tr,
-              onTapHandler: () async {
-                await launchUrl(Uri.parse(
-                  "whatsapp://send?phone=+966502374223",
-                ));
+              onTapHandler: ()   {
+                //   launchUrl(Uri.parse(
+                //   "whatsapp://send?phone=+966502374223",
+                // ));
               }),
           myListTile(icon: knowAboutIcon, name: "Know".tr),
           BlocBuilder<LogOutCubit, LogOutState>(

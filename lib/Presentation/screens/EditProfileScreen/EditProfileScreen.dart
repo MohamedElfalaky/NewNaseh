@@ -44,6 +44,7 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final ImagePicker _picker = ImagePicker();
+  late final profileCubit;
   XFile? regImage;
   final TextEditingController _fullName = TextEditingController();
   final TextEditingController _englishName = TextEditingController();
@@ -88,11 +89,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final List<MySelectedModel> _selectedCategory = [];
 
   Future<void> getDataFromApi() async {
-    await context.read<ProfileCubit>().getDataProfile();
-    await context.read<CountryCubit>().getCountries();
-    await context.read<NationalityCubit>().getNationalities();
 
-    var profileCubit = ProfileCubit.get(context);
+    await context.read<ProfileCubit>().getDataProfile();
+    if(mounted) {
+      await context.read<CountryCubit>().getCountries();
+    }
+    if(mounted) {
+      await context.read<NationalityCubit>().getNationalities();
+    }
+    if(mounted) {
+      profileCubit = ProfileCubit.get(context);
+    }
     _fullName.text = profileCubit.profileModel?.data?.fullName ?? "";
     _email.text = profileCubit.profileModel?.data?.email ?? "";
     _englishName.text = profileCubit.profileModel?.data!.userName ?? "";
