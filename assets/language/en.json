@@ -62,5 +62,6 @@
   "short description": "description must be at least 4 characters" ,
   "add image please": "please add image please",
   "name length": "Name length should be more than 2 and less than 33 character",
-  "summary length": "summary should be at least 33 character"
+  "summary length": "summary should be at least 33 character",
+  "error": "Error"
 }

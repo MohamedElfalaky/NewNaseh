@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Presentation/screens/NotificationScreen/Components/OneNotification.dart';
+import 'package:nasooh/Presentation/screens/NotificationScreen/Components/notification_widget.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 
 import '../../../Data/cubit/notification_cubit/notification_cubit.dart';
 import '../../../Data/cubit/notification_cubit/notification_state.dart';
@@ -51,7 +51,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             title: Text("Notifications".tr),
             leading: Padding(
               padding: const EdgeInsets.only(right: 10),
-              child: MyBackButton(),
+              child: CustomBackButton(),
             ),
 
           ),
@@ -64,7 +64,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 children: [
                   Expanded(
                       child: ListView.builder(
-                    itemBuilder: (context, index) => OneNotification(
+                    itemBuilder: (context, index) => NotificationWidget(
                       orderId: state.response?[index].id ?? 0,
                       description: state.response?[index].description ?? "",
                       date: state.response?[index].date ?? "",

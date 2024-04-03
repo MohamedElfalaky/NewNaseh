@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 
 import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
 import '../../../Data/cubit/settings_cubits/privacy_cubit/privacy_state.dart';
@@ -43,7 +43,7 @@ class _TermsConditionsScreenState extends State<TermsConditionsScreen> {
                 Text("الشروط والأحكام"),
               ],
             ),
-            leading: MyBackButton()),
+            leading: CustomBackButton()),
         body: BlocBuilder<PrivacyCubit, PrivacyState>(
             builder: (context, privacyState) {
           if (privacyState is PrivacyLoading) {

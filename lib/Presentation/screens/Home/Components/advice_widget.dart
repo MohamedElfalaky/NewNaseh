@@ -5,12 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Data/cubit/advice_cubits/done_advice_cubit/done_advice_cubit.dart';
 import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
-import 'package:nasooh/Presentation/screens/RegectOrder/RegectOrder.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
-import 'package:nasooh/Presentation/widgets/MyButtonOutlined.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/Presentation/screens/RegectOrder/regect_order.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
+import 'package:nasooh/Presentation/widgets/my_outlined_button.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 
 import '../../../../Data/cubit/advice_cubits/done_advice_cubit/done_advice_state.dart';
 import '../../../../Data/models/advice_models/show_advice_model.dart';
@@ -132,7 +132,7 @@ class AdviceWidget extends StatelessWidget {
                               : Padding(
                                   padding: const EdgeInsetsDirectional.only(
                                       end: 8.0),
-                                  child: MyButton(
+                                  child: CustomButton(
                                     isBold: true,
                                     txt: "تسليم",
                                     onPressedHandler: () {

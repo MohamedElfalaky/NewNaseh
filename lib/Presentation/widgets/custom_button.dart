@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nasooh/app/constants.dart';
 
-class MyButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final void Function()? onPressedHandler;
   final String? txt;
   final Color? btnColor;
@@ -10,7 +10,7 @@ class MyButton extends StatelessWidget {
   final bool? isBold;
   final Widget? prefixWidget;
 
-  const MyButton(
+  const CustomButton(
       {super.key,
       this.onPressedHandler,
       this.txt,

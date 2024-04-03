@@ -189,9 +189,8 @@ class Constants {
         prefixIconColor: prefixColor,
         suffixIconColor: suffixColor,
         suffixIcon: suffixIcon,
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
           fontFamily: 'Cairo',
-
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

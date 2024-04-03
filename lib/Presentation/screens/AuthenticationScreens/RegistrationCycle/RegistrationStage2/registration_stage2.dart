@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../Data/cubit/authentication/check_code/check_code_cubit.dart';
 import '../../../../../Data/cubit/authentication/check_code/check_code_state.dart';
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../../app/utils/registeration_values.dart';
 import '../../../../widgets/custom_loading_widget.dart';
 
@@ -48,7 +48,7 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
           appBar: AppBar(
               leadingWidth: 70,
               title: const Text("إدخال رمز التحقق"),
-              leading: MyBackButton()),
+              leading: CustomBackButton()),
           body: Form(
             key: _formKey,
             child: Container(
@@ -120,7 +120,6 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                                     }
                                     return null;
                                   },
-                                  onCompleted: (pin) => print(pin),
                                 ),
                               ),
                             ),
@@ -129,7 +128,7 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,
-                                    child: MyButton(
+                                    child: CustomButton(
                                       isBold: true,
                                       txt: "التالي",
                                       onPressedHandler: () {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage2/RegistrationStage2.dart';
-import '../../../../app/utils/myApplication.dart';
+import '../../../../Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage2/registration_stage2.dart';
+import '../../../../app/utils/my_application.dart';
 import '../../../repositories/authentication/mob_repo.dart';
 import 'mob_state.dart';
 

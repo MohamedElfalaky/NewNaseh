@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
 import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 
 import '../../../Data/cubit/rejections_cubit/reject_cubit/post_reject_cubit.dart';
 import '../../../Data/cubit/rejections_cubit/reject_cubit/post_reject_state.dart';
@@ -14,7 +14,7 @@ import '../../../Data/cubit/rejections_cubit/rejection_list_cubit/rejection_list
 import '../../../Data/cubit/rejections_cubit/rejection_list_cubit/rejection_list_state.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../Data/models/rejection_models/list_rejection_model.dart';
-import '../../../app/Style/Icons.dart';
+import '../../../app/Style/icons.dart';
 import '../../widgets/alerts.dart';
 import '../../widgets/custom_loading_widget.dart';
 
@@ -71,7 +71,7 @@ class _RejectOrderState extends State<RejectOrder> {
                 height: 50,
                 child: state is PostRejectLoading
                     ? const CustomLoadingIndicator()
-                    : MyButton(
+                    : CustomButton(
                         txt: "رفض الطلب",
                         isBold: true,
                         onPressedHandler: () {
@@ -95,7 +95,7 @@ class _RejectOrderState extends State<RejectOrder> {
                   Text("رفض الطلب"),
                 ],
               ),
-              leading: MyBackButton()),
+              leading: CustomBackButton()),
           body: BlocBuilder<ListRejectionCubit, ListRejectionState>(
               builder: (context, homeState) {
             if (homeState is ListRejectionLoading) {
@@ -103,8 +103,7 @@ class _RejectOrderState extends State<RejectOrder> {
             } else if (homeState is ListRejectionLoaded) {
               final List<RejectData> list = homeState.response!.data!;
               return Padding(
-                padding:
-                    const EdgeInsets.only(left: 16, right: 16, top: 10),
+                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Column(
                   children: [
                     AdviceWidget(
@@ -112,7 +111,7 @@ class _RejectOrderState extends State<RejectOrder> {
                       isAdviceDetail: false,
                     ),
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         showModalBottomSheet(
                           backgroundColor: Colors.white,
                           shape: const RoundedRectangleBorder(
@@ -143,32 +142,33 @@ class _RejectOrderState extends State<RejectOrder> {
                                           groupValue: 0,
                                           onChanged: (val) {},
                                         ),
-                                        title: Text(list[index].name!,style: const TextStyle(
-                                          fontFamily: 'Cairo',
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500,
-                                        ),),
+                                        title: Text(
+                                          list[index].name!,
+                                          style: const TextStyle(
+                                            fontFamily: 'Cairo',
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
                                         onTap: () {
                                           Navigator.pop(
                                               context); // Close the bottom sheet
                                           _textController.text =
-                                          list[index].name!;
+                                              list[index].name!;
                                           selectedId = list[index].id!;
                                           if (object.id == 0) {
                                             showModalBottomSheet(
                                               context: context,
                                               backgroundColor:
-                                              Constants.whiteAppColor,
+                                                  Constants.whiteAppColor,
                                               shape:
-                                              const RoundedRectangleBorder(
+                                                  const RoundedRectangleBorder(
                                                 borderRadius:
-                                                BorderRadius.vertical(
-                                                  top:
-                                                  Radius.circular(25.0),
+                                                    BorderRadius.vertical(
+                                                  top: Radius.circular(25.0),
                                                 ),
                                               ),
-                                              builder:
-                                                  (BuildContext context) {
+                                              builder: (BuildContext context) {
                                                 return _otherBottom();
                                               },
                                             );
@@ -187,19 +187,16 @@ class _RejectOrderState extends State<RejectOrder> {
                         controller: _textController,
                         maxLines: 1,
                         autofocus: false,
-                         enabled: false,
+                        enabled: false,
                         cursorHeight: 0,
-
                         decoration:
                             Constants.setRegistrationTextInputDecoration(
                           hintText: "سبب الرفض",
-
                           prefixIcon: SvgPicture.asset(
                             rejectIcon,
-                            color: const Color(0xffED2626),
+                            colorFilter: getFilterColor(Colors.red),
                             height: 24,
                           ),
-
                           suffixIcon: const Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: Colors.black,
@@ -280,7 +277,7 @@ class _RejectOrderState extends State<RejectOrder> {
               height: 50,
               child: state is PostRejectLoading
                   ? const CustomLoadingIndicator()
-                  : MyButton(
+                  : CustomButton(
                       txt: "رفض الطلب",
                       isBold: true,
                       onPressedHandler: () {

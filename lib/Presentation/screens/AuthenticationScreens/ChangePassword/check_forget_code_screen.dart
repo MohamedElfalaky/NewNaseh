@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_countdown_timer/index.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/check_forget_code_cubit/check_code_state.dart';
 import '../../../widgets/custom_loading_widget.dart';
@@ -49,7 +49,7 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
           appBar: AppBar(
               leadingWidth: 70,
               title: const Text("إدخال رمز التحقق"),
-              leading: MyBackButton()),
+              leading: CustomBackButton()),
           body: Form(
             key: _formKey,
             child: Container(
@@ -117,7 +117,7 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,
-                                    child: MyButton(
+                                    child: CustomButton(
                                       isBold: true,
                                       txt: "التالي",
                                       onPressedHandler: () {

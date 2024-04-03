@@ -5,16 +5,16 @@ import 'package:get/get.dart';
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_cubit.dart';
 import 'package:nasooh/Data/cubit/authentication/login_cubit/login_state.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/ChangePassword/check_mobile_forget_screen.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage1/RegistrationStage1.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage1/registration_stage1.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:password_text_field/password_text_field.dart';
 
 import '../../../../app/constants.dart';
-import '../../../../app/utils/myApplication.dart';
+import '../../../../app/utils/my_application.dart';
 import '../../../widgets/phone_textfield.dart';
 import '../../../widgets/custom_loading_widget.dart';
-import '../RegistrationCycle/RegistrationController.dart';
+import '../RegistrationCycle/registration_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -241,7 +241,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   child: SizedBox(
                                     width: double.infinity,
                                     height: 48,
-                                    child: MyButton(
+                                    child: CustomButton(
                                       isBold: true,
                                       txt: "تسجيل الدخول",
                                       onPressedHandler: () {

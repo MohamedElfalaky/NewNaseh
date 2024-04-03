@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nasooh/Presentation/screens/WalletScreen/Components/OneOrder.dart';
-import 'package:nasooh/Presentation/screens/WalletScreen/controller/WalletScreenController.dart';
+import 'package:nasooh/Presentation/screens/WalletScreen/Components/wallet_widget.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 
 import '../../../Data/cubit/wallet_cubit/wallet_cubit.dart';
 import '../../../Data/cubit/wallet_cubit/wallet_state.dart';
@@ -20,10 +19,8 @@ class WalletScreen extends StatefulWidget {
 }
 
 class _WalletScreenState extends State<WalletScreen> {
-  WalletScreenController walletScreenController = WalletScreenController();
 
-  bool? isConnected;
-  final controller = PageController(initialPage: 0);
+   final controller = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -54,7 +51,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   Text("محفظتي"),
                 ],
               ),
-              leading: MyBackButton()),
+              leading: CustomBackButton()),
           body:
               BlocBuilder<WalletCubit, WalletState>(builder: (context, state) {
             if (state is WalletLoading) {

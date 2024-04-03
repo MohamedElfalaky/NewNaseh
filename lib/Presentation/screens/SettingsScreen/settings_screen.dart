@@ -6,10 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:nasooh/Data/cubit/settings_cubits/is_notification_cubit/is_notification_cubit.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
-import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+import 'package:nasooh/app/utils/my_application.dart';
+import 'package:nasooh/app/utils/shared_preference.dart';
 
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_cubit.dart';
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_state.dart';
@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               centerTitle: false,
               leadingWidth: 70,
               title: Text("Settings".tr),
-              leading: MyBackButton()),
+              leading: CustomBackButton()),
           body: Padding(
             padding: const EdgeInsets.only(left: 20, right: 20, top: 18),
             child: Column(

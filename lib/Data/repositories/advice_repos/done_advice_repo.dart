@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:nasooh/app/keys.dart';
 
-import '../../../../app/utils/myApplication.dart';
-import '../../../app/utils/sharedPreferenceClass.dart';
+import '../../../../app/utils/my_application.dart';
+import '../../../app/utils/shared_preference.dart';
 import '../../models/advice_models/show_advice_model.dart';
 
 class DoneAdviceRepo {
@@ -25,7 +25,7 @@ class DoneAdviceRepo {
 
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        debugPrint("the response of pay  is ${responseMap.toString()}");
+        debugPrint("the response   is ${responseMap.toString()}");
         final adviceShowResult = showAdviceModelFromJson(responseMap);
         return adviceShowResult;
       } else {

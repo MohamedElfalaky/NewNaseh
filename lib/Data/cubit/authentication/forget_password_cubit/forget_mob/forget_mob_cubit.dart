@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../Presentation/screens/AuthenticationScreens/ChangePassword/check_forget_code_screen.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../repositories/authentication/forget_password/check_forget_mobile_repo.dart';
 import 'forget_mob_state.dart';
 

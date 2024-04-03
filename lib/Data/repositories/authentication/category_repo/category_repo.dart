@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:nasooh/Data/models/Auth_models/category_model.dart';
 import 'package:nasooh/app/keys.dart';
 
-import '../../../../app/utils/myApplication.dart';
-import '../../../../app/utils/sharedPreferenceClass.dart';
+import '../../../../app/utils/my_application.dart';
+import '../../../../app/utils/shared_preference.dart';
 
 class CategoryRepo {
   Future<CategoryModel?> getData() async {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nasooh/app/constants.dart';
 
-class OneNotification extends StatelessWidget {
-  const OneNotification(
+class NotificationWidget extends StatelessWidget {
+  const NotificationWidget(
       {super.key,
       required this.date,
       required this.description,

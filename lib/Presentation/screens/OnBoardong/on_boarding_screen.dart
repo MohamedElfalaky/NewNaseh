@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});
@@ -19,8 +19,7 @@ class _OnBoardingState extends State<OnBoarding>
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
+     super.initState();
 
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500));
@@ -118,7 +117,7 @@ class _OnBoardingState extends State<OnBoarding>
                       const Spacer(),
                       SizedBox(
                         height: 48,
-                        child: MyButton(
+                        child: CustomButton(
                           txt: "ابدأ الآن",
                           isBold: true,
                           onPressedHandler: () {

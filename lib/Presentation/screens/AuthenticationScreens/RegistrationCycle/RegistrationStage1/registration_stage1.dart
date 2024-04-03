@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 
 import '../../../../../Data/cubit/authentication/new_mob/mob_cubit.dart';
 import '../../../../../Data/cubit/authentication/new_mob/mob_state.dart';
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../../app/utils/registeration_values.dart';
 import '../../../../widgets/phone_textfield.dart';
 import '../../../../widgets/custom_loading_widget.dart';
@@ -37,7 +37,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
         appBar: AppBar(
             leadingWidth: 70,
             title: const Text("إنشاء حساب ناصح"),
-            leading: MyBackButton()),
+            leading: CustomBackButton()),
         body: Form(
           key: _formKey,
           child: Container(
@@ -111,7 +111,7 @@ class _RegistrationStage1State extends State<RegistrationStage1> {
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,
-                                    child: MyButton(
+                                    child: CustomButton(
                                       isBold: true,
                                       txt: "إرسال رمز التحقق",
                                       onPressedHandler: () {

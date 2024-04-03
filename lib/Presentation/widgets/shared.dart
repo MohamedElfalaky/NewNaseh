@@ -61,34 +61,6 @@ class GoBack extends StatelessWidget {
   }
 }
 
-class MyPrefixWidget extends StatelessWidget {
-  const MyPrefixWidget({Key? key, this.svgString}) : super(key: key);
-  final String? svgString;
-
-  String getSvgString() {
-    return svgString == null ? 'assets/images/SVGs/flag.svg' : svgString!;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2),
-      child: Container(
-        width: 60,
-        height: 60,
-        alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          // shape: BoxShape.rectangle,
-          color: Color(0xffEEEEEE),
-        ),
-        child: SvgPicture.asset(
-          getSvgString(),
-        ),
-      ),
-    );
-  }
-}
 
 class Back extends StatelessWidget {
   const Back({Key? key, this.header}) : super(key: key);
@@ -110,8 +82,8 @@ class Back extends StatelessWidget {
   }
 }
 
-class MyBackButton extends StatelessWidget {
-  MyBackButton({super.key, this.onPressed, this.hasValue = false});
+class CustomBackButton extends StatelessWidget {
+  CustomBackButton({super.key, this.onPressed, this.hasValue = false});
 
   void Function()? onPressed;
   bool hasValue = false;
@@ -120,8 +92,7 @@ class MyBackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        // margin: EdgeInsets.zero,
-        // padding: EdgeInsets.zero,
+
         decoration: BoxDecoration(
             color: Constants.whiteAppColor,
             border: Border.all(color: const Color(0XFFDADADA)),
@@ -150,4 +121,8 @@ class MyBackButton extends StatelessWidget {
       ),
     );
   }
+}
+
+ ColorFilter getFilterColor(Color color) {
+return ColorFilter.mode(color, BlendMode.srcIn);
 }

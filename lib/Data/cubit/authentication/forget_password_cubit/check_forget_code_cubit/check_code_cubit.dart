@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../Presentation/screens/AuthenticationScreens/ChangePassword/change_password.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../repositories/authentication/forget_password/check_forget_code_repo.dart';
 import 'check_code_state.dart';
 

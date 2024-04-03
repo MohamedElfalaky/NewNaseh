@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/forget_mob/forget_mob_state.dart';
 import '../../../widgets/phone_textfield.dart';
@@ -38,7 +38,7 @@ class _CheckForgetMobileState extends State<CheckForgetMobile> {
         appBar: AppBar(
             leadingWidth: 70,
             title: const Text("تغير كلمة المرور"),
-            leading: MyBackButton()),
+            leading: CustomBackButton()),
         body: Form(
           key: _formKey,
           child: Container(
@@ -121,7 +121,7 @@ class _CheckForgetMobileState extends State<CheckForgetMobile> {
                                 : SizedBox(
                                     width: double.infinity,
                                     height: 48,
-                                    child: MyButton(
+                                    child: CustomButton(
                                       isBold: true,
                                       txt: "التالي",
                                       onPressedHandler: () {

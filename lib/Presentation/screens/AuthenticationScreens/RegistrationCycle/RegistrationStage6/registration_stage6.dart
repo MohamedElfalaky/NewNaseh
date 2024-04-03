@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage7/RegistrationStage7.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
-import 'package:nasooh/Presentation/widgets/MyButtonOutlined.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/registration_controller.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage7/registration_stage7.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
+import 'package:nasooh/Presentation/widgets/my_outlined_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/utils/registeration_values.dart';
 
 import '../../../../../Data/cubit/authentication/register_cubit/register_cubit.dart';
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 
 class RegistrationStage6 extends StatefulWidget {
   const RegistrationStage6({Key? key}) : super(key: key);
@@ -42,7 +42,7 @@ class _RegistrationStage6State extends State<RegistrationStage6> {
                       flex: 2,
                       child: Padding(
                         padding: const EdgeInsetsDirectional.only(end: 8.0),
-                        child: MyButton(
+                        child: CustomButton(
                           isBold: true,
                           txt: "التالي",
                           onPressedHandler: () {
@@ -116,7 +116,7 @@ class _RegistrationStage6State extends State<RegistrationStage6> {
           centerTitle: false,
           leadingWidth: 70,
           title: const Text("معلومات إضافية"),
-          leading: MyBackButton(),
+          leading: CustomBackButton(),
         ),
         body: Container(
             height: MediaQuery.of(context).size.height,

@@ -9,11 +9,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/RegistrationStage4.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificateItem.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/registration_stage4.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificate_item.dart';
+import 'package:nasooh/Presentation/widgets/shared.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 import 'package:password_text_field/password_text_field.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -111,8 +112,7 @@ class RegistrationController {
                                 child: RegistrationController.regImage == null
                                     ? SvgPicture.asset(
                                         logotrans,
-                                        color:
-                                            Colors.transparent.withOpacity(.2),
+                                        colorFilter: getFilterColor(  Colors.transparent.withOpacity(.2)),
                                       )
                                     : ClipRRect(
                                         borderRadius: BorderRadius.circular(16),

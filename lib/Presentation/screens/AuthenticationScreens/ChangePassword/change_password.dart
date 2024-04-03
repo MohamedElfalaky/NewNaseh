@@ -6,13 +6,13 @@ import 'package:password_text_field/password_text_field.dart';
 
 import '../../../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_state.dart';
-import '../../../../app/Style/Icons.dart';
+import '../../../../app/Style/icons.dart';
 import '../../../../app/constants.dart';
-import '../../../../app/utils/myApplication.dart';
-import '../../../widgets/MyButton.dart';
+import '../../../../app/utils/my_application.dart';
+import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_loading_widget.dart';
 import '../../../widgets/shared.dart';
-import '../RegistrationCycle/RegistrationController.dart';
+import '../RegistrationCycle/registration_controller.dart';
 import 'check_mobile_forget_screen.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -63,7 +63,7 @@ class _ChangePasswordState extends State<ChangePassword>
           appBar: AppBar(
               leadingWidth: 70,
               title: Text("change_password".tr),
-              leading: MyBackButton()),
+              leading: CustomBackButton()),
           backgroundColor: Constants.whiteAppColor,
           resizeToAvoidBottomInset: false,
           body: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
@@ -219,7 +219,7 @@ class _ChangePasswordState extends State<ChangePassword>
                                       child: SizedBox(
                                         width: double.infinity,
                                         height: 48,
-                                        child: MyButton(
+                                        child: CustomButton(
                                           isBold: true,
                                           txt: "save".tr,
                                           onPressedHandler: () {

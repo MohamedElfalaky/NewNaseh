@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+import 'package:nasooh/app/utils/shared_preference.dart';
 
 import '../constants.dart';
 

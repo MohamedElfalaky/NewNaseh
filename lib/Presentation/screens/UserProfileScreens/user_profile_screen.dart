@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../widgets/shared.dart';
-import 'widgets/userInfoCard.dart';
-import 'widgets/userInfoMenu.dart';
+import 'widgets/user_info_card.dart';
+import 'widgets/user_info_menu.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});

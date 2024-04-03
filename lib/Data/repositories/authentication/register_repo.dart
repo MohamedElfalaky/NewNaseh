@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:nasooh/app/global.dart';
 import 'package:nasooh/app/keys.dart';
 
-import '../../../app/utils/myApplication.dart';
-import '../../../app/utils/sharedPreferenceClass.dart';
+import '../../../app/utils/my_application.dart';
+import '../../../app/utils/shared_preference.dart';
 import '../../models/Auth_models/register_model.dart';
 
 class Register {
@@ -106,8 +106,8 @@ class Register {
 // import 'package:image_picker/image_picker.dart';
 // import 'package:nasooh/app/global.dart';
 // import 'package:nasooh/app/keys.dart';
-// import '../../../app/utils/myApplication.dart';
-// import '../../../app/utils/sharedPreferenceClass.dart';
+// import '../../../app/utils/my_application.dart';
+// import '../../../app/utils/shared_preference.dart';
 // import '../../../dio..dart';
 // import '../../models/Auth_models/register_model.dart';
 // import 'package:http/http.dart' as http;
@@ -229,8 +229,8 @@ class Register {
 // // import 'package:image_picker/image_picker.dart';
 // // import 'package:nasooh/app/global.dart';
 // // import 'package:nasooh/app/keys.dart';
-// // import '../../../app/utils/myApplication.dart';
-// // import '../../../app/utils/sharedPreferenceClass.dart';
+// // import '../../../app/utils/my_application.dart';
+// // import '../../../app/utils/shared_preference.dart';
 // // import '../../../dio..dart';
 // // import '../../models/Auth_models/register_model.dart';
 // // import 'package:http/http.dart' as http;

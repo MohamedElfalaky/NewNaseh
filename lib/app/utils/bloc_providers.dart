@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasooh/Data/cubit/authentication/category_cubit/category_cubit.dart';
-import 'package:provider/single_child_widget.dart';
 
 import '../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../Data/cubit/advice_cubits/approve_advice_cubit/approve_advice_cubit.dart';
@@ -32,7 +31,7 @@ import '../../Data/cubit/settings_cubits/is_notification_cubit/is_notification_c
 import '../../Data/cubit/settings_cubits/privacy_cubit/privacy_cubit.dart';
 import '../../Data/cubit/wallet_cubit/wallet_cubit.dart';
 
-List<SingleChildWidget> providers = [
+final providers = [
   BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
   BlocProvider<RegisterCubit>(create: (context) => RegisterCubit()),
   BlocProvider<MobCubit>(create: (context) => MobCubit()),

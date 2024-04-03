@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
 import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
@@ -16,8 +16,8 @@ import 'package:responsive_framework/utils/scroll_behavior.dart';
 import 'Data/repositories/notification/fcm.dart';
 import 'Presentation/screens/SettingsScreen/lang_item.dart';
 import 'app/keys.dart';
-import 'app/utils/BlocProviders.dart';
-import 'app/utils/sharedPreferenceClass.dart';
+import 'app/utils/bloc_providers.dart';
+import 'app/utils/shared_preference.dart';
 
 // todo
 // 562131705
@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<void> initialization(BuildContext? context) async {
+Future<void> initialization(BuildContext context) async {
   await Future.delayed(const Duration(seconds: 1));
   FlutterNativeSplash.remove();
 }

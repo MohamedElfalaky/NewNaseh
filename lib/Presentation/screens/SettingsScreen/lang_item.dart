@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+import 'package:nasooh/app/utils/shared_preference.dart';
 
 import '../../../app/Style/sizes.dart';
 import '../../../app/constants.dart';
@@ -13,7 +13,7 @@ class Messages extends Translations {
       {'ar': getArabicLanguage(), 'en': getEnglishLanguage()};
 }
 
-enum SingingCharacter { Arabic, English }
+enum SingingCharacter { arabic, english }
 
 class ChangeLangItem extends StatefulWidget {
   const ChangeLangItem({
@@ -26,8 +26,8 @@ class ChangeLangItem extends StatefulWidget {
 
 class _ChangeLangItemState extends State<ChangeLangItem> {
   SingingCharacter _character = Get.locale!.languageCode == 'en'
-      ? SingingCharacter.English
-      : SingingCharacter.Arabic;
+      ? SingingCharacter.english
+      : SingingCharacter.arabic;
 
   void arabSelection(SingingCharacter value) {
     setState(() {
@@ -60,7 +60,7 @@ class _ChangeLangItemState extends State<ChangeLangItem> {
           children: [
             Radio(
               activeColor: Constants.primaryAppColor,
-              value: SingingCharacter.Arabic,
+              value: SingingCharacter.arabic,
               onChanged: (val) {
                 arabSelection(val as SingingCharacter);
               },
@@ -73,7 +73,7 @@ class _ChangeLangItemState extends State<ChangeLangItem> {
           children: [
             Radio(
               activeColor: Constants.primaryAppColor,
-              value: SingingCharacter.English,
+              value: SingingCharacter.english,
               onChanged: (val) {
                 engSelection(val as SingingCharacter);
               },

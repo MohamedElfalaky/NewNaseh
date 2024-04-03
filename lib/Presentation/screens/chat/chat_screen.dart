@@ -3,21 +3,22 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/Style/sizes.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid.dart' as u;
 import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
 import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_state.dart';
 import '../../../Data/cubit/send_chat_cubit/send_chat_cubit.dart';
@@ -72,7 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void startRecord() async {
     await openTheRecorder();
     startTimer();
-    String uniqueKey = const Uuid().v4() +
+    String uniqueKey = const u.Uuid().v4() +
         DateTime.now().toIso8601String().replaceAll('.', '-');
     Directory tempDir = await getApplicationDocumentsDirectory();
     String tempPath = tempDir.path;
@@ -164,12 +165,13 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     SvgPicture.asset(
                       logoColor,
-                      color: Constants.primaryAppColor,
                       height: 50,
+                      colorFilter: getFilterColor(  Constants.primaryAppColor),
+
                     )
                   ],
                 ),
-                leading: MyBackButton(
+                leading: CustomBackButton(
                   hasValue: true,
                   onPressed: () {
                     Navigator.pop(context);
@@ -270,21 +272,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       Text(pickedFile!.path
                                                           .replaceRange(
                                                               0, 56, "")),
-                                                      const SizedBox(
-                                                        width: 10
-                                                      ),
+                                                      const SizedBox(width: 10),
                                                       SvgPicture.asset(
                                                         filePdf,
                                                         width: 20,
                                                         height: 20,
                                                       ),
                                                     ],
-                                                  )
-
-                                                  // SfPdfViewer.file(
-                                                  //   pickedFile!,
-                                                  // ),
-                                                  ),
+                                                  )),
                                             ),
                                             if (pickedFile != null)
                                               IconButton(
@@ -373,7 +368,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                           suffixIcon: Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              InkWell(
+                                              GestureDetector(
                                                   onTap: () async {
                                                     FilePickerResult? result =
                                                         await FilePicker
@@ -402,13 +397,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       attachFiles)),
                                               const SizedBox(width: 8),
                                               isRecording
-                                                  ? InkWell(
+                                                  ? GestureDetector(
                                                       onTap: () {
                                                         stopRecord();
                                                       },
                                                       child: const Icon(Icons
                                                           .stop_circle_outlined))
-                                                  : InkWell(
+                                                  : GestureDetector(
                                                       onTap: startRecord,
                                                       child: SvgPicture.asset(
                                                           micee)),
@@ -500,10 +495,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       borderRadius: BorderRadius.circular(15),
                       color: const Color(0XFF273043)),
                   child: state3 is SendChatLoading?
-                      ? const Center(
-                          child: CircularProgressIndicator.adaptive(
-                          backgroundColor: Colors.white,
-                        ))
+                      ? const CustomLoadingIndicator()
                       : SvgPicture.asset(
                           sendChat,
                         )),
@@ -526,10 +518,7 @@ class _ChatScreenState extends State<ChatScreen> {
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.shade300,
-                offset: const Offset(
-                  5.0,
-                  5.0,
-                ),
+                offset: const Offset(5.0, 5.0),
                 blurRadius: 10.0,
                 spreadRadius: 2.0,
               )
@@ -589,7 +578,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               state.response?.data?.chat?[index].message ?? "",
                           style: Constants.subtitleFont,
                         )),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     if (state.response?.data!.chat?[index].document![0].file
                                 ?.contains('png') ==
@@ -605,21 +594,12 @@ class _ChatScreenState extends State<ChatScreen> {
                           barrierDismissible: true,
                           builder: (context) {
                             return AlertDialog(
-                              content: Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  const Center(
-                                    child: Center(
-                                      child:
-                                          CircularProgressIndicator.adaptive(),
-                                    ),
-                                  ),
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.network(
-                                        '${state.response!.data!.chat![index].document![0].file}'),
-                                  )
-                                ],
+                              content: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      '${state.response!.data!.chat![index].document![0].file}',
+                                ),
                               ),
                             );
                           });
@@ -639,7 +619,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: state.response?.data?.chat?[index].document?[0].file
                                 ?.endsWith("mp3") ??
                             false
-                        ? InkWell(
+                        ? GestureDetector(
                             onTap: () => playAudioFromUrl(
                               state.response?.data?.chat?[index].document?[0]
                                       .file ??
@@ -653,7 +633,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         : state.response?.data?.chat?[index].document?[0].file
                                     ?.endsWith("m4a") ??
                                 false
-                            ? InkWell(
+                            ? GestureDetector(
                                 onTap: () => playAudioFromUrl(
                                   state.response?.data?.chat?[index]
                                           .document?[0].file ??
@@ -671,7 +651,6 @@ class _ChatScreenState extends State<ChatScreen> {
             )
           : Container(
               constraints: const BoxConstraints(maxWidth: 220),
-              // width: 100,
               margin: const EdgeInsets.symmetric(vertical: 8),
               padding: const EdgeInsets.all(8),
               // constraints: BoxConstraints(mi),
@@ -691,39 +670,48 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Row buildImageDetailsWidget(ShowAdviceLoaded state, int index) {
+  buildImageDetailsWidget(ShowAdviceLoaded state, int index) {
+    String file = state.response?.data?.chat?[index].document?[0].file ?? '';
     return Row(
       children: [
-        state.response?.data?.chat?[index].document?[0].file?.endsWith("png") ??
-                false
-            ? SvgPicture.asset(photo)
-            : state.response?.data?.chat?[index].document?[0].file
-                        ?.endsWith("jpg") ??
-                    false
-                ? SvgPicture.asset(photo)
-                : state.response?.data?.chat?[index].document?[0].file
-                            ?.endsWith("jpeg") ??
-                        false
-                    ? SvgPicture.asset(photo)
-                    : state.response?.data?.chat?[index].document?[0].file
-                                ?.endsWith("pdf") ??
-                            false
-                        ? SvgPicture.asset(pdf)
-                        : state.response?.data?.chat?[index].document?[0].file
-                                    ?.endsWith("mp4") ??
-                                false
-                            ? SvgPicture.asset(mp4Icon)
-                            : const SizedBox.shrink(),
-        const SizedBox(width: 7),
-        Expanded(
-          child: Text(
-            state.response?.data?.chat?[index].document?[0].file
-                    ?.split("/")
-                    .last ??
-                "",
-            style: Constants.subtitleFont,
+        isImage(file)
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: CachedNetworkImage(
+                  width: 50,
+                  height: 50,
+                  imageUrl:
+                      '${state.response?.data?.chat?[index].document?[0].file}',
+                  placeholder: (c, g) {
+                    return const CustomLoadingIndicator();
+                  },
+                  errorWidget: (c, g, h) {
+                    return const Center(child: Icon(Icons.error,color: Colors.red,),);
+                  },
+                ),
+              )
+            : isPDF(file)
+                ? SvgPicture.asset(pdf)
+                : isM4A(file)
+                    ? SvgPicture.asset(mp4Icon)
+                    : const SizedBox.shrink(),
+        if (isPDF(file) || isImage(file))
+          const Flexible(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Text(
+                'اضغط لرؤية الملف',
+                maxLines: 2,
+                overflow: TextOverflow.clip,
+                style: TextStyle(
+                  fontFamily: 'Cairo',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10,
+                ),
+              ),
+            ),
           ),
-        ),
+        const SizedBox(width: 7),
       ],
     );
   }
@@ -783,7 +771,7 @@ Container cantSpeakWidget(BuildContext context) {
           "لا يمكنك التحدث مع هذا المنصوح الان",
           style: TextStyle(fontSize: 12, fontFamily: Constants.mainFont),
         ),
-        InkWell(
+        GestureDetector(
           onTap: () {
             Navigator.pop(context);
           },
@@ -798,3 +786,8 @@ Container cantSpeakWidget(BuildContext context) {
     ),
   );
 }
+
+bool isImage(file) =>
+    file.endsWith('png') || file.endsWith('jpg') || file.endsWith('jpeg');
+bool isPDF(file) => file.endsWith('pdf');
+bool isM4A(file) => file.endsWith('m4a') || file.endsWith('mp4');

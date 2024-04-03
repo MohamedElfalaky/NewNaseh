@@ -11,12 +11,12 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nasooh/Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
 import 'package:nasooh/Data/models/profile_models/profile_model.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/registration_controller.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
+import 'package:nasooh/app/utils/my_application.dart';
 import 'package:nasooh/app/utils/registeration_values.dart';
 import '../../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../../Data/cubit/authentication/category_cubit/category_cubit.dart';
@@ -27,14 +27,14 @@ import '../../../Data/cubit/profile/profile_cubit/profile_state.dart';
 import '../../../Data/cubit/profile/update_profile_cubit/update_profile_cubit.dart';
 import '../../../Data/cubit/profile/update_profile_cubit/update_profile_state.dart';
 import '../../../Data/models/Auth_models/category_model.dart';
-import '../../../app/utils/sharedPreferenceClass.dart';
+import '../../../app/utils/shared_preference.dart';
 import '../../../app/utils/validations.dart';
 import '../../widgets/my_drop_down_list.dart';
 import '../../widgets/row_modal_sheet.dart';
-import '../AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificateItem.dart';
+import '../AuthenticationScreens/RegistrationCycle/RegistrationStage4/components/certificate_item.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen();
+  const EditProfileScreen({super.key});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -47,7 +47,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _fullName = TextEditingController();
   final TextEditingController _englishName = TextEditingController();
   final TextEditingController _email = TextEditingController();
-  final TextEditingController _password = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _summaryController = TextEditingController();
   final TextEditingController _experienceController = TextEditingController();
@@ -71,15 +70,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {
         regImage = myImage;
       });
-      List<int> imageBytes = await File(regImage!.path).readAsBytesSync();
-      print("regImage is $regImage");
+      List<int> imageBytes = File(regImage!.path).readAsBytesSync();
+      debugPrint("regImage is $regImage");
       base64NewImage = base64.encode(imageBytes);
-      print("inputImagePhoto!.path  is ${regImage!.path}");
-      // log("base64Image!  is ${base64NewImage}");
+      debugPrint("inputImagePhoto!.path  is ${regImage!.path}");
     } on PlatformException catch (e) {
-      print("platform exeption : $e");
+      debugPrint("platform exeption : $e");
     }
-    Navigator.pop(context);
+    if(context.mounted) {
+      Navigator.pop(context);
+    }
   }
 
   List<Map<String, dynamic>> certiList = [];
@@ -87,10 +87,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<void> getDataFromApi() async {
     await context.read<ProfileCubit>().getDataProfile();
-    await context.read<CountryCubit>().getCountries();
-    await context.read<NationalityCubit>().getNationalities();
-
-    var profileCubit = ProfileCubit.get(context);
+    if(mounted) {
+      await context.read<CountryCubit>().getCountries();
+    }
+    if(mounted) {
+      await context.read<NationalityCubit>().getNationalities();
+    }
+    final profileCubit = ProfileCubit.get(context);
     _fullName.text = profileCubit.profileModel?.data?.fullName ?? "";
     _email.text = profileCubit.profileModel?.data?.email ?? "";
     _englishName.text = profileCubit.profileModel?.data!.userName ?? "";
@@ -113,6 +116,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         .toList() ??
         [];
 
+    log(_selectedCategory.length.toString(), name: "_selectedCategory in init");
     // print(documentsFromAPI);
     // print("documentsFromAPI");
 
@@ -162,16 +166,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     getDataFromApi();
     context.read<CategoryCubit>().getCategories();
 
-    print("the image from api is ${sharedPrefs.getUserPhoto()}");
-
+    debugPrint("the image from api is ${sharedPrefs.getUserPhoto()}");
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-
-
     return GestureDetector(
       onTap: () {
         MyApplication.dismissKeyboard(context);
@@ -188,22 +187,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: SizedBox(
                 width: double.infinity,
                 height: 48,
-                child: MyButton(
+                child: CustomButton(
                   isBold: true,
                   txt: "save".tr,
                   onPressedHandler: () {
-                    print(inputCity);
-                    print(inputCountry);
-                    print("base64NewImage is ${base64NewImage}");
-                    print(inputCountry);
-                    print(
+                    debugPrint(inputCity);
+                    debugPrint(inputCountry);
+                    debugPrint("base64NewImage is $base64NewImage");
+                    debugPrint(inputCountry);
+                    debugPrint(
                         "selectedCategory is ${_selectedCategory.toSet().toList().toString().split("[").last.split("]").first}");
 
                     var documents =
                     certiList.map((e) => e["cert"]).toList();
-                    print(
+                    debugPrint(
                         "selectedCategory is ${documents.toString().split("[").last.split("]").first}");
-                    print(documents.toString());
+                    debugPrint(documents.toString());
+
+                    log(_selectedCategory.length.toString(),
+                        name: "_selectedCategory in press");
                     context.read<UpdateProfileCubit>().updateMethod(
                       context: context,
                       nationalityId: inputNationality,
@@ -253,7 +255,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Text("Edit Profile".tr),
             ],
           ),
-          leading: MyBackButton(),
+          leading: CustomBackButton(),
         ),
         body: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, profileState) {
@@ -383,7 +385,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                                             .camera,
                                                                         ctx);
                                                                   }),
-                                                              Divider(),
+                                                              const Divider(),
                                                               RowModalSheet(
                                                                 txt: "gellery".tr,
                                                                 imageIcon:
@@ -395,7 +397,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                                       ctx);
                                                                 },
                                                               ),
-                                                              Divider(),
+                                                              const Divider(),
                                                               RowModalSheet(
                                                                 txt: "cancel".tr,
                                                                 imageIcon:
@@ -694,7 +696,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             .map((e) => CertificateItem(
                                           register: false,
                                           cert: e.value ?? "",
-                                          staticId: e.id.toString() ?? "0",
+                                          staticId: e.id.toString(),
                                         ))
                                             .toList(),
                                       ),
@@ -1031,7 +1033,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       }
 
                       results = searchList(_searchController.text);
-                      print(results.length);
+                      debugPrint('${results.length}');
                     });
                   },
                   decoration: Constants.setRegistrationTextInputDecoration(
@@ -1270,4 +1272,3 @@ class MySelectedModel {
   final bool value;
   MySelectedModel({required this.id, required this.value});
 }
-

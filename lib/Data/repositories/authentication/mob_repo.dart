@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:nasooh/app/global.dart';
 import 'package:nasooh/app/keys.dart';
 
-import '../../../app/utils/myApplication.dart';
+import '../../../app/utils/my_application.dart';
 import '../../models/Auth_models/check_mobile_model.dart';
 
 class MobRepo {

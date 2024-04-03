@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/loginscreen.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
 
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../repositories/authentication/forget_password/change_password_repo.dart';
 import 'change_password_state.dart';
 

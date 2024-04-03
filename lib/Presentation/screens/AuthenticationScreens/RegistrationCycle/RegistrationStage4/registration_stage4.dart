@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage5/RegistrationStage5.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/registration_controller.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage5/registration_stage5.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../../app/utils/registeration_values.dart';
 
 class RegistrationStage4 extends StatefulWidget {
@@ -35,7 +35,7 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
               SizedBox(
                 width: double.infinity,
                 height: 48,
-                child: MyButton(
+                child: CustomButton(
                   isBold: true,
                   txt: "التالي",
                   onPressedHandler: () {
@@ -68,7 +68,7 @@ class _RegistrationStage4State extends State<RegistrationStage4> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("معلومات التخصص"),
-            leading: MyBackButton()),
+            leading: CustomBackButton()),
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: double.infinity,

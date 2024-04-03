@@ -4,7 +4,7 @@
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // import '../../../app/keys.dart';
-// import '../../../app/utils/sharedPreferenceClass.dart';
+// import '../../../app/utils/shared_preference.dart';
 // import '../../cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
 //
 // class FCMNotification {
@@ -179,7 +179,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
+import 'package:nasooh/app/utils/shared_preference.dart';
 
 import '../../../app/keys.dart';
 import '../../cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage6/RegistrationStage6.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage6/registration_stage6.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 
 import '../../../../../Data/cubit/authentication/category_cubit/category_cubit.dart';
 import '../../../../../Data/cubit/authentication/category_cubit/category_state.dart';
 import '../../../../../Data/models/Auth_models/category_model.dart';
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../../app/utils/registeration_values.dart';
 import '../../../../widgets/custom_loading_widget.dart';
 
@@ -48,7 +48,7 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
                 SizedBox(
                   width: double.infinity,
                   height: 48,
-                  child: MyButton(
+                  child: CustomButton(
                     isBold: true,
                     txt: "التالي",
                     onPressedHandler: () {
@@ -77,7 +77,7 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("مجالات التخصص"),
-            leading: MyBackButton(),
+            leading: CustomBackButton(),
             actions: [
               Center(
                 child: Padding(

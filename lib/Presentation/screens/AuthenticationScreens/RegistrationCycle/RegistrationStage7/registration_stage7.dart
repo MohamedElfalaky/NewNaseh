@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationController.dart';
-import 'package:nasooh/Presentation/widgets/MyButton.dart';
-import 'package:nasooh/Presentation/widgets/MyButtonOutlined.dart';
+import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/registration_controller.dart';
+import 'package:nasooh/Presentation/widgets/custom_button.dart';
+import 'package:nasooh/Presentation/widgets/my_outlined_button.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/utils/registeration_values.dart';
 
@@ -11,7 +11,7 @@ import '../../../../../Data/cubit/authentication/nationality_cubit/nationality_c
 import '../../../../../Data/cubit/authentication/register_cubit/register_cubit.dart';
 import '../../../../../Data/cubit/authentication/register_cubit/register_state.dart';
 import '../../../../../app/constants.dart';
-import '../../../../../app/utils/myApplication.dart';
+import '../../../../../app/utils/my_application.dart';
 import '../../../../widgets/custom_loading_widget.dart';
 
 class RegistrationStage7 extends StatefulWidget {
@@ -41,7 +41,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
             centerTitle: false,
             leadingWidth: 70,
             title: const Text("معلومات إضافية"),
-            leading: MyBackButton(),
+            leading: CustomBackButton(),
           ),
           body: BlocBuilder<RegisterCubit, RegisterState>(
               builder: (context, state) => Container(
@@ -75,7 +75,7 @@ class _RegistrationStage7State extends State<RegistrationStage7> {
                                               padding:
                                                   const EdgeInsetsDirectional
                                                       .only(end: 8.0),
-                                              child: MyButton(
+                                              child: CustomButton(
                                                 isBold: true,
                                                 txt: "إتمام التسجيل",
                                                 onPressedHandler: () {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nasooh/Presentation/widgets/shared.dart';
 
 import '../../../../app/constants.dart';
 
@@ -32,7 +33,8 @@ class UserInfoCard extends StatelessWidget {
           ),
           SvgPicture.asset(
             "assets/images/SVGs/Ellipse.svg",
-            color: Colors.black54,
+            colorFilter: getFilterColor(Colors.black45),
+
             width: 60,
           ),
           Padding(
@@ -42,7 +44,9 @@ class UserInfoCard extends StatelessWidget {
               backgroundColor: Colors.black87,
               child: SvgPicture.asset(
                 "assets/images/SVGs/pen.svg",
-                color: Colors.white,
+
+                colorFilter: getFilterColor(Constants.whiteAppColor),
+
                 width: 8,
               ),
             ),
@@ -64,8 +68,8 @@ class UserInfoCard extends StatelessWidget {
             backgroundColor: const Color(0xff0085A5).withOpacity(0.2),
             child: SvgPicture.asset(
               "assets/images/SVGs/pen.svg",
-              color: const Color(0xff0085A5),
-              width: 12,
+              colorFilter: getFilterColor(Constants.primaryAppColor),
+               width: 12,
             ),
           )),
     );

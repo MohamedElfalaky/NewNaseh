@@ -6,22 +6,15 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/outcome_and_rate.dart';
-import 'package:nasooh/Presentation/screens/Home/controller/HomeController.dart';
-import 'package:nasooh/Presentation/screens/NotificationScreen/NotificationScreen.dart';
-import 'package:nasooh/Presentation/screens/SettingsScreen/SettingsScreen.dart';
-import 'package:nasooh/Presentation/screens/TermsConditionsScreen/TermsConditionsScreen.dart';
-import 'package:nasooh/Presentation/screens/WalletScreen/WalletScreen.dart';
+import 'package:nasooh/Presentation/screens/Home/controller/home_controller.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/Style/Icons.dart';
+import 'package:nasooh/app/Style/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/myApplication.dart';
-import 'package:nasooh/app/utils/sharedPreferenceClass.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:nasooh/app/utils/my_application.dart';
+import 'package:nasooh/app/utils/shared_preference.dart';
 
 import '../../../Data/cubit/authentication/get_user_cubit/get_user_cubit.dart';
 import '../../../Data/cubit/authentication/get_user_cubit/get_user_state.dart';
-import '../../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
-import '../../../Data/cubit/authentication/log_out_cubit/log_out_state.dart';
 import '../../../Data/cubit/home/home_one_cubit/home_one_cubit.dart';
 import '../../../Data/cubit/home/home_one_cubit/home_one_state.dart';
 import '../../../Data/cubit/home/home_status_cubit/home_status_cubit.dart';
@@ -29,8 +22,8 @@ import '../../../Data/cubit/home/home_status_cubit/home_status_state.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../Data/models/home_models/home_status_model.dart';
 import '../../widgets/custom_loading_widget.dart';
-import '../EditProfileScreen/EditProfileScreen.dart';
 import '../chat/chat_screen.dart';
+import 'Components/drawer_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,12 +33,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int ordersCount = 0;
   HomeController homeController = HomeController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-
-  final controller = PageController(initialPage: 0);
 
   late ListOneHomeCubit homeCubit;
   Future<void> getDataFromApi() async {
@@ -94,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 return const CustomLoadingIndicator();
               } else if (homeState is HomeStatusLoaded) {
                 final List<Datum> dataList = homeState.response?.data ?? [];
-                // print(dataList);
                 return Stack(
                   children: [
                     // Appbar
@@ -123,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               }),
                           Column(
                             mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+
                             children: [
                               Text(
                                 "حياك الله بنصوح",
@@ -138,7 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           SvgPicture.asset(logoColor,
-                              color: Colors.white, height: 60)
+                              colorFilter: getFilterColor(Colors.white),
+                          height: 60)
                         ],
                       ),
                     ),
@@ -193,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       OutcomeAndRate(
                                         assetName: ordersIcon,
                                         title: "عدد الطلبات",
-                                        subtitle: "${18} ",
+                                        subtitle: "$ordersCount ",
                                         color: Constants.primaryAppColor,
                                       ),
                                       OutcomeAndRate(
@@ -225,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     decoration: BoxDecoration(
                                         color: selectedIndex == index
                                             ? Constants.primaryAppColor
-                                            : const Color(0xff2730431A)
+                                            : const Color(0xff2730431a)
                                                 .withOpacity(0.1),
                                         borderRadius:
                                             BorderRadius.circular(15)),
@@ -284,8 +276,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const SizedBox(height: 18),
-                            BlocBuilder<ListOneHomeCubit, ListOneHomeState>(
-                                builder: (context, state) {
+                            BlocConsumer<ListOneHomeCubit, ListOneHomeState>(
+                                listener: (context, state) {
+                              if (state is ListOneHomeLoaded) {
+                                ordersCount = state.response?.data?.length ?? 0;
+                                setState(() {});
+                              }
+                            }, builder: (context, state) {
                               if (state is ListOneHomeLoading) {
                                 return const CustomLoadingIndicator();
                               } else if (state is ListOneHomeLoaded) {
@@ -294,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 if (homeCubit.homeSearchList?.isEmpty == true) {
                                   homeData = state.response?.data ?? [];
                                 } else {
-                                  homeData = homeCubit.homeSearchList!;
+                                  homeData = homeCubit.homeSearchList ?? [];
                                 }
                                 return Expanded(
                                     child: ListView.builder(
@@ -316,9 +313,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       )),
                                   itemCount: homeData.length,
                                 ));
-                              } else {
-                                return const SizedBox.shrink();
                               }
+                              return const SizedBox.shrink();
                             }),
                           ],
                         ),
@@ -331,136 +327,5 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
           )),
     );
-  }
-
-  Drawer buildHomeDrawerWidget(BuildContext context) {
-    return Drawer(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30), bottomLeft: Radius.circular(30)),
-      ),
-      child: ListView(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(
-                top: MyApplication.hightClc(context, 30),
-                bottom: 12,
-                right: 24,
-                left: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 4),
-                  height: 84,
-                  width: 84,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(sharedPrefs.getUserPhoto()),
-                        fit: BoxFit.cover,
-                      ),
-                      // shape: BoxShape.circle,
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                          width: 6,
-                          color: const Color(0XFF7C7C84).withOpacity(0.2))),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    sharedPrefs.getUserName(),
-                    style: Constants.mainTitleFont,
-                  ),
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset(nasehBadge),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text("ناصح",
-                        style: Constants.secondaryTitleRegularFont.copyWith(
-                          color: Constants.primaryAppColor,
-                        ))
-                  ],
-                )
-              ],
-            ),
-          ),
-          myListTile(
-              icon: ta3delProfile,
-              name: "Edit Profile".tr,
-              onTapHandler: () =>
-                  MyApplication.navigateTo(context, const EditProfileScreen())),
-          myListTile(
-              icon: mahfazty,
-              name: "My Wallet".tr,
-              onTapHandler: () {
-                // Navigator.pop(context);
-                MyApplication.navigateTo(context, const WalletScreen());
-              }),
-          myListTile(
-              icon: notificationIcon,
-              name: "Notifications".tr,
-              onTapHandler: () {
-                // Navigator.pop(context);
-                MyApplication.navigateTo(context, const NotificationScreen());
-              }),
-          myListTile(
-              icon: settingIcon,
-              name: "Settings".tr,
-              onTapHandler: () {
-                // Navigator.pop(context);
-                MyApplication.navigateTo(context, const SettingsScreen());
-              }),
-          myListTile(
-              icon: shorot,
-              name: "terms & Conditions".tr,
-              onTapHandler: () {
-                // Navigator.pop(context);
-                MyApplication.navigateTo(
-                    context, const TermsConditionsScreen());
-              }),
-          myListTile(
-              icon: techIcon,
-              name: "Tech".tr,
-              onTapHandler: ()   {
-                //   launchUrl(Uri.parse(
-                //   "whatsapp://send?phone=+966502374223",
-                // ));
-              }),
-          myListTile(icon: knowAboutIcon, name: "Know".tr),
-          BlocBuilder<LogOutCubit, LogOutState>(
-              builder: (context, state) => state is LogOutLoading
-                  ? const CustomLoadingIndicator()
-                  : myListTile(
-                      icon: logOut,
-                      name: "Sign Out".tr,
-                      onTapHandler: () {
-                        context.read<LogOutCubit>().logOut(
-                              context: context,
-                            );
-                      })),
-        ],
-      ),
-    );
-  }
-
-  ListTile myListTile(
-      {required String icon, required String name, Function()? onTapHandler}) {
-    return ListTile(
-        minLeadingWidth: 10,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 24,
-        ),
-        leading: SvgPicture.asset(icon, color: const Color(0XFF5C5E6B)),
-        title: Text(
-          name,
-          style: Constants.secondaryTitleRegularFont
-              .copyWith(color: const Color(0XFF5C5E6B)),
-        ),
-        onTap: onTapHandler);
   }
 }

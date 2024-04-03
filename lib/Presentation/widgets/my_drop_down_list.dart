@@ -9,19 +9,19 @@ import '../../Data/cubit/authentication/country_cubit/country_state.dart';
 import '../../Data/cubit/authentication/nationality_cubit/nationality_cubit.dart';
 import '../../Data/cubit/authentication/nationality_cubit/nationality_state.dart';
 import '../../Data/cubit/profile/profile_cubit/profile_cubit.dart';
-import '../../app/Style/Icons.dart';
+import '../../app/Style/icons.dart';
 import '../../app/constants.dart';
 import '../../app/utils/registeration_values.dart';
 import 'custom_loading_widget.dart';
 
 class CustomDropdownData<T> extends StatelessWidget {
-  final value;
+  final dynamic value;
   final String hintData;
   final List<DropdownMenuItem<String>>? items;
   final void Function(dynamic)? onChanged;
  final Widget? prefixIcon;
 
-    const CustomDropdownData({
+      const CustomDropdownData({
     Key? key,
     this.prefixIcon,
     required this.value,
@@ -94,13 +94,13 @@ class _MyColumnDataState extends State<MyColumnData> {
     if(mounted) {
       await context.read<NationalityCubit>().getNationalities();
     }
-    var profileCubit = ProfileCubit.get(context);
-    if (profileCubit.profileModel?.data?.nationalityId != null) {
+    final ProfileCubit? profileCubit =context.mounted? ProfileCubit.get(context):null;
+    if (profileCubit?.profileModel?.data?.nationalityId != null) {
       nationalityValue =
-          profileCubit.profileModel?.data?.nationalityId?.id.toString();
+          profileCubit?.profileModel?.data?.nationalityId?.id.toString();
     }
-    if (profileCubit.profileModel?.data?.countryId != null) {
-      countryValue = profileCubit.profileModel?.data?.countryId?.id.toString();
+    if (profileCubit?.profileModel?.data?.countryId != null) {
+      countryValue = profileCubit?.profileModel?.data?.countryId?.id.toString();
     }
   }
 
