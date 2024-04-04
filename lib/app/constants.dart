@@ -82,8 +82,7 @@ class Constants {
     color: fontHintColor,
   );
 
-// TextFieldInputs
-  static InputDecoration setTextInputDecoration(
+   static InputDecoration setTextInputDecoration(
       {Widget? prefixIcon,
       Widget? suffixIcon,
       Color? prefixColor,
@@ -93,6 +92,7 @@ class Constants {
       bool? withPadding,
       String? hintText}) {
     return InputDecoration(
+
         errorStyle: Constants.subtitleFont1.copyWith(
           color: Colors.red,
         ),
@@ -128,8 +128,7 @@ class Constants {
         ));
   }
 
-// TextFieldInputs
-  static InputDecoration setRegistrationTextInputDecoration(
+   static InputDecoration setRegistrationTextInputDecoration(
       {Widget? prefixIcon,
       Widget? suffixIcon,
       Color? prefixColor,
@@ -142,6 +141,8 @@ class Constants {
         errorStyle: Constants.subtitleFont1.copyWith(
           color: Colors.red,
         ),
+        counterText: '',
+
         prefixIcon: isParagraph == true
             ? SizedBox(
                 height: 140,

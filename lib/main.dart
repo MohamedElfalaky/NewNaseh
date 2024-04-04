@@ -1,15 +1,13 @@
-import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
 import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
-import 'package:nasooh/app/constants.dart';
+import 'package:nasooh/app/theme/app_theme.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 
@@ -19,13 +17,11 @@ import 'app/keys.dart';
 import 'app/utils/bloc_providers.dart';
 import 'app/utils/shared_preference.dart';
 
-// todo
 // 562131705
 // Aa@123123
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // ignore: deprecated_member_use
-  FlutterNativeSplash.removeAfter(initialization);
+  FlutterNativeSplash.remove;
   await SharedPrefs().init();
   await Firebase.initializeApp();
   FirebaseCustomNotification.setUpFirebase();
@@ -73,17 +69,7 @@ class MyApp extends StatelessWidget {
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
         title: 'ناصح',
-        theme: ThemeData(
-            primaryColor: Constants.primaryAppColor,
-            primarySwatch: Colors.lightBlue,
-            appBarTheme: const AppBarTheme().copyWith(
-              toolbarHeight: 70,
-              titleSpacing: 4,
-              color: Constants.whiteAppColor,
-              elevation: 0,
-              titleTextStyle: Constants.mainTitleFont,
-            ),
-            scaffoldBackgroundColor: Constants.whiteAppColor),
+        theme: whiteTheme,
         home: sharedPrefs.getToken() != ""
             ? const HomeScreen()
             : const LoginScreen(),
@@ -92,7 +78,4 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future<void> initialization(BuildContext context) async {
-  await Future.delayed(const Duration(seconds: 1));
-  FlutterNativeSplash.remove();
-}
+

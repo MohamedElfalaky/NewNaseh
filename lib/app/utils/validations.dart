@@ -26,8 +26,7 @@ class Validations {
   static String? validateNameForUpdateScreen(
       String? name, BuildContext context) {
     String? validateString = '';
-    // Pattern pattern = r'[a-zA-Zء-يa-zA-Zء-ي]';
-    Pattern pattern = r'[a-zA-zء-ي]{2,}[\s]{1,}[a-zA-Zء-ي]{2,}$';
+     Pattern pattern = r'[a-zA-zء-ي]{2,}[\s]{1,}[a-zA-Zء-ي]{2,}$';
     RegExp regex = RegExp(pattern.toString());
     if (name!.trim().isEmpty) {
       validateString = null;

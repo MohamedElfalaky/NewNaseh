@@ -1,7 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 
 String inputPhone = "";
-// String inputImageName = "";
 XFile? inputImagePhoto;
 
 String inputFullName = "";

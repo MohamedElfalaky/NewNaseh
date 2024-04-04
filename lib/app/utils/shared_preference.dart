@@ -1,11 +1,9 @@
-// ignore_for_file: file_names
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs {
   static SharedPreferences? sharedPrefs;
 
   Future<void> init() async {
-    // SharedPreferences.setMockInitialValues({});
     sharedPrefs = await SharedPreferences.getInstance();
   }
 
