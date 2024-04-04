@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
             maxWidth: 1200,
             minWidth: 450,
             defaultScale: false,
-            mediaQueryData: MediaQuery.of(context2)
-                .copyWith(textScaler: const TextScaler.linear(1.0)),
+            // mediaQueryData: MediaQuery.of(context2)
+            //     .copyWith(textScaler: const TextScaler.linear(1.0)),
             breakpoints: [
               const ResponsiveBreakpoint.resize(450, name: MOBILE),
               const ResponsiveBreakpoint.autoScale(800, name: TABLET),
