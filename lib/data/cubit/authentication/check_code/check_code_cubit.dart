@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Presentation/screens/AuthenticationScreens/RegistrationCycle/RegistrationStage3/registration_stage3.dart';
 import '../../../../app/utils/my_application.dart';
+import '../../../../presentation/screens/authentication/RegistrationCycle/RegistrationStage3/registration_stage3.dart';
 import '../../../repositories/authentication/check_code_repo.dart';
 import 'check_code_state.dart';
 

@@ -2,13 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
 import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
 import 'package:nasooh/app/theme/app_theme.dart';
+import 'package:nasooh/presentation/screens/authentication/LoginScreen/login_screen.dart';
+import 'package:nasooh/presentation/screens/settings/lang_item.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
-
-import 'Presentation/screens/SettingsScreen/lang_item.dart';
 import 'app/keys.dart';
 import 'app/utils/bloc_providers.dart';
 import 'app/utils/shared_preference.dart';
@@ -36,17 +35,16 @@ class NasehApp extends StatelessWidget {
             maxWidth: 1200,
             minWidth: 450,
             defaultScale: false,
-            // mediaQueryData: MediaQuery.of(context2)
-            //     .copyWith(textScaler: const TextScaler.linear(1.0)),
+
             breakpoints: [
               const ResponsiveBreakpoint.resize(450, name: MOBILE),
               const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-              const ResponsiveBreakpoint.autoScale(1000,
-                  name: TABLET, scaleFactor: 1.3),
+              const ResponsiveBreakpoint.autoScale(1000, name: TABLET, scaleFactor: 1.3),
               const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
               const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
             ],
-            background: Container(color: const Color(0xFFF5F5F5))),
+
+        ),
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,
         title: 'ناصح',

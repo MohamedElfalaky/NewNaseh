@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
 import '../../../../app/utils/my_application.dart';
+import '../../../../presentation/screens/authentication/LoginScreen/login_screen.dart';
 import '../../../repositories/authentication/delete_account_repo.dart';
 import 'delete_account_state.dart';
 

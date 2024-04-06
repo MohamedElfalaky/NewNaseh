@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../Presentation/screens/AuthenticationScreens/LoginScreen/login_screen.dart';
 import '../../../../app/utils/my_application.dart';
+import '../../../../presentation/screens/authentication/LoginScreen/login_screen.dart';
 import '../../../repositories/authentication/log_out_repo.dart';
 import 'log_out_state.dart';
 
