@@ -74,8 +74,7 @@ class Register {
         MyApplication.showToastView(message: responseMap["message"]);
         return userdata;
       } else {
-         MyApplication.showToastView(
-             message: responseMap["message"].toString());
+        MyApplication.showToastView(message: responseMap["message"].toString());
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());

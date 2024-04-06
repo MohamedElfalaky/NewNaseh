@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:nasooh/app/utils/shared_preference.dart';
@@ -13,7 +12,6 @@ class MyApplication {
   static double widthClc(BuildContext context, int myWidth) {
     return MediaQuery.of(context).size.width * myWidth / 375;
   }
-
 
   static void navigateToReplace(BuildContext context, Widget page) async {
     Navigator.of(context)
@@ -52,12 +50,19 @@ class MyApplication {
       sharedPrefs.setIsCurrentAddress(true);
     }
   }
+  static unFocusCursorRTL(TextEditingController controller) {
+    if (controller.selection ==
+        TextSelection.fromPosition(
+            TextPosition(offset: controller.text.length - 1))) {
+      controller.selection = TextSelection.fromPosition(
+        TextPosition(offset: controller.text.length),
+      );
+    }
+  }
+  static void dismissKeyboard() {
 
-  static void dismissKeyboard(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
-
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
+    if (FocusManager.instance.primaryFocus?.hasFocus==true) {
+      FocusManager.instance.primaryFocus?.unfocus();
     }
   }
 }

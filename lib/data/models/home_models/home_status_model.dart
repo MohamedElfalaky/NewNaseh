@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 HomeStatusModel homeStatusModelFromJson(dynamic str) =>

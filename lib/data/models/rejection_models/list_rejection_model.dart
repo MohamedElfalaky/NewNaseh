@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 ListRejectionModel listRejectionModelFromJson(dynamic str) =>

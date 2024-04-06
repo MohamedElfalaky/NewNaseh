@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 LoginModel loginModelFromJson(dynamic str) => LoginModel.fromJson(str);

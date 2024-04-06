@@ -20,7 +20,7 @@ class GetProfileRepo {
         headers: {
           'Accept': 'application/json',
           'lang': Get.locale?.languageCode ?? "ar",
-          "Authorization": "Bearer ${sharedPrefs.getToken()}"
+          "Authorization": "Bearer ${sharedPrefs.getToken}"
         },
       );
       Map<String, dynamic> responseMap = json.decode(response.body);

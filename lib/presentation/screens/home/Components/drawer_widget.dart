@@ -6,8 +6,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../Data/cubit/authentication/log_out_cubit/log_out_cubit.dart';
 import '../../../../Data/cubit/authentication/log_out_cubit/log_out_state.dart';
-import '../../../../app/styles/icons.dart';
 import '../../../../app/constants.dart';
+import '../../../../app/styles/icons.dart';
 import '../../../../app/utils/my_application.dart';
 import '../../../../app/utils/shared_preference.dart';
 import '../../../widgets/custom_loading_widget.dart';
@@ -139,7 +139,7 @@ ListTile myListTile(
           padding: const EdgeInsets.all(8.0),
           child: SvgPicture.asset(
             icon,
-            colorFilter: getFilterColor(  Colors.black),
+            colorFilter: getFilterColor(Colors.black),
           ),
         ),
       ),

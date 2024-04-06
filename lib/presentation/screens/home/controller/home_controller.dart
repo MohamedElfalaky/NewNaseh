@@ -1,4 +1,3 @@
-
 class HomeController {
   ///vars
   List<Map> categories = [
@@ -8,6 +7,4 @@ class HomeController {
     {"name": "الملغية", "isSelected": false},
     {"name": "المكتملة", "isSelected": false},
   ];
-
-
 }

@@ -7,15 +7,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/my_application.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:record/record.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:uuid/uuid.dart' as u;
+
 import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_cubit.dart';
 import '../../../Data/cubit/advice_cubits/show_advice_cubit/show_advice_state.dart';
 import '../../../Data/cubit/send_chat_cubit/send_chat_cubit.dart';
@@ -23,9 +24,9 @@ import '../../../Data/cubit/send_chat_cubit/send_chat_state.dart';
 import '../../../Data/models/advice_models/show_advice_model.dart';
 import '../../../app/styles/icons.dart';
 import '../../../app/styles/sizes.dart';
+import '../../../app/utils/my_application.dart';
 import '../../widgets/custom_loading_widget.dart';
 import '../../widgets/shared.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen(
@@ -44,6 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
   String? fileSelected;
   String? voiceSelected;
   File? pickedFile;
+
   @override
   void initState() {
     super.initState();
@@ -82,7 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
       voiceFile = File('$tempPath/$uniqueKey.mp3');
     }
     record.stop();
-     record.start(const RecordConfig(), path: voiceFile!.path).then((value) {
+    record.start(const RecordConfig(), path: voiceFile!.path).then((value) {
       isRecording = true;
       setState(() {});
     }).onError((error, stackTrace) {
@@ -103,12 +105,10 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> openTheRecorder() async {
-
-      final status = await Permission.microphone.request();
-      if (status != PermissionStatus.granted && await record.hasPermission()) {
-        throw Exception('Microphone permission not granted');
-      }
-
+    final status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted && await record.hasPermission()) {
+      throw Exception('Microphone permission not granted');
+    }
   }
 
   final player = AudioPlayer();
@@ -138,295 +138,284 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          MyApplication.dismissKeyboard(context);
-        },
-        child: Scaffold(
-            backgroundColor: Constants.whiteAppColor,
-            appBar: AppBar(
-                centerTitle: false,
-                leadingWidth: 70,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+        backgroundColor: Constants.whiteAppColor,
+        appBar: AppBar(
+            centerTitle: false,
+            leadingWidth: 70,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.showAdData?.client?.fullName ?? ""),
-                        Text(
-                          widget.showAdData?.date ?? "",
-                          style: Constants.subtitleFont
-                              .copyWith(fontWeight: FontWeight.normal),
-                        ),
-                      ],
+                    Text(widget.showAdData?.client?.fullName ?? ""),
+                    Text(
+                      widget.showAdData?.date ?? "",
+                      style: Constants.subtitleFont
+                          .copyWith(fontWeight: FontWeight.normal),
                     ),
-                    SvgPicture.asset(
-                      logoColor,
-                      height: 50,
-                      colorFilter: getFilterColor(Constants.primaryAppColor),
-                    )
                   ],
                 ),
-                leading: const CustomBackButton()),
-            body: BlocListener<SendChatCubit, SendChatState>(
-              listener: (context, state) {
-                if (state is SendChatLoaded) {
-                  context
-                      .read<ShowAdviceCubit>()
-                      .show(id: widget.showAdData!.id!);
-                  fileSelected = null;
-                  pickedFile = null;
-                  voiceSelected = null;
-                  messageController.clear();
-                  setState(() {});
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Column(
-                  children: [
-                    buildAdviceWidget(),
-                    Expanded(
-                        child: BlocBuilder<ShowAdviceCubit, ShowAdviceState>(
-                      buildWhen: (previous, current) {
-                        return current is! ShowAdviceLoading;
-                      },
-                      builder: (context, state) {
-                        if (state is ShowAdviceLoaded) {
-                          return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: ListView.builder(
-                                reverse: true,
-                                itemCount: state.response?.data?.chat?.length,
-                                itemBuilder: (context, index) =>
-                                    buildAlign(state, index, context),
-                              ));
-                        } else if (state is ShowAdviceError) {
-                          return const SizedBox.shrink();
-                        } else {
-                          return const CustomLoadingIndicator();
-                        }
-                      },
-                    )),
-                    widget.showAdData!.label!.id == 1 ||
-                            widget.showAdData!.label!.id == 2
-                        ? Padding(
-                            padding: const EdgeInsets.all(14),
-                            child: Column(
-                              children: [
-                                if (voiceSelected != null)
-                                  Row(
-                                    children: [
-                                      buildVoiceShapeWidget(context),
-                                    ],
-                                  ),
-                                if (pickedFile != null)
-                                  pickedFile!.path.endsWith('.pdf')
-                                      ? Row(
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                  padding:
-                                                      const EdgeInsets.all(5),
-                                                  margin: const EdgeInsets
-                                                      .symmetric(vertical: 5),
-                                                  height: 50,
-                                                  width: width(context),
-                                                  decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          color: Colors
-                                                              .grey.shade300,
-                                                          offset: const Offset(
-                                                            5.0,
-                                                            5.0,
-                                                          ),
-                                                          blurRadius: 10.0,
-                                                          spreadRadius: 2.0,
-                                                        )
-                                                      ],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  child: Row(
-                                                    children: [
-                                                      const Spacer(),
-                                                      Text(pickedFile!.path
-                                                          .replaceRange(
-                                                              0, 56, "")),
-                                                      const SizedBox(width: 10),
-                                                      SvgPicture.asset(
-                                                        filePdf,
-                                                        width: 20,
-                                                        height: 20,
+                SvgPicture.asset(
+                  logoColor,
+                  height: 50,
+                  colorFilter: getFilterColor(Constants.primaryAppColor),
+                )
+              ],
+            ),
+            leading: const CustomBackButton()),
+        body: BlocListener<SendChatCubit, SendChatState>(
+          listener: (context, state) {
+            if (state is SendChatLoaded) {
+              context
+                  .read<ShowAdviceCubit>()
+                  .show(id: widget.showAdData!.id!);
+              fileSelected = null;
+              pickedFile = null;
+              voiceSelected = null;
+              messageController.clear();
+              setState(() {});
+            }
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Column(
+              children: [
+                buildAdviceWidget(),
+                Expanded(
+                    child: BlocBuilder<ShowAdviceCubit, ShowAdviceState>(
+                  buildWhen: (previous, current) {
+                    return current is! ShowAdviceLoading;
+                  },
+                  builder: (context, state) {
+                    if (state is ShowAdviceLoaded) {
+                      return Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: ListView.builder(
+                            reverse: true,
+                            itemCount: state.response?.data?.chat?.length,
+                            itemBuilder: (context, index) =>
+                                buildAlign(state, index, context),
+                          ));
+                    } else if (state is ShowAdviceError) {
+                      return const SizedBox.shrink();
+                    } else {
+                      return const CustomLoadingIndicator();
+                    }
+                  },
+                )),
+                widget.showAdData!.label!.id == 1 ||
+                        widget.showAdData!.label!.id == 2
+                    ? Padding(
+                        padding: const EdgeInsets.all(14),
+                        child: Column(
+                          children: [
+                            if (voiceSelected != null)
+                              Row(
+                                children: [
+                                  buildVoiceShapeWidget(context),
+                                ],
+                              ),
+                            if (pickedFile != null)
+                              pickedFile!.path.endsWith('.pdf')
+                                  ? Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                              padding:
+                                                  const EdgeInsets.all(5),
+                                              margin: const EdgeInsets
+                                                  .symmetric(vertical: 5),
+                                              height: 50,
+                                              width: width(context),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors
+                                                          .grey.shade300,
+                                                      offset: const Offset(
+                                                        5.0,
+                                                        5.0,
                                                       ),
-                                                    ],
-                                                  )),
-                                            ),
-                                            if (pickedFile != null)
-                                              IconButton(
-                                                icon: const Icon(Icons.close),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    pickedFile = null;
-                                                  });
-                                                },
-                                              ),
-                                          ],
-                                        )
-                                      : Container(
-                                          padding: const EdgeInsets.all(5),
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 5),
-                                          height: 50,
-                                          width: width(context),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey.shade200,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Row(
-                                            children: [
-                                              Flexible(
-                                                  child: Text(
-                                                pickedFile!.path,
-                                                style: const TextStyle(
-                                                  fontSize: 12,
-                                                ),
-                                                maxLines: 1,
-                                              )),
-                                              const SizedBox(width: 5),
-                                              //
-                                              Image.file(
-                                                File(pickedFile!.path),
-                                                width: 25,
-                                                height: 25,
-                                              ),
-                                              if (pickedFile != null)
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(
-                                                      horizontal: 10),
-                                                  child: CircleAvatar(
-                                                    radius: 15,
-                                                    backgroundColor:
-                                                        Colors.grey.shade200,
-                                                    child: IconButton(
-                                                      padding: EdgeInsets.zero,
-                                                      icon: const Icon(
-                                                          Icons.close),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          pickedFile = null;
-                                                          fileSelected = null;
-                                                        });
-                                                      },
-                                                    ),
+                                                      blurRadius: 10.0,
+                                                      spreadRadius: 2.0,
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10)),
+                                              child: Row(
+                                                children: [
+                                                  const Spacer(),
+                                                  Text(pickedFile!.path
+                                                      .replaceRange(
+                                                          0, 56, "")),
+                                                  const SizedBox(width: 10),
+                                                  SvgPicture.asset(
+                                                    filePdf,
+                                                    width: 20,
+                                                    height: 20,
                                                   ),
-                                                ),
-                                            ],
-                                          )),
-                                const SizedBox(width: 20),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextField(
-                                        onTap: () {
-                                          if (messageController.selection ==
-                                              TextSelection.fromPosition(
-                                                  TextPosition(
-                                                      offset: messageController
-                                                              .text.length -
-                                                          1))) {
-                                            messageController.selection =
-                                                TextSelection.fromPosition(
-                                              TextPosition(
-                                                  offset: messageController
-                                                      .text.length),
-                                            );
-                                          }
-                                        },
-                                        controller: messageController,
-                                        decoration:
-                                            Constants.setTextInputDecoration(
-                                          suffixIcon: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              GestureDetector(
-                                                  onTap: () async {
-                                                    FilePickerResult? result =
-                                                        await FilePicker
-                                                            .platform
-                                                            .pickFiles();
-                                                    if (result != null) {
-                                                      setState(() {
-                                                        pickedFile = File(result
-                                                            .files
-                                                            .single
-                                                            .path!);
-                                                      });
-                                                      List<int> imageBytes =
-                                                          File(pickedFile!.path)
-                                                              .readAsBytesSync();
-                                                      fileSelected = base64
-                                                          .encode(imageBytes);
-                                                    }
-                                                    return;
-                                                  },
-                                                  child: SvgPicture.asset(
-                                                      attachFiles)),
-                                              const SizedBox(width: 8),
-                                              isRecording
-                                                  ? GestureDetector(
-                                                      onTap: () {
-                                                        stopRecord();
-                                                      },
-                                                      child: const Icon(Icons
-                                                          .stop_circle_outlined))
-                                                  : GestureDetector(
-                                                      onTap: startRecord,
-                                                      child: SvgPicture.asset(
-                                                          micee)),
-                                              const SizedBox(
-                                                width: 8,
-                                              )
-                                            ],
-                                          ),
-                                          hintText: isRecording
-                                              ? "جارِ التسجيل  ${countdownTimer?.tick}  ثواني ..... "
-                                              : "اكتب رسالتك...",
-                                        ).copyWith(
-                                          hintStyle: Constants
-                                              .subtitleRegularFontHint
-                                              .copyWith(
-                                                  color:
-                                                      const Color(0XFF5C5E6B)),
-                                          enabledBorder:
-                                              const OutlineInputBorder(
-                                            gapPadding: 0,
-                                            borderSide: BorderSide.none,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(25),
+                                                ],
+                                              )),
+                                        ),
+                                        if (pickedFile != null)
+                                          IconButton(
+                                            icon: const Icon(
+                                              Icons.close,
+                                              color: Colors.black,
                                             ),
+                                            onPressed: () {
+                                              setState(() {
+                                                pickedFile = null;
+                                              });
+                                            },
                                           ),
-                                          filled: true,
-                                          fillColor: const Color(0xffF5F4F5),
+                                      ],
+                                    )
+                                  : Container(
+                                      padding: const EdgeInsets.all(5),
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 5),
+                                      height: 50,
+                                      width: width(context),
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                              child: Text(
+                                            pickedFile!.path,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                            maxLines: 1,
+                                          )),
+                                          const SizedBox(width: 5),
+                                          //
+                                          Image.file(
+                                            File(pickedFile!.path),
+                                            width: 25,
+                                            height: 25,
+                                          ),
+                                          if (pickedFile != null)
+                                            Padding(
+                                              padding: const EdgeInsets
+                                                  .symmetric(
+                                                  horizontal: 10),
+                                              child: CircleAvatar(
+                                                radius: 15,
+                                                backgroundColor:
+                                                    Colors.grey.shade200,
+                                                child: IconButton(
+                                                  padding: EdgeInsets.zero,
+                                                  icon: const Icon(
+                                                    Icons.close,
+                                                    color: Colors.black,
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      pickedFile = null;
+                                                      fileSelected = null;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      )),
+                            const SizedBox(width: 20),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+
+                                    onTap: ()=>MyApplication.unFocusCursorRTL(messageController),
+
+                                    controller: messageController,
+                                    decoration:
+                                        Constants.setTextInputDecoration(
+                                      suffixIcon: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          GestureDetector(
+                                              onTap: () async {
+                                                FilePickerResult? result =
+                                                    await FilePicker
+                                                        .platform
+                                                        .pickFiles();
+                                                if (result != null) {
+                                                  setState(() {
+                                                    pickedFile = File(result
+                                                        .files
+                                                        .single
+                                                        .path!);
+                                                  });
+                                                  List<int> imageBytes =
+                                                      File(pickedFile!.path)
+                                                          .readAsBytesSync();
+                                                  fileSelected = base64
+                                                      .encode(imageBytes);
+                                                }
+                                                return;
+                                              },
+                                              child: SvgPicture.asset(
+                                                  attachFiles)),
+                                          const SizedBox(width: 8),
+                                          isRecording
+                                              ? GestureDetector(
+                                                  onTap: () {
+                                                    stopRecord();
+                                                  },
+                                                  child: const Icon(Icons
+                                                      .stop_circle_outlined))
+                                              : GestureDetector(
+                                                  onTap: startRecord,
+                                                  child: SvgPicture.asset(
+                                                      micee)),
+                                          const SizedBox(
+                                            width: 8,
+                                          )
+                                        ],
+                                      ),
+                                      hintText: isRecording
+                                          ? "جارِ التسجيل  ${countdownTimer?.tick}  ثواني ..... "
+                                          : "اكتب رسالتك...",
+                                    ).copyWith(
+                                      hintStyle: Constants
+                                          .subtitleRegularFontHint
+                                          .copyWith(
+                                              color:
+                                                  const Color(0XFF5C5E6B)),
+                                      enabledBorder:
+                                          const OutlineInputBorder(
+                                        gapPadding: 0,
+                                        borderSide: BorderSide.none,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(25),
                                         ),
                                       ),
+                                      filled: true,
+                                      fillColor: const Color(0xffF5F4F5),
                                     ),
-                                    if (!isRecording) buildRecordingWidget()
-                                  ],
+                                  ),
                                 ),
+                                if (!isRecording) buildRecordingWidget()
                               ],
                             ),
-                          )
-                        : cantSpeakWidget(context),
-                  ],
-                ),
-              ),
-            )));
+                          ],
+                        ),
+                      )
+                    : cantSpeakWidget(context),
+              ],
+            ),
+          ),
+        ));
   }
 
   BlocBuilder<ShowAdviceCubit, ShowAdviceState> buildRecordingWidget() {
@@ -439,9 +428,6 @@ class _ChatScreenState extends State<ChatScreen> {
                 if (state2 is ShowAdviceLoading || state3 is SendChatLoading) {
                   return;
                 }
-
-                MyApplication.dismissKeyboard(context);
-
                 if (fileSelected != null) {
                   context.read<SendChatCubit>().sendChatFunction(
                       filee: fileSelected,
@@ -478,9 +464,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       color: const Color(0XFF273043)),
                   child: state3 is SendChatLoading?
                       ? const CustomLoadingIndicator()
-                      : SvgPicture.asset(
-                          sendChat,
-                        )),
+                      : SvgPicture.asset(sendChat)),
             );
           },
         );
@@ -562,27 +546,18 @@ class _ChatScreenState extends State<ChatScreen> {
                         )),
                 GestureDetector(
                   onTap: () {
-                    if (state.response?.data!.chat?[index].document![0].file
-                                ?.contains('png') ==
-                            true ||
-                        state.response?.data!.chat?[index].document![0].file
-                                ?.contains('jpeg') ==
-                            true ||
-                        state.response?.data!.chat?[index].document![0].file
-                                ?.contains('jpg') ==
-                            true) {
+                    if (isImage(
+                        '${state.response?.data!.chat?[index].document![0].file}')) {
                       showDialog(
                           context: context,
                           barrierDismissible: true,
                           builder: (context) {
                             return AlertDialog(
+                              backgroundColor: Colors.white,
                               contentPadding: EdgeInsets.zero,
                               content: ClipRRect(
-
-
                                 borderRadius: BorderRadius.circular(15),
                                 child: CachedNetworkImage(
-
                                   imageUrl:
                                       '${state.response!.data!.chat![index].document![0].file}',
                                 ),
@@ -590,9 +565,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             );
                           });
                     } else {
-                      launchUrl(Uri.parse(state
-                              .response?.data?.chat?[index].document?[0].file ??
-                          ""));
+                      launchUrl(Uri.parse(
+                          '${state.response?.data?.chat?[index].document?[0].file}'));
                     }
                   },
                   child: Container(
@@ -620,8 +594,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ?.endsWith("m4a") ??
                                 false
                             ? GestureDetector(
-                                onTap: () => playAudioFromUrl('${state.response?.data?.chat?[index]
-                                    .document?[0].file}',
+                                onTap: () => playAudioFromUrl(
+                                  '${state.response?.data?.chat?[index].document?[0].file}',
                                   index,
                                 ),
                                 child: playingIndex == index
@@ -776,7 +750,9 @@ Container cantSpeakWidget(BuildContext context) {
   );
 }
 
-bool isImage(file) =>
+bool isImage(String file) =>
     file.endsWith('png') || file.endsWith('jpg') || file.endsWith('jpeg');
+
 bool isPDF(file) => file.endsWith('pdf');
+
 bool isM4A(file) => file.endsWith('m4a') || file.endsWith('mp4');

@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final FocusNode _focusNode = FocusNode();
 
   late ListOneHomeCubit homeCubit;
+
   Future<void> getDataFromApi() async {
     await context.read<HomeStatusCubit>().getDataHomeStatus();
     homeCubit.getOneHome("");
@@ -69,263 +70,248 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        MyApplication.dismissKeyboard(context);
-      },
-      child: Scaffold(
-          key: _scaffoldKey,
-          backgroundColor: Constants.whiteAppColor,
-          drawer: buildHomeDrawerWidget(context),
-          body: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: BlocBuilder<HomeStatusCubit, HomeStatusState>(
-                builder: (context, homeState) {
-              if (homeState is HomeStatusLoading) {
-                return const CustomLoadingIndicator();
-              } else if (homeState is HomeStatusLoaded) {
-                final List<Datum> dataList = homeState.response?.data ?? [];
-                return Stack(
-                  children: [
-                    // Appbar
-                    Container(
-                      height: MyApplication.hightClc(context, 160),
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                          color: Constants.primaryAppColor,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(25),
-                              bottomRight: Radius.circular(25))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          AppbarButton(
-                              myIcon: const Icon(
-                                Icons.menu,
-                                color: Colors.white,
-                              ),
-                              onTapHandler: () {
-                                _scaffoldKey.currentState!.openDrawer();
-                                if (_scaffoldKey.currentState!.isDrawerOpen) {
-                                  _focusNode
-                                      .unfocus(); // Unfocus the text field
-                                }
-                              }),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-
-                            children: [
-                              Text(
-                                "حياك الله بنصوح",
-                                style: Constants.secondaryTitleRegularFont
-                                    .copyWith(color: Colors.white),
-                              ),
-                              Text(
-                                sharedPrefs.getUserName(),
-                                style: Constants.secondaryTitleFont
-                                    .copyWith(color: Colors.white),
-                              ),
-                            ],
-                          ),
-                          SvgPicture.asset(logoColor,
-                              colorFilter: getFilterColor(Colors.white),
-                          height: 60)
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: MyApplication.hightClc(context, 160) - 25,
-                      child: Container(
-                        height: MediaQuery.of(context).size.height -
-                            MyApplication.hightClc(context, 160) +
-                            25,
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
+    return Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Constants.whiteAppColor,
+        drawer: buildHomeDrawerWidget(context),
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: BlocBuilder<HomeStatusCubit, HomeStatusState>(
+              builder: (context, homeState) {
+            if (homeState is HomeStatusLoading) {
+              return const CustomLoadingIndicator();
+            } else if (homeState is HomeStatusLoaded) {
+              final List<Datum> dataList = homeState.response?.data ?? [];
+              return Stack(
+                children: [
+                  Container(
+                    height: MyApplication.hightClc(context, 160),
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                        color: Constants.primaryAppColor,
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        AppbarButton(
+                            myIcon: const Icon(
+                              Icons.menu,
+                              color: Colors.white,
+                            ),
+                            onTapHandler: () {
+                              _scaffoldKey.currentState!.openDrawer();
+                              if (_scaffoldKey.currentState!.isDrawerOpen) {
+                                _focusNode.unfocus(); // Unfocus the text field
+                              }
+                            }),
+                        Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            TextField(
-                              controller: _textController,
-                              focusNode: _focusNode,
-                              onChanged: (val) {
-                                context
-                                    .read<ListOneHomeCubit>()
-                                    .getHomeSearch(name: val);
-                              },
-                              decoration:
-                                  Constants.setRegistrationTextInputDecoration(
-                                prefixIcon: SvgPicture.asset(searchIcon),
-                                hintText: "Search for Orders".tr,
-                              ).copyWith(
-                                enabledBorder: OutlineInputBorder(
-                                  gapPadding: 0,
-                                  borderSide: BorderSide(
-                                    color: const Color(0xff0085A5)
-                                        .withOpacity(0.25),
-                                  ),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(25),
-                                  ),
+                            Text(
+                              "حياك الله بنصوح",
+                              style: Constants.secondaryTitleRegularFont
+                                  .copyWith(color: Colors.white),
+                            ),
+                            Text(
+                              sharedPrefs.getUserName(),
+                              style: Constants.secondaryTitleFont
+                                  .copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        SvgPicture.asset(logoColor,
+                            colorFilter: getFilterColor(Colors.white),
+                            height: 60)
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: MyApplication.hightClc(context, 160) - 25,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height -
+                          MyApplication.hightClc(context, 160) +
+                          25,
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            onTap: ()=>MyApplication.unFocusCursorRTL(_textController),
+                            controller: _textController,
+                            focusNode: _focusNode,
+                            onChanged: (val) {
+                              context
+                                  .read<ListOneHomeCubit>()
+                                  .getHomeSearch(name: val);
+                            },
+                            decoration:
+                                Constants.setRegistrationTextInputDecoration(
+                              prefixIcon: SvgPicture.asset(searchIcon),
+                              hintText: "Search for Orders".tr,
+                            ).copyWith(
+                              enabledBorder: OutlineInputBorder(
+                                gapPadding: 0,
+                                borderSide: BorderSide(
+                                  color:
+                                      const Color(0xff0085A5).withOpacity(0.25),
                                 ),
-                                filled: true,
-                                fillColor: Colors.white,
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(25)),
                               ),
+                              filled: true,
+                              fillColor: Colors.white,
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 24, bottom: 32),
-                              child: BlocBuilder<GetUserCubit, GetUserState>(
-                                  builder: (context, stateUser) {
-                                if (stateUser is GetUserLoaded) {
-                                  return Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      OutcomeAndRate(
-                                        assetName: ordersIcon,
-                                        title: "عدد الطلبات",
-                                        subtitle: "$ordersCount ",
-                                        color: Constants.primaryAppColor,
-                                      ),
-                                      OutcomeAndRate(
-                                        assetName: starIcon,
-                                        title: "التقييم الإجمالي",
-                                        subtitle:
-                                            stateUser.response?.data?.rate ??
-                                                "0",
-                                        color: const Color(0xFF27AE60),
-                                      )
-                                    ],
-                                  );
-                                } else {
-                                  return const SizedBox.shrink();
-                                }
-                              }),
-                            ),
-                            SizedBox(
-                              height: 30,
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, int index) {
-                                  return AnimatedContainer(
-                                    height: 30,
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.easeInOut,
-                                    margin: const EdgeInsetsDirectional.only(
-                                        end: 8),
-                                    decoration: BoxDecoration(
-                                        color: selectedIndex == index
-                                            ? Constants.primaryAppColor
-                                            :  Colors.black
-                                                .withOpacity(0.1),
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    child: InkWell(
-                                      borderRadius: BorderRadius.circular(15),
-                                      onTap: () {
-                                        setState(() {
-                                          selectedIndex = index;
-                                          if (selectedIndex == 0) {
-                                            context
-                                                .read<ListOneHomeCubit>()
-                                                .getOneHome("");
-                                          } else {
-                                            context
-                                                .read<ListOneHomeCubit>()
-                                                .getOneHome(dataList[index]
-                                                    .id
-                                                    .toString());
-                                          }
-                                        });
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12, vertical: 4),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              dataList[index].name ?? "",
-                                              style: TextStyle(
-                                                  fontFamily:
-                                                      Constants.mainFont,
-                                                  color: selectedIndex == index
-                                                      ? Colors.white
-                                                      : Colors.black,
-                                                  fontSize: 12),
-                                            ),
-                                            const SizedBox(
-                                              width: 12,
-                                            ),
-                                            Text(
-                                              (dataList[index].total ?? 0)
-                                                  .toString(),
-                                              style: TextStyle(
-                                                color: selectedIndex == index
-                                                    ? Colors.white
-                                                    : Colors.black,
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 24, bottom: 32),
+                            child: BlocBuilder<GetUserCubit, GetUserState>(
+                                builder: (context, stateUser) {
+                              if (stateUser is GetUserLoaded) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    OutcomeAndRate(
+                                      assetName: ordersIcon,
+                                      title: "عدد الطلبات",
+                                      subtitle: "$ordersCount ",
+                                      color: Constants.primaryAppColor,
                                     ),
-                                  );
-                                },
-                                itemCount: dataList.length,
-                              ),
-                            ),
-                            const SizedBox(height: 18),
-                            BlocConsumer<ListOneHomeCubit, ListOneHomeState>(
-                                listener: (context, state) {
-                              if (state is ListOneHomeLoaded) {
-                                ordersCount = state.response?.data?.length ?? 0;
-                                setState(() {});
-                              }
-                            }, builder: (context, state) {
-                              if (state is ListOneHomeLoading) {
-                                return const CustomLoadingIndicator();
-                              } else if (state is ListOneHomeLoaded) {
-                                List<ShowAdData> homeData = [];
-
-                                if (homeCubit.homeSearchList?.isEmpty == true) {
-                                  homeData = state.response?.data ?? [];
-                                } else {
-                                  homeData = homeCubit.homeSearchList ?? [];
-                                }
-                                return Expanded(
-                                    child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) => InkWell(
-                                      onTap: () {
-                                        MyApplication.navigateTo(
-                                            context,
-                                            ChatScreen(
-                                              isAdviceDetail:
-                                                  homeData[index].label!.id ==
-                                                      2,
-                                              showAdData: homeData[index],
-                                            ));
-                                      },
-                                      child: AdviceWidget(
-                                        showAdData: homeData[index],
-                                        isAdviceDetail: false,
-                                      )),
-                                  itemCount: homeData.length,
-                                ));
+                                    OutcomeAndRate(
+                                      assetName: starIcon,
+                                      title: "التقييم الإجمالي",
+                                      subtitle:
+                                          stateUser.response?.data?.rate ?? "0",
+                                      color: const Color(0xFF27AE60),
+                                    )
+                                  ],
+                                );
                               }
                               return const SizedBox.shrink();
                             }),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, int index) {
+                                return AnimatedContainer(
+                                  height: 30,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOut,
+                                  margin:
+                                      const EdgeInsetsDirectional.only(end: 8),
+                                  decoration: BoxDecoration(
+                                      color: selectedIndex == index
+                                          ? Constants.primaryAppColor
+                                          : Colors.black.withOpacity(0.1),
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(15),
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = index;
+                                        if (selectedIndex == 0) {
+                                          context
+                                              .read<ListOneHomeCubit>()
+                                              .getOneHome("");
+                                        } else {
+                                          context
+                                              .read<ListOneHomeCubit>()
+                                              .getOneHome(dataList[index]
+                                                  .id
+                                                  .toString());
+                                        }
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 4),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            dataList[index].name ?? "",
+                                            style: TextStyle(
+                                                fontFamily: Constants.mainFont,
+                                                color: selectedIndex == index
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                fontSize: 12),
+                                          ),
+                                          const SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                            (dataList[index].total ?? 0)
+                                                .toString(),
+                                            style: TextStyle(
+                                              color: selectedIndex == index
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              itemCount: dataList.length,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          BlocConsumer<ListOneHomeCubit, ListOneHomeState>(
+                              listener: (context, state) {
+                            if (state is ListOneHomeLoaded) {
+                              ordersCount = state.response?.data?.length ?? 0;
+                              setState(() {});
+                            }
+                          }, builder: (context, state) {
+                            if (state is ListOneHomeLoading) {
+                              return const CustomLoadingIndicator();
+                            } else if (state is ListOneHomeLoaded) {
+                              List<ShowAdData> homeData = [];
+
+                              if (homeCubit.homeSearchList?.isEmpty == true) {
+                                homeData = state.response?.data ?? [];
+                              } else {
+                                homeData = homeCubit.homeSearchList ?? [];
+                              }
+                              return Expanded(
+                                  child: ListView.builder(
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) => InkWell(
+                                    onTap: () {
+                                      MyApplication.navigateTo(
+                                          context,
+                                          ChatScreen(
+                                            isAdviceDetail:
+                                                homeData[index].label!.id == 2,
+                                            showAdData: homeData[index],
+                                          ));
+                                    },
+                                    child: AdviceWidget(
+                                      showAdData: homeData[index],
+                                      isAdviceDetail: false,
+                                    )),
+                                itemCount: homeData.length,
+                              ));
+                            }
+                            return const SizedBox.shrink();
+                          }),
+                        ],
                       ),
-                    )
-                  ],
-                );
-              }
-              return const SizedBox.shrink();
-            }),
-          )),
-    );
+                    ),
+                  )
+                ],
+              );
+            }
+            return const SizedBox.shrink();
+          }),
+        ));
   }
 }

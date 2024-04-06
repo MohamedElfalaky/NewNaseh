@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 NationalityModel nationalityModelFromJson(dynamic str) =>

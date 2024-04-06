@@ -19,7 +19,7 @@ class DoneAdviceRepo {
         headers: {
           'Accept': 'application/json',
           'lang': Get.locale?.languageCode ?? "ar",
-          'Authorization': 'Bearer ${sharedPrefs.getToken()}',
+          'Authorization': 'Bearer ${sharedPrefs.getToken}',
         },
       );
 

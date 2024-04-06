@@ -35,7 +35,7 @@ class UpdateProfile {
           .post(Uri.parse('${Keys.baseUrl}/adviser/update'), headers: {
         'Accept': 'application/json',
         'lang': Get.locale?.languageCode ?? "ar",
-        "Authorization": "Bearer ${sharedPrefs.getToken()}"
+        "Authorization": "Bearer ${sharedPrefs.getToken}"
       }, body: {
         'email': email,
         'full_name': '$fullName',

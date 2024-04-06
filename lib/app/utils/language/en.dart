@@ -1,4 +1,4 @@
-Map<String, String>  getEnglishLanguage() {
+Map<String, String> getEnglishLanguage() {
   return {
     "noInternet": "No Internet Connection",
     "create_new_account": "Create New Account",

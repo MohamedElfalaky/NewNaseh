@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 PrivacyPolicyModel privacyPolicyModelFromJson(dynamic str) =>

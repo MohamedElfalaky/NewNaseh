@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 MobModel mobModelFromJson(dynamic str) => MobModel.fromJson(str);

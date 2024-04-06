@@ -51,7 +51,7 @@ class SharedPrefs {
     sharedPrefs!.setBool(keySignedIn, value);
   }
 
-  String getToken() {
+  String get getToken {
     return sharedPrefs!.getString(keyToken) ?? '';
   }
 

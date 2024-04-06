@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 RegisterModel registerModelFromJson(dynamic str) => RegisterModel.fromJson(str);

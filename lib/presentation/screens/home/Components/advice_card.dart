@@ -25,7 +25,7 @@ class AdvisorCard extends StatelessWidget {
                 blurRadius: 10,
                 spreadRadius: -5,
                 blurStyle: BlurStyle.normal,
-                color:   Colors.white.withOpacity(0)),
+                color: Colors.white.withOpacity(0)),
           ]),
       child: Column(
         children: [

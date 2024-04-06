@@ -17,15 +17,15 @@ class Alert {
           child: Container(
             width: 341,
             height: 250,
-             decoration: BoxDecoration(
-               color: Colors.white,
+            decoration: BoxDecoration(
+              color: Colors.white,
               borderRadius: BorderRadius.circular(25),
               border: Border.all(
                 color: Colors.black, // Border color
                 width: 2.0, // Border width
               ),
             ),
-            child:  Column(
+            child: Column(
               children: [
                 Image.asset(
                   dialogIcon,
@@ -47,8 +47,6 @@ class Alert {
                   child: CustomButton(
                     onPressedHandler: action,
                     txt: titleAction,
-
-
                   ),
                 ),
               ],

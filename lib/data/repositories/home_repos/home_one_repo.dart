@@ -19,7 +19,7 @@ class ListOneHomeRepo {
         headers: {
           'Accept': 'application/json',
           'lang': Get.locale?.languageCode ?? "ar",
-          "Authorization": "Bearer ${sharedPrefs.getToken()}"
+          "Authorization": "Bearer ${sharedPrefs.getToken}"
         },
       );
       Map<String, dynamic> responseMap = json.decode(response.body);
@@ -32,7 +32,6 @@ class ListOneHomeRepo {
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());
-
     } on SocketException catch (e) {
       MyApplication.showToastView(message: e.toString());
       if (kDebugMode) {

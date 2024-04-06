@@ -19,11 +19,11 @@ class LogOutRepo {
           .post(Uri.parse('${Keys.baseUrl}/adviser/auth/logout'), headers: {
         'Accept': 'application/json',
         'lang': Get.locale?.languageCode ?? "ar",
-        "Authorization": "Bearer ${sharedPrefs.getToken()}"
+        "Authorization": "Bearer ${sharedPrefs.getToken}"
       }, body: {
         'device': sharedPrefs.fCMToken,
       });
-      debugPrint("the token is ${sharedPrefs.getToken()}");
+      debugPrint("the token is ${sharedPrefs.getToken}");
       debugPrint("the response  is ${response.body}");
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {

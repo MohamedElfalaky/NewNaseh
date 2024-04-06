@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 LogOutModel logOutModelFromJson(dynamic str) => LogOutModel.fromJson(str);

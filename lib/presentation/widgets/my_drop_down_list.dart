@@ -22,28 +22,25 @@ class CustomDropdownData<T> extends StatelessWidget {
   final Widget? prefixIcon;
 
   const CustomDropdownData({
-    Key? key,
+    super.key,
     this.prefixIcon,
     required this.value,
     required this.hintData,
     required this.onChanged,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-
       height: MediaQuery.of(context).size.height * 0.06,
       decoration: BoxDecoration(
           color: Colors.white,
-
           border: Border.all(color: const Color(0xFFBDBDBD)),
           borderRadius: const BorderRadius.all(Radius.circular(30))),
       child: DropdownButtonHideUnderline(
-
         child: DropdownButtonFormField<String>(
-        dropdownColor: Colors.white,
+          dropdownColor: Colors.white,
           menuMaxHeight: 300.0,
           decoration: InputDecoration(
               fillColor: Colors.white,

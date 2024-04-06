@@ -35,9 +35,9 @@ class Auth {
         } else {
           sharedPrefs.setUserPhoto('');
         }
-         return userdata;
+        return userdata;
       } else {
-         MyApplication.showToastView(message: responseMap["message"].toString());
+        MyApplication.showToastView(message: responseMap["message"].toString());
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());

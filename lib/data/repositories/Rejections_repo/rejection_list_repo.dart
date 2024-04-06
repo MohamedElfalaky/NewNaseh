@@ -19,15 +19,15 @@ class ListRejectionRepo {
           headers: {
             'Accept': 'application/json',
             'lang': Get.locale?.languageCode ?? "ar",
-            'Authorization': 'Bearer ${sharedPrefs.getToken()}',
+            'Authorization': 'Bearer ${sharedPrefs.getToken}',
           });
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
         final categoryFields = listRejectionModelFromJson(responseMap);
 
-         return categoryFields;
+        return categoryFields;
       } else {
-         MyApplication.showToastView(message: responseMap["message"]);
+        MyApplication.showToastView(message: responseMap["message"]);
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());

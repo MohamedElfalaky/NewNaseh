@@ -19,8 +19,8 @@ class CategoryRepo {
           headers: {
             // 'Accept': 'application/json',
             // 'lang': Get.locale?.languageCode ?? "ar",
-            if (sharedPrefs.getToken() != "")
-              "Authorization": "Bearer ${sharedPrefs.getToken()}"
+            if (sharedPrefs.getToken != "")
+              "Authorization": "Bearer ${sharedPrefs.getToken}"
           });
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {

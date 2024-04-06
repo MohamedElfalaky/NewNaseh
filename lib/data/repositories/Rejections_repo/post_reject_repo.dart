@@ -23,7 +23,7 @@ class PostRejectRepo {
           headers: {
             'Accept': 'application/json',
             'lang': Get.locale?.languageCode ?? "ar",
-            "Authorization": "Bearer ${sharedPrefs.getToken()}"
+            "Authorization": "Bearer ${sharedPrefs.getToken}"
           },
           body: {
             'comment_id': commentId,

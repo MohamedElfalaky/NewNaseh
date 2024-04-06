@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -9,21 +8,16 @@ ThemeData whiteTheme = ThemeData(
   splashColor: Colors.transparent,
   highlightColor: Colors.transparent,
   fontFamily: 'Cairo',
-  inputDecorationTheme:   InputDecorationTheme(
+  inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
-        borderSide: BorderSide(color: Constants.primaryAppColor),
-            borderRadius: BorderRadius.circular(10)
-      ),
+          borderSide: const BorderSide(color: Constants.primaryAppColor),
+          borderRadius: BorderRadius.circular(10)),
       disabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Constants.primaryAppColor),
-          borderRadius: BorderRadius.circular(10)
-
-      ),
+          borderSide: const BorderSide(color: Constants.primaryAppColor),
+          borderRadius: BorderRadius.circular(10)),
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Constants.primaryAppColor),
-          borderRadius: BorderRadius.circular(10)
-
-      )),
+          borderSide: const BorderSide(color: Constants.primaryAppColor),
+          borderRadius: BorderRadius.circular(10))),
   colorScheme: ColorScheme.fromSwatch(
     primarySwatch: Palette.kToDark,
   ).copyWith(background: Constants.primaryAppColor),

@@ -6,7 +6,7 @@ class SendChatCubit extends Cubit<SendChatState> {
   SendChatCubit() : super(SendChatInitial());
   SendChatRepo sendChatRepo = SendChatRepo();
 
-  void emitChatInitial(){
+  void emitChatInitial() {
     emit(SendChatInitial());
   }
 

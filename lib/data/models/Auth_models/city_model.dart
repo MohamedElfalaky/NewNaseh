@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 CityModel cityModelFromJson(dynamic str) => CityModel.fromJson(str);

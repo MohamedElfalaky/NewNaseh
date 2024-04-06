@@ -19,7 +19,7 @@ class IsNotificationRepo {
           headers: {
             'Accept': 'application/json',
             'lang': Get.locale?.languageCode ?? "ar",
-            "Authorization": "Bearer ${sharedPrefs.getToken()}"
+            "Authorization": "Bearer ${sharedPrefs.getToken}"
           });
 
       // debugPrint("request is $phone & $pass");

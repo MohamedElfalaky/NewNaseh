@@ -82,7 +82,7 @@ class Constants {
     color: fontHintColor,
   );
 
-   static InputDecoration setTextInputDecoration(
+  static InputDecoration setTextInputDecoration(
       {Widget? prefixIcon,
       Widget? suffixIcon,
       Color? prefixColor,
@@ -92,7 +92,6 @@ class Constants {
       bool? withPadding,
       String? hintText}) {
     return InputDecoration(
-
         errorStyle: Constants.subtitleFont1.copyWith(
           color: Colors.red,
         ),
@@ -128,7 +127,7 @@ class Constants {
         ));
   }
 
-   static InputDecoration setRegistrationTextInputDecoration(
+  static InputDecoration setRegistrationTextInputDecoration(
       {Widget? prefixIcon,
       Widget? suffixIcon,
       Color? prefixColor,
@@ -142,7 +141,6 @@ class Constants {
           color: Colors.red,
         ),
         counterText: '',
-
         prefixIcon: isParagraph == true
             ? SizedBox(
                 height: 140,
@@ -211,7 +209,6 @@ class Constants {
           color: fontHintColor,
         ));
   }
-
 
   static final defaultPinTheme = PinTheme(
     width: 70,

@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 ProfileModel profileModelFromJson(dynamic str) => ProfileModel.fromJson(str);

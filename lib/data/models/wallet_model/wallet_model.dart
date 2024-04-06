@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 WalletModel walletModelFromJson(dynamic str) => WalletModel.fromJson(str);

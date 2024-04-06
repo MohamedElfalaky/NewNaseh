@@ -23,37 +23,31 @@ class MyIntlPhoneField extends StatefulWidget {
   final bool readOnly;
   final FormFieldSetter<PhoneNumber>? onSaved;
 
-
   final ValueChanged<PhoneNumber>? onChanged;
 
   final ValueChanged<Country>? onCountryChanged;
-
 
   final FutureOr<String?> Function(PhoneNumber?)? validator;
 
   final TextInputType keyboardType;
 
-    final TextEditingController? controller;
-
+  final TextEditingController? controller;
 
   final FocusNode? focusNode;
 
-
   final void Function(String)? onSubmitted;
-
 
   final bool enabled;
 
-   final Brightness? keyboardAppearance;
+  final Brightness? keyboardAppearance;
 
   final String? initialValue;
 
-   final String? initialCountryCode;
+  final String? initialCountryCode;
 
-   final List<String>? countries;
+  final List<String>? countries;
 
   final InputDecoration decoration;
-
 
   final TextStyle? style;
 
@@ -73,7 +67,6 @@ class MyIntlPhoneField extends StatefulWidget {
   final Icon dropdownIcon;
 
   final bool autofocus;
-
 
   final AutovalidateMode? autovalidateMode;
 
@@ -100,7 +93,7 @@ class MyIntlPhoneField extends StatefulWidget {
   final EdgeInsets flagsButtonMargin;
 
   const MyIntlPhoneField({
-    Key? key,
+    super.key,
     this.initialCountryCode,
     this.obscureText = false,
     this.textAlign = TextAlign.left,
@@ -143,7 +136,7 @@ class MyIntlPhoneField extends StatefulWidget {
     this.showCursor = true,
     this.pickerDialogStyle,
     this.flagsButtonMargin = EdgeInsets.zero,
-  }) : super(key: key);
+  });
 
   @override
   MyIntlPhoneFieldState createState() => MyIntlPhoneFieldState();
@@ -215,7 +208,8 @@ class MyIntlPhoneFieldState extends State<MyIntlPhoneField> {
             _selectedCountry = country;
             widget.onCountryChanged?.call(country);
             setState(() {});
-          }, languageCode: 'SA',
+          },
+          languageCode: 'SA',
         ),
       ),
     );

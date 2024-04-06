@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 NotificationModel notificationModelFromJson(dynamic str) =>

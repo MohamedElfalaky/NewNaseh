@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 CategoryModel categoryModelFromJson(dynamic str) => CategoryModel.fromJson(str);

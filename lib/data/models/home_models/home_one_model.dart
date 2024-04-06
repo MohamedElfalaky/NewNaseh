@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import '../advice_models/show_advice_model.dart';
@@ -43,5 +42,3 @@ class HomeOrdersList {
             : List<dynamic>.from(pagination!.map((x) => x)),
       };
 }
-
-

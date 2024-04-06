@@ -19,9 +19,9 @@ class DeleteAccountRepo {
           headers: {
             'Accept': 'application/json',
             'lang': "ar",
-            'Authorization': 'Bearer ${sharedPrefs.getToken()}',
+            'Authorization': 'Bearer ${sharedPrefs.getToken}',
           });
-      debugPrint("the token is ${sharedPrefs.getToken()}");
+      debugPrint("the token is ${sharedPrefs.getToken}");
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
         debugPrint("the response  is ${response.body}");

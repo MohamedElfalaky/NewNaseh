@@ -30,7 +30,7 @@ class SendChatRepo {
               headers: {
                 'Accept': 'application/json',
                 'lang': Get.locale?.languageCode ?? "ar",
-                "Authorization": "Bearer ${sharedPrefs.getToken()}"
+                "Authorization": "Bearer ${sharedPrefs.getToken}"
               },
               body: map);
       debugPrint("map sending is $map");

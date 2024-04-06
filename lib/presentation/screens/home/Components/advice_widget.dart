@@ -1,4 +1,3 @@
-
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,7 +19,9 @@ import '../../regect_order/regect_order.dart';
 class AdviceWidget extends StatelessWidget {
   final bool? isAdviceDetail;
   final ShowAdData? showAdData;
-    const AdviceWidget({super.key, this.isAdviceDetail, required this.showAdData});
+
+  const AdviceWidget(
+      {super.key, this.isAdviceDetail, required this.showAdData});
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,10 @@ class AdviceWidget extends StatelessWidget {
                   : Constants.primaryAppColor.withOpacity(0.1))),
       child: Column(children: [
         Padding(
-          padding: const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
+          padding:
+              const EdgeInsets.only(top: 6, bottom: 6, left: 16, right: 16),
           child: Text(
-           // dummyData[ Random().nextInt(3)],
+            // dummyData[ Random().nextInt(3)],
             showAdData?.name ?? "",
             style: Constants.mainTitleFont,
             maxLines: 2,
@@ -68,7 +70,8 @@ class AdviceWidget extends StatelessWidget {
                       bottomStart: Radius.circular(10))),
               child: Text(
                 showAdData?.label?.name ?? "",
-                style: const TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
+                style: const TextStyle(
+                    fontSize: 10, fontFamily: Constants.mainFont),
                 textAlign: TextAlign.center,
               ),
             )

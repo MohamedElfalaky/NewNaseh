@@ -14,8 +14,6 @@ class AdviceDetailController {
     {"name": "المكتملة", "isSelected": false},
   ];
 
-
-
   Widget pageViewItem() {
     return Container(
       width: double.infinity,

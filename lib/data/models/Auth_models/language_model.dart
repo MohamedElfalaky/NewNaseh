@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 LanguageModel languageModelFromJson(dynamic str) => LanguageModel.fromJson(str);
