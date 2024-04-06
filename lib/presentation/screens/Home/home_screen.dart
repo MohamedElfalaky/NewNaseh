@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> getDataFromApi() async {
     await context.read<HomeStatusCubit>().getDataHomeStatus();
     homeCubit.getOneHome("");
-    if (context.mounted) {
+    if (mounted) {
       context.read<GetUserCubit>().getUserMethod();
     }
   }

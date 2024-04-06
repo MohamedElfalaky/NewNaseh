@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -19,24 +18,17 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-
-   final controller = PageController(initialPage: 0);
+  final controller = PageController(initialPage: 0);
 
   @override
   void initState() {
     super.initState();
 
-
-
     context.read<NotificationCubit>().getDataNotification();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-
-
     return GestureDetector(
       onTap: () {
         MyApplication.dismissKeyboard(context);
@@ -53,7 +45,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
               padding: const EdgeInsets.only(right: 10),
               child: CustomBackButton(),
             ),
-
           ),
           body: BlocBuilder<NotificationCubit, NotificationState>(
               builder: (context, state) {

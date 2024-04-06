@@ -19,13 +19,15 @@ class NotificationWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(20), boxShadow: const [
-        BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 10),
-        BoxShadow(color: Colors.white),
-      ]),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow:   [
+            BoxShadow(
+                color: Constants.primaryAppColor.withOpacity(0.2),
+                spreadRadius: 1,
+                blurRadius: 10),
+          ]),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [

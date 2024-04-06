@@ -103,8 +103,8 @@ class SharedPrefs {
     sharedPrefs!.remove(cartAmount);
   }
 
-  String getLanguage() {
-    return sharedPrefs!.getString(langCode) ?? '';
+  String get getLanguage {
+    return sharedPrefs!.getString(langCode) ?? 'ar';
   }
 
   setLanguage(String value) {

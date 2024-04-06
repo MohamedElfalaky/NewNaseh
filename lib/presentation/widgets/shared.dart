@@ -61,7 +61,6 @@ class GoBack extends StatelessWidget {
   }
 }
 
-
 class Back extends StatelessWidget {
   const Back({Key? key, this.header}) : super(key: key);
   final String? header;
@@ -83,39 +82,37 @@ class Back extends StatelessWidget {
 }
 
 class CustomBackButton extends StatelessWidget {
-  CustomBackButton({super.key, this.onPressed, this.hasValue = false});
-
-  void Function()? onPressed;
-  bool hasValue = false;
+  const CustomBackButton({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-
-        decoration: BoxDecoration(
-            color: Constants.whiteAppColor,
-            border: Border.all(color: const Color(0XFFDADADA)),
-            borderRadius: BorderRadius.circular(5),
-            boxShadow: [
-              BoxShadow(
-                  color:   Constants.primaryAppColor.withOpacity(0.2),
-                  offset: const Offset(0, 4),
-                  blurRadius: 4)
-            ]),
-        height: 40,
-        width: 40,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: hasValue
-                ? onPressed
-                : () {
-                    Navigator.pop(context);
-                  },
-            color: const Color(0xff575762),
+    return LimitedBox(
+      maxHeight: 40,
+      maxWidth: 40,
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Constants.whiteAppColor,
+              border: Border.all(color: const Color(0XFFDADADA)),
+              borderRadius: BorderRadius.circular(5),
+              boxShadow: [
+                BoxShadow(
+                    color: Constants.primaryAppColor.withOpacity(0.2),
+                    offset: const Offset(0, 4),
+                    blurRadius: 4)
+              ]),
+          height: 40,
+          width: 40,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              color: const Color(0xff575762),
+            ),
           ),
         ),
       ),
@@ -123,6 +120,6 @@ class CustomBackButton extends StatelessWidget {
   }
 }
 
- ColorFilter getFilterColor(Color color) {
-return ColorFilter.mode(color, BlendMode.srcIn);
+ColorFilter getFilterColor(Color color) {
+  return ColorFilter.mode(color, BlendMode.srcIn);
 }

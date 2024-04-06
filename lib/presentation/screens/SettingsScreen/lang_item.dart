@@ -45,11 +45,6 @@ class _ChangeLangItemState extends State<ChangeLangItem> {
     });
   }
 
-  @override
-  void initState() {
-    sharedPrefs.getLanguage();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

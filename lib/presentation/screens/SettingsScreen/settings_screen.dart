@@ -13,8 +13,8 @@ import 'package:nasooh/app/utils/shared_preference.dart';
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_cubit.dart';
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_state.dart';
 import '../../../Data/cubit/settings_cubits/is_advice_cubit/is_advice_cubit.dart';
+import '../../../Presentation/screens/SettingsScreen/lang_item.dart';
 import '../../../app/styles/icons.dart';
-import '../../../app/utils/Language/get_language.dart';
 import '../../widgets/custom_loading_widget.dart';
 
 class SettingsScreen extends StatefulWidget {

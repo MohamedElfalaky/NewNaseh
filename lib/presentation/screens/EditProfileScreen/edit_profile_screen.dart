@@ -13,6 +13,7 @@ import 'package:nasooh/Data/cubit/authentication/nationality_cubit/nationality_c
 import 'package:nasooh/Data/models/profile_models/profile_model.dart';
 import 'package:nasooh/Presentation/screens/AuthenticationScreens/RegistrationCycle/registration_controller.dart';
 import 'package:nasooh/Presentation/widgets/custom_button.dart';
+import 'package:nasooh/Presentation/widgets/custom_loading_widget.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/styles/icons.dart';
 import 'package:nasooh/app/constants.dart';
@@ -77,7 +78,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     } on PlatformException catch (e) {
       debugPrint("platform exeption : $e");
     }
-    if(context.mounted) {
+    if (context.mounted) {
       Navigator.pop(context);
     }
   }
@@ -87,14 +88,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   Future<void> getDataFromApi() async {
     await context.read<ProfileCubit>().getDataProfile();
-    if(mounted) {
+    if (mounted) {
       await context.read<CountryCubit>().getCountries();
     }
-    if(mounted) {
+    if (mounted) {
       await context.read<NationalityCubit>().getNationalities();
     }
-    late ProfileCubit profileCubit ;
-    if(mounted) {
+    late ProfileCubit profileCubit;
+    if (mounted) {
       profileCubit = ProfileCubit.get(context);
     }
     _fullName.text = profileCubit.profileModel?.data?.fullName ?? "";
@@ -114,9 +115,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       //     ).toList();
     });
     _selectedCategory = profileCubit.profileModel?.data?.category
-        ?.map((e) =>
-        MySelectedModel(id: e.id ?? 0, value: e.selected ?? false))
-        .toList() ??
+            ?.map((e) =>
+                MySelectedModel(id: e.id ?? 0, value: e.selected ?? false))
+            .toList() ??
         [];
 
     log(_selectedCategory.length.toString(), name: "_selectedCategory in init");
@@ -124,7 +125,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     if (profileCubit.profileModel?.data?.gender != "") {
       genderValue = profileCubit.profileModel?.data?.gender ?? "";
     }
-
   }
 
   @override
@@ -146,71 +146,70 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton:
-        BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-            builder: (context, state) => state is UpdateProfileLoading
-                ? const CircularProgressIndicator()
-                : Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: CustomButton(
-                  isBold: true,
-                  txt: "save".tr,
-                  onPressedHandler: () {
-                    debugPrint(inputCity);
-                    debugPrint(inputCountry);
-                    debugPrint("base64NewImage is $base64NewImage");
-                    debugPrint(inputCountry);
-                    debugPrint(
-                        "selectedCategory is ${_selectedCategory.toSet().toList().toString().split("[").last.split("]").first}");
+            BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+                builder: (context, state) => state is UpdateProfileLoading
+                    ? const CircularProgressIndicator()
+                    : Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: CustomButton(
+                            isBold: true,
+                            txt: "save".tr,
+                            onPressedHandler: () {
+                              debugPrint(inputCity);
+                              debugPrint(inputCountry);
+                              debugPrint("base64NewImage is $base64NewImage");
+                              debugPrint(inputCountry);
+                              debugPrint(
+                                  "selectedCategory is ${_selectedCategory.toSet().toList().toString().split("[").last.split("]").first}");
 
-                    var documents =
-                    certiList.map((e) => e["cert"]).toList();
-                    debugPrint(
-                        "selectedCategory is ${documents.toString().split("[").last.split("]").first}");
-                    debugPrint(documents.toString());
+                              var documents =
+                                  certiList.map((e) => e["cert"]).toList();
+                              debugPrint(
+                                  "selectedCategory is ${documents.toString().split("[").last.split("]").first}");
+                              debugPrint(documents.toString());
 
-                    log(_selectedCategory.length.toString(),
-                        name: "_selectedCategory in press");
-                    context.read<UpdateProfileCubit>().updateMethod(
-                      context: context,
-                      nationalityId: inputNationality,
-                      gender: genderValue,
-                      fullName: _fullName.text,
-                      email: _email.text,
-                      cityId: inputCity,
-                      category:
-                      _selectedCategory
-                          .map((e) => e.id)
-                          .toSet()
-                          .toList()
-                          .toString()
-                          .split("[")
-                          .last
-                          .split("]")
-                          .first,
-                      documents: documents
-                          .toString()
-                          .split("[")
-                          .last
-                          .split("]")
-                          .first,
-                      description: _descriptionController.text,
-                      birthday: _birthdayController.text,
-                      bankName: _bankNameController.text,
-                      bankAccount: _bankAccountController.text,
-                      experienceYear: _experienceController.text,
-                      info: _summaryController.text,
-                      userName: _englishName.text,
-                      countryId: inputCountry,
-                      avatar: base64NewImage ?? "",
-                      // mobile: "0101258631255",
-                    );
-                  },
-                ),
-              ),
-            )),
+                              log(_selectedCategory.length.toString(),
+                                  name: "_selectedCategory in press");
+                              context.read<UpdateProfileCubit>().updateMethod(
+                                    context: context,
+                                    nationalityId: inputNationality,
+                                    gender: genderValue,
+                                    fullName: _fullName.text,
+                                    email: _email.text,
+                                    cityId: inputCity,
+                                    category: _selectedCategory
+                                        .map((e) => e.id)
+                                        .toSet()
+                                        .toList()
+                                        .toString()
+                                        .split("[")
+                                        .last
+                                        .split("]")
+                                        .first,
+                                    documents: documents
+                                        .toString()
+                                        .split("[")
+                                        .last
+                                        .split("]")
+                                        .first,
+                                    description: _descriptionController.text,
+                                    birthday: _birthdayController.text,
+                                    bankName: _bankNameController.text,
+                                    bankAccount: _bankAccountController.text,
+                                    experienceYear: _experienceController.text,
+                                    info: _summaryController.text,
+                                    userName: _englishName.text,
+                                    countryId: inputCountry,
+                                    avatar: base64NewImage ?? "",
+                                    // mobile: "0101258631255",
+                                  );
+                            },
+                          ),
+                        ),
+                      )),
         resizeToAvoidBottomInset: false,
         backgroundColor: Constants.whiteAppColor,
         appBar: AppBar(
@@ -225,393 +224,393 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         body: BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, profileState) {
-              if (profileState is ProfileLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (profileState is ProfileLoaded) {
-                return Container(
-                  height: MediaQuery.of(context).size.height,
-                  width: double.infinity,
-                  padding: EdgeInsets.only(
-                    top: 16,
-                    right: 16,
-                    left: 16,
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
-                  ),
-                  child: SingleChildScrollView(
-                      keyboardDismissBehavior:
+          if (profileState is ProfileLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (profileState is ProfileLoaded) {
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                top: 16,
+                right: 16,
+                left: 16,
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: SingleChildScrollView(
+                  keyboardDismissBehavior:
                       ScrollViewKeyboardDismissBehavior.onDrag,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ExpansionTile(
-                              tilePadding: const EdgeInsets.all(0),
-                              title: Text(
-                                "personal information".tr,
-                                style: Constants.mainTitleFont,
-                              ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ExpansionTile(
+                          tilePadding: const EdgeInsets.all(0),
+                          title: Text(
+                            "personal information".tr,
+                            style: Constants.mainTitleFont,
+                          ),
+                          children: [
+                            // RegistrationController.r3Body(context, setState)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // RegistrationController.r3Body(context, setState)
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Center(
-                                      child: SizedBox(
-                                        height: 190,
-                                        width: 190,
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Center(
-                                              child: DottedBorder(
-                                                color: Constants.outLineColor,
-                                                borderType: BorderType.RRect,
-                                                radius: const Radius.circular(20),
-                                                dashPattern: const [10, 6],
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(6),
-                                                  child: Container(
-                                                      height: 160,
-                                                      width: 160,
-                                                      decoration: BoxDecoration(
-                                                        // color: const Color(
-                                                        //     0XFFF8F8F9),
-                                                          borderRadius:
+                                Center(
+                                  child: SizedBox(
+                                    height: 190,
+                                    width: 190,
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Center(
+                                          child: DottedBorder(
+                                            color: Constants.outLineColor,
+                                            borderType: BorderType.RRect,
+                                            radius: const Radius.circular(20),
+                                            dashPattern: const [10, 6],
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(6),
+                                              child: Container(
+                                                  height: 160,
+                                                  width: 160,
+                                                  decoration: BoxDecoration(
+                                                      // color: const Color(
+                                                      //     0XFFF8F8F9),
+                                                      borderRadius:
                                                           BorderRadius.circular(
                                                               16)),
-                                                      child: regImage == null &&
+                                                  child: regImage == null &&
                                                           sharedPrefs
-                                                              .getUserPhoto() ==
+                                                                  .getUserPhoto() ==
                                                               ""
-                                                          ? Image.network(
+                                                      ? Image.network(
                                                           "https://th.bing.com/th/id/R.daced5c5d9871280ca8e2de03bf8bee5?rik=sUyBpUyNvR6IqQ&pid=ImgRaw&r=0")
-                                                          : regImage == null &&
-                                                          sharedPrefs
-                                                              .getUserPhoto() !=
-                                                              ""
+                                                      : regImage == null &&
+                                                              sharedPrefs
+                                                                      .getUserPhoto() !=
+                                                                  ""
                                                           ? Image.network(
-                                                          sharedPrefs
-                                                              .getUserPhoto())
+                                                              sharedPrefs
+                                                                  .getUserPhoto())
                                                           : ClipRRect(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            16),
-                                                        child: Image.file(
-                                                          File(regImage!
-                                                              .path),
-                                                          fit: BoxFit
-                                                              .cover,
-                                                        ),
-                                                        // PhotoView(
-                                                        //     imageProvider:
-                                                        //         FileImage(
-                                                        //   File(
-                                                        //       regImage!.path),
-                                                        // )),
-                                                      )),
-                                                ),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: InkWell(
-                                                onTap: () {
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    shape:
-                                                    const RoundedRectangleBorder(
-                                                      // <-- SEE HERE
-                                                      borderRadius:
-                                                      BorderRadius.vertical(
-                                                        top: Radius.circular(25.0),
-                                                      ),
-                                                    ),
-                                                    builder: (ctx) {
-                                                      return Container(
-                                                          padding:
-                                                          const EdgeInsets.all(
-                                                              18),
-                                                          // height: 100,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                            mainAxisSize:
-                                                            MainAxisSize.min,
-                                                            children: [
-                                                              RowModalSheet(
-                                                                  txt: "camera".tr,
-                                                                  imageIcon:
-                                                                  cameraIcon,
-                                                                  onPressed: () {
-                                                                    pickImage(
-                                                                        ImageSource
-                                                                            .camera,
-                                                                        ctx);
-                                                                  }),
-                                                              const Divider(),
-                                                              RowModalSheet(
-                                                                txt: "gellery".tr,
-                                                                imageIcon:
-                                                                galleryIcon,
-                                                                onPressed: () {
-                                                                  pickImage(
-                                                                      ImageSource
-                                                                          .gallery,
-                                                                      ctx);
-                                                                },
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          16),
+                                                              child: Image.file(
+                                                                File(regImage!
+                                                                    .path),
+                                                                fit: BoxFit
+                                                                    .cover,
                                                               ),
-                                                              const Divider(),
-                                                              RowModalSheet(
-                                                                txt: "cancel".tr,
-                                                                imageIcon:
-                                                                closeIcon,
-                                                                onPressed: () {
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                              )
-                                                            ],
-                                                          ));
-                                                    },
-                                                  );
-                                                },
-                                                child: const CircleAvatar(
-                                                  backgroundColor:
-                                                  Color(0XFF444444),
-                                                  radius: 20,
-                                                  child: Icon(
-                                                    Icons.camera_alt_outlined,
-                                                    color: Colors.white,
+                                                              // PhotoView(
+                                                              //     imageProvider:
+                                                              //         FileImage(
+                                                              //   File(
+                                                              //       regImage!.path),
+                                                              // )),
+                                                            )),
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomRight,
+                                          child: InkWell(
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                context: context,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  // <-- SEE HERE
+                                                  borderRadius:
+                                                      BorderRadius.vertical(
+                                                    top: Radius.circular(25.0),
                                                   ),
                                                 ),
+                                                builder: (ctx) {
+                                                  return Container(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              18),
+                                                      // height: 100,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                          RowModalSheet(
+                                                              txt: "camera".tr,
+                                                              imageIcon:
+                                                                  cameraIcon,
+                                                              onPressed: () {
+                                                                pickImage(
+                                                                    ImageSource
+                                                                        .camera,
+                                                                    ctx);
+                                                              }),
+                                                          const Divider(),
+                                                          RowModalSheet(
+                                                            txt: "gellery".tr,
+                                                            imageIcon:
+                                                                galleryIcon,
+                                                            onPressed: () {
+                                                              pickImage(
+                                                                  ImageSource
+                                                                      .gallery,
+                                                                  ctx);
+                                                            },
+                                                          ),
+                                                          const Divider(),
+                                                          RowModalSheet(
+                                                            txt: "cancel".tr,
+                                                            imageIcon:
+                                                                closeIcon,
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                  context);
+                                                            },
+                                                          )
+                                                        ],
+                                                      ));
+                                                },
+                                              );
+                                            },
+                                            child: const CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0XFF444444),
+                                              radius: 20,
+                                              child: Icon(
+                                                Icons.camera_alt_outlined,
+                                                color: Colors.white,
                                               ),
                                             ),
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      regImage = null;
-                                                      // inputImageName = "";
-                                                    });
-                                                  },
-                                                  child: const CircleAvatar(
-                                                      child: Icon(Icons.close))),
-                                            )
-                                          ],
+                                          ),
                                         ),
-                                      ),
+                                        Align(
+                                          alignment: Alignment.topLeft,
+                                          child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  regImage = null;
+                                                  // inputImageName = "";
+                                                });
+                                              },
+                                              child: const CircleAvatar(
+                                                  child: Icon(Icons.close))),
+                                        )
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 34, bottom: 24),
-                                      child: TextFormField(
-                                        controller: _fullName,
-                                        autovalidateMode:
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 34, bottom: 24),
+                                  child: TextFormField(
+                                    controller: _fullName,
+                                    autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
-                                        validator: (value) {
-                                          if (value!.isEmpty) {
-                                            return "full Name Required".tr;
-                                          } else if (value.length > 33 ||
-                                              value.length < 2) {
-                                            return "name length".tr;
-                                          }
-                                          return null;
-                                        },
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "full Name Required".tr;
+                                      } else if (value.length > 33 ||
+                                          value.length < 2) {
+                                        return "name length".tr;
+                                      }
+                                      return null;
+                                    },
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText:
-                                            "الاسم ثلاثي باللغة العربية ..سيظهر للمستخدمين",
+                                                "الاسم ثلاثي باللغة العربية ..سيظهر للمستخدمين",
                                             prefixIcon: SvgPicture.asset(
                                               nameIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    TextFormField(
-                                      controller: _englishName,
-                                      autovalidateMode:
+                                  ),
+                                ),
+                                TextFormField(
+                                  controller: _englishName,
+                                  autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return "User Name Required".tr;
-                                        }
-                                        if (value.length > 17 || value.length < 5) {
-                                          return "User Name Length".tr;
-                                        }
-                                        // else if   (!validEnglish(value)) {
-                                        //   return 'الاسم يجب ان يحتوي علي حروف انجليزية و أرقام' ;
-                                        // }
-                                        return null;
-                                      },
-                                      decoration: Constants
-                                          .setRegistrationTextInputDecoration(
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return "User Name Required".tr;
+                                    }
+                                    if (value.length > 17 || value.length < 5) {
+                                      return "User Name Length".tr;
+                                    }
+                                    // else if   (!validEnglish(value)) {
+                                    //   return 'الاسم يجب ان يحتوي علي حروف انجليزية و أرقام' ;
+                                    // }
+                                    return null;
+                                  },
+                                  decoration: Constants
+                                      .setRegistrationTextInputDecoration(
                                           hintText:
-                                          "اسم المستخدم باللغة الإنجليزية...",
+                                              "اسم المستخدم باللغة الإنجليزية...",
                                           prefixIcon: SvgPicture.asset(
                                             linkIcon,
                                             height: 24,
                                           )),
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 8),
-                                      child: Text(
-                                        "سيستخدم في رابط صفحتك الشخصية: nasooh.app/ahmed",
-                                        style: TextStyle(
-                                            fontFamily: Constants.mainFont,
-                                            color: Color(0XFF1ABC9C),
-                                            fontSize: 12),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        controller: _email,
-                                        validator: (val) {
-                                          if (val!.isEmpty ||
-                                              !RegExp(Validations.validationEmail)
-                                                  .hasMatch(val)) {
-                                            return "Email data".tr;
-                                          }
-                                          return null;
-                                        },
-                                        autovalidateMode:
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(bottom: 8),
+                                  child: Text(
+                                    "سيستخدم في رابط صفحتك الشخصية: nasooh.app/ahmed",
+                                    style: TextStyle(
+                                        fontFamily: Constants.mainFont,
+                                        color: Color(0XFF1ABC9C),
+                                        fontSize: 12),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    controller: _email,
+                                    validator: (val) {
+                                      if (val!.isEmpty ||
+                                          !RegExp(Validations.validationEmail)
+                                              .hasMatch(val)) {
+                                        return "Email data".tr;
+                                      }
+                                      return null;
+                                    },
+                                    autovalidateMode:
                                         AutovalidateMode.onUserInteraction,
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "Email ...".tr,
                                             prefixIcon: SvgPicture.asset(
                                               mailLink,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    // TextFormField(
-                                    //   controller: _password,
-                                    //   validator: (val) {
-                                    //     if (val!.isEmpty || val.length < 8) {
-                                    //       return getTranslated(
-                                    //           context, "password data".tr;
-                                    //     }
-                                    //     return null;
-                                    //   },
-                                    //   autovalidateMode:
-                                    //       AutovalidateMode.onUserInteraction,
-                                    //   decoration: Constants
-                                    //       .setRegistrationTextInputDecoration(
-                                    //           hintText: "كلمة المرور...",
-                                    //           prefixIcon: SvgPicture.asset(
-                                    //             passField,
-                                    //             height: 24,
-                                    //           )),
-                                    // ),
-                                    const SizedBox(
-                                      height: 20,
-                                    )
-                                  ],
+                                  ),
+                                ),
+                                // TextFormField(
+                                //   controller: _password,
+                                //   validator: (val) {
+                                //     if (val!.isEmpty || val.length < 8) {
+                                //       return getTranslated(
+                                //           context, "password data".tr;
+                                //     }
+                                //     return null;
+                                //   },
+                                //   autovalidateMode:
+                                //       AutovalidateMode.onUserInteraction,
+                                //   decoration: Constants
+                                //       .setRegistrationTextInputDecoration(
+                                //           hintText: "كلمة المرور...",
+                                //           prefixIcon: SvgPicture.asset(
+                                //             passField,
+                                //             height: 24,
+                                //           )),
+                                // ),
+                                const SizedBox(
+                                  height: 20,
                                 )
-                              ]),
-                          ExpansionTile(
-                              tilePadding: const EdgeInsets.all(0),
-                              title: const Text(
-                                "معلومات التخصص",
-                                style: Constants.mainTitleFont,
-                              ),
-                              children: [
-                                // RegistrationController.r4Body(context)
-                                Form(
-                                  key: stage4FormKey,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 24),
-                                        child: TextFormField(
-                                          maxLength: 35,
-                                          controller: _descriptionController,
-                                          autovalidateMode:
+                              ],
+                            )
+                          ]),
+                      ExpansionTile(
+                          tilePadding: const EdgeInsets.all(0),
+                          title: const Text(
+                            "معلومات التخصص",
+                            style: Constants.mainTitleFont,
+                          ),
+                          children: [
+                            // RegistrationController.r4Body(context)
+                            Form(
+                              key: stage4FormKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 24),
+                                    child: TextFormField(
+                                      maxLength: 35,
+                                      controller: _descriptionController,
+                                      autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return "description Required".tr;
-                                            } else if (value.length < 3) {
-                                              return "short description".tr;
-                                            }
-                                            return null;
-                                          },
-                                          decoration: Constants
-                                              .setRegistrationTextInputDecoration(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "description Required".tr;
+                                        } else if (value.length < 3) {
+                                          return "short description".tr;
+                                        }
+                                        return null;
+                                      },
+                                      decoration: Constants
+                                          .setRegistrationTextInputDecoration(
                                               hintText:
-                                              "الوصف المختصر | مثال: خبير في البرمجة والتصميم",
+                                                  "الوصف المختصر | مثال: خبير في البرمجة والتصميم",
                                               prefixIcon: SvgPicture.asset(
                                                 wasfIcon,
                                                 height: 24,
                                               )),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 24),
-                                        child: TextFormField(
-                                          maxLength: 770,
-                                          maxLines: 6,
-                                          controller: _summaryController,
-                                          autovalidateMode:
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 24),
+                                    child: TextFormField(
+                                      maxLength: 770,
+                                      maxLines: 6,
+                                      controller: _summaryController,
+                                      autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return "summary Required".tr;
-                                            }
-                                            return null;
-                                          },
-                                          decoration: Constants
-                                              .setRegistrationTextInputDecoration(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "summary Required".tr;
+                                        }
+                                        return null;
+                                      },
+                                      decoration: Constants
+                                          .setRegistrationTextInputDecoration(
                                               isParagraph: true,
                                               hintText: "نبذة تعريفية...",
                                               prefixIcon: SvgPicture.asset(
                                                 nabzaIcon,
                                                 height: 24,
                                               )),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          bottom: 24,
-                                        ),
-                                        child: TextFormField(
-                                          keyboardType: TextInputType.number,
-                                          controller: _experienceController,
-                                          autovalidateMode:
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      bottom: 24,
+                                    ),
+                                    child: TextFormField(
+                                      keyboardType: TextInputType.number,
+                                      controller: _experienceController,
+                                      autovalidateMode:
                                           AutovalidateMode.onUserInteraction,
-                                          validator: (value) {
-                                            if (value!.isEmpty) {
-                                              return "experience Required".tr;
-                                            }
-                                            return null;
-                                          },
-                                          decoration: Constants
-                                              .setRegistrationTextInputDecoration(
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return "experience Required".tr;
+                                        }
+                                        return null;
+                                      },
+                                      decoration: Constants
+                                          .setRegistrationTextInputDecoration(
                                               hintText: "سنوات الخبرة...",
                                               prefixIcon: SvgPicture.asset(
                                                 khebraIcon,
                                                 height: 24,
                                               )),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 24),
-                                        child: TextFormField(
-                                          controller: certificatesController,
-                                          // maxLength: 10,
-                                          decoration: Constants
-                                              .setRegistrationTextInputDecoration(
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 24),
+                                    child: TextFormField(
+                                      controller: certificatesController,
+                                      // maxLength: 10,
+                                      decoration: Constants
+                                          .setRegistrationTextInputDecoration(
                                               hintText:
-                                              "الشهادات والإنجازات...",
+                                                  "الشهادات والإنجازات...",
                                               suffixIcon: Padding(
                                                 padding:
-                                                const EdgeInsets.all(4),
+                                                    const EdgeInsets.all(4),
                                                 child: InkWell(
                                                   onTap: () {
                                                     if (certificatesController
@@ -622,29 +621,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                         "widget": CertificateItem(
                                                             register: true,
                                                             cert:
-                                                            certificatesController
-                                                                .text,
+                                                                certificatesController
+                                                                    .text,
                                                             staticId: idd),
                                                         "cert":
-                                                        certificatesController
-                                                            .text,
+                                                            certificatesController
+                                                                .text,
                                                         "id": idd
                                                       });
                                                       certificatesController
                                                           .clear();
                                                       MyApplication
                                                           .dismissKeyboard(
-                                                          context);
+                                                              context);
                                                       BlocProvider.of<
-                                                          AddCertificateCubit>(
-                                                          context)
+                                                                  AddCertificateCubit>(
+                                                              context)
                                                           .addCertificate();
                                                     }
                                                   },
                                                   child: Padding(
                                                     padding:
-                                                    const EdgeInsetsDirectional
-                                                        .only(end: 8),
+                                                        const EdgeInsetsDirectional
+                                                            .only(end: 8),
                                                     child: SvgPicture.asset(
                                                       certIcaddCertIconon,
                                                     ),
@@ -655,372 +654,331 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                 certIcon,
                                                 height: 24,
                                               )),
-                                        ),
-                                      ),
-                                      Wrap(
-                                        children: documentsFromAPI
-                                            .map((e) => CertificateItem(
-                                          register: false,
-                                          cert: e.value ?? "",
-                                          staticId: e.id.toString(),
-                                        ))
-                                            .toList(),
-                                      ),
-                                      BlocBuilder<AddCertificateCubit,
-                                          AddCertificateState>(
-                                        builder: (context, state) {
-                                          return Wrap(
-                                            children: certiList
-                                                .map((e) => e["widget"] as Widget)
-                                                .toList(),
-                                          );
-                                        },
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      )
-                                    ],
+                                    ),
                                   ),
-                                )
-                              ]),
-
-                          ExpansionTile(
-                            tilePadding: const EdgeInsets.all(0),
-                            title: const Text(
-                              "مجالات التخصص",
-                              style: Constants.mainTitleFont,
-                            ),
-                            children: [
-                              BlocBuilder<CategoryCubit, CategoryState>(
-                                  builder: (context, state) {
-                                    if (state is CategoryLoading) {
-                                      return const Center(
-                                          child: CircularProgressIndicator());
-                                    } else if (state is CategoryLoaded) {
-                                      return _buildCard(context, state.response!);
-                                    } else if (state is CategoryError) {
-                                      return const Center(child: Text('error'));
-                                    } else {
-                                      return const Center(child: Text('....'));
-                                    }
-                                  })
-                            ],
-                          ),
-                          // ListTile(
-                          //     contentPadding: const EdgeInsets.all(0),
-                          //     onTap: () => MyApplication.navigateTo(
-                          //         context, const RegistrationStage5()),
-                          //
-                          //     trailing: const Icon(
-                          //       Icons.keyboard_arrow_left_outlined,
-                          //       size: 26,
-                          //     )
-                          //     // children: [
-                          //
-                          //     // ]
-                          //     ),
-                          ExpansionTile(
-                              tilePadding: const EdgeInsets.all(0),
-                              title: Text(
-                                "additional information".tr,
-                                style: Constants.mainTitleFont,
+                                  Wrap(
+                                    children: documentsFromAPI
+                                        .map((e) => CertificateItem(
+                                              register: false,
+                                              cert: e.value ?? "",
+                                              staticId: e.id.toString(),
+                                            ))
+                                        .toList(),
+                                  ),
+                                  BlocBuilder<AddCertificateCubit,
+                                      AddCertificateState>(
+                                    builder: (context, state) {
+                                      return Wrap(
+                                        children: certiList
+                                            .map((e) => e["widget"] as Widget)
+                                            .toList(),
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(height: 20)
+                                ],
                               ),
+                            )
+                          ]),
+                      ExpansionTile(
+                        tilePadding: const EdgeInsets.all(0),
+                        title: const Text(
+                          "مجالات التخصص",
+                          style: Constants.mainTitleFont,
+                        ),
+                        children: [
+                          BlocBuilder<CategoryCubit, CategoryState>(
+                              builder: (context, state) {
+                            if (state is CategoryLoading) {
+                              return const CustomLoadingIndicator();
+                            } else if (state is CategoryLoaded) {
+                              return areaSpecificationWidget(state.response!);
+                            }
+                            return const SizedBox.shrink();
+                          })
+                        ],
+                      ),
+                      ExpansionTile(
+                          tilePadding: EdgeInsets.zero,
+                          title: Text(
+                            "additional information".tr,
+                            style: Constants.mainTitleFont,
+                          ),
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        controller: _bankNameController,
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    controller: _bankNameController,
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText:
-                                            "اسم صاحب الحساب البنكي...",
+                                                "اسم صاحب الحساب البنكي...",
                                             prefixIcon: SvgPicture.asset(
                                               ipanIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        controller: _bankAccountController,
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    controller: _bankAccountController,
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText:
-                                            "آيبانIBAN Number...  SA***********",
+                                                "آيبانIBAN Number...  SA***********",
                                             prefixIcon: SvgPicture.asset(
                                               ipanIcon2,
                                               height: 24,
                                             )),
-                                      ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(ekrar),
+                                    const SizedBox(
+                                      width: 8,
                                     ),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(ekrar),
-                                        const SizedBox(
-                                          width: 8,
-                                        ),
-                                        const Text(
-                                          "إقرار باالسياسة والعمولة",
-                                          style: Constants.mainTitleFont,
-                                        ),
-                                        const Spacer(),
-                                        SizedBox(
-                                            height: 24,
-                                            width: 24,
-                                            child: Checkbox(
-                                                activeColor:
+                                    const Text(
+                                      "إقرار باالسياسة والعمولة",
+                                      style: Constants.mainTitleFont,
+                                    ),
+                                    const Spacer(),
+                                    SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: Checkbox(
+                                            activeColor:
                                                 Constants.primaryAppColor,
-                                                value: _termsConditions,
-                                                onChanged: (d) {
-                                                  setState(() {
-                                                    _termsConditions = d!;
-                                                  });
-                                                }))
-                                      ],
-                                    ),
-                                    const Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 16),
-                                      child: Text(
-                                        "هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحةما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها.",
-                                        style: Constants.subtitleFont,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 20),
-                                      child: TextFormField(
-                                        controller: _birthdayController,
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                            value: _termsConditions,
+                                            onChanged: (d) {
+                                              setState(() {
+                                                _termsConditions = d!;
+                                              });
+                                            }))
+                                  ],
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 16),
+                                  child: Text(
+                                    "هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحةما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها.",
+                                    style: Constants.subtitleFont,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: TextFormField(
+                                    controller: _birthdayController,
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "تاريخ الميلاد...",
                                             prefixIcon: SvgPicture.asset(
                                               dateIcon,
                                               height: 24,
                                             )),
+                                  ),
+                                ),
+                                Text(
+                                  "gender".tr,
+                                  style: Constants.secondaryTitleFont,
+                                ),
+                                StatefulBuilder(
+                                  builder: (context, StateSetter setState) =>
+                                      Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 120,
+                                        child: RadioListTile(
+                                            activeColor:
+                                                Constants.primaryAppColor,
+                                            contentPadding:
+                                                const EdgeInsets.all(0),
+                                            title: Text(
+                                              "male".tr,
+                                              style: Constants
+                                                  .secondaryTitleRegularFont,
+                                            ),
+                                            value: "1",
+                                            groupValue: genderValue,
+                                            onChanged: (s) {
+                                              setState(() {
+                                                genderValue = s;
+                                              });
+                                            }),
                                       ),
-                                    ),
-                                    Text(
-                                      "gender".tr,
-                                      style: Constants.secondaryTitleFont,
-                                    ),
-                                    StatefulBuilder(
-                                      builder: (context, StateSetter setState) =>
-                                          Row(
-                                            children: [
-                                              SizedBox(
-                                                width: 120,
-                                                child: RadioListTile(
-                                                    activeColor:
-                                                    Constants.primaryAppColor,
-                                                    contentPadding:
-                                                    const EdgeInsets.all(0),
-                                                    title: Text(
-                                                      "male".tr,
-                                                      style: Constants
-                                                          .secondaryTitleRegularFont,
-                                                    ),
-                                                    value: "1",
-                                                    groupValue: genderValue,
-                                                    onChanged: (s) {
-                                                      setState(() {
-                                                        genderValue = s;
-                                                      });
-                                                    }),
-                                              ),
-                                              SizedBox(
-                                                width: 120,
-                                                child: RadioListTile(
-                                                    activeColor:
-                                                    Constants.primaryAppColor,
-                                                    contentPadding:
-                                                    const EdgeInsets.all(0),
-                                                    title: Text(
-                                                      "female".tr,
-                                                      style: Constants
-                                                          .secondaryTitleRegularFont,
-                                                    ),
-                                                    value: "0",
-                                                    groupValue: genderValue,
-                                                    onChanged: (s) {
-                                                      setState(() {
-                                                        genderValue = s;
-                                                      });
-                                                    }),
-                                              )
-                                            ],
-                                          ),
-                                    ),
-                                    const SizedBox(
-                                      height: 90,
-                                    )
-                                  ],
-                                )
-                                // RegistrationController.r6Body(setState)
-                              ]),
-                          ExpansionTile(
-                              tilePadding: const EdgeInsets.all(0),
-                              title: const Text(
-                                "بيانات الموقع وحسابات التواصل",
-                                style: Constants.mainTitleFont,
-                              ),
+                                      SizedBox(
+                                        width: 120,
+                                        child: RadioListTile(
+                                            activeColor:
+                                                Constants.primaryAppColor,
+                                            contentPadding:
+                                                const EdgeInsets.all(0),
+                                            title: Text(
+                                              "female".tr,
+                                              style: Constants
+                                                  .secondaryTitleRegularFont,
+                                            ),
+                                            value: "0",
+                                            groupValue: genderValue,
+                                            onChanged: (s) {
+                                              setState(() {
+                                                genderValue = s;
+                                              });
+                                            }),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const SizedBox(height: 90)
+                              ],
+                            )
+                            // RegistrationController.r6Body(setState)
+                          ]),
+                      ExpansionTile(
+                          tilePadding: const EdgeInsets.all(0),
+                          title: const Text(
+                            "بيانات الموقع وحسابات التواصل",
+                            style: Constants.mainTitleFont,
+                          ),
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const MyColumnData(),
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 16),
-                                      child: Text(
-                                        "حساباتك على وسائل التواصل الاجتماعي",
-                                        style: Constants.mainTitleFont,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                const MyColumnData(),
+                                const Padding(
+                                  padding: EdgeInsets.only(bottom: 16),
+                                  child: Text(
+                                    "حساباتك على وسائل التواصل الاجتماعي",
+                                    style: Constants.mainTitleFont,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "ادخل رابط تويتر...",
                                             prefixIcon: SvgPicture.asset(
                                               twitterIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "ادخل رابط لينكدان...",
                                             prefixIcon: SvgPicture.asset(
                                               linkedinIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "ادخل رابط سناب شات...",
                                             prefixIcon: SvgPicture.asset(
                                               snapIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "ادخل رابط انستقرام...",
                                             prefixIcon: SvgPicture.asset(
                                               instaIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "ادخل رابط فيس بوك...",
                                             prefixIcon: SvgPicture.asset(
                                               faceBookIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(bottom: 24),
-                                      child: TextFormField(
-                                        decoration: Constants
-                                            .setRegistrationTextInputDecoration(
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 24),
+                                  child: TextFormField(
+                                    decoration: Constants
+                                        .setRegistrationTextInputDecoration(
                                             hintText: "ادخل رابط يوتيوب...",
                                             prefixIcon: SvgPicture.asset(
                                               youtubeIcon,
                                               height: 24,
                                             )),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                                // RegistrationController.r7Body()
-                              ]),
-                          const SizedBox(
-                            height: 90,
-                          )
-                        ],
-                      )),
-                );
-              } else if (profileState is ProfileError) {
-                return const Center(child: SizedBox());
-              } else {
-                return const Center(child: SizedBox());
-              }
-            }),
+                                  ),
+                                ),
+                              ],
+                            )
+                            // RegistrationController.r7Body()
+                          ]),
+                      const SizedBox(height: 90)
+                    ],
+                  )),
+            );
+          }
+          return const SizedBox.shrink();
+        }),
       ),
     );
   }
 
-  Widget _buildCard(BuildContext context, CategoryModel model) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: double.infinity,
-      padding: EdgeInsets.only(
-        top: 16,
-        right: 16,
-        left: 16,
-        bottom: MediaQuery.of(context).viewInsets.bottom,
-      ),
-      child: SingleChildScrollView(
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 24),
-                child: TextFormField(
-                  controller: _searchController,
-                  onChanged: (val) {
-                    setState(() {
-                      categoryData = model.data!;
-                      List<CategoryData> searchList(String query) {
-                        return categoryData
-                            .where((item) => item.name!.contains(query))
-                            .toList();
-                      }
+  Widget areaSpecificationWidget(CategoryModel model) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 24),
+          child: TextFormField(
+            controller: _searchController,
+            onChanged: (val) {
+              setState(() {
+                categoryData = model.data!;
+                List<CategoryData> searchList(String query) {
+                  return categoryData
+                      .where((item) => item.name!.contains(query))
+                      .toList();
+                }
 
-                      results = searchList(_searchController.text);
-                      debugPrint('${results.length}');
-                    });
-                  },
-                  decoration: Constants.setRegistrationTextInputDecoration(
-                      hintText: "ابحث عن المجالات التي تجيديها...",
-                      prefixIcon: SvgPicture.asset(
-                        searchIcon,
-                        height: 24,
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.6,
-                child: _searchController.text.isEmpty
-                    ? ListView.builder(
+                results = searchList(_searchController.text);
+                debugPrint('${results.length}');
+              });
+            },
+            decoration: Constants.setRegistrationTextInputDecoration(
+                hintText: "ابحث عن المجالات التي تجيديها...",
+                prefixIcon: SvgPicture.asset(
+                  searchIcon,
+                  height: 24,
+                )),
+          ),
+        ),
+        _searchController.text.isEmpty
+            ? SizedBox(
+                height: 500,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(bottom: 80),
                   itemCount: model.data!.length,
                   itemBuilder: (context, int x) {
-                    // List<MyNewModel> newList = model.data!.map((obj) {
-                    //   return MyNewModel(id: obj.id!, booleanValue: false);
-                    // }).toList();
-                    // MyNewModel item = newList[x];
-
                     return ExpansionTile(
                         tilePadding: const EdgeInsets.all(0),
                         title: Row(
@@ -1033,41 +991,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     onChanged: (bool? s) {
                                       setState(() {
                                         model.data![x].selected = s;
-                                        if (model.data![x].selected ==
-                                            true) {
-                                          _selectedCategory.add(
-                                              MySelectedModel(
-                                                  id: model.data![x].id!,
-                                                  value: model.data![x]
-                                                      .selected!));
+                                        if (model.data![x].selected == true) {
+                                          _selectedCategory.add(MySelectedModel(
+                                              id: model.data![x].id!,
+                                              value: model.data![x].selected!));
 
-                                          for (var selectItems in model
-                                              .data![x].children!) {
+                                          for (var selectItems
+                                              in model.data![x].children!) {
                                             selectItems.selected = true;
                                             _selectedCategory.add(
                                                 MySelectedModel(
                                                     id: selectItems.id!,
-                                                    value: selectItems
-                                                        .selected!));
+                                                    value:
+                                                        selectItems.selected!));
                                           }
-                                        } else if (model
-                                            .data![x].selected ==
+                                        } else if (model.data![x].selected ==
                                             false) {
                                           _selectedCategory.removeWhere(
-                                                  (e) =>
-                                              e.id ==
-                                                  model.data![x].id);
+                                              (e) => e.id == model.data![x].id);
                                         }
                                       });
                                       log(_selectedCategory.toString(),
-                                          name:
-                                          "_selectedCategory in parent");
+                                          name: "_selectedCategory in parent");
                                       debugPrint(
                                           "the send category is ${_selectedCategory.toSet().toList().toString()}");
                                     })),
-                            const SizedBox(
-                              width: 4,
-                            ),
+                            const SizedBox(width: 4),
                             Expanded(
                               child: Text(
                                 model.data![x].name!,
@@ -1079,54 +1028,52 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         children: model.data![x].children!
                             .map(
                               (e) => Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                                start: 12, end: 4, top: 4, bottom: 4),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                    height: 24,
-                                    width: 24,
-                                    child: Checkbox(
-                                        value: e.selected,
-                                        onChanged: (s) {
-                                          setState(() {
-                                            e.selected = s;
-                                            if (e.selected == true) {
-                                              _selectedCategory.add(
-                                                  MySelectedModel(
-                                                      id: e.id!,
-                                                      value: e
-                                                          .selected!));
-                                            } else if (e.selected ==
-                                                false) {
-                                              _selectedCategory
-                                                  .removeWhere(
+                                padding: const EdgeInsetsDirectional.only(
+                                    start: 12, end: 4, top: 4, bottom: 4),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                        height: 24,
+                                        width: 24,
+                                        child: Checkbox(
+                                            value: e.selected,
+                                            onChanged: (s) {
+                                              setState(() {
+                                                e.selected = s;
+                                                if (e.selected == true) {
+                                                  _selectedCategory.add(
+                                                      MySelectedModel(
+                                                          id: e.id!,
+                                                          value: e.selected!));
+                                                } else if (e.selected ==
+                                                    false) {
+                                                  _selectedCategory.removeWhere(
                                                       (element) =>
-                                                  element
-                                                      .id ==
-                                                      e.id);
-                                            }
-                                            debugPrint(
-                                                "the send category is ${_selectedCategory.toSet().toList().toString()}");
-                                          });
-                                        })),
-                                const SizedBox(
-                                  width: 8,
+                                                          element.id == e.id);
+                                                }
+                                                debugPrint(
+                                                    "the send category is ${_selectedCategory.toSet().toList().toString()}");
+                                              });
+                                            })),
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      e.name!,
+                                      style:
+                                          Constants.secondaryTitleRegularFont,
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  e.name!,
-                                  style: Constants
-                                      .secondaryTitleRegularFont,
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
+                              ),
+                            )
                             .toList());
                   },
-                )
-                    : ListView.builder(
+                ),
+              )
+            : SizedBox(
+          height: 500,
+              child: ListView.builder(
                   itemCount: results.length,
+                  padding: const EdgeInsets.only(bottom: 80),
                   itemBuilder: (context, int x) => ExpansionTile(
                       tilePadding: const EdgeInsets.all(0),
                       title: Row(
@@ -1140,25 +1087,20 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     setState(() {
                                       results[x].selected = s;
                                       if (results[x].selected == true) {
-                                        _selectedCategory.add(
-                                            MySelectedModel(
-                                                id: results[x].id!,
-                                                value: results[x]
-                                                    .selected!));
+                                        _selectedCategory.add(MySelectedModel(
+                                            id: results[x].id!,
+                                            value: results[x].selected!));
 
                                         for (var selectItems
-                                        in results[x].children!) {
+                                            in results[x].children!) {
                                           selectItems.selected = true;
-                                          _selectedCategory.add(
-                                              MySelectedModel(
-                                                  id: selectItems.id!,
-                                                  value: selectItems
-                                                      .selected!));
+                                          _selectedCategory.add(MySelectedModel(
+                                              id: selectItems.id!,
+                                              value: selectItems.selected!));
                                         }
-                                      } else if (results[x].selected ==
-                                          false) {
+                                      } else if (results[x].selected == false) {
                                         _selectedCategory.removeWhere(
-                                                (e) => e.id == results[x].id);
+                                            (e) => e.id == results[x].id);
                                       }
                                     });
                                     debugPrint(
@@ -1179,56 +1121,47 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           .children!
                           .map(
                             (e) => Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 12, end: 4, top: 4, bottom: 4),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                  height: 24,
-                                  width: 24,
-                                  child: Checkbox(
-                                      value: e.selected,
-                                      onChanged: (s) {
-                                        setState(() {
-                                          e.selected = s;
-                                          if (e.selected == true) {
-                                            _selectedCategory.add(
-                                                MySelectedModel(
-                                                    id: e.id!,
-                                                    value:
-                                                    e.selected!));
-                                          } else if (e.selected ==
-                                              false) {
-                                            _selectedCategory
-                                                .removeWhere(
+                              padding: const EdgeInsetsDirectional.only(
+                                  start: 12, end: 4, top: 4, bottom: 4),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                      height: 24,
+                                      width: 24,
+                                      child: Checkbox(
+                                          value: e.selected,
+                                          onChanged: (s) {
+                                            setState(() {
+                                              e.selected = s;
+                                              if (e.selected == true) {
+                                                _selectedCategory.add(
+                                                    MySelectedModel(
+                                                        id: e.id!,
+                                                        value: e.selected!));
+                                              } else if (e.selected == false) {
+                                                _selectedCategory.removeWhere(
                                                     (element) =>
-                                                element.id ==
-                                                    e.id);
-                                          }
-                                          debugPrint(
-                                              "the send category is ${_selectedCategory.toSet().toList().toString()}");
-                                        });
-                                      })),
-                              const SizedBox(
-                                width: 8,
+                                                        element.id == e.id);
+                                              }
+                                              debugPrint(
+                                                  "the send category is ${_selectedCategory.toSet().toList().toString()}");
+                                            });
+                                          })),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Text(
+                                    e.name!,
+                                    style: Constants.secondaryTitleRegularFont,
+                                  ),
+                                ],
                               ),
-                              Text(
-                                e.name!,
-                                style: Constants
-                                    .secondaryTitleRegularFont,
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
+                            ),
+                          )
                           .toList()),
                 ),
-              ),
-              const SizedBox(
-                height: 90,
-              )
-            ],
-          )),
+            ),
+      ],
     );
   }
 }

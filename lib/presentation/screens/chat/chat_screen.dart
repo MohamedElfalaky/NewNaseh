@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -83,8 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
       voiceFile = File('$tempPath/$uniqueKey.mp3');
     }
     record.stop();
-    // timer;
-    record.start(const RecordConfig(), path: voiceFile!.path).then((value) {
+     record.start(const RecordConfig(), path: voiceFile!.path).then((value) {
       isRecording = true;
       setState(() {});
     }).onError((error, stackTrace) {
@@ -105,12 +103,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> openTheRecorder() async {
-    if (!kIsWeb) {
-      var status = await Permission.microphone.request();
+
+      final status = await Permission.microphone.request();
       if (status != PermissionStatus.granted && await record.hasPermission()) {
         throw Exception('Microphone permission not granted');
       }
-    }
+
   }
 
   final player = AudioPlayer();
@@ -166,17 +164,11 @@ class _ChatScreenState extends State<ChatScreen> {
                     SvgPicture.asset(
                       logoColor,
                       height: 50,
-                      colorFilter: getFilterColor(  Constants.primaryAppColor),
-
+                      colorFilter: getFilterColor(Constants.primaryAppColor),
                     )
                   ],
                 ),
-                leading: CustomBackButton(
-                  hasValue: true,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )),
+                leading: const CustomBackButton()),
             body: BlocListener<SendChatCubit, SendChatState>(
               listener: (context, state) {
                 if (state is SendChatLoaded) {
@@ -212,9 +204,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                     buildAlign(state, index, context),
                               ));
                         } else if (state is ShowAdviceError) {
-                          return const Center(
-                            child: Text("Error"),
-                          );
+                          return const SizedBox.shrink();
                         } else {
                           return const CustomLoadingIndicator();
                         }
@@ -223,12 +213,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     widget.showAdData!.label!.id == 1 ||
                             widget.showAdData!.label!.id == 2
                         ? Padding(
-                            padding: const EdgeInsets.only(
-                              top: 12,
-                              bottom: 12,
-                              left: 16,
-                              right: 16,
-                            ),
+                            padding: const EdgeInsets.all(14),
                             child: Column(
                               children: [
                                 if (voiceSelected != null)
@@ -313,8 +298,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 maxLines: 1,
                                               )),
                                               const SizedBox(width: 5),
-                                              SvgPicture.asset(
-                                                fileImage,
+                                              //
+                                              Image.file(
+                                                File(pickedFile!.path),
                                                 width: 25,
                                                 height: 25,
                                               ),
@@ -374,10 +360,6 @@ class _ChatScreenState extends State<ChatScreen> {
                                                         await FilePicker
                                                             .platform
                                                             .pickFiles();
-                                                    // type:
-                                                    // FileType.custom;
-                                                    // allowedExtensions:
-                                                    // ['pdf', 'jpg', 'png', "doc", "docx", "gif"];
                                                     if (result != null) {
                                                       setState(() {
                                                         pickedFile = File(result
@@ -634,17 +616,15 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ?.endsWith("m4a") ??
                                 false
                             ? GestureDetector(
-                                onTap: () => playAudioFromUrl(
-                                  state.response?.data?.chat?[index]
-                                          .document?[0].file ??
-                                      "",
+                                onTap: () => playAudioFromUrl('${state.response?.data?.chat?[index]
+                                    .document?[0].file}',
                                   index,
                                 ),
                                 child: playingIndex == index
                                     ? audioPlayingWidget()
                                     : audioStopWidget(),
                               )
-                            : buildImageDetailsWidget(state, index),
+                            : chatImageWidget(state, index),
                   ),
                 ),
               ],
@@ -670,7 +650,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  buildImageDetailsWidget(ShowAdviceLoaded state, int index) {
+  chatImageWidget(ShowAdviceLoaded state, int index) {
     String file = state.response?.data?.chat?[index].document?[0].file ?? '';
     return Row(
       children: [
@@ -686,7 +666,12 @@ class _ChatScreenState extends State<ChatScreen> {
                     return const CustomLoadingIndicator();
                   },
                   errorWidget: (c, g, h) {
-                    return const Center(child: Icon(Icons.error,color: Colors.red,),);
+                    return const Center(
+                      child: Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
+                    );
                   },
                 ),
               )

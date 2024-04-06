@@ -6,7 +6,7 @@ import 'package:password_text_field/password_text_field.dart';
 
 import '../../../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_cubit.dart';
 import '../../../../Data/cubit/authentication/forget_password_cubit/change_password_cubit/change_password_state.dart';
- import '../../../../app/constants.dart';
+import '../../../../app/constants.dart';
 import '../../../../app/styles/icons.dart';
 import '../../../../app/utils/my_application.dart';
 import '../../../widgets/custom_button.dart';
@@ -63,7 +63,7 @@ class _ChangePasswordState extends State<ChangePassword>
           appBar: AppBar(
               leadingWidth: 70,
               title: Text("change_password".tr),
-              leading: CustomBackButton()),
+              leading: const CustomBackButton()),
           backgroundColor: Constants.whiteAppColor,
           resizeToAvoidBottomInset: false,
           body: BlocBuilder<ChangePasswordCubit, ChangePasswordState>(
