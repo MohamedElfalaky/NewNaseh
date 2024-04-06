@@ -11,7 +11,6 @@ import 'app/utils/shared_preference.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.remove;
-
   await SharedPrefs().init();
   await Firebase.initializeApp();
   FirebaseCustomNotification.setUpFirebase();

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,6 @@ class NasehApp extends StatelessWidget {
             maxWidth: 1200,
             minWidth: 450,
             defaultScale: false,
-
             breakpoints: [
               const ResponsiveBreakpoint.resize(450, name: MOBILE),
               const ResponsiveBreakpoint.autoScale(800, name: TABLET),
@@ -43,7 +43,8 @@ class NasehApp extends StatelessWidget {
               const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
               const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
             ],
-
+            background: Container(color:   Colors.white,
+            ),
         ),
         useInheritedMediaQuery: true,
         debugShowCheckedModeBanner: false,

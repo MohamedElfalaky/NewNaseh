@@ -709,7 +709,7 @@ class RegistrationController {
                 style: Constants.mainTitleFont,
               ),
             ),
-            const MyColumnData(),
+            const PersonalData(),
             const Padding(
               padding: EdgeInsets.only(bottom: 16),
               child: Text(

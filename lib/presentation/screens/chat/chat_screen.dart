@@ -576,9 +576,13 @@ class _ChatScreenState extends State<ChatScreen> {
                           barrierDismissible: true,
                           builder: (context) {
                             return AlertDialog(
+                              contentPadding: EdgeInsets.zero,
                               content: ClipRRect(
+
+
                                 borderRadius: BorderRadius.circular(15),
                                 child: CachedNetworkImage(
+
                                   imageUrl:
                                       '${state.response!.data!.chat![index].document![0].file}',
                                 ),

@@ -42,7 +42,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  bool? isConnected;
   final ImagePicker _picker = ImagePicker();
   XFile? regImage;
   final TextEditingController _fullName = TextEditingController();
@@ -133,14 +132,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     getDataFromApi();
     context.read<CategoryCubit>().getCategories();
-
-    debugPrint("the image from api is ${sharedPrefs.getUserPhoto()}");
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: (){
         MyApplication.dismissKeyboard(context);
       },
       child: Scaffold(
@@ -148,7 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         floatingActionButton:
             BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
                 builder: (context, state) => state is UpdateProfileLoading
-                    ? const CircularProgressIndicator()
+                    ? const CustomLoadingIndicator()
                     : Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: SizedBox(
@@ -847,7 +844,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const MyColumnData(),
+                                const PersonalData(),
                                 const Padding(
                                   padding: EdgeInsets.only(bottom: 16),
                                   child: Text(
@@ -1070,8 +1067,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
               )
             : SizedBox(
-          height: 500,
-              child: ListView.builder(
+                height: 500,
+                child: ListView.builder(
                   itemCount: results.length,
                   padding: const EdgeInsets.only(bottom: 80),
                   itemBuilder: (context, int x) => ExpansionTile(
@@ -1160,7 +1157,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                           .toList()),
                 ),
-            ),
+              ),
       ],
     );
   }

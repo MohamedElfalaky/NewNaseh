@@ -28,14 +28,20 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
 
   late CountdownTimerController timerController;
   int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 120;
-  late FocusNode myFocusNode;
 
   @override
   void initState() {
     super.initState();
-    myFocusNode = FocusNode();
 
     timerController = CountdownTimerController(endTime: endTime, onEnd: () {});
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    timerController.dispose();
+    _pinController.dispose();
+
   }
 
   @override
@@ -96,7 +102,6 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
                                   showCursor: true,
                                   autofocus: true,
                                   controller: _pinController,
-                                  focusNode: myFocusNode,
                                   defaultPinTheme: Constants.defaultPinTheme,
                                   focusedPinTheme: Constants.focusedPinTheme,
                                   errorPinTheme: Constants.errorPinTheme,
@@ -109,7 +114,7 @@ class _CheckForgetCodeState extends State<CheckForgetCode> {
                                     }
                                     return null;
                                   },
-                                 ),
+                                ),
                               ),
                             ),
                             state is ForgetCodeLoading
