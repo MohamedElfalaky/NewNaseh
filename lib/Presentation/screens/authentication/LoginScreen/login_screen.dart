@@ -72,14 +72,6 @@ class _LoginScreenState extends State<LoginScreen>
               fit: BoxFit.cover,
             ),
           ),
-          // Center(
-          //   child: SvgPicture.asset(
-          //     backgroundddd,
-          //     height: MediaQuery.of(context).size.height,
-          //     width: MediaQuery.of(context).size.width,
-          //     fit: BoxFit.cover,
-          //   ),
-          // ),
           Scaffold(
             backgroundColor: const Color.fromARGB(0, 168, 46, 46),
             resizeToAvoidBottomInset: false,
@@ -157,6 +149,7 @@ class _LoginScreenState extends State<LoginScreen>
                                   ),
                                 ),
                                 initialCountryCode: 'SA',
+
                                 onChanged: (phone) {
                                   _sendPhone = phone.completeNumber;
                                 },
@@ -167,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen>
                           FadeTransition(
                             opacity: _fadeController,
                             child: PasswordTextFormField(
+                                maxLength: 10,
                                 controller: _passwordController,
                                 style: Constants.subtitleFont1,
                                 autovalidateMode:
@@ -188,8 +182,6 @@ class _LoginScreenState extends State<LoginScreen>
                                 },
                                 decoration: Constants.setTextInputDecoration(
                                     hintText: "كلمة المرور...",
-
-
                                     prefixIcon: Container(
                                       width: 30,
                                       decoration: const BoxDecoration(
@@ -207,31 +199,18 @@ class _LoginScreenState extends State<LoginScreen>
                                       ),
                                     ))),
                           ),
-                          Row(
-                            children: [
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              SizedBox(
-                                height: 16,
-                                width: 16,
-                                child: Checkbox(
-                                  value: valueChanged,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      valueChanged = value!;
-                                    });
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              const Text(
-                                "تذكر معلوماتي",
-                                style: Constants.secondaryTitleRegularFont,
-                              )
-                            ],
+                          CheckboxListTile(
+                            contentPadding: EdgeInsets.zero,
+                            secondary: const Text(
+                              "تذكر معلوماتي",
+                              style: Constants.secondaryTitleRegularFont,
+                            ),
+                            value: valueChanged,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                valueChanged = value!;
+                              });
+                            },
                           ),
                           const SizedBox(
                             height: 35,
