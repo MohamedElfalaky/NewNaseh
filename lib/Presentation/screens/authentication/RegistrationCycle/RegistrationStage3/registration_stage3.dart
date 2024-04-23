@@ -9,80 +9,75 @@ import '../RegistrationStage4/registration_stage4.dart';
 import '../registration_controller.dart';
 
 class RegistrationStage3 extends StatefulWidget {
-  const RegistrationStage3({Key? key}) : super(key: key);
+  const RegistrationStage3({super.key});
 
   @override
   State<RegistrationStage3> createState() => _RegistrationStage3State();
 }
 
 class _RegistrationStage3State extends State<RegistrationStage3> {
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        MyApplication.dismissKeyboard(context);
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: CustomButton(
-                  isBold: true,
-                  txt: "التالي",
-                  onPressedHandler: () {
-                    //   if(inputImagePhoto ==null) {
-                    //     MyApplication.showToastView(
-                    //       message: '${getTranslated(context,"add image please")}');}
-                    // else
-                    if (stage3FormKey.currentState!.validate()) {
-                      debugPrint(inputPhone +
-                          // inputImageName +
-                          inputFullName +
-                          inputEnglishName +
-                          inputEmail +
-                          inputPassword);
-                      MyApplication.navigateTo(context, const RegistrationStage4());
-                    }
-                  },
-                ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: CustomButton(
+                isBold: true,
+                txt: "التالي",
+                onPressedHandler: () {
+                  //   if(inputImagePhoto ==null) {
+                  //     MyApplication.showToastView(
+                  //       message: '${getTranslated(context,"add image please")}');}
+                  // else
+                  if (stage3FormKey.currentState!.validate()) {
+                    debugPrint(inputPhone +
+                        // inputImageName +
+                        inputFullName +
+                        inputEnglishName +
+                        inputEmail +
+                        inputPassword);
+                    MyApplication.navigateTo(
+                        context, const RegistrationStage4());
+                  }
+                },
               ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  top: 8,
-                ),
-                child: Text(
-                  "خطوة 3 من 7",
-                  style: Constants.subtitleRegularFont,
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        appBar: AppBar(
-            centerTitle: false,
-            leadingWidth: 70,
-            title: const Text("المعلومات الشخصية"),
-            leading: const CustomBackButton()),
-        body: Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            padding: EdgeInsets.only(
-              top: 16,
-              right: 16,
-              left: 16,
-              bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-            child: RegistrationController.r3Body(context, setState)),
+            const Padding(
+              padding: EdgeInsets.only(
+                top: 8,
+              ),
+              child: Text(
+                "خطوة 3 من 7",
+                style: Constants.subtitleRegularFont,
+              ),
+            ),
+          ],
+        ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      appBar: AppBar(
+          centerTitle: false,
+          leadingWidth: 70,
+          title: const Text("المعلومات الشخصية"),
+          leading: const CustomBackButton()),
+      body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          padding: EdgeInsets.only(
+            top: 16,
+            right: 16,
+            left: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: RegistrationController.r3Body(context, setState)),
     );
   }
 }

@@ -9,6 +9,9 @@ ThemeData whiteTheme = ThemeData(
   highlightColor: Colors.transparent,
   fontFamily: 'Cairo',
   inputDecorationTheme: InputDecorationTheme(
+      focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: Constants.primaryAppColor,width: 1.5),
+          borderRadius: BorderRadius.circular(10)),
       border: OutlineInputBorder(
           borderSide: const BorderSide(color: Constants.primaryAppColor),
           borderRadius: BorderRadius.circular(10)),

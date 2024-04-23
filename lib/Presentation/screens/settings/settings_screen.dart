@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:nasooh/Data/cubit/settings_cubits/is_notification_cubit/is_notification_cubit.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/my_application.dart';
 import 'package:nasooh/app/utils/shared_preference.dart';
 
 import '../../../Data/cubit/authentication/delete_account_cubit/delete_account_cubit.dart';
@@ -25,8 +24,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
-
   bool? isNotificationValue;
   bool? isAdviceValue;
 
@@ -38,127 +35,113 @@ class _SettingsScreenState extends State<SettingsScreen> {
     isAdviceValue = sharedPrefs.getIsAdvice() == 1 ? true : false;
     debugPrint("isNotificationValue is $isNotificationValue");
     debugPrint("isAdviceValue is $isAdviceValue");
-
-
-
   }
-
-
 
   @override
   Widget build(BuildContext context) {
-
-
-    return GestureDetector(
-      onTap: () {
-        MyApplication.dismissKeyboard(context);
-      },
-
-      child: Scaffold(
-
-           appBar: AppBar(
-              centerTitle: false,
-              leadingWidth: 70,
-              title: Text("Settings".tr),
-              leading: const CustomBackButton()),
-          body: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20, top: 18),
-            child: Column(
-              children: [
-                Row(
+    return Scaffold(
+        appBar: AppBar(
+            centerTitle: false,
+            leadingWidth: 70,
+            title: Text("Settings".tr),
+            leading: const CustomBackButton()),
+        body: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, top: 18),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  SvgPicture.asset(language),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(
+                    "change lang".tr,
+                    style: Constants.secondaryTitleFont,
+                  )
+                ],
+              ),
+              const ChangeLangItem(),
+              const Divider(
+                color: Color(0xff555B6E),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
                   children: [
-                    SvgPicture.asset(language),
+                    SvgPicture.asset(notifii),
                     const SizedBox(
                       width: 8,
                     ),
                     Text(
-                      "change lang".tr,
+                      "Notifications".tr,
                       style: Constants.secondaryTitleFont,
+                    ),
+                    const Spacer(),
+                    Switch(
+                      value: isNotificationValue!,
+                      onChanged: (value) {
+                        setState(() {
+                          isNotificationValue = value;
+                        });
+                        context.read<IsNotificationCubit>().isNotify();
+                      },
                     )
                   ],
                 ),
-                const ChangeLangItem(),
-                const Divider(
-                  color: Color(0xff555B6E),
+              ),
+              const Divider(
+                color: Color(0xff555B6E),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    Text(
+                      "Receive Orders".tr,
+                      style: Constants.secondaryTitleFont,
+                    ),
+                    const Spacer(),
+                    Switch(
+                      value: isAdviceValue!,
+                      onChanged: (value) {
+                        setState(() {
+                          isAdviceValue = value;
+                        });
+                        context.read<IsAdviceCubit>().isAdvice();
+                      },
+                    )
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(notifii),
-                      const SizedBox(
-                        width: 8,
+              ),
+              const Divider(
+                color: Color(0xff555B6E),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(deletAcc),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    InkWell(
+                      onTap: () => _showDeleteDialog(context),
+                      child: Text(
+                        "Delete Account".tr,
+                        style: Constants.secondaryTitleFont
+                            .copyWith(color: const Color(0XFFED2626)),
                       ),
-                      Text(
-                        "Notifications".tr,
-                        style: Constants.secondaryTitleFont,
-                      ),
-                      const Spacer(),
-                      Switch(
-                        value: isNotificationValue!,
-                        onChanged: (value) {
-                          setState(() {
-                            isNotificationValue = value;
-                          });
-                          context.read<IsNotificationCubit>().isNotify();
-                        },
-                      )
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                const Divider(
-                  color: Color(0xff555B6E),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(
-                        "Receive Orders".tr,
-                        style: Constants.secondaryTitleFont,
-                      ),
-                      const Spacer(),
-                      Switch(
-                        value: isAdviceValue!,
-                        onChanged: (value) {
-                          setState(() {
-                            isAdviceValue = value;
-                          });
-                          context.read<IsAdviceCubit>().isAdvice();
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                const Divider(
-                  color: Color(0xff555B6E),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(deletAcc),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      InkWell(
-                        onTap: () => _showDeleteDialog(context),
-                        child: Text(
-                          "Delete Account".tr,
-                          style: Constants.secondaryTitleFont
-                              .copyWith(color: const Color(0XFFED2626)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          )),
-    );
+              ),
+            ],
+          ),
+        ));
   }
 }
 
@@ -169,8 +152,6 @@ Future<void> _showDeleteDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return BlocBuilder<DeleteAccountCubit, DeleteAccountState>(
           builder: (context, state) => AlertDialog(
-                // <-- SEE HERE
-                // title: const Text('Cancel booking'),
                 content: SingleChildScrollView(
                   child: ListBody(
                     children: <Widget>[

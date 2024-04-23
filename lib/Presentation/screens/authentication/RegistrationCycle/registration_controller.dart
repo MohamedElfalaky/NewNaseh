@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -10,9 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
-import 'package:nasooh/app/styles/icons.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/my_application.dart';
+import 'package:nasooh/app/styles/icons.dart';
 import 'package:password_text_field/password_text_field.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -64,18 +64,18 @@ class RegistrationController {
 
   static Future pickImage(
       ImageSource source, BuildContext context, setState) async {
-       final myImage = await _picker.pickImage(source: source, imageQuality: 60);
-      if (myImage == null) return;
+    final myImage = await _picker.pickImage(source: source, imageQuality: 60);
+    if (myImage == null) return;
 
-      setState(() {
-        regImage = myImage;
-        inputImagePhoto = regImage;
-      });
-      List<int> imageBytes = File(regImage!.path).readAsBytesSync();
-      // print(imageBytes);
-      base64Image = base64.encode(imageBytes);
+    setState(() {
+      regImage = myImage;
+      inputImagePhoto = regImage;
+    });
+    List<int> imageBytes = File(regImage!.path).readAsBytesSync();
+    // print(imageBytes);
+    base64Image = base64.encode(imageBytes);
 
-    if(context.mounted) {
+    if (context.mounted) {
       Navigator.pop(context);
     }
   }
@@ -112,7 +112,8 @@ class RegistrationController {
                                 child: RegistrationController.regImage == null
                                     ? SvgPicture.asset(
                                         logotrans,
-                                        colorFilter: getFilterColor(  Colors.transparent.withOpacity(.2)),
+                                        colorFilter: getFilterColor(
+                                            Colors.transparent.withOpacity(.2)),
                                       )
                                     : ClipRRect(
                                         borderRadius: BorderRadius.circular(16),
@@ -210,6 +211,8 @@ class RegistrationController {
                           ),
                         ),
                       ),
+
+                      if(inputImagePhoto!=null)
                       Align(
                         alignment: Alignment.topLeft,
                         child: InkWell(
@@ -230,6 +233,7 @@ class RegistrationController {
               Padding(
                 padding: const EdgeInsets.only(top: 34, bottom: 24),
                 child: TextFormField(
+                  maxLength: 35,
                   controller: _fullName,
                   onChanged: (val) {
                     inputFullName = _fullName.text;
@@ -238,7 +242,7 @@ class RegistrationController {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "full Name Required".tr;
-                    } else if (value.length > 33 || value.length < 2) {
+                    } else if (value.length > 33 || value.length < 6) {
                       return "name length".tr;
                     }
                     return null;
@@ -252,6 +256,8 @@ class RegistrationController {
                 ),
               ),
               TextFormField(
+                maxLength: 35,
+
                 controller: _englishName,
                 onChanged: (val) {
                   inputEnglishName = _englishName.text;
@@ -261,7 +267,7 @@ class RegistrationController {
                   if (value!.isEmpty) {
                     return "User Name Required".tr;
                   }
-                  if (value.length > 17 || value.length < 5) {
+                  if (value.length > 17 || value.length < 6) {
                     return "User Name Length".tr;
                   }
                   // else if   (!validEnglish(value)) {
@@ -269,9 +275,6 @@ class RegistrationController {
                   // }
                   return null;
                 },
-                // inputFormatters: <TextInputFormatter>[
-                //   FilteringTextInputFormatter.allow(RegExp('[a-z A-Z 0-9]'))
-                // ],
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "اسم المستخدم باللغة الإنجليزية...",
                     prefixIcon: SvgPicture.asset(
@@ -292,30 +295,35 @@ class RegistrationController {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
+
                   keyboardType: TextInputType.emailAddress,
                   controller: _email,
                   onChanged: (val) {
                     inputEmail = _email.text;
                   },
                   validator: (val) {
-                    if (val!.isEmpty ||
-                        !RegExp(Validations.validationEmail).hasMatch(val)) {
+                    if (val!.isEmpty ) {
                       return "Email data".tr;
                     }
+                    if(
+                    !RegExp(Validations.validationEmail).hasMatch(val))
+                      {
+                        return 'error mail format'.tr;
+                      }
                     return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "البريد الإلكتروني...",
-                      prefixIcon: SvgPicture.asset(
-                        mailLink,
-                        height: 24,
-                      )),
+                      prefixIcon: SvgPicture.asset(mailLink
+                          // height: 24,
+                          )),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: PasswordTextFormField(
+                  maxLength: 10,
                     controller: _password,
                     style: Constants.subtitleFont1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -435,8 +443,13 @@ class RegistrationController {
                 child: TextFormField(
                   maxLength: 770,
                   maxLines: 6,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r"\n\n"))
+                  ],
+
                   controller: _summaryController,
                   onChanged: (val) {
+
                     inputSummary = _summaryController.text;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -462,6 +475,7 @@ class RegistrationController {
                   bottom: 24,
                 ),
                 child: TextFormField(
+                  maxLength: 2,
                   keyboardType: TextInputType.number,
                   controller: _experienceController,
                   onChanged: (val) {
@@ -486,7 +500,6 @@ class RegistrationController {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
                   controller: certificatesController,
-                  // maxLength: 10,
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "الشهادات والإنجازات...",
                       suffixIcon: Padding(
@@ -504,7 +517,6 @@ class RegistrationController {
                                 "id": idd
                               });
                               certificatesController.clear();
-                              MyApplication.dismissKeyboard(context);
                               BlocProvider.of<AddCertificateCubit>(context)
                                   .addCertificate();
                             }
@@ -551,6 +563,7 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: TextFormField(
+                maxLength: 40,
                 controller: _bankNameController,
                 onChanged: (val) {
                   inputBankName = _bankNameController.text;
@@ -566,9 +579,10 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: TextFormField(
+                maxLength: 24,
                 controller: _bankAccountController,
                 onChanged: (val) {
-                  inputBankAccount = _bankAccountController.text;
+                  inputBankAccount = _bankAccountController.text.replaceAll(' ', '');
                 },
                 decoration: Constants.setRegistrationTextInputDecoration(
                     hintText: "آيبانIBAN Number...  SA***********",
@@ -585,7 +599,7 @@ class RegistrationController {
                   width: 8,
                 ),
                 const Text(
-                  "إقرار باالسياسة والعمولة",
+                  "إقرار بالسياسة والعمولة",
                   style: Constants.mainTitleFont,
                 ),
                 const Spacer(),
@@ -630,7 +644,6 @@ class RegistrationController {
                       _birthdayController.text = formattedDate;
                     });
                   }
-
                 },
                 onChanged: (val) {
                   inputBirthday = _birthdayController.text;

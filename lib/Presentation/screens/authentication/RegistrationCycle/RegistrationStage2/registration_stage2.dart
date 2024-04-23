@@ -15,7 +15,7 @@ import '../../../../../app/utils/registeration_values.dart';
 import '../../../../widgets/custom_loading_widget.dart';
 
 class RegistrationStage2 extends StatefulWidget {
-  const RegistrationStage2({Key? key}) : super(key: key);
+  const RegistrationStage2({super.key});
 
   @override
   State<RegistrationStage2> createState() => _RegistrationStage2State();
@@ -39,165 +39,161 @@ class _RegistrationStage2State extends State<RegistrationStage2> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          MyApplication.dismissKeyboard(context);
-        },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-              leadingWidth: 70,
-              title: const Text("إدخال رمز التحقق"),
-              leading: const CustomBackButton()),
-          body: Form(
-            key: _formKey,
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              padding: EdgeInsets.only(
-                top: 16,
-                right: 16,
-                left: 16,
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: SingleChildScrollView(
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                child: BlocBuilder<CheckCodeCubit, CheckCodeState>(
-                    builder: (context, state) => Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+          leadingWidth: 70,
+          title: const Text("إدخال رمز التحقق"),
+          leading: const CustomBackButton()),
+      body: Form(
+        key: _formKey,
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          padding: EdgeInsets.only(
+            top: 16,
+            right: 16,
+            left: 16,
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: SingleChildScrollView(
+            keyboardDismissBehavior:
+                ScrollViewKeyboardDismissBehavior.onDrag,
+            child: BlocBuilder<CheckCodeCubit, CheckCodeState>(
+                builder: (context, state) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Padding(
+                        //   padding: EdgeInsets.only(
+                        //       bottom: MyApplication.hightClc(context, 88),
+                        //       top: MyApplication.hightClc(context, 74)),
+                        //   child: Center(
+                        //       child: Text(
+                        //     "إنشاء حساب جديد",
+                        //     style: TextStyle(
+                        //         fontFamily: Constants.mainFont, fontSize: 24),
+                        //   )),
+                        // ),
+                        Lottie.asset(otpLotti, height: 160),
+                        const Text(
+                          "رمز التحقق من الجوال",
+                          style: TextStyle(
+                              fontFamily: Constants.mainFont, fontSize: 24),
+                        ),
+                        const Text(
+                          "تم إرسال رمز التحقق إلى رقم جوالك",
+                          style: Constants.subtitleFont1,
+                        ),
+                        Text(
+                          " $inputPhone",
+                          style: Constants.secondaryTitleRegularFont,
+                        ),
+
+                        Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: MyApplication.hightClc(context, 30),
+                                bottom:
+                                    MyApplication.hightClc(context, 32)),
+                            child: Pinput(
+                              errorTextStyle: Constants.subtitleFont
+                                  .copyWith(color: Colors.red),
+                              pinputAutovalidateMode:
+                                  PinputAutovalidateMode.onSubmit,
+                              showCursor: true,
+                              autofocus: true,
+                              controller: _pinController,
+                              focusNode: myFocusNode,
+                              defaultPinTheme: Constants.defaultPinTheme,
+                              focusedPinTheme: Constants.focusedPinTheme,
+                              errorPinTheme: Constants.errorPinTheme,
+                              // errorBuilder: (errorText, pin) {},
+                              validator: (value) {
+                                if (value!.isEmpty ||
+                                    value.length != 4 ||
+                                    !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                  return "يرجى ادخال رمز تحقق صحيح";
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                        state is CheckCodeLoading
+                            ? const CustomLoadingIndicator()
+                            : SizedBox(
+                                width: double.infinity,
+                                height: 48,
+                                child: CustomButton(
+                                  isBold: true,
+                                  txt: "التالي",
+                                  onPressedHandler: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      context
+                                          .read<CheckCodeCubit>()
+                                          .checkCodeMethod(
+                                              context: context,
+                                              code: _pinController.text,
+                                              phone: inputPhone);
+                                    }
+                                  },
+                                ),
+                              ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: MyApplication.hightClc(context, 24),
+                              bottom: MyApplication.hightClc(context, 50)),
+                          // ignore: prefer_const_constructors
+                          child: Text(
+                            "خطوة 2 من 7",
+                            style: Constants.subtitleRegularFont,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            // Padding(
-                            //   padding: EdgeInsets.only(
-                            //       bottom: MyApplication.hightClc(context, 88),
-                            //       top: MyApplication.hightClc(context, 74)),
-                            //   child: Center(
-                            //       child: Text(
-                            //     "إنشاء حساب جديد",
-                            //     style: TextStyle(
-                            //         fontFamily: Constants.mainFont, fontSize: 24),
-                            //   )),
-                            // ),
-                            Lottie.asset(otpLotti, height: 160),
                             const Text(
-                              "رمز التحقق من الجوال",
-                              style: TextStyle(
-                                  fontFamily: Constants.mainFont, fontSize: 24),
+                              "سيتم اعادة ارسال الكود بعد ",
+                              style: Constants.subtitleRegularFont,
                             ),
-                            const Text(
-                              "تم إرسال رمز التحقق إلى رقم جوالك",
-                              style: Constants.subtitleFont1,
-                            ),
-                            Text(
-                              " $inputPhone",
-                              style: Constants.secondaryTitleRegularFont,
-                            ),
-
-                            Directionality(
-                              textDirection: TextDirection.ltr,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: MyApplication.hightClc(context, 30),
-                                    bottom:
-                                        MyApplication.hightClc(context, 32)),
-                                child: Pinput(
-                                  errorTextStyle: Constants.subtitleFont
-                                      .copyWith(color: Colors.red),
-                                  pinputAutovalidateMode:
-                                      PinputAutovalidateMode.onSubmit,
-                                  showCursor: true,
-                                  autofocus: true,
-                                  controller: _pinController,
-                                  focusNode: myFocusNode,
-                                  defaultPinTheme: Constants.defaultPinTheme,
-                                  focusedPinTheme: Constants.focusedPinTheme,
-                                  errorPinTheme: Constants.errorPinTheme,
-                                  // errorBuilder: (errorText, pin) {},
-                                  validator: (value) {
-                                    if (value!.isEmpty ||
-                                        value.length != 4 ||
-                                        !RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                      return "يرجى ادخال رمز تحقق صحيح";
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ),
-                            state is CheckCodeLoading
-                                ? const CustomLoadingIndicator()
-                                : SizedBox(
-                                    width: double.infinity,
-                                    height: 48,
-                                    child: CustomButton(
-                                      isBold: true,
-                                      txt: "التالي",
-                                      onPressedHandler: () {
-                                        if (_formKey.currentState!.validate()) {
-                                          context
-                                              .read<CheckCodeCubit>()
-                                              .checkCodeMethod(
-                                                  context: context,
-                                                  code: _pinController.text,
-                                                  phone: inputPhone);
-                                        }
-                                      },
-                                    ),
-                                  ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: MyApplication.hightClc(context, 24),
-                                  bottom: MyApplication.hightClc(context, 50)),
-                              // ignore: prefer_const_constructors
-                              child: Text(
-                                "خطوة 2 من 7",
-                                style: Constants.subtitleRegularFont,
-                              ),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  "سيتم اعادة ارسال الكود بعد ",
-                                  style: Constants.subtitleRegularFont,
-                                ),
-                                CountdownTimer(
-                                  controller: timerController,
-                                  widgetBuilder: (_, time) {
-                                    if (time == null) {
-                                      return Text(
-                                        '00:00',
-                                        style: Constants.subtitleRegularFont
-                                            .copyWith(
-                                                color:
-                                                    Constants.primaryAppColor),
-                                      );
-                                    }
-                                    return Text(
-                                      '${time.min ?? "00"}:${time.sec}',
-                                      style: Constants.subtitleRegularFont
-                                          .copyWith(
-                                              color: Constants.primaryAppColor),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: MyApplication.hightClc(context, 40)),
-                              child: const Text("لم تستلم الرمز حتى الآن",
-                                  style: Constants.subtitleFont1),
-                            ),
-                            const Text(
-                              "إعادة إرسال",
-                              style: Constants.mainTitleFont,
+                            CountdownTimer(
+                              controller: timerController,
+                              widgetBuilder: (_, time) {
+                                if (time == null) {
+                                  return Text(
+                                    '00:00',
+                                    style: Constants.subtitleRegularFont
+                                        .copyWith(
+                                            color:
+                                                Constants.primaryAppColor),
+                                  );
+                                }
+                                return Text(
+                                  '${time.min ?? "00"}:${time.sec}',
+                                  style: Constants.subtitleRegularFont
+                                      .copyWith(
+                                          color: Constants.primaryAppColor),
+                                );
+                              },
                             ),
                           ],
-                        )),
-              ),
-            ),
+                        ),
+
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: MyApplication.hightClc(context, 40)),
+                          child: const Text("لم تستلم الرمز حتى الآن",
+                              style: Constants.subtitleFont1),
+                        ),
+                        const Text(
+                          "إعادة إرسال",
+                          style: Constants.mainTitleFont,
+                        ),
+                      ],
+                    )),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

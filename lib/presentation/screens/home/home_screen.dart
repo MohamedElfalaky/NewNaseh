@@ -33,7 +33,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int ordersCount = 0;
+  int? ordersCount = null;
   HomeController homeController = HomeController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final TextEditingController _textController = TextEditingController();
@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     OutcomeAndRate(
                                       assetName: ordersIcon,
                                       title: "عدد الطلبات",
-                                      subtitle: "$ordersCount ",
+                                      subtitle: "${ordersCount??0} ",
                                       color: Constants.primaryAppColor,
                                     ),
                                     OutcomeAndRate(
@@ -267,8 +267,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           BlocConsumer<ListOneHomeCubit, ListOneHomeState>(
                               listener: (context, state) {
                             if (state is ListOneHomeLoaded) {
-                              ordersCount = state.response?.data?.length ?? 0;
-                              setState(() {});
+                              if(ordersCount==null) {
+                                ordersCount = state.response?.data?.length ?? 0;
+                                setState(() {});
+                              }
                             }
                           }, builder: (context, state) {
                             if (state is ListOneHomeLoading) {

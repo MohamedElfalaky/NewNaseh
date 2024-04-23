@@ -22,7 +22,7 @@ class NotificationWidget extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow:   [
+          boxShadow: [
             BoxShadow(
                 color: Constants.primaryAppColor.withOpacity(0.2),
                 spreadRadius: 1,

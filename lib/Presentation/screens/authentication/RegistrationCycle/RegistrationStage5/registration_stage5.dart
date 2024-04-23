@@ -15,7 +15,7 @@ import '../../../../widgets/custom_loading_widget.dart';
 import '../RegistrationStage6/registration_stage6.dart';
 
 class RegistrationStage5 extends StatefulWidget {
-  const RegistrationStage5({Key? key}) : super(key: key);
+  const RegistrationStage5({super.key});
 
   @override
   State<RegistrationStage5> createState() => _RegistrationStage5State();
@@ -33,85 +33,80 @@ class _RegistrationStage5State extends State<RegistrationStage5> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        MyApplication.dismissKeyboard(context);
-      },
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: CustomButton(
-                    isBold: true,
-                    txt: "التالي",
-                    onPressedHandler: () {
-                      debugPrint(
-                          "the صهفا سحمهف is ${sendCategory.toSet().toList().toString().split("[").last.split("]").first}");
-                      MyApplication.navigateTo(
-                          context, const RegistrationStage6());
-                    },
-                  ),
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: CustomButton(
+                  isBold: true,
+                  txt: "التالي",
+                  onPressedHandler: () {
+                    debugPrint(
+                        "the صهفا سحمهف is ${sendCategory.toSet().toList().toString().split("[").last.split("]").first}");
+                    MyApplication.navigateTo(
+                        context, const RegistrationStage6());
+                  },
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 8,
-                  ),
-                  child: Text(
-                    "خطوة 5 من 7",
-                    style: Constants.subtitleRegularFont,
-                  ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(
+                  top: 8,
                 ),
-              ],
-            ),
+                child: Text(
+                  "خطوة 5 من 7",
+                  style: Constants.subtitleRegularFont,
+                ),
+              ),
+            ],
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-          appBar: AppBar(
-            centerTitle: false,
-            leadingWidth: 70,
-            title: const Text("مجالات التخصص"),
-            leading: const CustomBackButton(),
-            actions: [
-              Center(
-                child: Padding(
-                  padding: const EdgeInsetsDirectional.only(end: 10),
-                  child: Badge(
-                    label: const Text("7"),
-                    backgroundColor: const Color.fromARGB(255, 138, 138, 144),
-                    alignment: const AlignmentDirectional(0, 25),
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                          color: Constants.primaryAppColor,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: SvgPicture.asset(
-                        selectedSectors,
-                      ),
+        ),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.centerDocked,
+        appBar: AppBar(
+          centerTitle: false,
+          leadingWidth: 70,
+          title: const Text("مجالات التخصص"),
+          leading: const CustomBackButton(),
+          actions: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(end: 10),
+                child: Badge(
+                  label: const Text("7"),
+                  backgroundColor: const Color.fromARGB(255, 138, 138, 144),
+                  alignment: const AlignmentDirectional(0, 25),
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: Constants.primaryAppColor,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: SvgPicture.asset(
+                      selectedSectors,
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
-          body: BlocBuilder<CategoryCubit, CategoryState>(
-              builder: (context, state) {
-            if (state is CategoryLoading) {
-              return const CustomLoadingIndicator();
-            } else if (state is CategoryLoaded) {
-              return _buildCard(context, state.response!);
-            } return const SizedBox.shrink(
-            );
-          })),
-    );
+              ),
+            )
+          ],
+        ),
+        body: BlocBuilder<CategoryCubit, CategoryState>(
+            builder: (context, state) {
+          if (state is CategoryLoading) {
+            return const CustomLoadingIndicator();
+          } else if (state is CategoryLoaded) {
+            return _buildCard(context, state.response!);
+          }
+          return const SizedBox.shrink();
+        }));
   }
 
   List<CategoryData> results = [];

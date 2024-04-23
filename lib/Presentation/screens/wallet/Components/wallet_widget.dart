@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:nasooh/app/constants.dart';
 
 import '../../../../app/styles/icons.dart';

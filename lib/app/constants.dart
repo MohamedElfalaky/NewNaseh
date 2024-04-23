@@ -94,6 +94,7 @@ class Constants {
     return InputDecoration(
         errorStyle: Constants.subtitleFont1.copyWith(
           color: Colors.red,
+          fontSize: 12
         ),
         prefixIcon: withPadding == true
             ? Padding(
@@ -139,6 +140,7 @@ class Constants {
     return InputDecoration(
         errorStyle: Constants.subtitleFont1.copyWith(
           color: Colors.red,
+          fontSize: 12
         ),
         counterText: '',
         prefixIcon: isParagraph == true

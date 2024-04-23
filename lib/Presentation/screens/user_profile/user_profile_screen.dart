@@ -37,7 +37,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                ...SettingsMenuItems.all.map(buildMenuItem).toList(),
+                ...SettingsMenuItems.all.map(buildMenuItem),
               ],
             )),
           ),

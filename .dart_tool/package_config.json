@@ -429,9 +429,9 @@
     },
     {
       "name": "image_picker",
-      "rootUri": "file:///Users/macbook/.pub-cache/hosted/pub.dev/image_picker-1.0.7",
+      "rootUri": "file:///Users/macbook/.pub-cache/hosted/pub.dev/image_picker-1.0.8",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.1"
     },
     {
       "name": "image_picker_android",
@@ -1022,7 +1022,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-04-06T20:57:41.146267Z",
+  "generated": "2024-04-16T04:21:33.937138Z",
   "generator": "pub",
   "generatorVersion": "3.3.3"
 }

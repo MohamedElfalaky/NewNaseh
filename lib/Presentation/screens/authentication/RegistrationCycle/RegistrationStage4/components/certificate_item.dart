@@ -50,7 +50,6 @@ class CertificateItem extends StatelessWidget {
 
                     BlocProvider.of<AddCertificateCubit>(context)
                         .addCertificate();
-
                   },
                   child: const Icon(
                     Icons.close_outlined,

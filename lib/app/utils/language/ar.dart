@@ -58,7 +58,7 @@ Map<String, String> getArabicLanguage() {
     "know_nasouh": "تعرف علي تطبيق نصوح",
     "signout": "تسجيل الخروج",
     "User Name Required": "اسم المستخدم مطلوب",
-    "User Name Length": "اسم المستخدم يجب ان تكون أكثر من 5 و  أقل 17 حرف ",
+    "User Name Length": " يجب ان يكون أكثر من 5 وأقل 17 حرف ",
     "Email data": "فضلا ادخل بريد الكتروني صحيح",
     "password data": "فضلا ادخل كلمة المرور",
     "description Required": "فضلا ادخل الوصف",
@@ -66,7 +66,7 @@ Map<String, String> getArabicLanguage() {
     "experience Required": "فضلا ادخل سنوات الخبرة",
     "short description": "الوصف لا يقل عن 4 أحرف",
     "add image please": "فضلا اختر صورة",
-    "name length": "عدد أحرف الاسم يجب ان تكون أكثر من 2 و  أقل 33 حرف ",
+    "name length": "عدد أحرف الاسم يجب ان تكون أكثر من 5 و أقل 33 حرف ",
     "summary length": "النبذة التعريفية يجب الا تقل عن 33 حرف",
     "My Wallet": "محفظتي",
     "Edit Profile": "تعديل الملف الشخصي",
@@ -93,5 +93,7 @@ Map<String, String> getArabicLanguage() {
     "delete tile": "تأكيد حذف الحساب ؟",
     "Yes": "نعم",
     "No": "لأ",
+    "error mail format":"خطأ في صياغة الاسم"
+
   };
 }

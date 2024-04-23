@@ -48,203 +48,194 @@ class _RejectOrderState extends State<RejectOrder> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          MyApplication.dismissKeyboard(context);
+    return Scaffold(
+      floatingActionButton: BlocConsumer<PostRejectCubit, PostRejectState>(
+        listener: (context, state) {
+          if (state is PostRejectLoaded) {
+            Alert.alert(
+                context: context,
+                action: () {
+                  MyApplication.navigateToReplaceAllPrevious(
+                      context, const HomeScreen());
+                },
+                content: "تم ارسال سبب الرفض بنجاح",
+                titleAction: "الرئيسية");
+          }
         },
-        child: Scaffold(
-          floatingActionButton: BlocConsumer<PostRejectCubit, PostRejectState>(
-            listener: (context, state) {
-              if (state is PostRejectLoaded) {
-                Alert.alert(
-                    context: context,
-                    action: () {
-                      MyApplication.navigateToReplaceAllPrevious(
-                          context, const HomeScreen());
+        builder: (context, state) => Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            height: 50,
+            child: state is PostRejectLoading
+                ? const CustomLoadingIndicator()
+                : CustomButton(
+                    txt: "رفض الطلب",
+                    isBold: true,
+                    onPressedHandler: () {
+                      context.read<PostRejectCubit>().postRejectMethod(
+                            adviceId: widget.showAdData!.id.toString(),
+                            commentId: selectedId.toString(),
+                            commentOther: "",
+                          );
                     },
-                    content: "تم ارسال سبب الرفض بنجاح",
-                    titleAction: "الرئيسية");
-              }
-            },
-            builder: (context, state) => Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                height: 50,
-                child: state is PostRejectLoading
-                    ? const CustomLoadingIndicator()
-                    : CustomButton(
-                        txt: "رفض الطلب",
-                        isBold: true,
-                        onPressedHandler: () {
-                          context.read<PostRejectCubit>().postRejectMethod(
-                                adviceId: widget.showAdData!.id.toString(),
-                                commentId: selectedId.toString(),
-                                commentOther: "",
-                              );
-                        },
-                      )),
+                  )),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      resizeToAvoidBottomInset: true,
+      extendBody: true,
+      backgroundColor: Constants.whiteAppColor,
+      appBar: AppBar(
+          centerTitle: false,
+          leadingWidth: 70,
+          title: const Row(
+            children: [
+              Text("رفض الطلب"),
+            ],
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          resizeToAvoidBottomInset: true,
-          extendBody: true,
-          backgroundColor: Constants.whiteAppColor,
-          appBar: AppBar(
-              centerTitle: false,
-              leadingWidth: 70,
-              title: const Row(
-                children: [
-                  Text("رفض الطلب"),
-                ],
-              ),
-              leading: const CustomBackButton()),
-          body: BlocBuilder<ListRejectionCubit, ListRejectionState>(
-              builder: (context, homeState) {
-            if (homeState is ListRejectionLoading) {
-              return const CustomLoadingIndicator();
-            } else if (homeState is ListRejectionLoaded) {
-              final List<RejectData> list = homeState.response!.data!;
-              return Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
-                child: Column(
-                  children: [
-                    AdviceWidget(
-                      showAdData: widget.showAdData,
-                      isAdviceDetail: false,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          backgroundColor: Colors.white,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(25.0),
-                            ),
-                          ),
-                          context: context,
-                          builder: (BuildContext context) {
-                            return Container(
-                              padding: EdgeInsets.zero,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(25.0),
-                                  topLeft: Radius.circular(25.0),
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Image.asset(
-                                    rejeIcon,
-                                    height: 100,
-                                    width: 100,
-                                    // fit: BoxFit.cover,
-                                  ),
-                                  Flexible(
-                                    child: ListView.builder(
-                                      itemCount: list.length,
-                                      itemBuilder: (context, index) {
-                                        final object = list[index];
-                                        return ListTile(
-                                          contentPadding: EdgeInsets.zero,
-                                          leading: Radio(
-                                            value: 1,
-                                            groupValue: 0,
-                                            onChanged: (val) {},
-                                          ),
-                                          title: Text(
-                                            list[index].name!,
-                                            style: const TextStyle(
-                                              fontFamily: 'Cairo',
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          onTap: () {
-                                            Navigator.pop(
-                                                context); // Close the bottom sheet
-                                            _textController.text =
-                                                list[index].name!;
-                                            selectedId = list[index].id!;
-                                            if (object.id == 0) {
-                                              showModalBottomSheet(
-                                                context: context,
-                                                backgroundColor:
-                                                    Constants.whiteAppColor,
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.vertical(
-                                                    top: Radius.circular(25.0),
-                                                  ),
-                                                ),
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return Padding(
-                                                    padding: EdgeInsets.only(
-                                                        bottom: MediaQuery.of(
-                                                                context)
-                                                            .viewInsets
-                                                            .bottom),
-                                                    child: SingleChildScrollView(
-                                                        child:
-                                                            otherBottomSheet()),
-                                                  );
-                                                },
-                                              );
-                                            }
-                                          },
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: TextField(
-                        controller: _textController,
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Cairo',
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600
-                        ),
-                        maxLines: 1,
-                        autofocus: false,
-                        enabled: false,
-                        cursorHeight: 0,
-                        decoration:
-                            Constants.setRegistrationTextInputDecoration(
-                          hintText: "سبب الرفض",
-                          prefixIcon: SvgPicture.asset(
-                            rejectIcon,
-                            colorFilter: getFilterColor(Colors.red),
-                            height: 24,
-                          ),
-                          suffixIcon: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: Colors.black,
-                            size: 24,
-                          ),
-                        ).copyWith(
-                          disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: const BorderSide(
-                                color: Colors.black45,
-                              )),
+          leading: const CustomBackButton()),
+      body: BlocBuilder<ListRejectionCubit, ListRejectionState>(
+          builder: (context, homeState) {
+        if (homeState is ListRejectionLoading) {
+          return const CustomLoadingIndicator();
+        } else if (homeState is ListRejectionLoaded) {
+          final List<RejectData> list = homeState.response!.data!;
+          return Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, top: 10),
+            child: Column(
+              children: [
+                AdviceWidget(
+                  showAdData: widget.showAdData,
+                  isAdviceDetail: false,
+                ),
+                InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      backgroundColor: Colors.white,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
                         ),
                       ),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          padding: EdgeInsets.zero,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(25.0),
+                              topLeft: Radius.circular(25.0),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                rejeIcon,
+                                height: 100,
+                                width: 100,
+                                // fit: BoxFit.cover,
+                              ),
+                              Flexible(
+                                child: ListView.builder(
+                                  itemCount: list.length,
+                                  itemBuilder: (context, index) {
+                                    final object = list[index];
+                                    return ListTile(
+                                      contentPadding: EdgeInsets.zero,
+                                      leading: Radio(
+                                        value: 1,
+                                        groupValue: 0,
+                                        onChanged: (val) {},
+                                      ),
+                                      title: Text(
+                                        list[index].name!,
+                                        style: const TextStyle(
+                                          fontFamily: 'Cairo',
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        Navigator.pop(
+                                            context); // Close the bottom sheet
+                                        _textController.text =
+                                            list[index].name!;
+                                        selectedId = list[index].id!;
+                                        if (object.id == 0) {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            backgroundColor:
+                                                Constants.whiteAppColor,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(25.0),
+                                              ),
+                                            ),
+                                            builder: (BuildContext context) {
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets
+                                                            .bottom),
+                                                child: SingleChildScrollView(
+                                                    child: otherBottomSheet()),
+                                              );
+                                            },
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: TextField(
+                    onTap: () =>
+                        MyApplication.unFocusCursorRTL(_textController),
+                    controller: _textController,
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600),
+                    maxLines: 1,
+                    autofocus: false,
+                    enabled: false,
+                    cursorHeight: 0,
+                    decoration: Constants.setRegistrationTextInputDecoration(
+                      hintText: "سبب الرفض",
+                      prefixIcon: SvgPicture.asset(
+                        rejectIcon,
+                        colorFilter: getFilterColor(Colors.red),
+                        height: 24,
+                      ),
+                      suffixIcon: const Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Colors.black,
+                        size: 24,
+                      ),
+                    ).copyWith(
+                      disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            color: Colors.black45,
+                          )),
                     ),
-                  ],
+                  ),
                 ),
-              );
-            }
-            return const SizedBox.shrink();
-          }),
-        ));
+              ],
+            ),
+          );
+        }
+        return const SizedBox.shrink();
+      }),
+    );
   }
 
   Widget otherBottomSheet() {
@@ -288,6 +279,8 @@ class _RejectOrderState extends State<RejectOrder> {
           Padding(
             padding: const EdgeInsets.all(15),
             child: TextFormField(
+              onTap: ()=>MyApplication.unFocusCursorRTL(_otherController),
+
               maxLines: 6,
               controller: _otherController,
               autovalidateMode: AutovalidateMode.onUserInteraction,

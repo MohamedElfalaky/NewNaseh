@@ -6,14 +6,13 @@ import 'package:nasooh/naseh_app.dart';
 import 'Data/repositories/notification/fcm.dart';
 import 'app/utils/shared_preference.dart';
 
-// 562131705
-// Aa@123123
+// 530530530
+// Ahmed0105#
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.remove;
   await SharedPrefs().init();
   await Firebase.initializeApp();
   FirebaseCustomNotification.setUpFirebase();
-
   runApp(const NasehApp());
 }

@@ -34,6 +34,7 @@ class NasehApp extends StatelessWidget {
             navigatorKey: Keys.navigatorKey,
             useInheritedMediaQuery: true,
             debugShowCheckedModeBanner: false,
+
             title: 'ناصح',
             theme: whiteTheme,
             home: sharedPrefs.getToken != ""

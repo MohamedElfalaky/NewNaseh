@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
-import 'package:nasooh/app/utils/my_application.dart';
 
 import '../../../Data/cubit/notification_cubit/notification_cubit.dart';
 import '../../../Data/cubit/notification_cubit/notification_state.dart';
@@ -29,49 +28,43 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        MyApplication.dismissKeyboard(context);
-      }, // hide keyboard on tap anywhere
-
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Constants.whiteAppColor,
-          appBar: AppBar(
-            centerTitle: false,
-            leadingWidth: 80,
-            title: Text("Notifications".tr),
-            leading: const Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: CustomBackButton(),
-            ),
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Constants.whiteAppColor,
+        appBar: AppBar(
+          centerTitle: false,
+          leadingWidth: 80,
+          title: Text("Notifications".tr),
+          leading: const Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: CustomBackButton(),
           ),
-          body: BlocBuilder<NotificationCubit, NotificationState>(
-              builder: (context, state) {
-            if (state is NotificationLoading) {
-              return const CustomLoadingIndicator();
-            } else if (state is NotificationLoaded) {
-              return Column(
-                children: [
-                  Expanded(
-                      child: ListView.builder(
-                    itemBuilder: (context, index) => NotificationWidget(
-                      orderId: state.response?[index].id ?? 0,
-                      description: state.response?[index].description ?? "",
-                      date: state.response?[index].date ?? "",
-                      notificationId:
-                          state.response?[index].id.toString() ?? "0",
-                    ),
-                    itemCount: state.response?.length ?? 0,
-                  ))
-                ],
-              );
-            } else if (state is NotificationError) {
-              return const Center(child: Text('error'));
-            } else {
-              return const CustomLoadingIndicator();
-            }
-          })),
-    );
+        ),
+        body: BlocBuilder<NotificationCubit, NotificationState>(
+            builder: (context, state) {
+          if (state is NotificationLoading) {
+            return const CustomLoadingIndicator();
+          } else if (state is NotificationLoaded) {
+            return Column(
+              children: [
+                Expanded(
+                    child: ListView.builder(
+                  itemBuilder: (context, index) => NotificationWidget(
+                    orderId: state.response?[index].id ?? 0,
+                    description: state.response?[index].description ?? "",
+                    date: state.response?[index].date ?? "",
+                    notificationId:
+                        state.response?[index].id.toString() ?? "0",
+                  ),
+                  itemCount: state.response?.length ?? 0,
+                ))
+              ],
+            );
+          } else if (state is NotificationError) {
+            return const Center(child: Text('error'));
+          } else {
+            return const CustomLoadingIndicator();
+          }
+        }));
   }
 }

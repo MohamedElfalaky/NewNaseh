@@ -20,7 +20,7 @@ class _OnBoardingState extends State<OnBoarding>
 
   @override
   void initState() {
-     super.initState();
+    super.initState();
 
     _animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 1500));
@@ -63,7 +63,8 @@ class _OnBoardingState extends State<OnBoarding>
                       ),
                       SlideTransition(
                         position: Tween<Offset>(
-                                begin: const Offset(0, -4), end: const Offset(0, 0.1))
+                                begin: const Offset(0, -4),
+                                end: const Offset(0, 0.1))
                             .animate(_animationController),
                         child: SizedBox(
                             height: 150,
@@ -77,7 +78,8 @@ class _OnBoardingState extends State<OnBoarding>
                       ),
                       SlideTransition(
                         position: Tween<Offset>(
-                                begin: const Offset(-2, 0), end: const Offset(0, 0))
+                                begin: const Offset(-2, 0),
+                                end: const Offset(0, 0))
                             .animate(_animationController),
                         child: Column(
                           children: [

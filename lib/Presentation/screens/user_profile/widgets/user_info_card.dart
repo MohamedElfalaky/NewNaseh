@@ -34,7 +34,6 @@ class UserInfoCard extends StatelessWidget {
           SvgPicture.asset(
             "assets/images/SVGs/Ellipse.svg",
             colorFilter: getFilterColor(Colors.black45),
-
             width: 60,
           ),
           Padding(
@@ -44,9 +43,7 @@ class UserInfoCard extends StatelessWidget {
               backgroundColor: Colors.black87,
               child: SvgPicture.asset(
                 "assets/images/SVGs/pen.svg",
-
                 colorFilter: getFilterColor(Constants.whiteAppColor),
-
                 width: 8,
               ),
             ),
@@ -69,7 +66,7 @@ class UserInfoCard extends StatelessWidget {
             child: SvgPicture.asset(
               "assets/images/SVGs/pen.svg",
               colorFilter: getFilterColor(Constants.primaryAppColor),
-               width: 12,
+              width: 12,
             ),
           )),
     );

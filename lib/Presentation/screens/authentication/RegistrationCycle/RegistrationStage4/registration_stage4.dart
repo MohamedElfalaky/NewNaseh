@@ -9,7 +9,7 @@ import '../RegistrationStage5/registration_stage5.dart';
 import '../registration_controller.dart';
 
 class RegistrationStage4 extends StatefulWidget {
-  const RegistrationStage4({Key? key}) : super(key: key);
+  const RegistrationStage4({super.key});
 
   @override
   State<RegistrationStage4> createState() => _RegistrationStage4State();
@@ -20,66 +20,62 @@ List<Map<String, dynamic>> certiList = [];
 class _RegistrationStage4State extends State<RegistrationStage4> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        MyApplication.dismissKeyboard(context);
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        floatingActionButton: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: CustomButton(
-                  isBold: true,
-                  txt: "التالي",
-                  onPressedHandler: () {
-                    if (stage4FormKey.currentState!.validate()) {
-                      debugPrint(
-                          "  inputDescription is $inputDescription &   inputSummary  is $inputSummary && List of inputs are $certiList ");
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: CustomButton(
+                isBold: true,
+                txt: "التالي",
+                onPressedHandler: () {
+                  if (stage4FormKey.currentState!.validate()) {
+                    debugPrint(
+                        "  inputDescription is $inputDescription &   inputSummary  is $inputSummary && List of inputs are $certiList ");
 
-                      inputDocuments = certiList.map((e) => e["cert"]).toList();
-                      debugPrint("The new List is ${inputDocuments.toString()}");
-                      MyApplication.navigateTo(
-                          context, const RegistrationStage5());
-                    }
-                  },
-                ),
+                    inputDocuments = certiList.map((e) => e["cert"]).toList();
+                    debugPrint(
+                        "The new List is ${inputDocuments.toString()}");
+                    MyApplication.navigateTo(
+                        context, const RegistrationStage5());
+                  }
+                },
               ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  top: 8,
-                ),
-                child: Text(
-                  "خطوة 4 من 7",
-                  style: Constants.subtitleRegularFont,
-                ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(
+                top: 8,
               ),
-            ],
-          ),
+              child: Text(
+                "خطوة 4 من 7",
+                style: Constants.subtitleRegularFont,
+              ),
+            ),
+          ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        appBar: AppBar(
-            centerTitle: false,
-            leadingWidth: 70,
-            title: const Text("معلومات التخصص"),
-            leading: const CustomBackButton()),
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: double.infinity,
-          padding: EdgeInsets.only(
-            top: 16,
-            right: 16,
-            left: 16,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: RegistrationController.r4Body(context),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      appBar: AppBar(
+          centerTitle: false,
+          leadingWidth: 70,
+          title: const Text("معلومات التخصص"),
+          leading: const CustomBackButton()),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: double.infinity,
+        padding: EdgeInsets.only(
+          top: 16,
+          right: 16,
+          left: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
+        child: RegistrationController.r4Body(context),
       ),
     );
   }

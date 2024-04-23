@@ -17,8 +17,8 @@ enum SingingCharacter { arabic, english }
 
 class ChangeLangItem extends StatefulWidget {
   const ChangeLangItem({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<ChangeLangItem> createState() => _ChangeLangItemState();
@@ -44,7 +44,6 @@ class _ChangeLangItemState extends State<ChangeLangItem> {
       sharedPrefs.setLanguage('en');
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +82,7 @@ class _ChangeLangItemState extends State<ChangeLangItem> {
 }
 
 class ColoredContain extends StatelessWidget {
-  const ColoredContain({Key? key, this.color, this.txt}) : super(key: key);
+  const ColoredContain({super.key, this.color, this.txt});
   final Color? color;
   final String? txt;
 
