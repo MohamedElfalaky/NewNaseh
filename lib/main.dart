@@ -1,3 +1,4 @@
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -8,6 +9,7 @@ import 'app/utils/shared_preference.dart';
 
 // 530530530
 // Ahmed0105#
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.remove;
@@ -16,3 +18,13 @@ void main() async {
   FirebaseCustomNotification.setUpFirebase();
   runApp(const NasehApp());
 }
+
+
+unFocusCursorRTL(TextEditingController controller) {
+  if (controller.selection ==
+      TextSelection.fromPosition(
+          TextPosition(offset: controller.text.length - 1))) {
+    controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: controller.text.length),
+    );
+  }}

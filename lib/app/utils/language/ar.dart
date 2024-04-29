@@ -83,7 +83,7 @@ Map<String, String> getArabicLanguage() {
     "Delete Account": "حذف الحساب",
     "Save": "حفظ",
     " Password should contain Capital, small letter & Number & Special":
-        "كلمة المرور يجب ان تحتوي علي حروف و ارقام و رموز",
+        "كلمة المرور يجب ان تحتوي علي حروف و ارقام",
     "personal information": "المعلومات الشخصية",
     "camera": "كاميرا",
     "gellery": "الاستديو",
@@ -93,7 +93,7 @@ Map<String, String> getArabicLanguage() {
     "delete tile": "تأكيد حذف الحساب ؟",
     "Yes": "نعم",
     "No": "لأ",
-    "error mail format":"خطأ في صياغة الاسم"
+    "error mail format":"خطأ في صياغة البريد الإلكتروني"
 
   };
 }

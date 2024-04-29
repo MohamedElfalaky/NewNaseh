@@ -34,13 +34,7 @@ class AdviceDetailController {
                       fontFamily: Constants.mainFont,
                       fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 10),
-                Text(
-                  textAlign: TextAlign.right,
-                  "هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحةما سيلهي القارئ عن التركيز على الشكل.",
-                  style:
-                      TextStyle(fontSize: 10, fontFamily: Constants.mainFont),
-                ),
+
                 SizedBox(height: 20),
               ],
             ),

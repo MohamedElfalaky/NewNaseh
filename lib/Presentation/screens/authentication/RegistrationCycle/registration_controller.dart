@@ -13,9 +13,12 @@ import 'package:nasooh/Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dar
 import 'package:nasooh/Presentation/widgets/shared.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:nasooh/app/styles/icons.dart';
+import 'package:nasooh/app/utils/my_application.dart';
+import 'package:nasooh/main.dart';
 import 'package:password_text_field/password_text_field.dart';
 import 'package:photo_view/photo_view.dart';
 
+import '../../../../Presentation/screens/terms_and_conditions/terms_conditions_screen.dart';
 import '../../../../app/utils/registeration_values.dart';
 import '../../../../app/utils/validations.dart';
 import '../../../widgets/my_drop_down_list.dart';
@@ -25,8 +28,7 @@ import 'RegistrationStage4/registration_stage4.dart';
 
 final stage3FormKey = GlobalKey<FormState>();
 final stage4FormKey = GlobalKey<FormState>();
-RegExp passValid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
-//A function that validate user entered password
+RegExp passValid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])");
 bool validatePassword(String pass) {
   String password = pass.trim();
   if (passValid.hasMatch(password)) {
@@ -36,13 +38,11 @@ bool validatePassword(String pass) {
   }
 }
 
-bool validEnglish(String value) {
-  RegExp regex = RegExp(r'/^[A-Za-z0-9]*$');
-  return (!regex.hasMatch(value)) ? false : true;
-}
 
 class RegistrationController {
   /// r3
+  static bool termsConditions = false;
+
   static final ImagePicker _picker = ImagePicker();
   static XFile? regImage;
   static final TextEditingController _fullName = TextEditingController();
@@ -80,7 +80,7 @@ class RegistrationController {
     }
   }
 
-  static Widget r3Body(context, setState) {
+  static Widget register3Body(context, setState) {
     return SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Form(
@@ -238,11 +238,19 @@ class RegistrationController {
                   onChanged: (val) {
                     inputFullName = _fullName.text;
                   },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                      RegExp('[\u0600-\u06FF\\s]'), // Range for Arabic characters
+                    ),
+                  ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "full Name Required".tr;
-                    } else if (value.length > 33 || value.length < 6) {
+                    }
+
+
+                    else if (value.length > 33 || value.length < 6) {
                       return "name length".tr;
                     }
                     return null;
@@ -258,6 +266,11 @@ class RegistrationController {
               TextFormField(
                 maxLength: 35,
 
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                    RegExp('[a-zA-Z1-9\\s]'), // Regular expression for English characters and spaces
+                  ),
+                ],
                 controller: _englishName,
                 onChanged: (val) {
                   inputEnglishName = _englishName.text;
@@ -267,12 +280,11 @@ class RegistrationController {
                   if (value!.isEmpty) {
                     return "User Name Required".tr;
                   }
-                  if (value.length > 17 || value.length < 6) {
+
+                 else  if (value.length > 17 || value.length < 6) {
                     return "User Name Length".tr;
                   }
-                  // else if   (!validEnglish(value)) {
-                  //   return 'الاسم يجب ان يحتوي علي حروف انجليزية و أرقام' ;
-                  // }
+
                   return null;
                 },
                 decoration: Constants.setRegistrationTextInputDecoration(
@@ -285,7 +297,7 @@ class RegistrationController {
               const Padding(
                 padding: EdgeInsets.only(bottom: 8),
                 child: Text(
-                  "سيستخدم في رابط صفحتك الشخصية: nasooh.app/ahmed",
+                  "سيستخدم في رابط صفحتك الشخصية: nasoh.app/ahmed",
                   style: TextStyle(
                       fontFamily: Constants.mainFont,
                       color: Color(0XFF1ABC9C),
@@ -312,6 +324,7 @@ class RegistrationController {
                       }
                     return null;
                   },
+                  onTap: unFocusCursorRTL(_email),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "البريد الإلكتروني...",
@@ -323,7 +336,9 @@ class RegistrationController {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: PasswordTextFormField(
-                  maxLength: 10,
+                    onTap: unFocusCursorRTL(_password),
+
+                    maxLength: 10,
                     controller: _password,
                     style: Constants.subtitleFont1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -336,13 +351,12 @@ class RegistrationController {
                       } else if (value.length < 6 || value.length > 10) {
                         return "password_length".tr;
                       }
-                      bool result = validatePassword(value);
-                      if (result) {
-                        return null;
-                      } else {
-                        return " Password should contain Capital, small letter & Number & Special"
-                            .tr;
+                      RegExp regex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$');
+                      if(!regex.hasMatch(value))
+                      {
+                        return 'يجب أن تحتوي كلمة المرور علي رقم وحرف علي الأقل';
                       }
+
                     },
                     decoration: Constants.setTextInputDecoration(
                         hintText: "كلمة المرور...",
@@ -360,39 +374,7 @@ class RegistrationController {
                           ),
                         ))),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(bottom: 24),
-              //   child: TextFormField(
-              //     controller: _password,
-              //     onChanged: (val) {
-              //       inputPassword = _password.text;
-              //     },
-              //     validator: (val) {
-              //       if (val!.isEmpty
-              //           // ||
-              //           // !RegExp(Validations.validationPassword.toString()).hasMatch(val)
-              //           ) {
-              //         return  "password data".tr;
-              //       }
-              //       if (val.length < 6 || val.length >10) {
-              //         return  "password_length".tr;
-              //       }
-              //       bool result = validatePassword(val);
-              //       if (result) {
-              //         return null;
-              //       } else {
-              //         return " Password should contain Capital, small letter & Number & Special".tr;
-              //       }
-              //     },
-              //     autovalidateMode: AutovalidateMode.onUserInteraction,
-              //     decoration: Constants.setRegistrationTextInputDecoration(
-              //         hintText: "كلمة المرور...",
-              //         prefixIcon: SvgPicture.asset(
-              //           passField,
-              //           height: 24,
-              //         )),
-              //   ),
-              // ),
+
               const SizedBox(
                 height: 90,
               )
@@ -401,7 +383,7 @@ class RegistrationController {
         ));
   }
 
-  /// r4
+
   static TextEditingController certificatesController = TextEditingController();
 
   static Widget r4Body(context) {
@@ -531,7 +513,7 @@ class RegistrationController {
                       ),
                       prefixIcon: SvgPicture.asset(
                         certIcon,
-                        height: 24,
+                        height: 24
                       )),
                 ),
               ),
@@ -552,7 +534,6 @@ class RegistrationController {
   }
 
   /// r6
-  static bool _termsConditions = false;
 
   static Widget r6Body(setState, BuildContext context) {
     return SingleChildScrollView(
@@ -563,8 +544,18 @@ class RegistrationController {
             Padding(
               padding: const EdgeInsets.only(bottom: 24),
               child: TextFormField(
+                onTap: (){unFocusCursorRTL(_bankNameController);},
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 maxLength: 40,
                 controller: _bankNameController,
+                validator: (val){
+                  if(!val!.contains(' '))
+                    {
+                     return 'برجاء إدخال الاسم ثنائي';
+                    }
+                  return null;
+                },
+
                 onChanged: (val) {
                   inputBankName = _bankNameController.text;
                 },
@@ -577,7 +568,7 @@ class RegistrationController {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 24),
+              padding: const EdgeInsets.only(bottom: 10),
               child: TextFormField(
                 maxLength: 24,
                 controller: _bankAccountController,
@@ -592,39 +583,9 @@ class RegistrationController {
                     )),
               ),
             ),
-            Row(
-              children: [
-                SvgPicture.asset(ekrar),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text(
-                  "إقرار بالسياسة والعمولة",
-                  style: Constants.mainTitleFont,
-                ),
-                const Spacer(),
-                SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: Checkbox(
-                        activeColor: Constants.primaryAppColor,
-                        value: _termsConditions,
-                        onChanged: (d) {
-                          setState(() {
-                            _termsConditions = d!;
-                          });
-                        }))
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: Text(
-                "هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحةما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها.",
-                style: Constants.subtitleFont,
-              ),
-            ),
+
             Padding(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(bottom: 10,top: 5),
               child: TextFormField(
                 controller: _birthdayController,
                 onTap: () async {
@@ -658,6 +619,40 @@ class RegistrationController {
                     )),
               ),
             ),
+            Row(
+              children: [
+                SvgPicture.asset(ekrar),
+                const SizedBox(
+                  width: 8,
+                ),
+                InkWell(
+                  onTap: (){
+                    MyApplication.navigateTo(context, const TermsConditionsScreen());
+                  },
+                  child: const Text(
+                    "إقرار بالسياسة والعمولة",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(
+                    height: 24,
+                    width: 24,
+                    child: Checkbox(
+                        activeColor: Constants.primaryAppColor,
+                        value: termsConditions,
+                        onChanged: (d) {
+                          setState(() {
+                            termsConditions = d!;
+                          });
+                        }))
+              ],
+            ),
+            const SizedBox(height: 10),
             const Text(
               "الجنس",
               style: Constants.secondaryTitleFont,
@@ -700,14 +695,12 @@ class RegistrationController {
                 )
               ],
             ),
-            const SizedBox(
-              height: 90,
-            )
+
           ],
-        ));
+        ),);
   }
 
-  /// r7
+
 
   static Widget r7Body() {
     return SingleChildScrollView(

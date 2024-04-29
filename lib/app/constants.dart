@@ -92,10 +92,8 @@ class Constants {
       bool? withPadding,
       String? hintText}) {
     return InputDecoration(
-        errorStyle: Constants.subtitleFont1.copyWith(
-          color: Colors.red,
-          fontSize: 12
-        ),
+        errorStyle:
+            Constants.subtitleFont1.copyWith(color: Colors.red, fontSize: 12),
         prefixIcon: withPadding == true
             ? Padding(
                 padding: const EdgeInsetsDirectional.only(
@@ -135,13 +133,12 @@ class Constants {
       Color? suffixColor,
       Color? borderColor,
       Color? fillColor,
+      var formater,
       bool? isParagraph,
       String? hintText}) {
     return InputDecoration(
-        errorStyle: Constants.subtitleFont1.copyWith(
-          color: Colors.red,
-          fontSize: 12
-        ),
+        errorStyle:
+            Constants.subtitleFont1.copyWith(color: Colors.red, fontSize: 12),
         counterText: '',
         prefixIcon: isParagraph == true
             ? SizedBox(

@@ -1,3 +1,5 @@
+
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
@@ -455,7 +457,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               const Padding(
                                 padding: EdgeInsets.only(bottom: 8),
                                 child: Text(
-                                  "سيستخدم في رابط صفحتك الشخصية: nasooh.app/ahmed",
+                                  "سيستخدم في رابط صفحتك الشخصية: nasoh.app/ahmed",
                                   style: TextStyle(
                                       fontFamily: Constants.mainFont,
                                       color: Color(0XFF1ABC9C),
@@ -574,9 +576,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                    bottom: 24,
+                                    bottom: 24
                                   ),
                                   child: TextFormField(
+                                    maxLength: 2,
                                     keyboardType: TextInputType.number,
                                     controller: _experienceController,
                                     autovalidateMode:
@@ -756,13 +759,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           }))
                                 ],
                               ),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 16),
-                                child: Text(
-                                  "هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحةما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها.",
-                                  style: Constants.subtitleFont,
-                                ),
-                              ),
+
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 20),
                                 child: TextFormField(
@@ -853,6 +850,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.url,
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط تويتر...",
@@ -865,6 +863,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.url,
+
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط لينكدان...",
@@ -889,6 +889,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.url,
+
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط انستقرام...",
@@ -901,6 +903,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.url,
+
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط فيس بوك...",
@@ -913,6 +917,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
+                                  keyboardType: TextInputType.url,
+
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط يوتيوب...",

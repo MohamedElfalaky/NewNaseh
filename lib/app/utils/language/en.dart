@@ -93,6 +93,6 @@ Map<String, String> getEnglishLanguage() {
     "delete tile": "Confirm Delete Account?",
     "Yes": "Yes",
     "No": "No",
-    "error mail format":"Error in name format"
+    "error mail format":"Error in email format"
   };
 }

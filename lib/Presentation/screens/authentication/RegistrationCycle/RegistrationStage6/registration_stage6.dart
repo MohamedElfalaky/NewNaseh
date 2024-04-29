@@ -42,6 +42,13 @@ class _RegistrationStage6State extends State<RegistrationStage6> {
                         isBold: true,
                         txt: "التالي",
                         onPressedHandler: () {
+                          if(RegistrationController.termsConditions==false)
+                            {
+                              MyApplication.showToastView(message: 'برجاء الموافقة علي سياسة العمولة');
+
+                              return;
+
+                            }
                           MyApplication.navigateTo(
                               context, const RegistrationStage7());
                         },
@@ -54,6 +61,13 @@ class _RegistrationStage6State extends State<RegistrationStage6> {
                       isBold: false,
                       txt: "تخطي",
                       onPressedHandler: () {
+                        if(RegistrationController.termsConditions==false)
+                        {
+                          MyApplication.showToastView(message: 'برجاء الموافقة علي سياسة العمولة');
+
+                          return;
+
+                        }
                         context.read<RegisterCubit>().registerMethod(
                               pass: inputPassword,
                               email: inputEmail,
