@@ -6,7 +6,6 @@ import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
 import 'package:nasooh/app/theme/app_theme.dart';
 import 'package:nasooh/app/utils/my_application.dart';
 import 'package:nasooh/presentation/screens/authentication/LoginScreen/login_screen.dart';
-import 'package:nasooh/presentation/screens/authentication/RegistrationCycle/RegistrationStage3/registration_stage3.dart';
 import 'package:nasooh/presentation/screens/settings/lang_item.dart';
 
 import 'app/keys.dart';
@@ -38,10 +37,9 @@ class NasehApp extends StatelessWidget {
 
             title: 'ناصح',
             theme: whiteTheme,
-            home: RegistrationStage3(),
-            // home: sharedPrefs.getToken != ""
-            //     ? const HomeScreen()
-            //     : const LoginScreen(),
+            home: sharedPrefs.getToken != ""
+                ? const HomeScreen()
+                : const LoginScreen(),
           ),
         ),
 

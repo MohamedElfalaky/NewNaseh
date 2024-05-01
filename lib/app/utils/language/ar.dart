@@ -58,7 +58,7 @@ Map<String, String> getArabicLanguage() {
     "know_nasouh": "تعرف علي تطبيق نصوح",
     "signout": "تسجيل الخروج",
     "User Name Required": "اسم المستخدم مطلوب",
-    "User Name Length": " يجب ان يكون أكثر من 5 وأقل 17 حرف ",
+    "User Name Length": " يجب ان يكون أكثر من 4 حروف وأقل 17 حرف ",
     "Email data": "فضلا ادخل بريد الكتروني صحيح",
     "password data": "فضلا ادخل كلمة المرور",
     "description Required": "فضلا ادخل الوصف",

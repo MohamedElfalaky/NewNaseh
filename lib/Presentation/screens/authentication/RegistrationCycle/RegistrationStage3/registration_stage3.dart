@@ -77,7 +77,7 @@ class _RegistrationStage3State extends State<RegistrationStage3> {
             left: 16,
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
-          child: RegistrationController.r3Body(context, setState)),
+          child: RegistrationController.register3Body(context, setState)),
     );
   }
 }

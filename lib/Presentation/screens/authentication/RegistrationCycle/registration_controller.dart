@@ -38,7 +38,6 @@ bool validatePassword(String pass) {
   }
 }
 
-
 class RegistrationController {
   /// r3
   static bool termsConditions = false;
@@ -211,21 +210,20 @@ class RegistrationController {
                           ),
                         ),
                       ),
-
-                      if(inputImagePhoto!=null)
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                inputImagePhoto =
-                                    RegistrationController.regImage = null;
-                                // inputImageName = "";
-                              });
-                            },
-                            child:
-                                const CircleAvatar(child: Icon(Icons.close))),
-                      )
+                      if (inputImagePhoto != null)
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  inputImagePhoto =
+                                      RegistrationController.regImage = null;
+                                  // inputImageName = "";
+                                });
+                              },
+                              child:
+                                  const CircleAvatar(child: Icon(Icons.close))),
+                        )
                     ],
                   ),
                 ),
@@ -233,22 +231,26 @@ class RegistrationController {
               Padding(
                 padding: const EdgeInsets.only(top: 34, bottom: 24),
                 child: TextFormField(
-                  maxLength: 35,
+                  maxLength: 33,
+                  onTap: unFocusCursorRTL(_fullName),
                   controller: _fullName,
                   onChanged: (val) {
                     inputFullName = _fullName.text;
                   },
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
-                      RegExp('[\u0600-\u06FF\\s]'), // Range for Arabic characters
-                    ),
+                        RegExp('[\u0600-\u06FF\\s]'))
                   ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
+
                       return "full Name Required".tr;
                     }
-
+                    if(!value.contains(' '))
+                      {
+                        return 'يجب إدخال الاسم ثنائي';
+                      }
 
                     else if (value.length > 33 || value.length < 6) {
                       return "name length".tr;
@@ -264,14 +266,17 @@ class RegistrationController {
                 ),
               ),
               TextFormField(
-                maxLength: 35,
-
+                maxLength: 17,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
-                    RegExp('[a-zA-Z1-9\\s]'), // Regular expression for English characters and spaces
+                    RegExp(
+                        '[a-zA-Z1-9\\s]'), // Regular expression for English characters and spaces
                   ),
                 ],
                 controller: _englishName,
+                onTap: () {
+                  unFocusCursorRTL(_englishName);
+                },
                 onChanged: (val) {
                   inputEnglishName = _englishName.text;
                 },
@@ -279,9 +284,7 @@ class RegistrationController {
                 validator: (value) {
                   if (value!.isEmpty) {
                     return "User Name Required".tr;
-                  }
-
-                 else  if (value.length > 17 || value.length < 6) {
+                  } else if (value.length > 17 || value.length < 4) {
                     return "User Name Length".tr;
                   }
 
@@ -307,21 +310,18 @@ class RegistrationController {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
-
                   keyboardType: TextInputType.emailAddress,
                   controller: _email,
                   onChanged: (val) {
                     inputEmail = _email.text;
                   },
                   validator: (val) {
-                    if (val!.isEmpty ) {
+                    if (val!.isEmpty) {
                       return "Email data".tr;
                     }
-                    if(
-                    !RegExp(Validations.validationEmail).hasMatch(val))
-                      {
-                        return 'error mail format'.tr;
-                      }
+                    if (!RegExp(Validations.validationEmail).hasMatch(val)) {
+                      return 'error mail format'.tr;
+                    }
                     return null;
                   },
                   onTap: unFocusCursorRTL(_email),
@@ -337,7 +337,6 @@ class RegistrationController {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: PasswordTextFormField(
                     onTap: unFocusCursorRTL(_password),
-
                     maxLength: 10,
                     controller: _password,
                     style: Constants.subtitleFont1,
@@ -351,12 +350,12 @@ class RegistrationController {
                       } else if (value.length < 6 || value.length > 10) {
                         return "password_length".tr;
                       }
-                      RegExp regex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$');
-                      if(!regex.hasMatch(value))
-                      {
+                      RegExp regex =
+                          RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$');
+                      if (!regex.hasMatch(value)) {
                         return 'يجب أن تحتوي كلمة المرور علي رقم وحرف علي الأقل';
                       }
-
+                      return null;
                     },
                     decoration: Constants.setTextInputDecoration(
                         hintText: "كلمة المرور...",
@@ -374,7 +373,6 @@ class RegistrationController {
                           ),
                         ))),
               ),
-
               const SizedBox(
                 height: 90,
               )
@@ -382,7 +380,6 @@ class RegistrationController {
           ),
         ));
   }
-
 
   static TextEditingController certificatesController = TextEditingController();
 
@@ -398,6 +395,7 @@ class RegistrationController {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
                   maxLength: 35,
+                  onTap: unFocusCursorRTL(_descriptionController),
                   controller: _descriptionController,
                   onChanged: (val) {
                     inputDescription = _descriptionController.text;
@@ -428,10 +426,9 @@ class RegistrationController {
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r"\n\n"))
                   ],
-
+                  onTap: unFocusCursorRTL(_summaryController),
                   controller: _summaryController,
                   onChanged: (val) {
-
                     inputSummary = _summaryController.text;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -457,6 +454,7 @@ class RegistrationController {
                   bottom: 24,
                 ),
                 child: TextFormField(
+                  onTap: unFocusCursorRTL(_experienceController),
                   maxLength: 2,
                   keyboardType: TextInputType.number,
                   controller: _experienceController,
@@ -481,6 +479,7 @@ class RegistrationController {
               Padding(
                 padding: const EdgeInsets.only(bottom: 24),
                 child: TextFormField(
+                  onTap: unFocusCursorRTL(certificatesController),
                   controller: certificatesController,
                   decoration: Constants.setRegistrationTextInputDecoration(
                       hintText: "الشهادات والإنجازات...",
@@ -511,10 +510,7 @@ class RegistrationController {
                           ),
                         ),
                       ),
-                      prefixIcon: SvgPicture.asset(
-                        certIcon,
-                        height: 24
-                      )),
+                      prefixIcon: SvgPicture.asset(certIcon, height: 24)),
                 ),
               ),
               BlocBuilder<AddCertificateCubit, AddCertificateState>(
@@ -537,170 +533,170 @@ class RegistrationController {
 
   static Widget r6Body(setState, BuildContext context) {
     return SingleChildScrollView(
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: TextFormField(
-                onTap: (){unFocusCursorRTL(_bankNameController);},
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                maxLength: 40,
-                controller: _bankNameController,
-                validator: (val){
-                  if(!val!.contains(' '))
-                    {
-                     return 'برجاء إدخال الاسم ثنائي';
-                    }
-                  return null;
-                },
-
-                onChanged: (val) {
-                  inputBankName = _bankNameController.text;
-                },
-                decoration: Constants.setRegistrationTextInputDecoration(
-                    hintText: "اسم صاحب الحساب البنكي...",
-                    prefixIcon: SvgPicture.asset(
-                      ipanIcon,
-                      height: 24,
-                    )),
-              ),
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 24),
+            child: TextFormField(
+              onTap: () {
+                unFocusCursorRTL(_bankNameController);
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              maxLength: 40,
+              controller: _bankNameController,
+              validator: (val) {
+                if (!val!.contains(' ')) {
+                  return 'برجاء إدخال الاسم ثنائي';
+                }
+                return null;
+              },
+              onChanged: (val) {
+                inputBankName = _bankNameController.text;
+              },
+              decoration: Constants.setRegistrationTextInputDecoration(
+                  hintText: "اسم صاحب الحساب البنكي...",
+                  prefixIcon: SvgPicture.asset(
+                    ipanIcon,
+                    height: 24,
+                  )),
             ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: TextFormField(
-                maxLength: 24,
-                controller: _bankAccountController,
-                onChanged: (val) {
-                  inputBankAccount = _bankAccountController.text.replaceAll(' ', '');
-                },
-                decoration: Constants.setRegistrationTextInputDecoration(
-                    hintText: "آيبانIBAN Number...  SA***********",
-                    prefixIcon: SvgPicture.asset(
-                      ipanIcon2,
-                      height: 24,
-                    )),
-              ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: TextFormField(
+              maxLength: 24,
+              onTap: unFocusCursorRTL(_bankAccountController),
+              controller: _bankAccountController,
+              onChanged: (val) {
+                inputBankAccount =
+                    _bankAccountController.text.replaceAll(' ', '');
+              },
+              decoration: Constants.setRegistrationTextInputDecoration(
+                  hintText: "آيبانIBAN Number...  SA***********",
+                  prefixIcon: SvgPicture.asset(
+                    ipanIcon2,
+                    height: 24,
+                  )),
             ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10, top: 5),
+            child: TextFormField(
+              controller: _birthdayController,
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1970),
+                    lastDate: DateTime(2030));
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10,top: 5),
-              child: TextFormField(
-                controller: _birthdayController,
-                onTap: () async {
-                  DateTime? pickedDate = await showDatePicker(
-                      context: context,
-                      initialDate: DateTime.now(),
-                      firstDate: DateTime(1970),
-                      lastDate: DateTime(2030));
+                if (pickedDate != null) {
+                  debugPrint(pickedDate.toString());
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                  debugPrint(formattedDate);
 
-                  if (pickedDate != null) {
-                    debugPrint(pickedDate.toString());
-                    String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                    debugPrint(formattedDate);
-
-                    setState(() {
-                      _birthdayController.text = formattedDate;
-                    });
-                  }
-                },
-                onChanged: (val) {
-                  inputBirthday = _birthdayController.text;
-                  debugPrint(inputBirthday.toString());
-                  debugPrint("the birthday is $inputBirthday");
-                },
-                decoration: Constants.setRegistrationTextInputDecoration(
-                    hintText: "تاريخ الميلاد...",
-                    prefixIcon: SvgPicture.asset(
-                      dateIcon,
-                      height: 24,
-                    )),
-              ),
+                  setState(() {
+                    _birthdayController.text = formattedDate;
+                  });
+                }
+              },
+              onChanged: (val) {
+                inputBirthday = _birthdayController.text;
+                debugPrint(inputBirthday.toString());
+                debugPrint("the birthday is $inputBirthday");
+              },
+              decoration: Constants.setRegistrationTextInputDecoration(
+                  hintText: "تاريخ الميلاد...",
+                  prefixIcon: SvgPicture.asset(
+                    dateIcon,
+                    height: 24,
+                  )),
             ),
-            Row(
-              children: [
-                SvgPicture.asset(ekrar),
-                const SizedBox(
-                  width: 8,
-                ),
-                InkWell(
-                  onTap: (){
-                    MyApplication.navigateTo(context, const TermsConditionsScreen());
-                  },
-                  child: const Text(
-                    "إقرار بالسياسة والعمولة",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      decoration: TextDecoration.underline,
-                    ),
+          ),
+          Row(
+            children: [
+              SvgPicture.asset(ekrar),
+              const SizedBox(
+                width: 8,
+              ),
+              InkWell(
+                onTap: () {
+                  MyApplication.navigateTo(
+                      context, const TermsConditionsScreen());
+                },
+                child: const Text(
+                  "إقرار بالسياسة والعمولة",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    decoration: TextDecoration.underline,
                   ),
                 ),
-                const Spacer(),
-                SizedBox(
-                    height: 24,
-                    width: 24,
-                    child: Checkbox(
-                        activeColor: Constants.primaryAppColor,
-                        value: termsConditions,
-                        onChanged: (d) {
-                          setState(() {
-                            termsConditions = d!;
-                          });
-                        }))
-              ],
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              "الجنس",
-              style: Constants.secondaryTitleFont,
-            ),
-            Row(
-              children: [
-                SizedBox(
-                  width: 120,
-                  child: RadioListTile(
+              ),
+              const Spacer(),
+              SizedBox(
+                  height: 24,
+                  width: 24,
+                  child: Checkbox(
                       activeColor: Constants.primaryAppColor,
-                      contentPadding: const EdgeInsets.all(0),
-                      title: const Text(
-                        "ذكر",
-                        style: Constants.secondaryTitleRegularFont,
-                      ),
-                      value: 1,
-                      groupValue: inputGender,
-                      onChanged: (s) {
+                      value: termsConditions,
+                      onChanged: (d) {
                         setState(() {
-                          inputGender = s;
+                          termsConditions = d!;
                         });
-                      }),
-                ),
-                SizedBox(
-                  width: 120,
-                  child: RadioListTile(
-                      activeColor: Constants.primaryAppColor,
-                      contentPadding: const EdgeInsets.all(0),
-                      title: const Text(
-                        "أنثى",
-                        style: Constants.secondaryTitleRegularFont,
-                      ),
-                      value: 0,
-                      groupValue: inputGender,
-                      onChanged: (s) {
-                        setState(() {
-                          inputGender = s;
-                        });
-                      }),
-                )
-              ],
-            ),
-
-          ],
-        ),);
+                      }))
+            ],
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            "الجنس",
+            style: Constants.secondaryTitleFont,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 120,
+                child: RadioListTile(
+                    activeColor: Constants.primaryAppColor,
+                    contentPadding: const EdgeInsets.all(0),
+                    title: const Text(
+                      "ذكر",
+                      style: Constants.secondaryTitleRegularFont,
+                    ),
+                    value: 1,
+                    groupValue: inputGender,
+                    onChanged: (s) {
+                      setState(() {
+                        inputGender = s;
+                      });
+                    }),
+              ),
+              SizedBox(
+                width: 120,
+                child: RadioListTile(
+                    activeColor: Constants.primaryAppColor,
+                    contentPadding: const EdgeInsets.all(0),
+                    title: const Text(
+                      "أنثى",
+                      style: Constants.secondaryTitleRegularFont,
+                    ),
+                    value: 0,
+                    groupValue: inputGender,
+                    onChanged: (s) {
+                      setState(() {
+                        inputGender = s;
+                      });
+                    }),
+              )
+            ],
+          ),
+        ],
+      ),
+    );
   }
-
-
 
   static Widget r7Body() {
     return SingleChildScrollView(
