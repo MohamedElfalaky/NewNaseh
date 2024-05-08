@@ -93,7 +93,8 @@ Map<String, String> getArabicLanguage() {
     "delete tile": "تأكيد حذف الحساب ؟",
     "Yes": "نعم",
     "No": "لأ",
-    "error mail format":"خطأ في صياغة البريد الإلكتروني"
+    "error mail format":"خطأ في صياغة البريد الإلكتروني",
+    "IBAN number must start with":"IbBan يجب أن يبدأ ب"
 
   };
 }

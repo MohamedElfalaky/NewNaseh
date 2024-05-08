@@ -93,6 +93,7 @@ Map<String, String> getEnglishLanguage() {
     "delete tile": "Confirm Delete Account?",
     "Yes": "Yes",
     "No": "No",
-    "error mail format":"Error in email format"
+    "error mail format":"Error in email format",
+    "IBAN number must start with":"IBAN number must start with"
   };
 }

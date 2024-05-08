@@ -237,22 +237,18 @@ class RegistrationController {
                   onChanged: (val) {
                     inputFullName = _fullName.text;
                   },
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                        RegExp('[\u0600-\u06FF\\s]'))
-                  ],
+                  // inputFormatters: [
+                  //   FilteringTextInputFormatter.allow(
+                  //       RegExp('[\u0600-\u06FF\\s]'))
+                  // ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value!.isEmpty) {
-
                       return "full Name Required".tr;
                     }
-                    if(!value.contains(' '))
-                      {
-                        return 'يجب إدخال الاسم ثنائي';
-                      }
-
-                    else if (value.length > 33 || value.length < 6) {
+                    if (!value.contains(' ')) {
+                      return 'يجب إدخال الاسم ثنائي';
+                    } else if (value.length > 33 || value.length < 6) {
                       return "name length".tr;
                     }
                     return null;
@@ -573,6 +569,21 @@ class RegistrationController {
                 inputBankAccount =
                     _bankAccountController.text.replaceAll(' ', '');
               },
+              validator: (value) {
+                // if (value == null || value.isEmpty) {
+                //   return 'IBAN number is required';
+                // }
+                if (!value!.startsWith('SA(')) {
+                  return '${"IBAN number must start with".tr}" SA(" ';
+                }
+                // You can add more validation rules here if needed
+                return null; // Return null if the input is valid
+              },
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              // inputFormatters: [
+              //   FilteringTextInputFormatter.allow(
+              //       RegExp('[\u0600-\u06FF\\s]'))
+              // ],
               decoration: Constants.setRegistrationTextInputDecoration(
                   hintText: "آيبانIBAN Number...  SA***********",
                   prefixIcon: SvgPicture.asset(

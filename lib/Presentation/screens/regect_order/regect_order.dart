@@ -143,9 +143,42 @@ class _RejectOrderState extends State<RejectOrder> {
                                     return ListTile(
                                       contentPadding: EdgeInsets.zero,
                                       leading: Radio(
-                                        value: 1,
-                                        groupValue: 0,
-                                        onChanged: (val) {},
+                                        value: list[index].id,
+                                        groupValue: selectedId,
+                                        onChanged: (val) {
+                                          setState(() {
+                                            selectedId = val;
+                                          });
+                                          Navigator.pop(context);
+                                          _textController.text =
+                                              list[index].name!;
+                                          if (object.id == 0) {
+                                            showModalBottomSheet(
+                                              context: context,
+                                              backgroundColor:
+                                                  Constants.whiteAppColor,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                  top: Radius.circular(25.0),
+                                                ),
+                                              ),
+                                              builder: (BuildContext context) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom:
+                                                          MediaQuery.of(context)
+                                                              .viewInsets
+                                                              .bottom),
+                                                  child: SingleChildScrollView(
+                                                      child:
+                                                          otherBottomSheet()),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        },
                                       ),
                                       title: Text(
                                         list[index].name!,
@@ -279,8 +312,7 @@ class _RejectOrderState extends State<RejectOrder> {
           Padding(
             padding: const EdgeInsets.all(15),
             child: TextFormField(
-              onTap: ()=>MyApplication.unFocusCursorRTL(_otherController),
-
+              onTap: () => MyApplication.unFocusCursorRTL(_otherController),
               maxLines: 6,
               controller: _otherController,
               autovalidateMode: AutovalidateMode.onUserInteraction,

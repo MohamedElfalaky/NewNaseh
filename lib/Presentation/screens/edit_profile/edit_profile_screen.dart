@@ -111,9 +111,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         profileCubit.profileModel?.data?.experienceYear ?? "";
 
     setState(() {
-      documentsFromAPI = profileCubit.profileModel!.data!.document ?? [];
+      documentsFromAPI = profileCubit.profileModel?.data!.document ?? [];
       // _selectedCategory =
-      //     profileCubit.profileModel!.data!.category!.map((e) =>
+      //     profileCubit.profileModel?.data!.category!.map((e) =>
       //         MySelectedModel(id: e.id!,value:e.selected??true )
       //     ).toList();
     });
@@ -124,7 +124,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         [];
 
     log(_selectedCategory.length.toString(), name: "_selectedCategory in init");
-    _birthdayController.text = profileCubit.profileModel!.data?.birthday ?? "";
+    _birthdayController.text = profileCubit.profileModel?.data?.birthday ?? "";
     if (profileCubit.profileModel?.data?.gender != "") {
       genderValue = profileCubit.profileModel?.data?.gender ?? "";
     }
