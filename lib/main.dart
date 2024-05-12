@@ -15,7 +15,6 @@ void main() async {
   FlutterNativeSplash.remove;
   await SharedPrefs().init();
   await Firebase.initializeApp();
-  FirebaseCustomNotification.setUpFirebase();
   runApp(const NasehApp());
 }
 

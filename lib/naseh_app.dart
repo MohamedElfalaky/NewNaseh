@@ -8,12 +8,24 @@ import 'package:nasooh/app/utils/my_application.dart';
 import 'package:nasooh/presentation/screens/authentication/LoginScreen/login_screen.dart';
 import 'package:nasooh/presentation/screens/settings/lang_item.dart';
 
+import 'Data/repositories/notification/fcm.dart';
 import 'app/keys.dart';
 import 'app/utils/bloc_providers.dart';
 import 'app/utils/shared_preference.dart';
 
-class NasehApp extends StatelessWidget {
+class NasehApp extends StatefulWidget {
   const NasehApp({super.key});
+
+  @override
+  State<NasehApp> createState() => _NasehAppState();
+}
+
+class _NasehAppState extends State<NasehApp> {
+  @override
+  void initState() {
+    FirebaseCustomNotification.setUpFirebase();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

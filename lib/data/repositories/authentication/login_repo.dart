@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -22,6 +23,11 @@ class Auth {
             'password': '$pass',
             'device': sharedPrefs.fCMToken,
           });
+      log({
+        'mobile': '$phone',
+        'password': '$pass',
+        'device': sharedPrefs.fCMToken,
+      }.toString() ,name: "LoginData");
       debugPrint("response is ${response.body.toString()}");
       Map<String, dynamic> responseMap = json.decode(response.body);
 
