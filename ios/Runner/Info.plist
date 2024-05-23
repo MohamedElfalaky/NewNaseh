@@ -37,11 +37,11 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play audios</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to the camera as profile picture photo</string>
+	<string>This app requires access to the camera to have profile picture photo</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>take voice to send message in chat</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to the camera as profile picture photo</string>
+	<string>This app requires access to the camera to have profile picture photo</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

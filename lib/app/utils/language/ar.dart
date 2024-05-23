@@ -43,7 +43,7 @@ Map<String, String> getArabicLanguage() {
     "password_required": "كلمة المرور مطلوبة",
     "password_confirm": "تأكيد كلمة المرور",
     "save": "حفظ",
-    "password_length": "كلمة المرور يجب أن تكون 6 على الأقل ولا تزيد عن 10",
+    "password_length": "كلمة المرور يجب أن تكون 8 على الأقل ولا تزيد عن 12",
     "password_not_match": "كلمة المرور غير متطابقة",
     "invalid_number": "رقم غير صحيح",
     "email_required": "البريد الإلكتروني مطلوب",

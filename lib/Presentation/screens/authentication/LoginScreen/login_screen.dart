@@ -146,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen>
                       FadeTransition(
                         opacity: _fadeController,
                         child: PasswordTextFormField(
-                            maxLength: 10,
+                            maxLength: 12,
                             controller: _passwordController,
                             style: Constants.subtitleFont1,
                             autovalidateMode:
@@ -154,17 +154,17 @@ class _LoginScreenState extends State<LoginScreen>
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "password_required".tr;
-                              } else if (value.length < 6 ||
-                                  value.length > 10) {
+                              } else if (value.length < 8 || value.length > 12) {
                                 return "password_length".tr;
                               }
-                              bool result = validatePassword(value);
-                              if (result) {
-                                return null;
-                              } else {
-                                return " Password should contain Capital, small letter & Number & Special"
-                                    .tr;
+
+                              // Enhanced regular expression for password complexity (optional symbol)
+                              RegExp regex = RegExp(
+                                  r'^(?=.*[A-Za-z])(?=.*\d)(?:.*[@$!%*?&])?[A-Za-z\d@$!%*?&]+$');
+                              if (!regex.hasMatch(value)) {
+                                return 'يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم (الرمز اختياري)';
                               }
+                              return null;
                             },
                             decoration: Constants.setTextInputDecoration(
                                 hintText: "كلمة المرور...",

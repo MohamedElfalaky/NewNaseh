@@ -25,7 +25,7 @@ class GetProfileRepo {
       );
       Map<String, dynamic> responseMap = json.decode(response.body);
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        log(response.body);
+        log(response.body , name: "response body ");
         final userdata = profileModelFromJson(responseMap);
         return userdata;
       } else {

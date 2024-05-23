@@ -12,9 +12,9 @@ import 'app/utils/shared_preference.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.remove;
-  await SharedPrefs().init();
+  FlutterNativeSplash.remove();
   await Firebase.initializeApp();
+  await SharedPrefs().init();
   runApp(const NasehApp());
 }
 

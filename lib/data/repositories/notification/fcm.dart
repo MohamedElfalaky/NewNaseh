@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,6 +42,9 @@ class FirebaseCustomNotification {
           .listen(CustomLocalNotification.showFlutterNotification);
       FirebaseMessaging.onMessageOpenedApp
           .listen((CustomLocalNotification.onMessageOpenedApp));
+      // debugPrint(
+      //     'FIREBASE TOKEN: ${await FirebaseMessaging.instance.getToken()}');
+      // sharedPrefs.setFCM(await FirebaseMessaging.instance.getToken()??"");
     }
   }
 }

@@ -40,7 +40,7 @@
   "password_required": "كلمة المرور مطلوبة",
   "password_confirm": "تأكيد كلمة المرور",
   "save": "حفظ",
-  "password_length": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
+  "password_length": "كلمة المرور يجب أن تكون 8 أحرف على الأقل",
   "password_not_match": "كلمة المرور غير متطابقة",
   "invalid_number": "رقم غير صحيح",
   "email_required": "البريد الإلكتروني مطلوب",

@@ -39,7 +39,7 @@ Map<String, String> getEnglishLanguage() {
     "password_confirm": "Password confirm",
     "save": "Save",
     "password_length":
-        "Password must be at least 6 characters and should be less than 10",
+        "Password must be at least 8 characters and should be less than 12",
     "password_not_match": "Password not match",
     "invalid_number": "Invalid number",
     "email_required": "Email is required",

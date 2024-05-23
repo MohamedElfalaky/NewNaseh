@@ -58,7 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController _bankAccountController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
   final TextEditingController certificatesController = TextEditingController();
-  bool _termsConditions = false;
+  bool _termsConditions = true;
   String? genderValue;
   String? base64NewImage;
   List<CategoryData> categoryData = [];
@@ -109,6 +109,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _summaryController.text = profileCubit.profileModel?.data?.info ?? "";
     _experienceController.text =
         profileCubit.profileModel?.data?.experienceYear ?? "";
+    _birthdayController.text =
+        profileCubit.profileModel?.data?.birthday ?? "";
+    _bankAccountController.text =
+        profileCubit.profileModel?.data?.bankAccount ?? "";
 
     setState(() {
       documentsFromAPI = profileCubit.profileModel?.data!.document ?? [];
@@ -170,6 +174,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                             log(_selectedCategory.length.toString(),
                                 name: "_selectedCategory in press");
+
+                            log(_birthdayController.text,
+                                name: "_birthdayController.text");
+
+                            log(_bankAccountController.text,
+                                name: "_bankAccountController.text");
                             context.read<UpdateProfileCubit>().updateMethod(
                                   context: context,
                                   nationalityId: inputNationality,
@@ -732,6 +742,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             ipanIcon2,
                                             height: 24,
                                           )),
+                                  validator: (value) {
+                                    // if (value == null || value.isEmpty) {
+                                    //   return "IBAN number is required".tr;
+                                    // }
+                                    if (!value!.toLowerCase().startsWith('sa(')) {
+                                      return '${"IBAN number must start with".tr} SA or sa(';
+                                    }
+                                    return null;  // Return null if the input is valid so far
+                                  },
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
                                 ),
                               ),
                               Row(
@@ -753,15 +773,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                               Constants.primaryAppColor,
                                           value: _termsConditions,
                                           onChanged: (d) {
-                                            setState(() {
-                                              _termsConditions = d!;
-                                            });
+                                            // setState(() {
+                                            //   _termsConditions = d!;
+                                            // });
                                           }))
                                 ],
                               ),
 
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
+                                padding: const EdgeInsets.symmetric(vertical: 20),
                                 child: TextFormField(
                                   controller: _birthdayController,
                                   decoration: Constants

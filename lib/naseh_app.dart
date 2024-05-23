@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:nasooh/Presentation/screens/Home/home_screen.dart';
-import 'package:nasooh/app/theme/app_theme.dart';
-import 'package:nasooh/app/utils/my_application.dart';
-import 'package:nasooh/presentation/screens/authentication/LoginScreen/login_screen.dart';
-import 'package:nasooh/presentation/screens/settings/lang_item.dart';
-
 import 'Data/repositories/notification/fcm.dart';
+import 'Presentation/screens/Home/home_screen.dart';
+import 'Presentation/screens/authentication/LoginScreen/login_screen.dart';
+import 'Presentation/screens/settings/lang_item.dart';
 import 'app/keys.dart';
+import 'app/theme/app_theme.dart';
 import 'app/utils/bloc_providers.dart';
+import 'app/utils/my_application.dart';
 import 'app/utils/shared_preference.dart';
 
 class NasehApp extends StatefulWidget {
@@ -23,8 +23,8 @@ class NasehApp extends StatefulWidget {
 class _NasehAppState extends State<NasehApp> {
   @override
   void initState() {
-    FirebaseCustomNotification.setUpFirebase();
     super.initState();
+    FirebaseCustomNotification.setUpFirebase();
   }
 
   @override

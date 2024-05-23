@@ -333,7 +333,7 @@ class RegistrationController {
                 padding: const EdgeInsets.only(bottom: 24),
                 child: PasswordTextFormField(
                     onTap: unFocusCursorRTL(_password),
-                    maxLength: 10,
+                    maxLength: 12,
                     controller: _password,
                     style: Constants.subtitleFont1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -343,13 +343,15 @@ class RegistrationController {
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "password_required".tr;
-                      } else if (value.length < 6 || value.length > 10) {
+                      } else if (value.length < 8 || value.length > 12) {
                         return "password_length".tr;
                       }
-                      RegExp regex =
-                          RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$');
+
+                      // Enhanced regular expression for password complexity (optional symbol)
+                      RegExp regex = RegExp(
+                          r'^(?=.*[A-Za-z])(?=.*\d)(?:.*[@$!%*?&])?[A-Za-z\d@$!%*?&]+$');
                       if (!regex.hasMatch(value)) {
-                        return 'يجب أن تحتوي كلمة المرور علي رقم وحرف علي الأقل';
+                        return 'يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم (الرمز اختياري)';
                       }
                       return null;
                     },
@@ -570,14 +572,13 @@ class RegistrationController {
                     _bankAccountController.text.replaceAll(' ', '');
               },
               validator: (value) {
-                // if (value == null || value.isEmpty) {
-                //   return 'IBAN number is required';
-                // }
-                if (!value!.startsWith('SA(')) {
-                  return '${"IBAN number must start with".tr}" SA(" ';
+                if (value == null || value.isEmpty) {
+                  return "IBAN number is required".tr;
                 }
-                // You can add more validation rules here if needed
-                return null; // Return null if the input is valid
+                if (!value.toLowerCase().startsWith('sa(')) {
+                  return '${"IBAN number must start with".tr} SA or sa(';
+                }
+                return null;  // Return null if the input is valid so far
               },
               autovalidateMode: AutovalidateMode.onUserInteraction,
               // inputFormatters: [
