@@ -79,6 +79,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const Spacer(),
                     Switch(
+                      inactiveThumbColor: Colors.black,
+                      inactiveTrackColor: Colors.grey,
                       value: isNotificationValue!,
                       onChanged: (value) {
                         setState(() {
@@ -106,6 +108,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const Spacer(),
                     Switch(
+                      inactiveThumbColor: Colors.black,
+                      inactiveTrackColor: Colors.grey,
                       value: isAdviceValue!,
                       onChanged: (value) {
                         setState(() {

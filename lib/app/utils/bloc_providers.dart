@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasooh/Data/cubit/authentication/category_cubit/category_cubit.dart';
+import 'package:nasooh/data/cubit/settings_cubits/about_cubit/about_cubit.dart';
 
 import '../../Data/cubit/FrontEndCubits/cubit/add_cirtificate_cubit.dart';
 import '../../Data/cubit/advice_cubits/approve_advice_cubit/approve_advice_cubit.dart';
@@ -59,6 +60,7 @@ final providers = [
   BlocProvider<PostRejectCubit>(create: (context) => PostRejectCubit()),
   BlocProvider<ListRejectionCubit>(create: (context) => ListRejectionCubit()),
   BlocProvider<WalletCubit>(create: (context) => WalletCubit()),
+  BlocProvider<AboutCubit>(create: (context) => AboutCubit()),
   BlocProvider<NotificationCubit>(create: (context) => NotificationCubit()),
   BlocProvider<IsNotificationCubit>(create: (context) => IsNotificationCubit()),
   BlocProvider<IsAdviceCubit>(create: (context) => IsAdviceCubit()),

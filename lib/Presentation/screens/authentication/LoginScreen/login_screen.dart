@@ -154,13 +154,14 @@ class _LoginScreenState extends State<LoginScreen>
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return "password_required".tr;
-                              } else if (value.length < 8 || value.length > 12) {
+                              } else if (value.length < 8 ||
+                                  value.length > 12) {
                                 return "password_length".tr;
                               }
 
                               // Enhanced regular expression for password complexity (optional symbol)
                               RegExp regex = RegExp(
-                                  r'^(?=.*[A-Za-z])(?=.*\d)(?:.*[@$!%*?&])?[A-Za-z\d@$!%*?&]+$');
+                                  r'^(?=.*[A-Za-z])(?=.*\d)(?:.*[@$!%*?&#])?[A-Za-z\d@$!%*?&#]+$');
                               if (!regex.hasMatch(value)) {
                                 return 'يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم (الرمز اختياري)';
                               }

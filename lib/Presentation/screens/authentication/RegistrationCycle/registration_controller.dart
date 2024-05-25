@@ -349,7 +349,7 @@ class RegistrationController {
 
                       // Enhanced regular expression for password complexity (optional symbol)
                       RegExp regex = RegExp(
-                          r'^(?=.*[A-Za-z])(?=.*\d)(?:.*[@$!%*?&])?[A-Za-z\d@$!%*?&]+$');
+                          r'^(?=.*[A-Za-z])(?=.*\d)(?:.*[@$!%*?&#])?[A-Za-z\d@$!%*?&#]+$');
                       if (!regex.hasMatch(value)) {
                         return 'يجب أن تحتوي كلمة المرور على حرف كبير وحرف صغير ورقم (الرمز اختياري)';
                       }

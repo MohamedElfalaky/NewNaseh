@@ -12,6 +12,7 @@ import '../../../../app/utils/my_application.dart';
 import '../../../../app/utils/shared_preference.dart';
 import '../../../widgets/custom_loading_widget.dart';
 import '../../../widgets/shared.dart';
+import '../../about_us/about_us_screen.dart';
 import '../../edit_profile/edit_profile_screen.dart';
 import '../../notification/notification_screen.dart';
 import '../../settings/settings_screen.dart';
@@ -111,7 +112,12 @@ Drawer buildHomeDrawerWidget(BuildContext context) {
                 Uri.parse('https://wa.me/+966502374223'),
               );
             }),
-        myListTile(icon: knowAboutIcon, name: "Know".tr),
+        myListTile(icon: knowAboutIcon, name: "Know".tr,
+            onTapHandler: () {
+              // Navigator.pop(context);
+              MyApplication.navigateTo(context, const AboutUsScreen());
+            }
+        ),
         BlocBuilder<LogOutCubit, LogOutState>(
             builder: (context, state) => state is LogOutLoading
                 ? const CustomLoadingIndicator()
