@@ -49,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.lundev.nasooh.NASE7"
+        applicationId "com.lun.nasooh.NASE7"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()

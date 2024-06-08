@@ -49,22 +49,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
           padding: const EdgeInsets.only(left: 20, right: 20, top: 18),
           child: Column(
             children: [
-              Row(
-                children: [
-                  SvgPicture.asset(language),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  Text(
-                    "change lang".tr,
-                    style: Constants.secondaryTitleFont,
-                  )
-                ],
-              ),
-              const ChangeLangItem(),
-              const Divider(
-                color: Color(0xff555B6E),
-              ),
+              // Row(
+              //   children: [
+              //     SvgPicture.asset(language),
+              //     const SizedBox(
+              //       width: 8,
+              //     ),
+              //     Text(
+              //       "change lang".tr,
+              //       style: Constants.secondaryTitleFont,
+              //     )
+              //   ],
+              // ),
+              // const ChangeLangItem(),
+              // const Divider(
+              //   color: Color(0xff555B6E),
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Row(
@@ -156,16 +156,16 @@ Future<void> _showDeleteDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return BlocBuilder<DeleteAccountCubit, DeleteAccountState>(
           builder: (context, state) => AlertDialog(
-                content: SingleChildScrollView(
-                  child: ListBody(
-                    children: <Widget>[
-                      Text("delete tile".tr),
-                    ],
-                  ),
+                content: Text(
+                  "delete tile".tr,
+                  style: TextStyle(color: Colors.white),
                 ),
                 actions: <Widget>[
                   TextButton(
-                    child: Text("No".tr),
+                    child: Text(
+                      "No".tr,
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -173,7 +173,10 @@ Future<void> _showDeleteDialog(BuildContext context) async {
                   state is DeleteAccountLoading
                       ? const CustomLoadingIndicator()
                       : TextButton(
-                          child: Text("Yes".tr),
+                          child: Text(
+                            "Yes".tr,
+                            style: TextStyle(color: Colors.white),
+                          ),
                           onPressed: () {
                             context.read<DeleteAccountCubit>().delete(
                                   context: context,

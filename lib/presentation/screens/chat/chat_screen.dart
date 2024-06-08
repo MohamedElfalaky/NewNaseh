@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
@@ -168,9 +169,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: BlocListener<SendChatCubit, SendChatState>(
           listener: (context, state) {
             if (state is SendChatLoaded) {
-              context
-                  .read<ShowAdviceCubit>()
-                  .show(id: widget.showAdData!.id!);
+              context.read<ShowAdviceCubit>().show(id: widget.showAdData!.id!);
               fileSelected = null;
               pickedFile = null;
               voiceSelected = null;
@@ -191,8 +190,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   builder: (context, state) {
                     if (state is ShowAdviceLoaded) {
                       return Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: ListView.builder(
                             reverse: true,
                             itemCount: state.response?.data?.chat?.length,
@@ -207,7 +205,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                 )),
                 widget.showAdData!.label!.id == 1 ||
-                        widget.showAdData!.label!.id == 2
+                        widget.showAdData!.label!.id == 2 ||
+                        widget.showAdData!.label!.id == 3
                     ? Padding(
                         padding: const EdgeInsets.all(14),
                         child: Column(
@@ -224,18 +223,18 @@ class _ChatScreenState extends State<ChatScreen> {
                                       children: [
                                         Expanded(
                                           child: Container(
-                                              padding:
-                                                  const EdgeInsets.all(5),
-                                              margin: const EdgeInsets
-                                                  .symmetric(vertical: 5),
+                                              padding: const EdgeInsets.all(5),
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 5),
                                               height: 50,
                                               width: width(context),
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color: Colors
-                                                          .grey.shade300,
+                                                      color:
+                                                          Colors.grey.shade300,
                                                       offset: const Offset(
                                                         5.0,
                                                         5.0,
@@ -249,10 +248,14 @@ class _ChatScreenState extends State<ChatScreen> {
                                                           10)),
                                               child: Row(
                                                 children: [
-                                                  const Spacer(),
-                                                  Text(pickedFile!.path
-                                                      .replaceRange(
-                                                          0, 56, "")),
+                                                  Expanded(
+                                                      child: Text(
+                                                    pickedFile!.path
+                                                        .replaceRange(
+                                                            0, 56, ""),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  )),
                                                   const SizedBox(width: 10),
                                                   SvgPicture.asset(
                                                     filePdf,
@@ -305,9 +308,9 @@ class _ChatScreenState extends State<ChatScreen> {
                                           ),
                                           if (pickedFile != null)
                                             Padding(
-                                              padding: const EdgeInsets
-                                                  .symmetric(
-                                                  horizontal: 10),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
                                               child: CircleAvatar(
                                                 radius: 15,
                                                 backgroundColor:
@@ -334,9 +337,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               children: [
                                 Expanded(
                                   child: TextField(
-
-                                    onTap: ()=>MyApplication.unFocusCursorRTL(messageController),
-
+                                    onTap: () => MyApplication.unFocusCursorRTL(
+                                        messageController),
                                     controller: messageController,
                                     decoration:
                                         Constants.setTextInputDecoration(
@@ -346,21 +348,18 @@ class _ChatScreenState extends State<ChatScreen> {
                                           GestureDetector(
                                               onTap: () async {
                                                 FilePickerResult? result =
-                                                    await FilePicker
-                                                        .platform
+                                                    await FilePicker.platform
                                                         .pickFiles();
                                                 if (result != null) {
                                                   setState(() {
                                                     pickedFile = File(result
-                                                        .files
-                                                        .single
-                                                        .path!);
+                                                        .files.single.path!);
                                                   });
                                                   List<int> imageBytes =
                                                       File(pickedFile!.path)
                                                           .readAsBytesSync();
-                                                  fileSelected = base64
-                                                      .encode(imageBytes);
+                                                  fileSelected =
+                                                      base64.encode(imageBytes);
                                                 }
                                                 return;
                                               },
@@ -376,8 +375,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                                       .stop_circle_outlined))
                                               : GestureDetector(
                                                   onTap: startRecord,
-                                                  child: SvgPicture.asset(
-                                                      micee)),
+                                                  child:
+                                                      SvgPicture.asset(micee)),
                                           const SizedBox(
                                             width: 8,
                                           )
@@ -390,10 +389,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                       hintStyle: Constants
                                           .subtitleRegularFontHint
                                           .copyWith(
-                                              color:
-                                                  const Color(0XFF5C5E6B)),
-                                      enabledBorder:
-                                          const OutlineInputBorder(
+                                              color: const Color(0XFF5C5E6B)),
+                                      enabledBorder: const OutlineInputBorder(
                                         gapPadding: 0,
                                         borderSide: BorderSide.none,
                                         borderRadius: BorderRadius.all(
@@ -424,11 +421,18 @@ class _ChatScreenState extends State<ChatScreen> {
         return BlocBuilder<SendChatCubit, SendChatState>(
           builder: (context, state3) {
             return GestureDetector(
-              onTap: () {
+              onTap: () async {
                 if (state2 is ShowAdviceLoading || state3 is SendChatLoading) {
                   return;
                 }
                 if (fileSelected != null) {
+                  var fileLength = await pickedFile?.length();
+                  debugPrint('file length is $fileLength');
+                  if (fileLength! >= 5242880 == true) {
+                    MyApplication.showToastView(
+                        message: ' 5 MB لا يمكن ان يتعدي الملف');
+                    return;
+                  }
                   context.read<SendChatCubit>().sendChatFunction(
                       filee: fileSelected,
                       msg: messageController.text,
@@ -544,67 +548,71 @@ class _ChatScreenState extends State<ChatScreen> {
                               state.response?.data?.chat?[index].message ?? "",
                           style: Constants.subtitleFont,
                         )),
-                GestureDetector(
-                  onTap: () {
-                    if (isImage(
-                        '${state.response?.data!.chat?[index].document![0].file}')) {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: true,
-                          builder: (context) {
-                            return AlertDialog(
-                              backgroundColor: Colors.white,
-                              contentPadding: EdgeInsets.zero,
-                              content: ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
-                                child: CachedNetworkImage(
-                                  imageUrl:
-                                      '${state.response!.data!.chat![index].document![0].file}',
-                                ),
-                              ),
-                            );
-                          });
-                    } else {
-                      launchUrl(Uri.parse(
-                          '${state.response?.data?.chat?[index].document?[0].file}'));
-                    }
-                  },
-                  child: Container(
-                    width: width(context) * 0.7,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    padding: const EdgeInsets.all(7),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey.shade400)),
-                    child: state.response?.data?.chat?[index].document?[0].file
-                                ?.endsWith("mp3") ??
-                            false
-                        ? GestureDetector(
-                            onTap: () => playAudioFromUrl(
-                              state.response?.data?.chat?[index].document?[0]
-                                      .file ??
-                                  "",
-                              index,
-                            ),
-                            child: playingIndex == index
-                                ? audioPlayingWidget()
-                                : audioStopWidget(),
-                          )
-                        : state.response?.data?.chat?[index].document?[0].file
-                                    ?.endsWith("m4a") ??
-                                false
-                            ? GestureDetector(
-                                onTap: () => playAudioFromUrl(
-                                  '${state.response?.data?.chat?[index].document?[0].file}',
-                                  index,
-                                ),
-                                child: playingIndex == index
-                                    ? audioPlayingWidget()
-                                    : audioStopWidget(),
-                              )
-                            : chatImageWidget(state, index),
-                  ),
-                ),
+                state.response?.data?.chat?[index].document?.isEmpty ?? false
+                    ? const SizedBox.shrink()
+                    : GestureDetector(
+                        onTap: () {
+                          if (isImage(
+                              '${state.response?.data!.chat?[index].document![0].file}')) {
+                            showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    contentPadding: EdgeInsets.zero,
+                                    content: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            '${state.response!.data!.chat![index].document![0].file}',
+                                      ),
+                                    ),
+                                  );
+                                });
+                          } else {
+                            launchUrl(Uri.parse(
+                                '${state.response?.data?.chat?[index].document?[0].file}'));
+                          }
+                        },
+                        child: Container(
+                          width: width(context) * 0.7,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          padding: const EdgeInsets.all(7),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.grey.shade400)),
+                          child: state.response?.data?.chat?[index].document?[0]
+                                      .file
+                                      ?.endsWith("mp3") ??
+                                  false
+                              ? GestureDetector(
+                                  onTap: () => playAudioFromUrl(
+                                    state.response?.data?.chat?[index]
+                                            .document?[0].file ??
+                                        "",
+                                    index,
+                                  ),
+                                  child: playingIndex == index
+                                      ? audioPlayingWidget()
+                                      : audioStopWidget(),
+                                )
+                              : state.response?.data?.chat?[index].document?[0]
+                                          .file
+                                          ?.endsWith("m4a") ??
+                                      false
+                                  ? GestureDetector(
+                                      onTap: () => playAudioFromUrl(
+                                        '${state.response?.data?.chat?[index].document?[0].file}',
+                                        index,
+                                      ),
+                                      child: playingIndex == index
+                                          ? audioPlayingWidget()
+                                          : audioStopWidget(),
+                                    )
+                                  : chatImageWidget(state, index),
+                        ),
+                      ),
               ],
             )
           : Container(
