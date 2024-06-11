@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -29,16 +30,22 @@ class PostRejectRepo {
             'comment_id': commentId,
             'comment_other': '$commentOther',
           });
-      Map<String, dynamic> responseMap = json.decode(response.body);
 
+      log({
+        'comment_id': commentId,
+        'comment_other': '$commentOther',
+        "adviceId":adviceId
+      }.toString() , name: "rejecting Post");
+      Map<String, dynamic> responseMap = json.decode(response.body);
+      log(response.body ,name: "reject response");
       if (response.statusCode == 200 && responseMap["status"] == 1) {
-        debugPrint("response.bodyis ${response.body}");
+        log(response.body ,name: "reject response");
         final userdata = postRejectModelFromJson(responseMap);
         // sharedPrefs.setToken(userdata.data!.token!);
         return userdata;
       } else {
-        MyApplication.showToastView(
-            message: responseMap["message"].values.toString());
+        // MyApplication.showToastView(
+        //     message: responseMap["message"].values.toString());
       }
     } on TimeoutException catch (e) {
       MyApplication.showToastView(message: e.toString());

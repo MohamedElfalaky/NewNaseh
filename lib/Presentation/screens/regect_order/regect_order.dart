@@ -71,11 +71,16 @@ class _RejectOrderState extends State<RejectOrder> {
                     txt: "رفض الطلب",
                     isBold: true,
                     onPressedHandler: () {
-                      context.read<PostRejectCubit>().postRejectMethod(
-                            adviceId: widget.showAdData!.id.toString(),
-                            commentId: selectedId.toString(),
-                            commentOther: "",
-                          );
+                      if (selectedId == null) {
+                        MyApplication.showToastView(
+                            message: "فضلا اختر سبب الرفض");
+                      } else {
+                        context.read<PostRejectCubit>().postRejectMethod(
+                              adviceId: widget.showAdData!.id.toString(),
+                              commentId: selectedId.toString(),
+                              commentOther: "",
+                            );
+                      }
                     },
                   )),
       ),
@@ -338,11 +343,25 @@ class _RejectOrderState extends State<RejectOrder> {
                           txt: "رفض  الطلب",
                           isBold: true,
                           onPressedHandler: () {
-                            context.read<PostRejectCubit>().postRejectMethod(
-                                  adviceId: widget.showAdData!.id.toString(),
-                                  commentId: "0",
-                                  commentOther: _otherController.text,
-                                );
+                            if (selectedId == null) {
+                              MyApplication.showToastView(
+                                  message: "فضلا اختر سبب الرفض");
+                            } else {
+                              if (_otherController.text.isEmpty ||
+                                  _otherController.text == "") {
+                                MyApplication.showToastView(
+                                    message:  "اكتب سبب رفض الطلب...");
+                              } else {
+                                context
+                                    .read<PostRejectCubit>()
+                                    .postRejectMethod(
+                                      adviceId:
+                                          widget.showAdData!.id.toString(),
+                                      commentId: selectedId.toString(),
+                                      commentOther: _otherController.text,
+                                    );
+                              }
+                            }
                           },
                         ),
                       )),

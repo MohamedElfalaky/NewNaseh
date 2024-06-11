@@ -156,22 +156,26 @@ class Client {
 }
 
 class Document {
-  dynamic id;
+  int? id;
   String? file;
+  String? type;
 
   Document({
     this.id,
     this.file,
+    this.type,
   });
 
   factory Document.fromJson(Map<String, dynamic> json) => Document(
         id: json["id"],
         file: json["file"],
+        type: json["type"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "file": file,
+        "type": type,
       };
 }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -97,21 +99,27 @@ class _PersonalDataState extends State<PersonalData> {
     await context.read<CountryCubit>().getCountries();
     if (mounted) {
       await context.read<NationalityCubit>().getNationalities();
+      final ProfileCubit profileCubit = ProfileCubit.get(context);
+      if (profileCubit.profileModel?.data?.nationalityId != null) {
+        nationalityValue =
+            profileCubit.profileModel?.data?.nationalityId?.id.toString();
+      }
+      if (profileCubit.profileModel?.data?.countryId != null) {
+        countryValue = profileCubit.profileModel?.data?.countryId?.id.toString();
+      }
+
+      log(nationalityValue.toString() , name: "nationalityValue");
+      log(countryValue.toString() , name: "countryValue");
+      log(profileCubit.profileModel?.data?.nationalityId?.name.toString()??"" , name: "profileCubit");
     }
-    final ProfileCubit profileCubit = ProfileCubit.get(context);
-    if (profileCubit.profileModel?.data?.nationalityId != null) {
-      nationalityValue =
-          profileCubit.profileModel?.data?.nationalityId?.id.toString();
-    }
-    if (profileCubit.profileModel?.data?.countryId != null) {
-      countryValue = profileCubit.profileModel?.data?.countryId?.id.toString();
-    }
+
+
+
   }
 
   @override
   void initState() {
     context.read<NationalityCubit>().getNationalities();
-
     super.initState();
 
     getData();

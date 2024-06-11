@@ -405,7 +405,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                     ),
                                   ),
                                 ),
-                                if (!isRecording) buildRecordingWidget()
+                                if (!isRecording)
+                                  buildRecordingWidget()
                               ],
                             ),
                           ],
@@ -435,32 +436,31 @@ class _ChatScreenState extends State<ChatScreen> {
                     MyApplication.showToastView(
                         message: ' 5 MB لا يمكن ان يتعدي الملف');
                     return;
-                  }
+                  } else {
                   context.read<SendChatCubit>().sendChatFunction(
-                      filee: pickedFile,
+                      file: pickedFile,
                       msg: messageController.text,
-                      // typee:  pickedFile!.path.split(".").last,
                       adviceId: widget.showAdData!.id.toString());
 
                   pickedFile = null;
+                  }
                 } else if (voiceFile != null) {
                   log(voiceSelected?.path ?? "", name: "the voice is");
                   // log(voiceSelected?.path??""  , name: "the voice is");
                   context.read<SendChatCubit>().sendChatFunction(
-                      filee: voiceSelected,
+                      file: voiceSelected,
                       msg: messageController.text,
-                      // typee: voiceFile!.path.split(".").last,
                       adviceId: widget.showAdData!.id.toString());
-                  // isRecording = false;
                   setState(() {
                     voiceSelected = null;
                     voiceFile = null;
                   });
                 } else if (messageController.text.isNotEmpty) {
                   context.read<SendChatCubit>().sendChatFunction(
-                      filee: pickedFile,
+                      file: pickedFile,
                       msg: messageController.text,
                       adviceId: widget.showAdData!.id.toString());
+                  log("printed");
                 }
               },
               child: Container(
@@ -587,10 +587,21 @@ class _ChatScreenState extends State<ChatScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(color: Colors.grey.shade400)),
-                          child: state.response?.data?.chat?[index].document?[0]
-                                      .file
-                                      ?.endsWith("mp3") ??
-                                  false
+                          child: (state.response?.data?.chat?[index]
+                                          .document?[0].file
+                                          ?.endsWith("mp4") ??
+                                      false) &&
+                              (state.response?.data?.chat?[index]
+                                  .document?[0].type ==
+                                  "audio") ||
+                                  (state.response?.data?.chat?[index]
+                                          .document?[0].file
+                                          ?.endsWith("m4a") ??
+                                      false) ||
+                                  (state.response?.data?.chat?[index]
+                                              .document?[0].file
+                                              ?.endsWith("mp3") ??
+                                          false)
                               ? GestureDetector(
                                   onTap: () => playAudioFromUrl(
                                     state.response?.data?.chat?[index]
@@ -602,20 +613,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                       ? audioPlayingWidget()
                                       : audioStopWidget(),
                                 )
-                              : state.response?.data?.chat?[index].document?[0]
-                                          .file
-                                          ?.endsWith("m4a") ??
-                                      false
-                                  ? GestureDetector(
-                                      onTap: () => playAudioFromUrl(
-                                        '${state.response?.data?.chat?[index].document?[0].file}',
-                                        index,
-                                      ),
-                                      child: playingIndex == index
-                                          ? audioPlayingWidget()
-                                          : audioStopWidget(),
-                                    )
-                                  : chatImageWidget(state, index),
+                              :
+                              chatImageWidget(state, index),
                         ),
                       ),
               ],
@@ -668,10 +667,10 @@ class _ChatScreenState extends State<ChatScreen> {
               )
             : isPDF(file)
                 ? SvgPicture.asset(pdf)
-                : isM4A(file)
+                : isMP4(file) && state.response?.data?.chat?[index].document?[0].type=="video"
                     ? SvgPicture.asset(mp4Icon)
                     : const SizedBox.shrink(),
-        if (isPDF(file) || isImage(file))
+        if (isPDF(file) || isImage(file) || isMP4(file))
           const Flexible(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
@@ -768,4 +767,4 @@ bool isImage(String file) =>
 
 bool isPDF(file) => file.endsWith('pdf');
 
-bool isM4A(file) => file.endsWith('m4a') || file.endsWith('mp4');
+bool isMP4(file) => file.endsWith('mp4');

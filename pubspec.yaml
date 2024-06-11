@@ -49,8 +49,6 @@ dependencies:
   uuid:
   path_provider: ^2.1.2
   dio:
-  mime_type:
-
 
 
 dev_dependencies:
