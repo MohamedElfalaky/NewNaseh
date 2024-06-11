@@ -176,6 +176,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "dio",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/dio-5.4.3+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.15"
+    },
+    {
       "name": "dotted_border",
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/dotted_border-2.1.0",
       "packageUri": "lib/",
@@ -282,6 +288,12 @@
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/firebase_messaging_web-3.5.18",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "fixnum",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/fixnum-1.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
     },
     {
       "name": "flutter",
@@ -552,6 +564,12 @@
       "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/mime-1.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "mime_type",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/mime_type-1.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "nested",
@@ -939,9 +957,9 @@
     },
     {
       "name": "uuid",
-      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/uuid-4.2.2",
+      "rootUri": "file:///Users/apple/.pub-cache/hosted/pub.dev/uuid-4.4.0",
       "packageUri": "lib/",
-      "languageVersion": "2.14"
+      "languageVersion": "3.0"
     },
     {
       "name": "vector_graphics",
@@ -1004,7 +1022,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2024-06-07T12:47:58.366780Z",
+  "generated": "2024-06-10T12:14:40.312867Z",
   "generator": "pub",
   "generatorVersion": "3.3.4"
 }

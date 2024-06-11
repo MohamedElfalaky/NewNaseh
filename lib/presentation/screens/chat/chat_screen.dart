@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nasooh/Presentation/screens/Home/Components/advice_widget.dart';
 import 'package:nasooh/app/constants.dart';
 import 'package:path_provider/path_provider.dart';
@@ -43,8 +45,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageController = TextEditingController();
 
-  String? fileSelected;
-  String? voiceSelected;
+  // File? fileSelected;
+  File? voiceSelected;
   File? pickedFile;
 
   @override
@@ -98,8 +100,9 @@ class _ChatScreenState extends State<ChatScreen> {
     await record.stop();
     isRecording = false;
     if (voiceFile!.existsSync()) {
-      List<int> imageBytes = File(voiceFile!.path).readAsBytesSync();
-      voiceSelected = base64.encode(imageBytes);
+      voiceSelected = voiceFile;
+      // List<int> imageBytes = File(voiceFile!.path).readAsBytesSync();
+      // voiceSelected = base64.encode(imageBytes);
     }
 
     setState(() {});
@@ -170,7 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
           listener: (context, state) {
             if (state is SendChatLoaded) {
               context.read<ShowAdviceCubit>().show(id: widget.showAdData!.id!);
-              fileSelected = null;
+              // fileSelected = null;
               pickedFile = null;
               voiceSelected = null;
               messageController.clear();
@@ -324,7 +327,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                                   onPressed: () {
                                                     setState(() {
                                                       pickedFile = null;
-                                                      fileSelected = null;
+                                                      // fileSelected = null;
                                                     });
                                                   },
                                                 ),
@@ -353,13 +356,13 @@ class _ChatScreenState extends State<ChatScreen> {
                                                 if (result != null) {
                                                   setState(() {
                                                     pickedFile = File(result
-                                                        .files.single.path!);
+                                                        .files.first.path!);
                                                   });
-                                                  List<int> imageBytes =
-                                                      File(pickedFile!.path)
-                                                          .readAsBytesSync();
-                                                  fileSelected =
-                                                      base64.encode(imageBytes);
+                                                  // List<int> imageBytes =
+                                                  //     File(pickedFile!.path)
+                                                  //         .readAsBytesSync();
+                                                  // fileSelected =
+                                                  //     base64.encode(imageBytes);
                                                 }
                                                 return;
                                               },
@@ -425,26 +428,28 @@ class _ChatScreenState extends State<ChatScreen> {
                 if (state2 is ShowAdviceLoading || state3 is SendChatLoading) {
                   return;
                 }
-                if (fileSelected != null) {
-                  var fileLength = await pickedFile?.length();
+                if (pickedFile != null) {
+                  var fileLength = await pickedFile!.length();
                   debugPrint('file length is $fileLength');
-                  if (fileLength! >= 5242880 == true) {
+                  if (fileLength >= 5242880 == true) {
                     MyApplication.showToastView(
                         message: ' 5 MB لا يمكن ان يتعدي الملف');
                     return;
                   }
                   context.read<SendChatCubit>().sendChatFunction(
-                      filee: fileSelected,
+                      filee: pickedFile,
                       msg: messageController.text,
-                      typee: pickedFile?.path.split(".").last,
+                      // typee:  pickedFile!.path.split(".").last,
                       adviceId: widget.showAdData!.id.toString());
 
-                  fileSelected = null;
+                  pickedFile = null;
                 } else if (voiceFile != null) {
+                  log(voiceSelected?.path ?? "", name: "the voice is");
+                  // log(voiceSelected?.path??""  , name: "the voice is");
                   context.read<SendChatCubit>().sendChatFunction(
                       filee: voiceSelected,
                       msg: messageController.text,
-                      typee: voiceFile!.path.split(".").last,
+                      // typee: voiceFile!.path.split(".").last,
                       adviceId: widget.showAdData!.id.toString());
                   // isRecording = false;
                   setState(() {
@@ -453,7 +458,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   });
                 } else if (messageController.text.isNotEmpty) {
                   context.read<SendChatCubit>().sendChatFunction(
-                      filee: fileSelected,
+                      filee: pickedFile,
                       msg: messageController.text,
                       adviceId: widget.showAdData!.id.toString());
                 }

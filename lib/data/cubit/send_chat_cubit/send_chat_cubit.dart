@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nasooh/Data/cubit/send_chat_cubit/send_chat_state.dart';
 import 'package:nasooh/Data/repositories/send_chat_repo.dart';
@@ -13,13 +16,15 @@ class SendChatCubit extends Cubit<SendChatState> {
   sendChatFunction({
     required String msg,
     required String adviceId,
-    String? filee,
-    String? typee,
+    File? filee,
+    // String? typee,
   }) async {
     try {
       emit(SendChatLoading());
       sendChatRepo
-          .sendChat(msg: msg, adviceId: adviceId, file: filee, type: typee)
+          .sendChat(msg: msg, adviceId: adviceId, file: filee
+          // , type: typee
+      )
           .then((value) {
         if (value == true) {
           emit(SendChatLoaded());
