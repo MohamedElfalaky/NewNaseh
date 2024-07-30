@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../repositories/authentication/nationality_repo/country_repo.dart';
+import '../../../repositories/authentication/nationality_repo/nationality_repo.dart';
 import 'nationality_state.dart';
 
 class NationalityCubit extends Cubit<NationalityState> {

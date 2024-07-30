@@ -30,31 +30,29 @@ class _NasehAppState extends State<NasehApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: providers,
-        child: GestureDetector(
-          onTap: ()=>MyApplication.dismissKeyboard(),
-          child: GetMaterialApp(
-            translations: Messages(),
-            locale: Locale(sharedPrefs.getLanguage),
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-              DefaultCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [Locale('ar'), Locale('en')],
-            navigatorKey: Keys.navigatorKey,
-            useInheritedMediaQuery: true,
-            debugShowCheckedModeBanner: false,
-
-            title: 'ناصح',
-            theme: whiteTheme,
-            home: sharedPrefs.getToken != ""
-                ? const HomeScreen()
-                : const LoginScreen(),
-          ),
+      providers: providers,
+      child: GestureDetector(
+        onTap: () => MyApplication.dismissKeyboard(),
+        child: GetMaterialApp(
+          translations: Messages(),
+          locale: Locale(sharedPrefs.getLanguage),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            DefaultCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [Locale('ar'), Locale('en')],
+          navigatorKey: Keys.navigatorKey,
+          useInheritedMediaQuery: true,
+          debugShowCheckedModeBanner: false,
+          title: 'ناصح',
+          theme: whiteTheme,
+          home: sharedPrefs.getToken != ""
+              ? const HomeScreen()
+              : const LoginScreen(),
         ),
-
+      ),
     );
   }
 }
