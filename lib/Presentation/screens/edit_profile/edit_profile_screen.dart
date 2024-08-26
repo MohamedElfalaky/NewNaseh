@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
@@ -109,8 +107,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _summaryController.text = profileCubit.profileModel?.data?.info ?? "";
     _experienceController.text =
         profileCubit.profileModel?.data?.experienceYear ?? "";
-    _birthdayController.text =
-        profileCubit.profileModel?.data?.birthday ?? "";
+    _birthdayController.text = profileCubit.profileModel?.data?.birthday ?? "";
     _bankAccountController.text =
         profileCubit.profileModel?.data?.bankAccount ?? "";
 
@@ -146,77 +143,76 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:
-          BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-              builder: (context, state) => state is UpdateProfileLoading
-                  ? const CustomLoadingIndicator()
-                  : Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 48,
-                        child: CustomButton(
-                          isBold: true,
-                          txt: "save".tr,
-                          onPressedHandler: () {
-                            debugPrint(inputCity);
-                            debugPrint(inputCountry);
-                            debugPrint("base64NewImage is $base64NewImage");
-                            debugPrint(inputCountry);
-                            debugPrint(
-                                "selectedCategory is ${_selectedCategory.toSet().toList().toString().split("[").last.split("]").first}");
+      floatingActionButton: BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+          builder: (context, state) => state is UpdateProfileLoading
+              ? const CustomLoadingIndicator()
+              : Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 48,
+                    child: CustomButton(
+                      isBold: true,
+                      txt: "save".tr,
+                      onPressedHandler: () {
+                        debugPrint(inputCity);
+                        debugPrint(inputCountry);
+                        debugPrint("base64NewImage is $base64NewImage");
+                        debugPrint(inputCountry);
+                        debugPrint(
+                            "selectedCategory is ${_selectedCategory.toSet().toList().toString().split("[").last.split("]").first}");
 
-                            var documents =
-                                certiList.map((e) => e["cert"]).toList();
-                            debugPrint(
-                                "selectedCategory is ${documents.toString().split("[").last.split("]").first}");
-                            debugPrint(documents.toString());
+                        var documents =
+                            certiList.map((e) => e["cert"]).toList();
+                        debugPrint(
+                            "selectedCategory is ${documents.toString().split("[").last.split("]").first}");
+                        debugPrint(documents.toString());
 
-                            log(_selectedCategory.length.toString(),
-                                name: "_selectedCategory in press");
+                        log(_selectedCategory.length.toString(),
+                            name: "_selectedCategory in press");
 
-                            log(_birthdayController.text,
-                                name: "_birthdayController.text");
+                        log(_birthdayController.text,
+                            name: "_birthdayController.text");
 
-                            log(_bankAccountController.text,
-                                name: "_bankAccountController.text");
-                            context.read<UpdateProfileCubit>().updateMethod(
-                                  context: context,
-                                  nationalityId: inputNationality,
-                                  gender: genderValue,
-                                  fullName: _fullName.text,
-                                  email: _email.text,
-                                  cityId: inputCity,
-                                  category: _selectedCategory
-                                      .map((e) => e.id)
-                                      .toSet()
-                                      .toList()
-                                      .toString()
-                                      .split("[")
-                                      .last
-                                      .split("]")
-                                      .first,
-                                  documents: documents
-                                      .toString()
-                                      .split("[")
-                                      .last
-                                      .split("]")
-                                      .first,
-                                  description: _descriptionController.text,
-                                  birthday: _birthdayController.text,
-                                  bankName: _bankNameController.text,
-                                  bankAccount: _bankAccountController.text,
-                                  experienceYear: _experienceController.text,
-                                  info: _summaryController.text,
-                                  userName: _englishName.text,
-                                  countryId: inputCountry,
-                                  avatar: base64NewImage ?? "",
-                                  // mobile: "0101258631255",
-                                );
-                          },
-                        ),
-                      ),
-                    )),
+                        log(_bankAccountController.text,
+                            name: "_bankAccountController.text");
+                        context.read<UpdateProfileCubit>().updateMethod(
+                              context: context,
+                              nationalityId: inputNationality,
+                              gender: genderValue,
+                              fullName: _fullName.text,
+                              email: _email.text,
+                              cityId: inputCity,
+                              category: _selectedCategory
+                                  .map((e) => e.id)
+                                  .toSet()
+                                  .toList()
+                                  .toString()
+                                  .split("[")
+                                  .last
+                                  .split("]")
+                                  .first,
+                              documents: documents
+                                  .toString()
+                                  .split("[")
+                                  .last
+                                  .split("]")
+                                  .first,
+                              description: _descriptionController.text,
+                              birthday: _birthdayController.text,
+                              bankName: _bankNameController.text,
+                              bankAccount: _bankAccountController.text,
+                              experienceYear: _experienceController.text,
+                              info: _summaryController.text,
+                              userName: _englishName.text,
+                              countryId: inputCountry,
+                              avatar: base64NewImage ?? "",
+                              // mobile: "0101258631255",
+                            );
+                      },
+                    ),
+                  ),
+                )),
       resizeToAvoidBottomInset: false,
       backgroundColor: Constants.whiteAppColor,
       appBar: AppBar(
@@ -307,8 +303,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                             child: Image.file(
                                                               File(regImage!
                                                                   .path),
-                                                              fit: BoxFit
-                                                                  .cover,
+                                                              fit: BoxFit.cover,
                                                             ),
                                                             // PhotoView(
                                                             //     imageProvider:
@@ -372,8 +367,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                         const Divider(),
                                                         RowModalSheet(
                                                           txt: "cancel".tr,
-                                                          imageIcon:
-                                                              closeIcon,
+                                                          imageIcon: closeIcon,
                                                           onPressed: () {
                                                             Navigator.pop(
                                                                 context);
@@ -385,8 +379,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                             );
                                           },
                                           child: const CircleAvatar(
-                                            backgroundColor:
-                                                Color(0XFF444444),
+                                            backgroundColor: Color(0XFF444444),
                                             radius: 20,
                                             child: Icon(
                                               Icons.camera_alt_outlined,
@@ -412,11 +405,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 34, bottom: 24),
+                                padding:
+                                    const EdgeInsets.only(top: 34, bottom: 24),
                                 child: TextFormField(
-                                  onTap: ()=>MyApplication.unFocusCursorRTL(_fullName),
-
+                                  onTap: () =>
+                                      MyApplication.unFocusCursorRTL(_fullName),
                                   controller: _fullName,
                                   autovalidateMode:
                                       AutovalidateMode.onUserInteraction,
@@ -424,7 +417,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     if (value!.isEmpty) {
                                       return "full Name Required".tr;
                                     } else if (value.length > 33 ||
-                                        value.length < 2) {
+                                        value.length < 5) {
                                       return "name length".tr;
                                     }
                                     return null;
@@ -585,9 +578,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                    bottom: 24
-                                  ),
+                                  padding: const EdgeInsets.only(bottom: 24),
                                   child: TextFormField(
                                     maxLength: 2,
                                     keyboardType: TextInputType.number,
@@ -616,11 +607,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     // maxLength: 10,
                                     decoration: Constants
                                         .setRegistrationTextInputDecoration(
-                                            hintText:
-                                                "الشهادات والإنجازات...",
+                                            hintText: "الشهادات والإنجازات...",
                                             suffixIcon: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(4),
+                                              padding: const EdgeInsets.all(4),
                                               child: InkWell(
                                                 onTap: () {
                                                   if (certificatesController
@@ -722,8 +711,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   controller: _bankNameController,
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
-                                          hintText:
-                                              "اسم صاحب الحساب البنكي...",
+                                          hintText: "اسم صاحب الحساب البنكي...",
                                           prefixIcon: SvgPicture.asset(
                                             ipanIcon,
                                             height: 24,
@@ -746,12 +734,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     // if (value == null || value.isEmpty) {
                                     //   return "IBAN number is required".tr;
                                     // }
-                                    if (!value!.toLowerCase().startsWith('sa(')) {
+                                    if (!value!
+                                        .toLowerCase()
+                                        .startsWith('sa(')) {
                                       return '${"IBAN number must start with".tr} SA or sa(';
                                     }
-                                    return null;  // Return null if the input is valid so far
+                                    return null; // Return null if the input is valid so far
                                   },
-                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                 ),
                               ),
                               Row(
@@ -779,9 +770,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           }))
                                 ],
                               ),
-
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 20),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 child: TextFormField(
                                   controller: _birthdayController,
                                   decoration: Constants
@@ -798,8 +789,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 style: Constants.secondaryTitleFont,
                               ),
                               StatefulBuilder(
-                                builder: (context, StateSetter setState) =>
-                                    Row(
+                                builder: (context, StateSetter setState) => Row(
                                   children: [
                                     SizedBox(
                                       width: 120,
@@ -884,7 +874,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
                                   keyboardType: TextInputType.url,
-
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط لينكدان...",
@@ -910,7 +899,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
                                   keyboardType: TextInputType.url,
-
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط انستقرام...",
@@ -924,7 +912,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
                                   keyboardType: TextInputType.url,
-
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط فيس بوك...",
@@ -938,7 +925,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 padding: const EdgeInsets.only(bottom: 24),
                                 child: TextFormField(
                                   keyboardType: TextInputType.url,
-
                                   decoration: Constants
                                       .setRegistrationTextInputDecoration(
                                           hintText: "ادخل رابط يوتيوب...",
@@ -969,8 +955,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         Padding(
           padding: const EdgeInsets.only(bottom: 24),
           child: TextFormField(
-            onTap: ()=>MyApplication.unFocusCursorRTL(_searchController),
-
+            onTap: () => MyApplication.unFocusCursorRTL(_searchController),
             controller: _searchController,
             onChanged: (val) {
               setState(() {
@@ -1073,7 +1058,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                       (element) =>
                                                           element.id == e.id);
                                                 }
-                                                debugPrint("the send category is ${_selectedCategory.toSet().toList()}");
+                                                debugPrint(
+                                                    "the send category is ${_selectedCategory.toSet().toList()}");
                                               });
                                             })),
                                     const SizedBox(width: 8),

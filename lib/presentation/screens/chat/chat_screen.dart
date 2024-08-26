@@ -426,43 +426,54 @@ class _ChatScreenState extends State<ChatScreen> {
           builder: (context, state3) {
             return GestureDetector(
               onTap: () async {
+                // Trim the message text to remove any leading or trailing whitespace
+                String trimmedMessage = messageController.text.trim();
+
+                // Check if the message is empty after trimming
+                if (trimmedMessage.isEmpty && pickedFile == null && voiceFile == null) {
+                  MyApplication.showToastView(message: "يجب ادخال رسالة");
+                  return;
+                }
+
                 if (state2 is ShowAdviceLoading || state3 is SendChatLoading) {
                   return;
                 }
+
                 if (pickedFile != null) {
                   var fileLength = await pickedFile!.length();
                   debugPrint('file length is $fileLength');
-                  if (fileLength >= 5242880 == true) {
-                    MyApplication.showToastView(
-                        message: ' 5 MB لا يمكن ان يتعدي الملف');
+                  if (fileLength >= 5242880) {
+                    MyApplication.showToastView(message: ' 5 MB لا يمكن ان يتعدي الملف');
                     return;
                   } else {
-                  context.read<SendChatCubit>().sendChatFunction(
+                    context.read<SendChatCubit>().sendChatFunction(
                       file: pickedFile,
-                      msg: messageController.text,
-                      adviceId: widget.showAdData!.id.toString());
-
-                  pickedFile = null;
+                      msg: trimmedMessage,
+                      adviceId: widget.showAdData!.id.toString(),
+                    );
+                    pickedFile = null;
                   }
                 } else if (voiceFile != null) {
                   log(voiceSelected?.path ?? "", name: "the voice is");
-                  // log(voiceSelected?.path??""  , name: "the voice is");
                   context.read<SendChatCubit>().sendChatFunction(
-                      file: voiceSelected,
-                      msg: messageController.text,
-                      adviceId: widget.showAdData!.id.toString());
+                    file: voiceSelected,
+                    msg: trimmedMessage,
+                    adviceId: widget.showAdData!.id.toString(),
+                  );
                   setState(() {
                     voiceSelected = null;
                     voiceFile = null;
                   });
-                } else if (messageController.text.isNotEmpty) {
+                } else if (trimmedMessage.isNotEmpty) {
                   context.read<SendChatCubit>().sendChatFunction(
-                      file: pickedFile,
-                      msg: messageController.text,
-                      adviceId: widget.showAdData!.id.toString());
+                    file: pickedFile,
+                    msg: trimmedMessage,
+                    adviceId: widget.showAdData!.id.toString(),
+                  );
                   log("printed");
                 }
               },
+
               child: Container(
                   margin: const EdgeInsetsDirectional.only(start: 8),
                   padding: const EdgeInsets.all(10),
